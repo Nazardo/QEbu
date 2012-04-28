@@ -4,6 +4,8 @@
 #
 #-------------------------------------------------
 
+include(model/model.pri)
+
 QT       += core gui
 
 TARGET = QEbu
