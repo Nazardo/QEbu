@@ -38,7 +38,7 @@ public:
     void setOrientation(const enum Orientation &orientation);
     QList<TypeGroup*> imageEncoding() const;
     TechnicalAttributes technicalAttributes() const;
-    void getTechnicalAttributes(const TechnicalAttributes &technicalAttributes);
+    void setTechnicalAttributes(const TechnicalAttributes &technicalAttributes);
 
 private:
     // Attributes
@@ -107,7 +107,7 @@ public:
     QList<TypeGroup*> videoEncoding() const;
     QList<VideoTrackType*> videoTrack() const;
     TechnicalAttributes *technicalAttributes() const;
-    void getTechnicalAttributes(TechnicalAttributes *technicalAttributes);
+    void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
 
 private:
     // Attributes
@@ -160,7 +160,7 @@ public:
     void setAudioTrackConfiguration(TypeGroup *audioTrackConfiguration);
     QList<AudioTrackType*> audioTrack() const;
     TechnicalAttributes *technicalAttributes() const;
-    void getTechnicalAttributes(TechnicalAttributes *technicalAttributes);
+    void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
 
 private:
     // Attributes
@@ -207,7 +207,7 @@ public:
     void setDID(const int &DID);
     int SDID() const;
     void setSDID(const int &SDID);
-    QList<int*> m_lineNumber() const;
+    QList<int*> lineNumber() const;
     int wrappingType() const;
     void setWrappingType(const int &wrappingType);
 
@@ -238,7 +238,7 @@ public:
     QList<CaptioningFormatType*> captioningFormat() const;
     QList<AncillarityDataFormatType*> ancillarityDataFormat() const;
     TechnicalAttributes *technicalAttributes() const;
-    void getTechnicalAttributes(TechnicalAttributes *technicalAttributes);
+    void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
 
 private:
     // Attributes
@@ -303,7 +303,7 @@ public:
     LengthType *height() const;
     void setHeight(LengthType *height);
     TechnicalAttributes *technicalAttributes() const;
-    void getTechnicalAttributes(TechnicalAttributes *technicalAttributes);
+    void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
 
 private:
     // Attributes
@@ -350,25 +350,25 @@ public:
     QList<DataFormatType*> dataFormat() const;
     QList<SigningFormatType*> signingFormat() const;
     TimeType *start() const;
-    void getStart(TimeType *start);
+    void setStart(TimeType *start);
     TimeType *end() const;
-    void getEnd(TimeType *end);
+    void setEnd(TimeType *end);
     DurationType *duration() const;
-    void getDuration(DurationType *duration);
+    void setDuration(DurationType *duration);
     long fileSize() const;
-    void getFileSize(const long &fileSize);
+    void setFileSize(const long &fileSize);
     QString fileName() const;
-    void getFileName(const QString &FileName);
+    void setFileName(const QString &fileName);
     TypeGroup *locator() const;
-    void getLocator(TypeGroup *locator);
+    void setLocator(TypeGroup *locator);
     DocumentFormatType *documentFormat() const;
-    void getDocumentFormat(DocumentFormatType *documentFormat);
+    void setDocumentFormat(DocumentFormatType *documentFormat);
     TechnicalAttributes *technicalAttributes() const;
-    void getTechnicalAttributes(TechnicalAttributes *technicalAttributes);
+    void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
     DateGroupType *dateCreated() const;
-    void getDateCreated(DateGroupType *dateCreated);
+    void setDateCreated(DateGroupType *dateCreated);
     DateGroupType *dateModified() const;
-    void getDateCreated(DateGroupType *dateModified);
+    void setDateModified(DateGroupType *dateModified);
 
 private:
     // Attributes

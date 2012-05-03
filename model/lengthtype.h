@@ -1,6 +1,8 @@
 #ifndef LENGTHTYPE_H
 #define LENGTHTYPE_H
 
+#include <QString>
+
 class LengthType
 {
 public:
