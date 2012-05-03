@@ -10,7 +10,9 @@ HEADERS += \
     model/elementtype.h \
     model/detailstype.h \
     model/contactdetailstype.h \
-    model/technicalattributes.h
+    model/technicalattributes.h \
+    model/formattype.h \
+    model/lengthtype.h
 
 SOURCES += \
     model/ebucoremaintype.cpp \
@@ -24,6 +26,8 @@ SOURCES += \
     model/elementtype.cpp \
     model/detailstype.cpp \
     model/contactdetailstype.cpp \
-    model/technicalattributes.cpp
+    model/technicalattributes.cpp \
+    model/formattype.cpp \
+    model/lengthtype.cpp
 
 
