@@ -99,7 +99,7 @@ EntityType *SubjectType::attributor() const
     return m_attributor;
 }
 
-void SubjectType::setAttributor(const EntityType *attributor)
+void SubjectType::setAttributor(EntityType *attributor)
 {
     m_attributor = attributor;
 }
@@ -616,7 +616,7 @@ void PublicationHistoryType::setFirstPublication(PublicationType *firstPublicati
 
 QList<PublicationType *> &PublicationHistoryType::repetitions()
 {
-    m_repetitions = repetitions;
+    return m_repetitions;
 }
 
 QString RatingType::ratingValue() const

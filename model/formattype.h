@@ -12,6 +12,8 @@
 #include "technicalattributes.h"
 #include "dategroup.h"
 
+class TimeType;
+
 class ImageFormatType
 {
 public:
@@ -29,16 +31,16 @@ public:
     unsigned int regionDelimX() const;
     void setRegionDelimX(const unsigned int &regionDelimX);
     unsigned int regionDelimY() const;
-    void setRegionDelimY(const unsigned int &regionDelimY);
+    void setRegionDelimY(const unsigned int &width);
     LengthType *width() const;
     void setWidth(LengthType *length);
     LengthType *height() const;
     void setHeight(LengthType *height);
     enum Orientation orientation() const;
     void setOrientation(const enum Orientation &orientation);
-    QList<TypeGroup*> imageEncoding() const;
-    TechnicalAttributes technicalAttributes() const;
-    void setTechnicalAttributes(const TechnicalAttributes &technicalAttributes);
+    QList<TypeGroup*> &imageEncoding();
+    TechnicalAttributes *technicalAttributes() const;
+    void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
 
 private:
     // Attributes
@@ -64,7 +66,7 @@ public:
     void setNote(const QString &note);
 private:
     // Attributes
-    QString note;
+    QString m_note;
 };
 
 class VideoTrackType : public TypeGroup
@@ -78,8 +80,8 @@ public:
     void setTrackName(const QString &trackName);
 private:
     // Attributes
-    QString trackId;
-    QString trackName;
+    QString m_trackId;
+    QString m_trackName;
 };
 
 class VideoFormatType
@@ -99,13 +101,13 @@ public:
     unsigned int regionDelimY() const;
     void setRegionDelimY(const unsigned int &regionDelimY);
     LengthType *width() const;
-    void setWidth(LengthType *length);
+    void setWidth(LengthType *width);
     LengthType *height() const;
     void setHeight(LengthType *height);
     AspectRatioType *aspectRatio() const;
     void setAspectRatio(AspectRatioType *aspectRatio);
-    QList<TypeGroup*> videoEncoding() const;
-    QList<VideoTrackType*> videoTrack() const;
+    QList<TypeGroup*> &videoEncoding();
+    QList<VideoTrackType*> &videoTrack();
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
 
@@ -138,9 +140,9 @@ public:
     void setTrackName(const QString &trackName);
 private:
     // Attributes
-    QString trackLanguage;
-    QString trackId;
-    QString trackName;
+    QString m_trackLanguage;
+    QString m_trackId;
+    QString m_trackName;
 };
 
 class AudioFormatType
@@ -155,10 +157,10 @@ public:
     QString audioFormatDefinition() const;
     void setAudioFormatDefinition(const QString &audioFormatDefinition);
     // Elements
-    QList<TypeGroup*> audioEncoding() const;
+    QList<TypeGroup*> &audioEncoding();
     TypeGroup *audioTrackConfiguration() const;
     void setAudioTrackConfiguration(TypeGroup *audioTrackConfiguration);
-    QList<AudioTrackType*> audioTrack() const;
+    QList<AudioTrackType*> &audioTrack();
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
 
@@ -207,7 +209,7 @@ public:
     void setDID(const int &DID);
     int SDID() const;
     void setSDID(const int &SDID);
-    QList<int*> lineNumber() const;
+    QList<int> &lineNumber();
     int wrappingType() const;
     void setWrappingType(const int &wrappingType);
 
@@ -218,7 +220,7 @@ private:
     // Elements (all optional)
     int m_DID;
     int m_SDID;
-    QList<int*> m_lineNumber;
+    QList<int> m_lineNumber;
     int m_wrappingType;
 };
 
@@ -235,8 +237,8 @@ public:
     QString dataFormatDefinition() const;
     void setDataFormatDefinition(const QString &dataFormatDefinition);
     // Elements
-    QList<CaptioningFormatType*> captioningFormat() const;
-    QList<AncillarityDataFormatType*> ancillarityDataFormat() const;
+    QList<CaptioningFormatType*> &captioningFormat();
+    QList<AncillarityDataFormatType*> &ancillarityDataFormat();
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
 
@@ -341,20 +343,20 @@ public:
     void setWidth(LengthType *width);
     LengthType *height() const;
     void setHeight(LengthType *height);
-    QList<TypeGroup*> medium() const;
-    QList<TypeGroup*> mimeType() const;
-    QList<ImageFormatType*> imageFormat() const;
-    QList<VideoFormatType*> videoFormat() const;
-    QList<AudioFormatType*> audioFormat() const;
-    QList<TypeGroup*> containerFormat() const;
-    QList<DataFormatType*> dataFormat() const;
-    QList<SigningFormatType*> signingFormat() const;
+    QList<TypeGroup*> &medium();
+    QList<TypeGroup*> &mimeType();
+    QList<ImageFormatType*> &imageFormat();
+    QList<VideoFormatType*> &videoFormat();
+    QList<AudioFormatType*> &audioFormat();
+    QList<FormatGroup*> &containerFormat();
+    QList<DataFormatType*> &dataFormat();
+    QList<SigningFormatType*> &signingFormat();
     TimeType *start() const;
     void setStart(TimeType *start);
     TimeType *end() const;
     void setEnd(TimeType *end);
-    DurationType *duration() const;
-    void setDuration(DurationType *duration);
+    TimeType *duration() const;
+    void setDuration(TimeType *duration);
     long fileSize() const;
     void setFileSize(const long &fileSize);
     QString fileName() const;
@@ -365,10 +367,10 @@ public:
     void setDocumentFormat(DocumentFormatType *documentFormat);
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
-    DateGroupType *dateCreated() const;
-    void setDateCreated(DateGroupType *dateCreated);
-    DateGroupType *dateModified() const;
-    void setDateModified(DateGroupType *dateModified);
+    DateGroup *dateCreated() const;
+    void setDateCreated(DateGroup *dateCreated);
+    DateGroup *dateModified() const;
+    void setDateModified(DateGroup *dateModified);
 
 private:
     // Attributes

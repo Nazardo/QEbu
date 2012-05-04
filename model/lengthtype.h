@@ -7,7 +7,7 @@ class LengthType
 {
 public:
     LengthType();
-    LengthType(const unsigned int &value, const String unit);
+    LengthType(const unsigned int &value, const QString &unit);
     unsigned int value() const;
     void setValue(const unsigned int &value);
     QString unit() const;

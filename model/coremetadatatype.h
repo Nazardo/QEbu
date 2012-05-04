@@ -113,7 +113,7 @@ public:
     QString subjectDefinition();
     void setSubjectDefinition(const QString &subjectDefinition);
     EntityType *attributor() const;
-    void setAttributor (const EntityType *attributor);
+    void setAttributor (EntityType *attributor);
 private:
     QString m_note;
     ElementType *m_subject;
@@ -139,7 +139,7 @@ class AlternativeType : public DateGroup, public TypeGroup { };
 class DateType
 {
 public:
-    QList<ElementType *> date();
+    QList<ElementType *> &date();
     DateGroup *created() const;
     void setCreated (DateGroup *created);
     DateGroup *issued() const;

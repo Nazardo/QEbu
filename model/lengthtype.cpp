@@ -4,9 +4,10 @@ LengthType::LengthType()
 {
 }
 
-LengthType::LengthType(const unsigned int &value)
+LengthType::LengthType(const unsigned int &value, const QString &unit)
 {
     m_value = value;
+    m_unit = unit;
 }
 
 unsigned int LengthType::value() const

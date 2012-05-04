@@ -9,7 +9,7 @@ QString ImageFormatType::imageFormatId() const
 
 void ImageFormatType::setImageFormatId(const QString &imageFormatId)
 {
-    m_imageFormatId=imageFormatId;
+    m_imageFormatId = imageFormatId;
 }
 
 QString ImageFormatType::imageFormatName() const
@@ -19,7 +19,7 @@ QString ImageFormatType::imageFormatName() const
 
 void ImageFormatType::setImageFormatName(const QString &imageFormatName)
 {
-    m_imageFormatName=imageFormatName;
+    m_imageFormatName = imageFormatName;
 }
 
 QString ImageFormatType::imageFormatDefinition() const
@@ -29,7 +29,7 @@ QString ImageFormatType::imageFormatDefinition() const
 
 void ImageFormatType::setImageFormatDefinition(const QString &imageFormatDefinition)
 {
-    m_imageFormatDefinition=imageFormatDefinition;
+    m_imageFormatDefinition = imageFormatDefinition;
 }
 
 unsigned int ImageFormatType::regionDelimX() const
@@ -39,7 +39,7 @@ unsigned int ImageFormatType::regionDelimX() const
 
 void ImageFormatType::setRegionDelimX(const unsigned int &regionDelimX)
 {
-    m_regionDelimX=regionDelimX;
+    m_regionDelimX = regionDelimX;
 }
 
 unsigned int ImageFormatType::regionDelimY() const
@@ -49,7 +49,7 @@ unsigned int ImageFormatType::regionDelimY() const
 
 void ImageFormatType::setRegionDelimY(const unsigned int &regionDelimY)
 {
-    m_regionDelimY=regionDelimY;
+    m_regionDelimY = regionDelimY;
 }
 
 LengthType *ImageFormatType::width() const
@@ -57,9 +57,9 @@ LengthType *ImageFormatType::width() const
     return m_width;
 }
 
-void ImageFormatType::setWidth(LengthType *length)
+void ImageFormatType::setWidth(LengthType *width)
 {
-    m_length=length;
+    m_width = width;
 }
 
 LengthType *ImageFormatType::height() const
@@ -69,7 +69,7 @@ LengthType *ImageFormatType::height() const
 
 void ImageFormatType::setHeight(LengthType *height)
 {
-    m_height=height;
+    m_height = height;
 }
 
 ImageFormatType::Orientation ImageFormatType::orientation() const
@@ -79,22 +79,22 @@ ImageFormatType::Orientation ImageFormatType::orientation() const
 
 void ImageFormatType::setOrientation(const ImageFormatType::Orientation &orientation)
 {
-    m_orientation=orientation;
+    m_orientation = orientation;
 }
 
-QList<TypeGroup *> ImageFormatType::imageEncoding() const
+QList<TypeGroup *> &ImageFormatType::imageEncoding()
 {
     return m_imageEncoding;
 }
 
-TechnicalAttributes ImageFormatType::technicalAttributes() const
+TechnicalAttributes *ImageFormatType::technicalAttributes() const
 {
     return m_technicalAttributes;
 }
 
-void ImageFormatType::setTechnicalAttributes(const TechnicalAttributes &technicalAttributes)
+void ImageFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
-    m_technicalAttributes=technicalAttributes;
+    m_technicalAttributes = technicalAttributes;
 }
 
 /* ------------------------------ AspectRatioType -------------------------- */
@@ -109,7 +109,7 @@ QString AspectRatioType::note() const
 
 void AspectRatioType::setNote(const QString &note)
 {
-    m_note=note;
+    m_note = note;
 }
 
 /* ------------------------------ VideoTrackType -------------------------- */
@@ -124,7 +124,7 @@ QString VideoTrackType::trackId() const
 
 void VideoTrackType::setTrackId(const QString &trackId)
 {
-    m_trackId=trackId;
+    m_trackId = trackId;
 }
 
 QString VideoTrackType::trackName() const
@@ -134,7 +134,7 @@ QString VideoTrackType::trackName() const
 
 void VideoTrackType::setTrackName(const QString &trackName)
 {
-    m_trackName=trackName;
+    m_trackName = trackName;
 }
 
 /* ------------------------------ VideoFormatType -------------------------- */
@@ -149,7 +149,7 @@ QString VideoFormatType::videoFormatId() const
 
 void VideoFormatType::setVideoFormatId(const QString &videoFormatId)
 {
-    m_videoFormatId=videoFormatId;
+    m_videoFormatId = videoFormatId;
 }
 
 QString VideoFormatType::videoFormatName() const
@@ -159,7 +159,7 @@ QString VideoFormatType::videoFormatName() const
 
 void VideoFormatType::setVideoFormatName(const QString &videoFormatName)
 {
-    m_videoFormatName=videoFormatName;
+    m_videoFormatName = videoFormatName;
 }
 
 QString VideoFormatType::videoFormatDefinition() const
@@ -169,7 +169,7 @@ QString VideoFormatType::videoFormatDefinition() const
 
 void VideoFormatType::setVideoFormatDefinition(const QString &videoFormatDefinition)
 {
-    m_videoFormatDefinition=videoFormatDefinition;
+    m_videoFormatDefinition = videoFormatDefinition;
 }
 
 unsigned int VideoFormatType::regionDelimX() const
@@ -179,7 +179,7 @@ unsigned int VideoFormatType::regionDelimX() const
 
 void VideoFormatType::setRegionDelimX(const unsigned int &regionDelimX)
 {
-    m_regionDelimX=regionDelimX;
+    m_regionDelimX = regionDelimX;
 }
 
 unsigned int VideoFormatType::regionDelimY() const
@@ -189,7 +189,7 @@ unsigned int VideoFormatType::regionDelimY() const
 
 void VideoFormatType::setRegionDelimY(const unsigned int &regionDelimY)
 {
-    m_regionDelimY=regionDelimY;
+    m_regionDelimY = regionDelimY;
 }
 
 LengthType *VideoFormatType::width() const
@@ -197,9 +197,9 @@ LengthType *VideoFormatType::width() const
     return m_width;
 }
 
-void VideoFormatType::setWidth(LengthType *length)
+void VideoFormatType::setWidth(LengthType *width)
 {
-    m_length=length;
+    m_width = width;
 }
 
 LengthType *VideoFormatType::height() const
@@ -209,7 +209,7 @@ LengthType *VideoFormatType::height() const
 
 void VideoFormatType::setHeight(LengthType *height)
 {
-    m_height=height;
+    m_height = height;
 }
 
 AspectRatioType *VideoFormatType::aspectRatio() const
@@ -219,15 +219,15 @@ AspectRatioType *VideoFormatType::aspectRatio() const
 
 void VideoFormatType::setAspectRatio(AspectRatioType *aspectRatio)
 {
-    m_aspectRatio=aspectRatio;
+    m_aspectRatio = aspectRatio;
 }
 
-QList<TypeGroup *> VideoFormatType::videoEncoding() const
+QList<TypeGroup *> &VideoFormatType::videoEncoding()
 {
     return m_videoEncoding;
 }
 
-QList<VideoTrackType *> VideoFormatType::videoTrack() const
+QList<VideoTrackType *> &VideoFormatType::videoTrack()
 {
     return m_videoTrack;
 }
@@ -239,7 +239,7 @@ TechnicalAttributes *VideoFormatType::technicalAttributes() const
 
 void VideoFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
-    m_technicalAttributes=technicalAttributes;
+    m_technicalAttributes = technicalAttributes;
 }
 
 /* ------------------------------ AudioTrackType -------------------------- */
@@ -254,7 +254,7 @@ QString AudioTrackType::trackLanguage() const
 
 void AudioTrackType::setTrackLanguage(const QString &trackLanguage)
 {
-    m_trackLanguage=trackLanguage;
+    m_trackLanguage = trackLanguage;
 }
 
 QString AudioTrackType::trackId() const
@@ -264,7 +264,7 @@ QString AudioTrackType::trackId() const
 
 void AudioTrackType::setTrackId(const QString &trackId)
 {
-    m_trackId=trackId;
+    m_trackId = trackId;
 }
 
 QString AudioTrackType::trackName() const
@@ -274,7 +274,7 @@ QString AudioTrackType::trackName() const
 
 void AudioTrackType::setTrackName(const QString &trackName)
 {
-    m_trackName=trackName;
+    m_trackName = trackName;
 }
 
 /* ------------------------------ AudioFormatType -------------------------- */
@@ -289,7 +289,7 @@ QString AudioFormatType::audioFormatId() const
 
 void AudioFormatType::setAudioFormatId(const QString &audioFormatId)
 {
-    m_audioFormatId=audioFormatId;
+    m_audioFormatId = audioFormatId;
 }
 
 QString AudioFormatType::audioFormatName() const
@@ -299,7 +299,7 @@ QString AudioFormatType::audioFormatName() const
 
 void AudioFormatType::setAudioFormatName(const QString &audioFormatName)
 {
-    m_audioFormatName=audioFormatName;
+    m_audioFormatName = audioFormatName;
 }
 
 QString AudioFormatType::audioFormatDefinition() const
@@ -309,10 +309,10 @@ QString AudioFormatType::audioFormatDefinition() const
 
 void AudioFormatType::setAudioFormatDefinition(const QString &audioFormatDefinition)
 {
-    m_audioFormatDefinition=audioFormatDefinition;
+    m_audioFormatDefinition = audioFormatDefinition;
 }
 
-QList<TypeGroup *> AudioFormatType::audioEncoding() const
+QList<TypeGroup *> &AudioFormatType::audioEncoding()
 {
     return m_audioEncoding;
 }
@@ -324,10 +324,10 @@ TypeGroup *AudioFormatType::audioTrackConfiguration() const
 
 void AudioFormatType::setAudioTrackConfiguration(TypeGroup *audioTrackConfiguration)
 {
-    m_audioTrackConfiguration=audioTrackConfiguration;
+    m_audioTrackConfiguration = audioTrackConfiguration;
 }
 
-QList<AudioTrackType *> AudioFormatType::audioTrack() const
+QList<AudioTrackType *> &AudioFormatType::audioTrack()
 {
     return m_audioTrack;
 }
@@ -339,7 +339,7 @@ TechnicalAttributes *AudioFormatType::technicalAttributes() const
 
 void AudioFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
-    m_technicalAttributes=technicalAttributes;
+    m_technicalAttributes = technicalAttributes;
 }
 
 /* ------------------------------ CaptioningFormatType -------------------------- */
@@ -354,7 +354,7 @@ QString CaptioningFormatType::captioningSourceUri() const
 
 void CaptioningFormatType::setCaptioningSourceUri(const QString &captioningSourceUri)
 {
-    m_captioningSourceUri=captioningSourceUri;
+    m_captioningSourceUri = captioningSourceUri;
 }
 
 QString CaptioningFormatType::captioningFormatId() const
@@ -364,7 +364,7 @@ QString CaptioningFormatType::captioningFormatId() const
 
 void CaptioningFormatType::setCaptioningFormatId(const QString &captioningFormatId)
 {
-    m_captioningFormatId=captioningFormatId;
+    m_captioningFormatId = captioningFormatId;
 }
 
 QString CaptioningFormatType::captioningFormatName() const
@@ -374,7 +374,7 @@ QString CaptioningFormatType::captioningFormatName() const
 
 void CaptioningFormatType::setCaptioningFormatName(const QString &captioningFormatName)
 {
-    m_captioningFormatName=captioningFormatName;
+    m_captioningFormatName = captioningFormatName;
 }
 
 /* ------------------------------ AncillarityDataFormatType -------------------------- */
@@ -389,7 +389,7 @@ QString AncillarityDataFormatType::ancillaryDataFormatId() const
 
 void AncillarityDataFormatType::setAncillaryDataFormatId(const QString &ancillaryDataFormatId)
 {
-    m_ancillaryDataFormatId=ancillaryDataFormatId;
+    m_ancillaryDataFormatId = ancillaryDataFormatId;
 }
 
 QString AncillarityDataFormatType::ancillaryDataFormatName() const
@@ -399,7 +399,7 @@ QString AncillarityDataFormatType::ancillaryDataFormatName() const
 
 void AncillarityDataFormatType::setAncillaryDataFormatName(const QString &ancillaryDataFormatName)
 {
-    m_ancillaryDataFormatName=ancillaryDataFormatName;
+    m_ancillaryDataFormatName = ancillaryDataFormatName;
 }
 
 int AncillarityDataFormatType::DID() const
@@ -409,7 +409,7 @@ int AncillarityDataFormatType::DID() const
 
 void AncillarityDataFormatType::setDID(const int &DID)
 {
-    m_DID=DID;
+    m_DID = DID;
 }
 
 int AncillarityDataFormatType::SDID() const
@@ -419,10 +419,10 @@ int AncillarityDataFormatType::SDID() const
 
 void AncillarityDataFormatType::setSDID(const int &SDID)
 {
-    m_SDID=SDID;
+    m_SDID = SDID;
 }
 
-QList<int *> AncillarityDataFormatType::lineNumber() const
+QList<int> &AncillarityDataFormatType::lineNumber()
 {
     return m_lineNumber;
 }
@@ -434,7 +434,7 @@ int AncillarityDataFormatType::wrappingType() const
 
 void AncillarityDataFormatType::setWrappingType(const int &wrappingType)
 {
-    m_wrappingType=wrappingType;
+    m_wrappingType = wrappingType;
 }
 
 /* ------------------------------ DataFormatType -------------------------- */
@@ -449,7 +449,7 @@ QString DataFormatType::dataFormatId() const
 
 void DataFormatType::setDataFormatId(const QString &dataFormatId)
 {
-    m_dataFormatId=dataFormatId;
+    m_dataFormatId = dataFormatId;
 }
 
 QString DataFormatType::dataFormatName() const
@@ -459,7 +459,7 @@ QString DataFormatType::dataFormatName() const
 
 void DataFormatType::setDataFormatName(const QString &dataFormatName)
 {
-    m_dataFormatName=dataFormatName;
+    m_dataFormatName = dataFormatName;
 }
 
 QString DataFormatType::dataFormatDefinition() const
@@ -469,15 +469,15 @@ QString DataFormatType::dataFormatDefinition() const
 
 void DataFormatType::setDataFormatDefinition(const QString &dataFormatDefinition)
 {
-    m_dataFormatDefinition=dataFormatDefinition;
+    m_dataFormatDefinition = dataFormatDefinition;
 }
 
-QList<CaptioningFormatType *> DataFormatType::captioningFormat() const
+QList<CaptioningFormatType *> &DataFormatType::captioningFormat()
 {
     return m_captioningFormat;
 }
 
-QList<AncillarityDataFormatType *> DataFormatType::ancillarityDataFormat() const
+QList<AncillarityDataFormatType *> &DataFormatType::ancillarityDataFormat()
 {
     return m_ancillarityDataFormat;
 }
@@ -489,7 +489,7 @@ TechnicalAttributes *DataFormatType::technicalAttributes() const
 
 void DataFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
-    m_technicalAttributes=technicalAttributes;
+    m_technicalAttributes = technicalAttributes;
 }
 
 /* ------------------------------ SigningFormatType -------------------------- */
@@ -504,7 +504,7 @@ QString SigningFormatType::trackId() const
 
 void SigningFormatType::setTrackId(const QString &trackId)
 {
-    m_trackId=trackId;
+    m_trackId = trackId;
 }
 
 QString SigningFormatType::trackName() const
@@ -514,7 +514,7 @@ QString SigningFormatType::trackName() const
 
 void SigningFormatType::setTrackName(const QString &trackName)
 {
-    m_trackName=trackName;
+    m_trackName = trackName;
 }
 
 QString SigningFormatType::language() const
@@ -524,7 +524,7 @@ QString SigningFormatType::language() const
 
 void SigningFormatType::setLanguage(const QString &language)
 {
-    m_language=language;
+    m_language = language;
 }
 
 QString SigningFormatType::signingSourceUri() const
@@ -534,7 +534,7 @@ QString SigningFormatType::signingSourceUri() const
 
 void SigningFormatType::setSigningSourceUri(const QString &signingSourceUri)
 {
-    m_signingSourceUri=signingSourceUri;
+    m_signingSourceUri = signingSourceUri;
 }
 
 QString SigningFormatType::signingFormatId() const
@@ -544,7 +544,7 @@ QString SigningFormatType::signingFormatId() const
 
 void SigningFormatType::setSigningFormatId(const QString &signingFormatId)
 {
-    m_signingFormatId=signingFormatId;
+    m_signingFormatId = signingFormatId;
 }
 
 QString SigningFormatType::signingFormatName() const
@@ -554,7 +554,7 @@ QString SigningFormatType::signingFormatName() const
 
 void SigningFormatType::setSigningFormatName(const QString &signingFormatName)
 {
-    m_signingFormatName=signingFormatName;
+    m_signingFormatName = signingFormatName;
 }
 
 QString SigningFormatType::signingFormatDefinition() const
@@ -564,7 +564,7 @@ QString SigningFormatType::signingFormatDefinition() const
 
 void SigningFormatType::setSigningFormatDefinition(const QString &signingFormatDefinition)
 {
-    m_signingFormatDefinition=signingFormatDefinition;
+    m_signingFormatDefinition = signingFormatDefinition;
 }
 
 /* ------------------------------ DocumentFormatType -------------------------- */
@@ -579,7 +579,7 @@ QString DocumentFormatType::formatId() const
 
 void DocumentFormatType::setFormatId(const QString &formatId)
 {
-    m_formatId=formatId;
+    m_formatId = formatId;
 }
 
 QString DocumentFormatType::formatName() const
@@ -589,7 +589,7 @@ QString DocumentFormatType::formatName() const
 
 void DocumentFormatType::setFormatName(const QString &formatName)
 {
-    m_formatName=formatName;
+    m_formatName = formatName;
 }
 
 QString DocumentFormatType::formatDefinition() const
@@ -599,7 +599,7 @@ QString DocumentFormatType::formatDefinition() const
 
 void DocumentFormatType::setFormatDefinition(const QString &formatDefinition)
 {
-    m_formatDefinition=formatDefinition;
+    m_formatDefinition = formatDefinition;
 }
 
 unsigned int DocumentFormatType::regionDelimX() const
@@ -609,7 +609,7 @@ unsigned int DocumentFormatType::regionDelimX() const
 
 void DocumentFormatType::setRegionDelimX(const unsigned int &regionDelimX)
 {
-    m_regionDelimX=regionDelimX;
+    m_regionDelimX = regionDelimX;
 }
 
 unsigned int DocumentFormatType::regionDelimY() const
@@ -619,7 +619,7 @@ unsigned int DocumentFormatType::regionDelimY() const
 
 void DocumentFormatType::setRegionDelimY(const unsigned int &regionDelimY)
 {
-    m_regionDelimY=regionDelimY;
+    m_regionDelimY = regionDelimY;
 }
 
 LengthType *DocumentFormatType::width() const
@@ -629,7 +629,7 @@ LengthType *DocumentFormatType::width() const
 
 void DocumentFormatType::setHeight(LengthType *height)
 {
-    m_height=height;
+    m_height = height;
 }
 
 TechnicalAttributes *DocumentFormatType::technicalAttributes() const
@@ -639,7 +639,7 @@ TechnicalAttributes *DocumentFormatType::technicalAttributes() const
 
 void DocumentFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
-    m_technicalAttributes=technicalAttributes;
+    m_technicalAttributes = technicalAttributes;
 }
 
 /* ------------------------------ FormatType -------------------------- */
@@ -654,7 +654,7 @@ QString FormatType::formatId() const
 
 void FormatType::setFormatId(const QString &formatId)
 {
-    m_formatId=formatId;
+    m_formatId = formatId;
 }
 
 QString FormatType::formatName() const
@@ -664,7 +664,7 @@ QString FormatType::formatName() const
 
 void FormatType::setFormatName(const QString &formatName)
 {
-    m_formatName=formatName;
+    m_formatName = formatName;
 }
 
 QString FormatType::formatDefinition() const
@@ -674,7 +674,7 @@ QString FormatType::formatDefinition() const
 
 void FormatType::setFormatDefinition(const QString &formatDefinition)
 {
-    m_formatDefinition=formatDefinition;
+    m_formatDefinition = formatDefinition;
 }
 
 ElementType *FormatType::format() const
@@ -684,7 +684,7 @@ ElementType *FormatType::format() const
 
 void FormatType::setFormat(ElementType *format)
 {
-    m_format=format;
+    m_format = format;
 }
 
 unsigned int FormatType::regionDelimX() const
@@ -694,7 +694,7 @@ unsigned int FormatType::regionDelimX() const
 
 void FormatType::setRegionDelimX(const unsigned int &regionDelimX)
 {
-    m_regionDelimX=regionDelimX;
+    m_regionDelimX = regionDelimX;
 }
 
 unsigned int FormatType::regionDelimY() const
@@ -704,7 +704,7 @@ unsigned int FormatType::regionDelimY() const
 
 void FormatType::setRegionDelimY(const unsigned int &regionDelimY)
 {
-    m_regionDelimY=regionDelimY;
+    m_regionDelimY = regionDelimY;
 }
 
 LengthType *FormatType::width() const
@@ -714,7 +714,7 @@ LengthType *FormatType::width() const
 
 void FormatType::setWidth(LengthType *width)
 {
-    m_width=width;
+    m_width = width;
 }
 
 LengthType *FormatType::height() const
@@ -724,45 +724,45 @@ LengthType *FormatType::height() const
 
 void FormatType::setHeight(LengthType *height)
 {
-    m_height=height;
+    m_height = height;
 }
 
-QList<TypeGroup *> FormatType::medium() const
+QList<TypeGroup *> &FormatType::medium()
 {
     return m_medium;
 }
 
-QList<TypeGroup *> FormatType::mimeType() const
+QList<TypeGroup *> &FormatType::mimeType()
 {
     return m_mimeType;
 }
 
-QList<ImageFormatType *> FormatType::imageFormat() const
+QList<ImageFormatType *> &FormatType::imageFormat()
 {
     return m_imageFormat;
 }
 
-QList<VideoFormatType *> FormatType::videoFormat() const
+QList<VideoFormatType *> &FormatType::videoFormat()
 {
     return m_videoFormat;
 }
 
-QList<AudioFormatType *> FormatType::audioFormat() const
+QList<AudioFormatType *> &FormatType::audioFormat()
 {
     return m_audioFormat;
 }
 
-QList<TypeGroup *> FormatType::containerFormat() const
+QList<FormatGroup *> &FormatType::containerFormat()
 {
     return m_containerFormat;
 }
 
-QList<DataFormatType *> FormatType::dataFormat() const
+QList<DataFormatType *> &FormatType::dataFormat()
 {
     return m_dataFormat;
 }
 
-QList<SigningFormatType *> FormatType::signingFormat() const
+QList<SigningFormatType *> &FormatType::signingFormat()
 {
     return m_signingFormat;
 }
@@ -774,7 +774,7 @@ TimeType *FormatType::start() const
 
 void FormatType::setStart(TimeType *start)
 {
-    m_start=start;
+    m_start = start;
 }
 
 TimeType *FormatType::end() const
@@ -784,17 +784,17 @@ TimeType *FormatType::end() const
 
 void FormatType::setEnd(TimeType *end)
 {
-    m_end=end;
+    m_end = end;
 }
 
-DurationType *FormatType::duration() const
+TimeType *FormatType::duration() const
 {
     return m_duration;
 }
 
-void FormatType::setDuration(DurationType *duration)
+void FormatType::setDuration(TimeType *duration)
 {
-    m_duration=duration;
+    m_duration = duration;
 }
 
 long FormatType::fileSize() const
@@ -804,7 +804,7 @@ long FormatType::fileSize() const
 
 void FormatType::setFileSize(const long &fileSize)
 {
-    m_fileSize=fileSize;
+    m_fileSize = fileSize;
 }
 
 QString FormatType::fileName() const
@@ -814,7 +814,7 @@ QString FormatType::fileName() const
 
 void FormatType::setFileName(const QString &fileName)
 {
-    m_fileName=fileName;
+    m_fileName = fileName;
 }
 
 TypeGroup *FormatType::locator() const
@@ -824,7 +824,7 @@ TypeGroup *FormatType::locator() const
 
 void FormatType::setLocator(TypeGroup *locator)
 {
-    m_locator=locator;
+    m_locator = locator;
 }
 
 DocumentFormatType *FormatType::documentFormat() const
@@ -834,7 +834,7 @@ DocumentFormatType *FormatType::documentFormat() const
 
 void FormatType::setDocumentFormat(DocumentFormatType *documentFormat)
 {
-    m_documentFormat=documentFormat;
+    m_documentFormat = documentFormat;
 }
 
 TechnicalAttributes *FormatType::technicalAttributes() const
@@ -844,25 +844,25 @@ TechnicalAttributes *FormatType::technicalAttributes() const
 
 void FormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
-    m_technicalAttributes=technicalAttributes;
+    m_technicalAttributes = technicalAttributes;
 }
 
-DateGroupType *FormatType::dateCreated() const
+DateGroup *FormatType::dateCreated() const
 {
     return m_dateCreated;
 }
 
-void FormatType::setDateCreated(DateGroupType *dateCreated)
+void FormatType::setDateCreated(DateGroup *dateCreated)
 {
-    m_dateCreated=dateCreated;
+    m_dateCreated = dateCreated;
 }
 
-DateGroupType *FormatType::dateModified() const
+DateGroup *FormatType::dateModified() const
 {
     return m_dateModified;
 }
 
-void FormatType::setDateModified(DateGroupType *dateModified)
+void FormatType::setDateModified(DateGroup *dateModified)
 {
-    m_dateModified=dateModified;
+    m_dateModified = dateModified;
 }
