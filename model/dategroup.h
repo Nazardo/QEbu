@@ -21,6 +21,8 @@ public:
     void setEndDate(const QDate &endDate);
     QTime endTime() const;
     void setEndTime(const QTime &endTime);
+    QString period() const;
+    void setPeriod(const QString &period);
 
 private:
     qint32 m_startYear;

@@ -34,6 +34,43 @@ class CoreMetadataType
 {
 public:
     CoreMetadataType();
+    QList<TitleType *> &title();
+    QList<AlternativeTitleType *> &alternativeTitle();
+    QList<EntityType *> &creator();
+    QList<SubjectType *> &subject();
+    QList<DescriptionType *> &description();
+    QList<EntityType *> &publisher();
+    QList<EntityType *> &contributor();
+    QList<DateType *> &date();
+    QList<TypeType *> &type();
+    QList<FormatType *> &format();
+    QList<IdentifierType *> &identifier();
+    QList<ElementType *> &source();
+    QList<LanguageType *> &language();
+    QList<RelationType *> &relation();
+    QList<RelationType *> &isVersionOf();
+    QList<RelationType *> &hasVersion();
+    QList<RelationType *> &isReplacedBy();
+    QList<RelationType *> &replaces();
+    QList<RelationType *> &isRequiredBy();
+    QList<RelationType *> &requires();
+    QList<RelationType *> &isPartOf();
+    QList<RelationType *> &hasPart();
+    QList<HasTrackPartType *> &hasTrackPart();
+    QList<RelationType *> &isReferencedBy();
+    QList<RelationType *> &references();
+    QList<RelationType *> &isFormatOf();
+    QList<RelationType *> &hasFormat();
+    QList<RelationType *> &isEpisodeOf();
+    QList<RelationType *> &isMemberOf();
+    QList<CoverageType *> &coverage();
+    QList<RightsType *> &rights();
+    QList<RatingType *> &rating();
+    QList<PartType *> &part();
+    ElementType *version() const;
+    void setVersion(ElementType *version);
+    PublicationHistoryType *publicationHistory() const;
+    void setPubblicationHistory(PublicationHistoryType *pubblicationHistory);
 
 private:
     // Attributes

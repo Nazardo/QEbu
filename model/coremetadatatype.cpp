@@ -679,6 +679,194 @@ void PartType::setPartName(const QString &partName)
     m_partName = partName;
 }
 
+QList<TitleType *> &CoreMetadataType::title()
+{
+    return m_title;
+}
+
+QList<AlternativeTitleType *> &CoreMetadataType::alternativeTitle()
+{
+    return m_alternativeTitle;
+}
+
+QList<EntityType *> &CoreMetadataType::creator()
+{
+    return m_creator;
+}
+
+QList<SubjectType *> &CoreMetadataType::subject()
+{
+    return m_subject;
+}
+
+QList<DescriptionType *> &CoreMetadataType::description()
+{
+    return m_description;
+}
+
+QList<EntityType *> &CoreMetadataType::publisher()
+{
+    return m_publisher;
+}
+
+QList<EntityType *> &CoreMetadataType::contributor()
+{
+    return m_contributor;
+}
+
+QList<DateType *> &CoreMetadataType::date()
+{
+    return m_date;
+}
+
+QList<TypeType *> &CoreMetadataType::type()
+{
+    return m_type;
+}
+
+QList<FormatType *> &CoreMetadataType::format()
+{
+    return m_format;
+}
+
+QList<IdentifierType *> &CoreMetadataType::identifier()
+{
+    return m_identifier;
+}
+
+QList<ElementType *> &CoreMetadataType::source()
+{
+    return m_source;
+}
+
+QList<LanguageType *> &CoreMetadataType::language()
+{
+    return m_language;
+}
+
+QList<RelationType *> &CoreMetadataType::relation()
+{
+    return m_relation;
+}
+
+QList<RelationType *> &CoreMetadataType::isVersionOf()
+{
+    return m_isVersionOf;
+}
+
+QList<RelationType *> &CoreMetadataType::hasVersion()
+{
+    return m_hasVersion;
+}
+
+QList<RelationType *> &CoreMetadataType::isReplacedBy()
+{
+    return m_isReplacedBy;
+}
+
+QList<RelationType *> &CoreMetadataType::replaces()
+{
+    return m_replaces;
+}
+
+QList<RelationType *> &CoreMetadataType::isRequiredBy()
+{
+    return m_isRequiredBy;
+}
+
+QList<RelationType *> &CoreMetadataType::requires()
+{
+    return m_requires;
+}
+
+QList<RelationType *> &CoreMetadataType::isPartOf()
+{
+    return m_isPartOf;
+}
+
+QList<RelationType *> &CoreMetadataType::hasPart()
+{
+    return m_hasPart;
+}
+
+QList<HasTrackPartType *> &CoreMetadataType::hasTrackPart()
+{
+    return m_hasTrackPart;
+}
+
+QList<RelationType *> &CoreMetadataType::isReferencedBy()
+{
+    return m_isReferencedBy;
+}
+
+QList<RelationType *> &CoreMetadataType::references()
+{
+    return m_references;
+}
+
+QList<RelationType *> &CoreMetadataType::isFormatOf()
+{
+    return m_isFormatOf;
+}
+
+QList<RelationType *> &CoreMetadataType::hasFormat()
+{
+    return m_hasFormat;
+}
+
+QList<RelationType *> &CoreMetadataType::isEpisodeOf()
+{
+    return m_isEpisodeOf;
+}
+
+QList<RelationType *> &CoreMetadataType::isMemberOf()
+{
+    return m_isMemberOf;
+}
+
+QList<CoverageType *> &CoreMetadataType::coverage()
+{
+    return m_coverage;
+}
+
+QList<RightsType *> &CoreMetadataType::rights()
+{
+    return m_rights;
+}
+
+QList<RatingType *> &CoreMetadataType::rating()
+{
+    return m_rating;
+}
+
+QList<PartType *> &CoreMetadataType::part()
+{
+    return m_part;
+}
+
+ElementType *CoreMetadataType::version() const
+{
+    return m_version;
+}
+
+void CoreMetadataType::setVersion(ElementType *version)
+{
+    m_version = version;
+}
+
+PublicationHistoryType *CoreMetadataType::publicationHistory() const
+{
+    return m_publicationHistory;
+}
+
+void CoreMetadataType::setPubblicationHistory(PublicationHistoryType *publicationHistory)
+{
+    m_publicationHistory = publicationHistory;
+}
+
+
+
+
 
 
 

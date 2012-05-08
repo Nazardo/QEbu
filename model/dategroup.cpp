@@ -12,6 +12,7 @@ DateGroup::DateGroup(const DateGroup &copy)
     m_endYear = copy.endYear();
     m_endDate = copy.endDate();
     m_endTime = copy.endTime();
+    m_period = copy.period();
 }
 
 qint32 DateGroup::startYear() const
@@ -72,4 +73,14 @@ QTime DateGroup::endTime() const
 void DateGroup::setEndTime(const QTime &endTime)
 {
     m_endTime = endTime;
+}
+
+QString DateGroup::period() const
+{
+    return m_period;
+}
+
+void DateGroup::setPeriod(const QString &period)
+{
+    m_period = period;
 }

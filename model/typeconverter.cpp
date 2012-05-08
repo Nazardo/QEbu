@@ -6,35 +6,35 @@ TypeConverter::TypeConverter()
 
 QDate TypeConverter::stringToDate(QString date)
 {
-    return null;    //TODO
+    return QDate();    //TODO
 }
 
 QString TypeConverter::dateToString(QDate date)
 {
-    return null;    //TODO
+    return QString();    //TODO
 }
 
 QDate TypeConverter::stringToDuration(QString duration)
 {
-    return null;    //TODO
+    return QDate();    //TODO
 }
 
 QString TypeConverter::durationToString(QDate duration)
 {
-    return null;    //TODO
+    return QString();    //TODO
 }
 
 QTime TypeConverter::stringToTime(QString time)
 {
-    return null;    //TODO
+    return QTime();    //TODO
 }
 
 QString TypeConverter::timeToString(QTime time)
 {
-    return null;    //TODO
+    return QString();    //TODO
 }
 
 bool TypeConverter::validateUri(QString uri)
 {
-    return null;    //TODO
+    return 0;    //TODO
 }
