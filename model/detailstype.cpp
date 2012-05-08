@@ -99,12 +99,12 @@ void AddressType::setDeliveryCode(const QString &deliveryCode)
     m_deliveryCode = deliveryCode;
 }
 
-QString AddressType::country() const
+TypeGroup *AddressType::country() const
 {
     return m_country;
 }
 
-void AddressType::setCountry(const QString &country)
+void AddressType::setCountry(TypeGroup *country)
 {
     m_country = country;
 }

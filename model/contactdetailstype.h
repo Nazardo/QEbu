@@ -10,6 +10,7 @@ class EntityType;
 class Name
 {
 public:
+    Name();
     Name(const QString &name);
     Name(const QString &givenName, const QString &familyName);
     bool isComplexName();
@@ -26,7 +27,7 @@ private:
 class ContactDetailsType
 {
 public:
-    ContactDetailsType(const Name &name);
+    ContactDetailsType();
     QString contactId() const;
     void setContactId(const QString &contactId);
     Name name() const;

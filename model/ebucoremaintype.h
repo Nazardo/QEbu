@@ -18,6 +18,7 @@ public:
     void setLang(const QString &lang);
     // Elements
     CoreMetadataType *coreMetadata() const;
+    void setCoreMetadata(CoreMetadataType *coreMetadata);
     EntityType *metadataProvider() const;
     void setMetadataProvider(EntityType *metadataProvider);
 private:

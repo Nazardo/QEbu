@@ -17,14 +17,14 @@ public:
     void setCountyState(const QString &countyState);
     QString deliveryCode() const;
     void setDeliveryCode(const QString &deliveryCode);
-    QString country() const;
-    void setCountry(const QString &country);
+    TypeGroup *country() const;
+    void setCountry(TypeGroup *country);
 private:
     QList<QString> m_lines;
     QString m_townCity;
     QString m_countyState;
     QString m_deliveryCode;
-    QString m_country;
+    TypeGroup *m_country;
 };
 
 class DetailsType : public TypeGroup

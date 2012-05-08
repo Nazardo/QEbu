@@ -30,7 +30,7 @@ void EntityType::setOrganisationDetails(OrganisationDetailsType *organisationDet
     m_organisationDetails = organisationDetails;
 }
 
-QList<RoleType *> &EntityType::roles()
+QList<TypeGroup *> &EntityType::roles()
 {
     return m_roles;
 }

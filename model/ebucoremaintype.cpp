@@ -42,6 +42,11 @@ CoreMetadataType *EbuCoreMainType::coreMetadata() const
     return m_coreMetadata;
 }
 
+void EbuCoreMainType::setCoreMetadata(CoreMetadataType *coreMetadata)
+{
+    m_coreMetadata = coreMetadata;
+}
+
 EntityType *EbuCoreMainType::metadataProvider() const
 {
     return m_metadataProvider;

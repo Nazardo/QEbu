@@ -10,8 +10,6 @@
 class OrganisationDetailsType;
 class ContactDetailsType;
 
-class RoleType : public TypeGroup { };
-
 class EntityType
 {
 public:
@@ -23,14 +21,14 @@ public:
     QList<ContactDetailsType *> &contactDetails();
     OrganisationDetailsType *organisationDetails() const;
     void setOrganisationDetails(OrganisationDetailsType *organisationDetails);
-    QList<RoleType *> &roles();
+    QList<TypeGroup *> &roles();
 private:
     // Attributes
     QString m_entityId; // anyURI
     // Elements
     QList<ContactDetailsType*> m_contactDetails;
     OrganisationDetailsType *m_organisationDetails;
-    QList<RoleType*> m_roles;
+    QList<TypeGroup*> m_roles;
 };
 
 

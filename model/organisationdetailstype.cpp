@@ -26,12 +26,12 @@ void OrganisationDetailsType::setOrganisationName(ElementType *organisationName)
     m_organisationName = organisationName;
 }
 
-ElementType *OrganisationDetailsType::organisationDepartment() const
+OrganisationDepartmentType *OrganisationDetailsType::organisationDepartment() const
 {
     return m_organisationDepartment;
 }
 
-void OrganisationDetailsType::setOrganisationDepartment(ElementType *organisationDepartment)
+void OrganisationDetailsType::setOrganisationDepartment(OrganisationDepartmentType *organisationDepartment)
 {
     m_organisationDepartment = organisationDepartment;
 }
@@ -44,4 +44,18 @@ QList<DetailsType*> &OrganisationDetailsType::details()
 QList<EntityType*> &OrganisationDetailsType::contacts()
 {
     return m_contacts;
+}
+
+OrganisationDepartmentType::OrganisationDepartmentType()
+{
+}
+
+QString OrganisationDepartmentType::departmentId() const
+{
+    return m_departmentId;
+}
+
+void OrganisationDepartmentType::setDepartmentId(const QString &departmentId)
+{
+    m_departmentId = departmentId;
 }

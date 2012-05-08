@@ -1,7 +1,6 @@
 #include "contactdetailstype.h"
 
-ContactDetailsType::ContactDetailsType(const Name &name)
-    : m_name(name)
+ContactDetailsType::ContactDetailsType()
 {
 }
 
@@ -58,6 +57,10 @@ QList<QString>& ContactDetailsType::stageNames()
 QList<EntityType *>& ContactDetailsType::relatedContacts()
 {
     return m_relatedContacts;
+}
+
+Name::Name()
+{
 }
 
 Name::Name(const QString &name)

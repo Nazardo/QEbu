@@ -9,6 +9,7 @@
 #include "detailstype.h"
 
 class EntityType;
+class OrganisationDepartmentType;
 
 class OrganisationDetailsType
 {
@@ -20,16 +21,26 @@ public:
     // Elements
     ElementType *organisationName() const;
     void setOrganisationName(ElementType *organisationName);
-    ElementType *organisationDepartment() const;
-    void setOrganisationDepartment(ElementType *organisationDepartment);
+    OrganisationDepartmentType *organisationDepartment() const;
+    void setOrganisationDepartment(OrganisationDepartmentType *organisationDepartment);
     QList<DetailsType*> &details();
     QList<EntityType*> &contacts();
 private:
     QString m_organisationId; // anyURI
     ElementType *m_organisationName;
-    ElementType *m_organisationDepartment;
+    OrganisationDepartmentType *m_organisationDepartment;
     QList<DetailsType*> m_details;
     QList<EntityType*> m_contacts;
+};
+
+class OrganisationDepartmentType : public ElementType
+{
+public:
+    OrganisationDepartmentType();
+    QString departmentId() const;
+    void setDepartmentId(const QString &departmentId);
+private:
+    QString m_departmentId;
 };
 
 #endif // ORGANIZATIONDETAILSTYPE_H
