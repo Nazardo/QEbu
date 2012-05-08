@@ -13,7 +13,8 @@ HEADERS += \
     model/technicalattributes.h \
     model/formattype.h \
     model/lengthtype.h \
-    model/timetype.h
+    model/timetype.h \
+    model/typeconverter.h
 
 SOURCES += \
     model/ebucoremaintype.cpp \
@@ -30,4 +31,5 @@ SOURCES += \
     model/technicalattributes.cpp \
     model/formattype.cpp \
     model/lengthtype.cpp \
-    model/timetype.cpp
+    model/timetype.cpp \
+    model/typeconverter.cpp
