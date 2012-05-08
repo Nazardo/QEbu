@@ -4,12 +4,12 @@ CoreMetadataType::CoreMetadataType()
 {
 }
 
-QDate TitleType::attributionDate() const
+QDateTime TitleType::attributionDate() const
 {
     return m_attributionDate;
 }
 
-void TitleType::setAttributionDate(const QDate &attributionDate)
+void TitleType::setAttributionDate(const QDateTime &attributionDate)
 {
     m_attributionDate = attributionDate;
 }
@@ -574,12 +574,12 @@ QList<ContactDetailsType *> &RightsType::contactDetails()
     return m_contactDetails;
 }
 
-QDate PublicationType::date() const
+QDateTime PublicationType::date() const
 {
     return m_date;
 }
 
-void PublicationType::setDate(const QDate &date)
+void PublicationType::setDate(const QDateTime &date)
 {
     m_date = date;
 }

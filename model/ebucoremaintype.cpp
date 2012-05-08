@@ -7,12 +7,12 @@ EbuCoreMainType::EbuCoreMainType()
     m_metadataProvider = 0;
 }
 
-QDate EbuCoreMainType::dateLastModified() const
+QDateTime EbuCoreMainType::dateLastModified() const
 {
     return m_dateLastModified;
 }
 
-void EbuCoreMainType::setDateLastModified(const QDate &dateLastModified)
+void EbuCoreMainType::setDateLastModified(const QDateTime &dateLastModified)
 {
     m_dateLastModified = dateLastModified;
 }

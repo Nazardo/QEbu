@@ -1,7 +1,7 @@
 #ifndef EBUCOREMAINTYPE_H
 #define EBUCOREMAINTYPE_H
 
-#include <QDate>
+#include <QDateTime>
 #include "coremetadatatype.h"
 #include "entitytype.h"
 
@@ -10,8 +10,8 @@ class EbuCoreMainType
 public:
     EbuCoreMainType();
     // Attributes
-    QDate dateLastModified() const;
-    void setDateLastModified(const QDate &dateLastModified);
+    QDateTime dateLastModified() const;
+    void setDateLastModified(const QDateTime &dateLastModified);
     QString documentId() const;
     void setDocumentId(const QString &documentId);
     QString lang() const;
@@ -23,7 +23,7 @@ public:
     void setMetadataProvider(EntityType *metadataProvider);
 private:
     // Attributes
-    QDate m_dateLastModified;
+    QDateTime m_dateLastModified;
     QString m_documentId;
     QString m_lang;
     // Elements

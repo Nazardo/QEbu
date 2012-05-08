@@ -1,24 +1,29 @@
 #ifndef TYPECONVERTER_H
 #define TYPECONVERTER_H
 
-#include <QDate>
+#include <QDateTime>
+#include <QUrl>
 
 class TypeConverter
 {
 public:
-    static QDate stringToDate(QString date);
-    static QString dateToString(QDate date);
+    static QDateTime stringToDate(const QString &date);
+    static QString dateToString(const QDateTime &date);
 
-    static QDate stringToDuration(QString duration);
-    static QString durationToString(QDate duration);
+    static QDateTime stringToDuration(const QString &duration);
+    static QString durationToString(const QDateTime &duration);
 
-    static QTime stringToTime(QString time);
-    static QString timeToString(QTime time);
+    static QTime stringToTime(const QString &time);
+    static QString timeToString(const QTime &time);
 
-    static bool validateUri(QString uri);
+    static bool validateUri(const QString &uri);
+
+    static QString errorMsg();
 
 private:
     TypeConverter();
+
+    static QString m_errorMsg;
 };
 
 #endif // TYPECONVERTER_H

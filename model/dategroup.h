@@ -1,7 +1,7 @@
 #ifndef DATEGROUP_H
 #define DATEGROUP_H
 
-#include <QDate>
+#include <QDateTime>
 #include <QTime>
 
 class DateGroup
@@ -11,14 +11,14 @@ public:
     DateGroup(const DateGroup &copy);
     qint32 startYear() const;
     void setStartYear(const qint32 startYear);
-    QDate startDate() const;
-    void setStartDate(const QDate &startDate);
+    QDateTime startDate() const;
+    void setStartDate(const QDateTime &startDate);
     QTime startTime() const;
     void setStartTime(const QTime &startTime);
     qint32 endYear() const;
     void setEndYear(const qint32 endYear);
-    QDate endDate() const;
-    void setEndDate(const QDate &endDate);
+    QDateTime endDate() const;
+    void setEndDate(const QDateTime &endDate);
     QTime endTime() const;
     void setEndTime(const QTime &endTime);
     QString period() const;
@@ -26,10 +26,10 @@ public:
 
 private:
     qint32 m_startYear;
-    QDate m_startDate;
+    QDateTime m_startDate;
     QTime m_startTime;
     qint32 m_endYear;
-    QDate m_endDate;
+    QDateTime m_endDate;
     QTime m_endTime;
     QString m_period;
 };

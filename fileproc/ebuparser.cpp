@@ -29,7 +29,7 @@ bool EbuParser::parseFromFile(QFile &file)
     m_root = new EbuCoreMainType();
 
     // Get attributes.
-    QDate dateLast = TypeConverter::stringToDate(root.attribute("dateLastModified"));
+    QDateTime dateLast = TypeConverter::stringToDate(root.attribute("dateLastModified"));
     if (dateLast.isValid())
         m_root->setDateLastModified(dateLast);
     QString documentId = root.attribute("documentId");
@@ -788,10 +788,10 @@ void EbuParser::parseDateGroup(const QDomElement &element, DateGroup* const date
     qint32 endYear = element.attribute("endYear").toInt(&ok, 10);
     if(ok)
         dateGroup->setEndYear(endYear);
-    QDate startDate = TypeConverter::stringToDate(element.attribute("startDate"));
+    QDateTime startDate = TypeConverter::stringToDate(element.attribute("startDate"));
     if(startDate.isValid())
         dateGroup->setStartDate(startDate);
-    QDate endDate = TypeConverter::stringToDate(element.attribute("endDate"));
+    QDateTime endDate = TypeConverter::stringToDate(element.attribute("endDate"));
     if(endDate.isValid())
         dateGroup->setEndDate(endDate);
     QTime startTime = TypeConverter::stringToTime(element.attribute("startTime"));
@@ -917,7 +917,7 @@ TitleType *EbuParser::parseTitleType(const QDomElement &element)
     QString note = element.attribute("note");
     if (!note.isEmpty())
         title->setNote(note);
-    QDate attributionDate = TypeConverter::stringToDate(element.attribute("attributiondate"));
+    QDateTime attributionDate = TypeConverter::stringToDate(element.attribute("attributiondate"));
     if (attributionDate.isValid())
         title->setAttributionDate(attributionDate);
 
@@ -961,5 +961,77 @@ AlternativeTitleType *EbuParser::parseAlternativeTitleType(const QDomElement &el
         alternativeTitle->setTitle(title);
     }
     return alternativeTitle;
+}
+
+SubjectType *EbuParser::parseSubjectType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+DateType *EbuParser::parseDateType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+TypeType *EbuParser::parseTypeType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+FormatType *EbuParser::parseFormatType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+LanguageType *EbuParser::parseLanguageType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+HasTrackPartType *EbuParser::parseHasTrackPartType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+CoverageType *EbuParser::parseCoverageType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+RightsType *EbuParser::parseRightsType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+PublicationHistoryType *EbuParser::parsePublicationHistoryType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+RatingType *EbuParser::parseRatingType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+PartType *EbuParser::parsePartType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
+}
+
+DescriptionType *EbuParser::parseDescriptionType(const QDomElement &element)
+{
+    /// @todo Implement method.
+    return 0;
 }
 

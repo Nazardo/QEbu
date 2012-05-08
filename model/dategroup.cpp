@@ -25,12 +25,12 @@ void DateGroup::setStartYear(const qint32 startYear)
     m_startYear = startYear;
 }
 
-QDate DateGroup::startDate() const
+QDateTime DateGroup::startDate() const
 {
     return m_startDate;
 }
 
-void DateGroup::setStartDate(const QDate &startDate)
+void DateGroup::setStartDate(const QDateTime &startDate)
 {
     m_startDate = startDate;
 }
@@ -55,12 +55,12 @@ void DateGroup::setEndYear(const qint32 endYear)
     m_endYear = endYear;
 }
 
-QDate DateGroup::endDate() const
+QDateTime DateGroup::endDate() const
 {
     return m_endDate;
 }
 
-void DateGroup::setEndDate(const QDate &endDate)
+void DateGroup::setEndDate(const QDateTime &endDate)
 {
     m_endDate = endDate;
 }

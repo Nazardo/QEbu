@@ -2,7 +2,7 @@
 #define COREMETADATATYPE_H
 
 #include <QList>
-#include <QDate>
+#include <QDateTime>
 #include <QString>
 #include "entitytype.h"
 #include "elementtype.h"
@@ -114,14 +114,14 @@ private:
 class TitleType
 {
 public:
-    QDate attributionDate() const;
-    void setAttributionDate (const QDate &attributionDate);
+    QDateTime attributionDate() const;
+    void setAttributionDate (const QDateTime &attributionDate);
     QString note() const;
     void setNote(const QString &note);
     ElementType *title() const;
     void setTitle(ElementType *title);
 private:
-    QDate m_attributionDate;
+    QDateTime m_attributionDate;
     QString m_note;
     ElementType *m_title;
 };
@@ -383,14 +383,14 @@ private:
 class PublicationType
 {
 public:
-    QDate date() const;
-    void setDate (const QDate &date);
+    QDateTime date() const;
+    void setDate (const QDateTime &date);
     QTime time() const;
     void setTime (const QTime &time);
     FormatType *channel() const;
     void setChannel(FormatType *channel);
 private:
-    QDate m_date;
+    QDateTime m_date;
     QTime m_time;
     FormatType *m_channel;
 };
