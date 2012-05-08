@@ -5,8 +5,9 @@
 #-------------------------------------------------
 
 include(model/model.pri)
+include(fileproc/fileproc.pri)
 
-QT       += core gui
+QT       += core gui xml
 
 TARGET = QEbu
 TEMPLATE = app
