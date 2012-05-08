@@ -7,70 +7,63 @@ TypeConverter::TypeConverter()
 {
 }
 
-QDateTime *TypeConverter::stringToDate(const QString &date)
+QDateTime TypeConverter::stringToDate(const QString &date)
 {
     // Schema date format: '-'? yyyy '-' mm '-' dd zzzzzz?
 
-    QDateTime *dateTime;
 
-    if(date[0] == '-'){
+    if (date[0] == '-') {
         m_errorMsg = "B.C. years are considered invalid";
-        return 0;
+        return QDateTime();
     }
 
-    if(date.length() < 10){
+    if (date.length() < 10) {
         m_errorMsg = "Invalid date length (considering a 4 digits year)";
-        return 0;
+        return QDateTime();
     }
 
-    dateTime=new QDateTime(QDateTime::fromString(date.left(10),"yyyy-MM-dd"));
+    QDateTime dateTime(QDateTime::fromString(date.left(10),"yyyy-MM-dd"));
 
-    if(date.length() == 10){
+    if (date.length() == 10) {
         // Unspecified timezone
-        dateTime->setTimeSpec(Qt::LocalTime);
-
-    }else{
+        dateTime.setTimeSpec(Qt::LocalTime);
+    } else {
         // Timezone format: (('+' | '-') hh ':' mm) | 'Z'
         int hours;
         int minutes;
 
         if(date[10] == 'Z'){
             // UTC time
-            dateTime->setTimeSpec(Qt::UTC);
-            hours=0;
-            minutes=0;
-
-        }else{
+            dateTime.setTimeSpec(Qt::UTC);
+            hours = 0;
+            minutes = 0;
+        } else {
             // Offset from the UTC time
-            dateTime->setTimeSpec(Qt::OffsetFromUTC);
-            hours=date.mid(10,3).toInt();
-            minutes=date.mid(14,2).toInt();
-
-            if(date[13] != ':'){
+            dateTime.setTimeSpec(Qt::OffsetFromUTC);
+            hours = date.mid(10,3).toInt();
+            minutes = date.mid(14,2).toInt();
+            if (date[13] != ':') {
                 m_errorMsg = "Invalid hours/minutes separator: " + date[13].toAscii();
-                return 0;
+                return QDateTime();
             }
-
-            if(hours<-14    ||  hours>14){
+            if (hours < -14 || hours > 14) {
                 m_errorMsg = "Invalid hours value: "+ QString::number(hours);
-                return 0;
+                return QDateTime();
             }
-
-            if(minutes<0    ||  minutes>59){
+            if (minutes<0 || minutes>59) {
                 m_errorMsg = "Invalid minutes value: "+ QString::number(minutes);
-                return 0;
+                return QDateTime();
             }
-
-            if((hours==14    ||  hours==-14)    &&  minutes!=0){
+            if ((hours == 14 || hours == -14) && minutes != 0) {
                 m_errorMsg = "Invalid hours/minutes value: " + QString::number(hours) + "/" + QString::number(minutes);
-                return 0;
+                return QDateTime();
             }
         }
 
         //qDebug() <<"ora:" + QString::number(hours) + " minuti: " + QString::number(minutes);
         //if(dateTime->isValid()==false) qDebug() <<"dateTime is invalid!";
 
-        dateTime->setUtcOffset( (hours * 60 + minutes) * 60);
+        dateTime.setUtcOffset( (hours * 60 + minutes) * 60);
 
         //if(dateTime->isValid()==false) qDebug() <<"dateTime is invalid!";
     }
@@ -78,64 +71,62 @@ QDateTime *TypeConverter::stringToDate(const QString &date)
     return dateTime;
 }
 
-QString *TypeConverter::dateToString(const QDateTime &date)
+QString TypeConverter::dateToString(const QDateTime &date)
 {
-    QString *d=new QString(date.toString("yyyy-MM-dd"));
-    int utcOffset=date.utcOffset();
+    QString d(date.toString("yyyy-MM-dd"));
+    int utcOffset = date.utcOffset();
 
-    if(date.timeSpec() == Qt::UTC   &&  utcOffset == 0){
-        d->append("Z");
-    }else{
-        if(date.timeSpec() == Qt::OffsetFromUTC){
-            if(utcOffset>0){
-                d->append("+");
-            }else{
-                d->append("-");
+    if (date.timeSpec() == Qt::UTC && utcOffset == 0) {
+        d.append("Z");
+    } else {
+        if (date.timeSpec() == Qt::OffsetFromUTC){
+            if (utcOffset > 0) {
+                d.append("+");
+            } else {
+                d.append("-");
                 utcOffset*=-1;
             }
+            utcOffset /= 60;
+            int hours = utcOffset / 60;
+            int minutes = utcOffset % 60;
 
-            utcOffset/=60;
-            int hours=utcOffset/60;
-            int minutes=utcOffset%60;
-
-            if(hours<10  &&  hours>-10)
-                d->append("0");
-            d->append(QString::number(hours) + ":");
-            if(minutes<10)
-                d->append("0");
-            d->append(QString::number(minutes));
+            if (hours < 10 && hours > -10)
+                d.append("0");
+            d.append(QString::number(hours) + ":");
+            if (minutes < 10)
+                d.append("0");
+            d.append(QString::number(minutes));
         }
     }
-
     return d;
 }
 
-QDateTime *TypeConverter::stringToDuration(const QString &duration)
+QDateTime TypeConverter::stringToDuration(const QString &duration)
 {
-    return 0;    //TODO
+    return QDateTime(); //TODO
 }
 
-QString *TypeConverter::durationToString(const QDateTime &duration)
+QString TypeConverter::durationToString(const QDateTime &duration)
 {
-    return 0;    //TODO
+    return QString(); //TODO
 }
 
-QTime *TypeConverter::stringToTime(const QString &time)
+QTime TypeConverter::stringToTime(const QString &time)
 {
-    return 0;    //TODO
+    return QTime(); //TODO
 }
 
-QString *TypeConverter::timeToString(const QTime &time)
+QString TypeConverter::timeToString(const QTime &time)
 {
-    return 0;    //TODO
+    return QString(); //TODO
 }
 
 bool TypeConverter::validateUri(const QString &uri)
 {
-    return QUrl(uri,QUrl::StrictMode).isValid();
+    return QUrl(uri, QUrl::StrictMode).isValid();
 }
 
-QString *TypeConverter::errorMsg()
+QString TypeConverter::errorMsg()
 {
-    return &m_errorMsg;
+    return m_errorMsg;
 }
