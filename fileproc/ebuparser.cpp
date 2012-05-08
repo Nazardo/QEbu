@@ -965,27 +965,445 @@ AlternativeTitleType *EbuParser::parseAlternativeTitleType(const QDomElement &el
 
 SubjectType *EbuParser::parseSubjectType(const QDomElement &element)
 {
-    /// @todo Implement method.
-    return 0;
+    if (element.isNull()) {
+         m_errorMsg = "SubjectType is null";
+         return 0;
+     }
+     SubjectType *subject = new SubjectType();
+
+     // Get attributes.
+     parseTypeGroup(element, subject);
+     QString note = element.attribute("note");
+     if (!note.isEmpty())
+         subject->setNote(note);
+
+     // Get elements.
+     QDomElement el = element.elementsByTagName("ebucore:subject").at(0).toElement();
+     if (!el.isNull()) {
+         ElementType *subjectEl = parseElementType(el);
+         if (!subjectEl) {
+             delete subject;
+             return 0;
+         }
+         subject->setSubject(subjectEl);
+     }
+
+     el = element.elementsByTagName("ebucore:attributor").at(0).toElement();
+     if (!el.isNull()) {
+         EntityType *attributor = parseEntityType(el);
+         if (!attributor) {
+             delete subject;
+             return 0;
+         }
+         subject->setAttributor(attributor);
+     }
+
+     el = element.elementsByTagName("ebucore:subjectCode").at(0).toElement();
+     if (!el.isNull())
+         subject->setSubjectCode(el.text());
+
+     el = element.elementsByTagName("ebucore:subjectDefinition").at(0).toElement();
+     if (!el.isNull())
+         subject->setSubjectDefinition(el.text());
+
+     return subject;
 }
 
 DateType *EbuParser::parseDateType(const QDomElement &element)
 {
-    /// @todo Implement method.
-    return 0;
+    if (element.isNull()) {
+         m_errorMsg = "DateType is null";
+         return 0;
+     }
+
+     DateType *date = new DateType();
+
+     // Get elements.
+     QDomNodeList el_list = element.elementsByTagName("ebucore:date");
+     for (int i=0; i < el_list.size(); ++i) {
+         ElementType *dateEl = parseElementType(el_list.at(i).toElement());
+         if (!dateEl) {
+             delete date;
+             return 0;
+         }
+         date->date().append(dateEl);
+     }
+
+     QDomElement el = element.elementsByTagName("ebucore:created").at(0).toElement();
+     if (!el.isNull()) {
+         parseDateGroup(el, date->created());
+     }
+
+     el = element.elementsByTagName("ebucore:issued").at(0).toElement();
+     if (!el.isNull()) {
+         parseDateGroup(el, date->issued());
+     }
+
+     el = element.elementsByTagName("ebucore:modified").at(0).toElement();
+     if (!el.isNull()) {
+         parseDateGroup(el, date->modified());
+     }
+
+     el = element.elementsByTagName("ebucore:digitised").at(0).toElement();
+     if (!el.isNull()) {
+         parseDateGroup(el, date->digitised());
+     }
+
+     el_list = element.elementsByTagName("ebucore:alternative");
+     for (int i=0; i < el_list.size(); ++i) {
+         AlternativeType *alternative = parseAlternativeType(el_list.at(i).toElement());
+         if (!alternative) {
+             delete date;
+             return 0;
+         }
+         date->alternative().append(alternative);
+     }
+     return 0;
+}
+
+AlternativeType *EbuParser::parseAlternativeType(const QDomElement &element)
+{
+    if (element.isNull()) {
+        m_errorMsg = "AlternativeType is null";
+        return 0;
+    }
+
+    AlternativeType *alternative = new AlternativeType();
+
+    // Get attributes.
+    parseDateGroup(element, alternative);
+    parseTypeGroup(element, alternative);
+
+    return alternative;
 }
 
 TypeType *EbuParser::parseTypeType(const QDomElement &element)
 {
-    /// @todo Implement method.
-    return 0;
+    if (element.isNull()) {
+         m_errorMsg = "TypeType is null";
+         return 0;
+     }
+
+     TypeType *type = new TypeType();
+
+     // Get attributes.
+     QString note = element.attribute("note");
+     if (!note.isEmpty())
+         type->setNote(note);
+
+     // Get elements.
+     QDomNodeList el_list = element.elementsByTagName("ebucore:type");
+     for (int i=0; i < el_list.size(); ++i) {
+         ElementType *typeEl = parseElementType(el_list.at(i).toElement());
+         if (!typeEl) {
+             delete type;
+             return 0;
+         }
+         type->type().append(typeEl);
+     }
+
+     el_list = element.elementsByTagName("ebucore:genre");
+     for (int i=0; i < el_list.size(); ++i) {
+         QDomElement el = el_list.at(i).toElement();
+         if(el.isNull())
+         {
+             delete type;
+             return 0;
+         }
+         type->genre().append(new TypeGroup());
+         parseTypeGroup(el, type->genre().at(i));
+     }
+
+     el_list = element.elementsByTagName("ebucore:targetAudience");
+     for (int i=0; i < el_list.size(); ++i) {
+         QDomElement el = el_list.at(i).toElement();
+         if(el.isNull())
+         {
+             delete type;
+             return 0;
+         }
+         type->targetAudience().append(new TypeGroup());
+         parseTypeGroup(el, type->targetAudience().at(i));
+     }
+
+     el_list = element.elementsByTagName("ebucore:objectType");
+     for (int i=0; i < el_list.size(); ++i) {
+         QDomElement el = el_list.at(i).toElement();
+         if(el.isNull())
+         {
+             delete type;
+             return 0;
+         }
+         type->objectType().append(new TypeGroup());
+         parseTypeGroup(el, type->objectType().at(i));
+     }
+
+     return type;
 }
 
 FormatType *EbuParser::parseFormatType(const QDomElement &element)
 {
-    /// @todo Implement method.
+    if (element.isNull()) {
+         m_errorMsg = "FormatType is null";
+         return 0;
+     }
+
+     FormatType *format = new FormatType();
+
+     // Get attributes.
+     QString formatId = element.attribute("formatId");
+     if (!formatId.isEmpty())
+         format->setFormatId(formatId);
+     QString formatName = element.attribute("formatName");
+     if (!formatName.isEmpty())
+         format->setFormatName(formatName);
+     QString formatDefinition = element.attribute("formatDefinition");
+     if (!formatDefinition.isEmpty())
+         format->setFormatDefinition(formatDefinition);
+
+     // Get elements.
+     QDomElement el = element.elementsByTagName("ebucore:format").at(0).toElement();
+     if (!el.isNull()) {
+         ElementType *formatEl = parseElementType(el);
+         if (!formatEl) {
+             delete format;
+             return 0;
+         }
+         format->setFormat(formatEl);
+     }
+
+     bool ok;
+     el = element.elementsByTagName("ebucore:regionDelimX").at(0).toElement();
+     qint32 regionDelimX = el.text().toInt(&ok, 10);
+     if(ok)
+         format->setRegionDelimX(regionDelimX);
+     el = element.elementsByTagName("ebucore:regionDelimY").at(0).toElement();
+     qint32 regionDelimY = el.text().toInt(&ok, 10);
+     if(ok)
+         format->setRegionDelimY(regionDelimY);
+
+     el = element.elementsByTagName("ebucore:width").at(0).toElement();
+     if (!el.isNull()) {
+         LengthType *width = parseLengthType(el);
+         if (!width) {
+             delete format;
+             return 0;
+         }
+         format->setWidth(width);
+     }
+     el = element.elementsByTagName("ebucore:width").at(0).toElement();
+     if (!el.isNull()) {
+         LengthType *length = parseLengthType(el);
+         if (!length) {
+             delete format;
+             return 0;
+         }
+         format->setWidth(length);
+     }
+     QDomNodeList el_list = element.elementsByTagName("ebucore:mediumType");
+     for (int i=0; i < el_list.size(); ++i) {
+         QDomElement el = el_list.at(i).toElement();
+         if(el.isNull())
+         {
+             delete format;
+             return 0;
+         }
+         format->medium().append(new TypeGroup());
+         parseTypeGroup(el, format->medium().at(i));
+     }
+     el_list = element.elementsByTagName("ebucore:mimeType");
+     for (int i=0; i < el_list.size(); ++i) {
+         QDomElement el = el_list.at(i).toElement();
+         if(el.isNull())
+         {
+             delete format;
+             return 0;
+         }
+         format->mimeType().append(new TypeGroup());
+         parseTypeGroup(el, format->mimeType().at(i));
+     }
+     el_list = element.elementsByTagName("ebucore:imageFormat");
+     for (int i=0; i < el_list.size(); ++i) {
+         ImageFormatType *imageFormat = parseImageFormatType(el_list.at(i).toElement());
+         if (!imageFormat) {
+             delete format;
+             return 0;
+         }
+         format->imageFormat().append(imageFormat);
+     }
+     el_list = element.elementsByTagName("ebucore:videoFormat");
+     for (int i=0; i < el_list.size(); ++i) {
+         VideoFormatType *videoFormat = parseVideoFormatType(el_list.at(i).toElement());
+         if (!videoFormat) {
+             delete format;
+             return 0;
+         }
+         format->videoFormat().append(videoFormat);
+     }
+     el_list = element.elementsByTagName("ebucore:audioFormat");
+     for (int i=0; i < el_list.size(); ++i) {
+         AudioFormatType *audioFormat = parseAudioFormatType(el_list.at(i).toElement());
+         if (!audioFormat) {
+             delete format;
+             return 0;
+         }
+         format->audioFormat().append(audioFormat);
+     }
+     el_list = element.elementsByTagName("ebucore:dataFormat");
+     for (int i=0; i < el_list.size(); ++i) {
+         DataFormatType *dataFormat = parseDataFormatType(el_list.at(i).toElement());
+         if (!dataFormat) {
+             delete format;
+             return 0;
+         }
+         format->dataFormat().append(dataFormat);
+     }
+     el = element.elementsByTagName("ebucore:containerFormat").at(0).toElement();
+     for (int i=0; i < el_list.size(); ++i) {
+         QDomElement el = el_list.at(i).toElement();
+         if(el.isNull())
+         {
+             delete format;
+             return 0;
+         }
+         format->containerFormat().append(new FormatGroup());
+         parseFormatGroup(el, format->containerFormat().at(i));
+     }
+     el_list = element.elementsByTagName("ebucore:signingFormat");
+     for (int i=0; i < el_list.size(); ++i) {
+         SigningFormatType *signingFormat = parseSigningFormatType(el_list.at(i).toElement());
+         if (!signingFormat) {
+             delete format;
+             return 0;
+         }
+         format->signingFormat().append(signingFormat);
+     }
+     return format;
+}
+
+
+LengthType *EbuParser::parseLengthType(const QDomElement &element)
+{
+    if (element.isNull()) {
+        m_errorMsg = "LengthType is null";
+        return 0;
+    }
+    LengthType *length = new LengthType();
+
+    // Get attributes.
+    QString unit = element.attribute("unit");
+    if (!unit.isEmpty())
+        length->setUnit(unit);
+
+    bool ok;
+    qint32 value = element.text().toInt(&ok, 10);
+    if(ok)
+        length->setValue(value);
+
+    return length;
+}
+
+SigningFormatType *EbuParser::parseSigningFormatType(const QDomElement &element)
+{
+    if (element.isNull()) {
+        m_errorMsg = "SigningFormatType is null";
+        return 0;
+    }
+    SigningFormatType *signingFormat = new SigningFormatType();
+
+    // Get attributes.
+    parseFormatGroup(element, signingFormat);
+    parseTypeGroup(element, signingFormat);
+
+    QString trackId = element.attribute("trackId");
+    if (!trackId.isEmpty())
+        signingFormat->setTrackId(trackId);
+    QString trackName = element.attribute("trackName");
+    if (!trackName.isEmpty())
+        signingFormat->setTrackName(trackName);
+    QString language = element.attribute("language");
+    if (!language.isEmpty())
+        signingFormat->setLanguage(language);
+    QString signingSourceUri = element.attribute("signingSourceUri");
+    if (!signingSourceUri.isEmpty())
+        signingFormat->setSigningSourceUri(signingSourceUri);
+    QString signingFormatId = element.attribute("signingFormatId");
+    if (!signingFormatId.isEmpty())
+        signingFormat->setSigningFormatId(signingFormatId);
+    QString signingFormatName = element.attribute("signingFormatName");
+    if (!signingFormatName.isEmpty())
+        signingFormat->setSigningFormatName(signingFormatName);
+    QString signingFormatDefinition = element.attribute("signingFormatDefinition");
+    if (!signingFormatDefinition.isEmpty())
+        signingFormat->setSigningFormatDefinition(signingFormatDefinition);
+
+    return signingFormat;
+}
+
+
+VideoFormatType *EbuParser::parseVideoFormatType(const QDomElement &element)
+{
+    if (element.isNull()) {
+        m_errorMsg = "VideoFormatType is null";
+        return 0;
+    }
+    VideoFormatType *videoFormat = new VideoFormatType();
+
+    // Get attributes.
+
+    // Get element.
+
+    return videoFormat;
+}
+
+ImageFormatType *EbuParser::parseImageFormatType(const QDomElement &element)
+{
+    if (element.isNull()) {
+        m_errorMsg = "ImageFormatType is null";
+        return 0;
+    }
+    // CANNOT RESOLVE new ImageFormatType()
+    ImageFormatType *imageFormat;// = new ImageFormatType();
+
+    // Get attributes.
+
+    // Get element.
+
+    return imageFormat;
+
     return 0;
 }
+
+DataFormatType *EbuParser::parseDataFormatType(const QDomElement &element)
+{
+    if (element.isNull()) {
+        m_errorMsg = "DataeFormatType is null";
+        return 0;
+    }
+    DataFormatType *dataFormat = new DataFormatType();
+
+    // Get attributes.
+
+    // Get element.
+
+    return dataFormat;
+}
+
+AudioFormatType *EbuParser::parseAudioFormatType(const QDomElement &element)
+{
+    if (element.isNull()) {
+        m_errorMsg = "AudioFormatType is null";
+        return 0;
+    }
+    AudioFormatType *audioFormat = new AudioFormatType();
+
+    // Get attributes.
+
+    // Get element.
+
+    return audioFormat;
+}
+
 
 LanguageType *EbuParser::parseLanguageType(const QDomElement &element)
 {
@@ -1031,7 +1449,29 @@ PartType *EbuParser::parsePartType(const QDomElement &element)
 
 DescriptionType *EbuParser::parseDescriptionType(const QDomElement &element)
 {
-    /// @todo Implement method.
-    return 0;
+    if (element.isNull()) {
+         m_errorMsg = "DescriptionType is null";
+         return 0;
+     }
+     DescriptionType *description = new DescriptionType();
+
+     // Get attributes.
+     parseTypeGroup(element, description);
+     QString note = element.attribute("note");
+     if (!note.isEmpty())
+         description->setNote(note);
+
+     // Get elements.
+     QDomElement el = element.elementsByTagName("ebucore:description").at(0).toElement();
+     if (!el.isNull()) {
+         ElementType *descriptionEl = parseElementType(el);
+         if (!descriptionEl) {
+             delete description;
+             return 0;
+         }
+         description->setDescription(descriptionEl);
+     }
+
+     return description;
 }
 

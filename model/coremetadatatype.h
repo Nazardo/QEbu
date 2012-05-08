@@ -185,15 +185,14 @@ public:
     void setModified (DateGroup *modified);
     DateGroup *digitised() const;
     void setDigitised (DateGroup *digitised);
-    AlternativeType *alternative () const;
-    void setAlternative (AlternativeType *alternative);
+    QList<AlternativeType *> &alternative();
 private:
     QList<ElementType *> m_date;
     DateGroup *m_created;
     DateGroup *m_issued;
     DateGroup *m_modified;
     DateGroup *m_digitised;
-    AlternativeType *m_alternative;
+    QList<AlternativeType *> m_alternative;
 };
 
 class TypeType

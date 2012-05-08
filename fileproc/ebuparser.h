@@ -12,8 +12,11 @@ public:
     EbuParser();
     bool parseFromFile(QFile &file);
     QString errorMsg();
+
+
 private:
     CoreMetadataType *parseCoreMetadataType(const QDomElement &element);
+    AlternativeType *parseAlternativeType(const QDomElement &element);
     EntityType *parseEntityType(const QDomElement &element);
     ContactDetailsType *parseContactDetailsType(const QDomElement &element);
     DetailsType *parseDetailsType(const QDomElement &element);
@@ -22,6 +25,7 @@ private:
     ElementType *parseElementType(const QDomElement &element);
     RelationType *parseRelationType(const QDomElement &element);
     IdentifierType *parseIdentifierType(const QDomElement &element);
+    SigningFormatType *parseSigningFormatType(const QDomElement &element);
     TitleType *parseTitleType(const QDomElement &element);
     AlternativeTitleType *parseAlternativeTitleType(const QDomElement &element);
     SubjectType *parseSubjectType(const QDomElement &element);
@@ -36,6 +40,11 @@ private:
     RatingType *parseRatingType(const QDomElement &element);
     PartType *parsePartType(const QDomElement &element);
     DescriptionType *parseDescriptionType(const QDomElement &element);
+    LengthType *parseLengthType(const QDomElement &element);
+    AudioFormatType *parseAudioFormatType(const QDomElement &element);
+    DataFormatType *parseDataFormatType(const QDomElement &element);
+    ImageFormatType *parseImageFormatType(const QDomElement &element);
+    VideoFormatType *parseVideoFormatType(const QDomElement &element);
     void parseTypeGroup(const QDomElement &element, TypeGroup* const typeGroup);
     void parseStatusGroup(const QDomElement &element, StatusGroup* const statusGroup);
     void parseFormatGroup(const QDomElement &element, FormatGroup* const formatGroup);

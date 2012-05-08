@@ -169,14 +169,9 @@ void DateType::setDigitised(DateGroup *digitised)
     m_digitised = digitised;
 }
 
-AlternativeType *DateType::alternative() const
+QList<AlternativeType *> &DateType::alternative()
 {
     return m_alternative;
-}
-
-void DateType::setAlternative(AlternativeType *alternative)
-{
-    m_alternative = alternative;
 }
 
 QString TypeType::note() const
