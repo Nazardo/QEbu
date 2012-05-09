@@ -1191,7 +1191,7 @@ FormatType *EbuParser::parseFormatType(const QDomElement &element)
          }
          format->setWidth(width);
      }
-     el = element.elementsByTagName("ebucore:width").at(0).toElement();
+     el = element.elementsByTagName("ebucore:length").at(0).toElement();
      if (!el.isNull()) {
          LengthType *length = parseLengthType(el);
          if (!length) {
@@ -1278,9 +1278,11 @@ FormatType *EbuParser::parseFormatType(const QDomElement &element)
          }
          format->signingFormat().append(signingFormat);
      }
+
+     // FROM START ...
+
      return format;
 }
-
 
 LengthType *EbuParser::parseLengthType(const QDomElement &element)
 {
@@ -1350,9 +1352,82 @@ VideoFormatType *EbuParser::parseVideoFormatType(const QDomElement &element)
     VideoFormatType *videoFormat = new VideoFormatType();
 
     // Get attributes.
+    QString videoFormatId = element.attribute("videoFormatId");
+    if (!videoFormatId.isEmpty())
+        videoFormat->setVideoFormatId(videoFormatId);
+    QString videoFormatName = element.attribute("videoFormatName");
+    if (!videoFormatName.isEmpty())
+        videoFormat->setVideoFormatName(videoFormatName);
+    QString videoFormatDefinition = element.attribute("videoFormatDefinition");
+    if (!videoFormatDefinition.isEmpty())
+        videoFormat->setVideoFormatDefinition(videoFormatDefinition);
 
-    // Get element.
+    // Get elements.
+    bool ok;
 
+    QDomElement el = element.elementsByTagName("ebucore:regionDelimX").at(0).toElement();
+    qint32 regionDelimX = el.text().toInt(&ok, 10);
+    if(ok)
+        videoFormat->setRegionDelimX(regionDelimX);
+    el = element.elementsByTagName("ebucore:regionDelimY").at(0).toElement();
+    qint32 regionDelimY = el.text().toInt(&ok, 10);
+    if(ok)
+        videoFormat->setRegionDelimY(regionDelimY);
+
+    el = element.elementsByTagName("ebucore:width").at(0).toElement();
+    if (!el.isNull()) {
+        LengthType *width = parseLengthType(el);
+        if (!width) {
+            delete videoFormat;
+            return 0;
+        }
+        videoFormat->setWidth(width);
+    }
+    el = element.elementsByTagName("ebucore:length").at(0).toElement();
+    if (!el.isNull()) {
+        LengthType *length = parseLengthType(el);
+        if (!length) {
+            delete videoFormat;
+            return 0;
+        }
+        videoFormat->setWidth(length);
+    }
+
+    QDomNodeList el_list = element.elementsByTagName("ebucore:videoEncoding");
+    for (int i=0; i < el_list.size(); ++i) {
+        QDomElement el = el_list.at(i).toElement();
+        if(el.isNull())
+        {
+            delete videoFormat;
+            return 0;
+        }
+        videoFormat->videoEncoding().append(new TypeGroup());
+        parseTypeGroup(el, videoFormat->videoEncoding().at(i));
+    }
+
+    el_list = element.elementsByTagName("ebucore:videoTrack");
+    for (int i=0; i < el_list.size(); ++i) {
+        VideoTrackType *typeEl = parseVideoTrackType(el_list.at(i).toElement());
+        if (!typeEl) {
+            delete videoFormat;
+            return 0;
+        }
+        videoFormat->videoTrack().append(typeEl);
+    }
+
+    el = element.elementsByTagName("ebucore:aspectRatio").at(0).toElement();
+    AspectRatioType *aspectRatio = parseAspectRatioType(el);
+    if (!aspectRatio) {
+        delete videoFormat;
+        return 0;
+    }
+    videoFormat->setAspectRatio(aspectRatio);
+
+    TechnicalAttributes *technicalAttributes = parseTechnicalAttributes(element);
+    if(technicalAttributes)
+    {
+        videoFormat->setTechnicalAttributes(technicalAttributes);
+    }
     return videoFormat;
 }
 
@@ -1396,7 +1471,7 @@ ImageFormatType *EbuParser::parseImageFormatType(const QDomElement &element)
         }
         imageFormat->setWidth(width);
     }
-    el = element.elementsByTagName("ebucore:width").at(0).toElement();
+    el = element.elementsByTagName("ebucore:lenght").at(0).toElement();
     if (!el.isNull()) {
         LengthType *length = parseLengthType(el);
         if (!length) {
@@ -1428,11 +1503,7 @@ ImageFormatType *EbuParser::parseImageFormatType(const QDomElement &element)
     {
         imageFormat->setTechnicalAttributes(technicalAttributes);
     }
-
-
     return imageFormat;
-
-    return 0;
 }
 
 TechnicalAttributes *EbuParser::parseTechnicalAttributes(const QDomElement &element)
@@ -1586,9 +1657,42 @@ DataFormatType *EbuParser::parseDataFormatType(const QDomElement &element)
     DataFormatType *dataFormat = new DataFormatType();
 
     // Get attributes.
+    QString dataFormatId = element.attribute("dataFormatId");
+    if (!dataFormatId.isEmpty())
+        dataFormat->setDataFormatId(dataFormatId);
+    QString dataFormatName = element.attribute("dataFormatName");
+    if (!dataFormatName.isEmpty())
+        dataFormat->setDataFormatName(dataFormatName);
+    QString dataFormatDefinition = element.attribute("dataFormatDefinition");
+    if (!dataFormatDefinition.isEmpty())
+        dataFormat->setDataFormatDefinition(dataFormatDefinition);
 
-    // Get element.
+    // Get elements.
+    QDomNodeList el_list = element.elementsByTagName("ebucore:captioningFormat");
+    for (int i=0; i < el_list.size(); ++i) {
+        CaptioningFormatType *typeEl = parseCaptioningFormatType(el_list.at(i).toElement());
+        if (!typeEl) {
+            delete dataFormat;
+            return 0;
+        }
+        dataFormat->captioningFormat().append(typeEl);
+    }
 
+    el_list = element.elementsByTagName("ebucore:ancillaryDataFormat");
+    for (int i=0; i < el_list.size(); ++i) {
+        AncillarityDataFormatType *typeEl = parseAncillarityDataFormatType(el_list.at(i).toElement());
+        if (!typeEl) {
+            delete dataFormat;
+            return 0;
+        }
+        dataFormat->ancillarityDataFormat().append(typeEl);
+    }
+
+    TechnicalAttributes *technicalAttributes = parseTechnicalAttributes(element);
+    if(technicalAttributes)
+    {
+        dataFormat->setTechnicalAttributes(technicalAttributes);
+    }
     return dataFormat;
 }
 
@@ -1601,9 +1705,47 @@ AudioFormatType *EbuParser::parseAudioFormatType(const QDomElement &element)
     AudioFormatType *audioFormat = new AudioFormatType();
 
     // Get attributes.
+    QString audioFormatId = element.attribute("audioFormatId");
+    if (!audioFormatId.isEmpty())
+        audioFormat->setAudioFormatId(audioFormatId);
+    QString audioFormatName = element.attribute("audioFormatName");
+    if (!audioFormatName.isEmpty())
+        audioFormat->setAudioFormatName(audioFormatName);
+    QString audioFormatDefinition = element.attribute("audioFormatDefinition");
+    if (!audioFormatDefinition.isEmpty())
+        audioFormat->setAudioFormatDefinition(audioFormatDefinition);
 
-    // Get element.
+    // Get elements.
+    QDomNodeList el_list = element.elementsByTagName("ebucore:audioEncoding");
+    for (int i=0; i < el_list.size(); ++i) {
+        QDomElement el = el_list.at(i).toElement();
+        if(el.isNull())
+        {
+            delete audioFormat;
+            return 0;
+        }
+        audioFormat->audioEncoding().append(new TypeGroup());
+        parseTypeGroup(el, audioFormat->audioEncoding().at(i));
+    }
 
+    el_list = element.elementsByTagName("ebucore:audioTrack");
+    for (int i=0; i < el_list.size(); ++i) {
+        AudioTrackType *typeEl = parseAudioTrackType(el_list.at(i).toElement());
+        if (!typeEl) {
+            delete audioFormat;
+            return 0;
+        }
+        audioFormat->audioTrack().append(typeEl);
+    }
+
+    QDomElement el = element.elementsByTagName("ebucore:audioTrackConfiguration").at(0).toElement();
+    parseTypeGroup(el, audioFormat->audioTrackConfiguration());
+
+    TechnicalAttributes *technicalAttributes = parseTechnicalAttributes(element);
+    if(technicalAttributes)
+    {
+        audioFormat->setTechnicalAttributes(technicalAttributes);
+    }
     return audioFormat;
 }
 
@@ -1760,6 +1902,13 @@ UInt8 *EbuParser::parseUInt8(const QDomElement &element)
         m_errorMsg = "UInt8 is null";
         return 0;
     }
+    bool ok;
+    UInt8 *uint8 = new UInt8();
+    parseTypeGroup(element, uint8);
+    quint8 value = element.attribute("value").toInt(&ok, 10);
+    if(ok)
+        uint8->setValue(value);
+    return uint8;
 }
 UInt16 *EbuParser::parseUInt16(const QDomElement &element)
 {
@@ -1768,6 +1917,13 @@ UInt16 *EbuParser::parseUInt16(const QDomElement &element)
         m_errorMsg = "UInt16 is null";
         return 0;
     }
+    bool ok;
+    UInt16 *uint16 = new UInt16();
+    parseTypeGroup(element, uint16);
+    unsigned short value = element.attribute("value").toUShort(&ok, 10);
+    if(ok)
+        uint16->setValue(value);
+    return uint16;
 }
 UInt32 *EbuParser::parseUInt32(const QDomElement &element)
 {
@@ -1775,7 +1931,13 @@ UInt32 *EbuParser::parseUInt32(const QDomElement &element)
     {
         m_errorMsg = "UInt32 is null";
         return 0;
-    }
+    }    bool ok;
+    UInt32 *uint32 = new UInt32();
+    parseTypeGroup(element, uint32);
+    unsigned int value = element.attribute("value").toUInt(&ok, 10);
+    if(ok)
+        uint32->setValue(value);
+    return uint32;
 }
 UInt64 *EbuParser::parseUInt64(const QDomElement &element)
 {
@@ -1784,6 +1946,13 @@ UInt64 *EbuParser::parseUInt64(const QDomElement &element)
         m_errorMsg = "UInt64 is null";
         return 0;
     }
+    bool ok;
+    UInt64 *uint64 = new UInt64();
+    parseTypeGroup(element, uint64);
+    unsigned long value = element.attribute("value").toULong(&ok, 10);
+    if(ok)
+        uint64->setValue(value);
+    return uint64;
 }
 Boolean *EbuParser::parseBoolean(const QDomElement &element)
 {
@@ -1792,6 +1961,13 @@ Boolean *EbuParser::parseBoolean(const QDomElement &element)
         m_errorMsg = "Boolean is null";
         return 0;
     }
+    bool ok;
+    Boolean *boolean = new Boolean();
+    parseTypeGroup(element, boolean);
+    bool value = element.attribute("value").toInt(&ok, 10);
+    if(ok)
+        boolean->setValue(value);
+    return boolean;
 }
 Float *EbuParser::parseFloat(const QDomElement &element)
 {
@@ -1800,6 +1976,13 @@ Float *EbuParser::parseFloat(const QDomElement &element)
         m_errorMsg = "Float is null";
         return 0;
     }
+    bool ok;
+    Float *f = new Float();
+    parseTypeGroup(element, f);
+    double value = element.attribute("value").toDouble(&ok);
+    if(ok)
+        f->setValue(value);
+    return f;
 }
 TechnicalAttributeRationalType *EbuParser::parseTechnicalAttributeRationalType(const QDomElement &element)
 {
@@ -1808,6 +1991,16 @@ TechnicalAttributeRationalType *EbuParser::parseTechnicalAttributeRationalType(c
         m_errorMsg = "TechnicalAttributeRationalType is null";
         return 0;
     }
+    bool ok;
+    TechnicalAttributeRationalType *rational = new TechnicalAttributeRationalType();
+    parseTypeGroup(element, rational);
+    int num = element.attribute("factorNumerator").toInt(&ok, 10);
+    if(ok)
+        rational->setFactorNumerator(num);
+    int den = element.attribute("factorDenominator").toInt(&ok, 10);
+        rational->setFactorDenominator(den);
+    return rational;
+
 }
 TechnicalAttributeUriType *EbuParser::parseTechnicalAttributeUriType(const QDomElement &element)
 {
@@ -1816,6 +2009,132 @@ TechnicalAttributeUriType *EbuParser::parseTechnicalAttributeUriType(const QDomE
         m_errorMsg = "TechnicalAttributeUriType is null";
         return 0;
     }
+    TechnicalAttributeUriType *s = new TechnicalAttributeUriType();
+    parseTypeGroup(element, s);
+    QString value = element.attribute("value");
+    if(!value.isEmpty())
+        s->setValue(value);
+    return s;
+}
+AspectRatioType *EbuParser::parseAspectRatioType(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "AspectRatioType is null";
+        return 0;
+    }
+    AspectRatioType *aspectRatio = new AspectRatioType();
+    parseFormatGroup(element, aspectRatio);
+    QString note = element.attribute("note");
+    if(!note.isEmpty())
+        aspectRatio->setNote(note);
+    return aspectRatio;
+}
+VideoTrackType *EbuParser::parseVideoTrackType(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "VideoTrackType is null";
+        return 0;
+    }
+    VideoTrackType *videoTrack = new VideoTrackType();
+    parseTypeGroup(element, videoTrack);
+    QString trackId = element.attribute("trackId");
+    if(!trackId.isEmpty())
+        videoTrack->setTrackId(trackId);
+    QString trackName = element.attribute("trackName");
+    if(!trackName.isEmpty())
+        videoTrack->setTrackName(trackName);
+    return videoTrack;
+}
+AudioTrackType *EbuParser::parseAudioTrackType(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "AudioTrackType is null";
+        return 0;
+    }
+    AudioTrackType *audioTrack = new AudioTrackType();
+    parseTypeGroup(element, audioTrack);
+    QString trackId = element.attribute("trackId");
+    if(!trackId.isEmpty())
+        audioTrack->setTrackId(trackId);
+    QString trackName = element.attribute("trackName");
+    if(!trackName.isEmpty())
+        audioTrack->setTrackName(trackName);
+    QString trackLanguage = element.attribute("trackLanguage");
+    if(!trackLanguage.isEmpty())
+        audioTrack->setTrackLanguage(trackLanguage);
+    return audioTrack;
+}
+CaptioningFormatType *EbuParser::parseCaptioningFormatType(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "CaptioningFormatType is null";
+        return 0;
+    }
+    CaptioningFormatType *captionFormat = new CaptioningFormatType();
+    parseTypeGroup(element, captionFormat);
+    QString trackId = element.attribute("trackId");
+    if(!trackId.isEmpty())
+        captionFormat->setTrackId(trackId);
+    QString trackName = element.attribute("trackName");
+    if(!trackName.isEmpty())
+        captionFormat->setTrackName(trackName);
+    QString language = element.attribute("language");
+    if(!language.isEmpty())
+        captionFormat->setTrackLanguage(language);
+    parseTypeGroup(element, captionFormat);
+    parseFormatGroup(element, captionFormat);
+    QString captionSourceUri = element.attribute("captioningSourceUri");
+    if(!captionSourceUri.isEmpty())
+        captionFormat->setCaptioningSourceUri(captionSourceUri);
+    QString captionFormatId = element.attribute("captioningFormatId");
+    if(!captionFormatId.isEmpty())
+        captionFormat->setCaptioningFormatId(captionFormatId);
+    QString captionFormatName = element.attribute("captioningFormatName");
+    if(!captionFormatName.isEmpty())
+        captionFormat->setCaptioningFormatName(captionFormatName);
+
+    return captionFormat;
+}
+
+AncillarityDataFormatType *EbuParser::parseAncillarityDataFormatType(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "AncillarityDataFormatType is null";
+        return 0;
+    }
+    AncillarityDataFormatType *ancillaryDataFormat = new AncillarityDataFormatType();
+
+    QString ancillaryDataFormatId = element.attribute("ancillaryDataFormatId");
+    if(!ancillaryDataFormatId.isEmpty())
+        ancillaryDataFormat->setAncillaryDataFormatId(ancillaryDataFormatId);
+    QString ancillaryDataFormatName = element.attribute("ancillaryDataFormatName");
+    if(!ancillaryDataFormatName.isEmpty())
+        ancillaryDataFormat->setAncillaryDataFormatName(ancillaryDataFormatName);
+
+    bool ok;
+    int did = element.elementsByTagName("ebucore:DID").at(0).toElement().text().toInt(&ok, 10);
+    if(ok)
+        ancillaryDataFormat->setDID(did);
+    int sdid = element.elementsByTagName("ebucore:SDID").at(0).toElement().text().toInt(&ok, 10);
+    if(ok)
+        ancillaryDataFormat->setSDID(sdid);
+    int wrap = element.elementsByTagName("ebucore:wrappingType").at(0).toElement().text().toInt(&ok, 10);
+    if(ok)
+        ancillaryDataFormat->setWrappingType(wrap);
+    QDomNodeList el_list = element.elementsByTagName("lineNumber");
+    for(int i = 0; i<el_list.size(); ++i)
+    {
+        int lineNumber = el_list.at(i).toElement().text().toInt(&ok, 10);
+        if(ok)
+            ancillaryDataFormat->lineNumber().append(lineNumber);
+    }
+
+    return ancillaryDataFormat;
 }
 
 

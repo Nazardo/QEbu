@@ -11,13 +11,19 @@ class EbuParser
 public:
     EbuParser();
     bool parseFromFile(QFile &file);
-    QString errorMsg();    
+    QString errorMsg();
+
 private:
     CoreMetadataType *parseCoreMetadataType(const QDomElement &element);
     AlternativeType *parseAlternativeType(const QDomElement &element);
     TechnicalAttributes *parseTechnicalAttributes(const QDomElement &element);
+    AudioTrackType *parseAudioTrackType(const QDomElement &element);
     EntityType *parseEntityType(const QDomElement &element);
     ContactDetailsType *parseContactDetailsType(const QDomElement &element);
+    VideoTrackType *parseVideoTrackType(const QDomElement &element);
+    AspectRatioType *parseAspectRatioType(const QDomElement &element);
+    CaptioningFormatType *parseCaptioningFormatType(const QDomElement &element);
+    AncillarityDataFormatType *parseAncillarityDataFormatType(const QDomElement &element);
     DetailsType *parseDetailsType(const QDomElement &element);
     AddressType *parseAddressType(const QDomElement &element);
     OrganisationDetailsType *parseOrganisationDetailsType(const QDomElement &element);
