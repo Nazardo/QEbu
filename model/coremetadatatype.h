@@ -292,8 +292,8 @@ class TemporalType : public TypeGroup
 public:
     QString note() const;
     void setNote(const QString &note);
-    QString periodID() const;
-    void setPeriodID(const QString &periodID);
+    QString periodId() const;
+    void setPeriodId(const QString &periodId);
     DateGroup *periodOfTime() const;
     void setPeriodOfTime(DateGroup *periodOfTime);
 private:
@@ -430,7 +430,7 @@ private:
 
 class PartType : public CoreMetadataType
 {
-private:
+public:
     QString partId() const;
     void setPartId(const QString &partId);
     QString partName() const;

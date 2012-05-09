@@ -10,6 +10,7 @@ class FormatType;
 class TimeType
 {
 public:
+    TimeType();
     TimeType(const QString &timecode,
              const QTime &normalPlayTime);
     QString timecode() const;
@@ -22,15 +23,15 @@ public:
     void setFactorNumerator(unsigned int factorNumerator);
     unsigned int factorDenominator() const;
     void setFactorDenominator(unsigned int factorDenominator);
-    FormatType *time() const;
-    void setTime(FormatType *time);
+    FormatGroup *time() const;
+    void setTime(FormatGroup *time);
 private:
     QString m_timecode;
     QTime m_normalPlayTime;
     unsigned int m_editRate;
     unsigned int m_factorNumerator;
     unsigned int m_factorDenominator;
-    FormatType *m_time;
+    FormatGroup *m_time;
 };
 
 #endif // TIMETYPE_H

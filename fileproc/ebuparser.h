@@ -13,11 +13,17 @@ public:
     bool parseFromFile(QFile &file);
     QString errorMsg();
 
+
 private:
     CoreMetadataType *parseCoreMetadataType(const QDomElement &element);
     AlternativeType *parseAlternativeType(const QDomElement &element);
     TechnicalAttributes *parseTechnicalAttributes(const QDomElement &element);
     AudioTrackType *parseAudioTrackType(const QDomElement &element);
+    DocumentFormatType *parseDocumentFormatType(const QDomElement &element);
+    TimeType *parseTimeType(const QDomElement &element);
+    TemporalType *parseTemporalType(const QDomElement &element);
+    LocationType *parseLocationType(const QDomElement &element);
+    CoordinatesType *parseCoordinatesType(const QDomElement &element);
     EntityType *parseEntityType(const QDomElement &element);
     ContactDetailsType *parseContactDetailsType(const QDomElement &element);
     VideoTrackType *parseVideoTrackType(const QDomElement &element);

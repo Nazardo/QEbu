@@ -395,12 +395,12 @@ void TemporalType::setNote(const QString &note)
     m_note = note;
 }
 
-QString TemporalType::periodID() const
+QString TemporalType::periodId() const
 {
     return m_periodId;
 }
 
-void TemporalType::setPeriodID(const QString &periodID)
+void TemporalType::setPeriodId(const QString &periodID)
 {
     m_periodId = periodID;
 }

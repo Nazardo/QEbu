@@ -1,5 +1,10 @@
 #include "timetype.h"
 
+TimeType::TimeType()
+{
+
+}
+
 TimeType::TimeType(const QString &timecode,
                    const QTime &normalPlayTime)
     : m_timecode(timecode), m_normalPlayTime(normalPlayTime)
@@ -57,12 +62,12 @@ void TimeType::setFactorDenominator(unsigned int factorDenominator)
     m_factorDenominator = factorDenominator;
 }
 
-FormatType *TimeType::time() const
+FormatGroup *TimeType::time() const
 {
     return m_time;
 }
 
-void TimeType::setTime(FormatType *time)
+void TimeType::setTime(FormatGroup *time)
 {
     m_time = time;
 }

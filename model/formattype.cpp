@@ -591,32 +591,42 @@ DocumentFormatType::DocumentFormatType()
 
 QString DocumentFormatType::formatId() const
 {
-    return m_formatId;
+    return m_documentFormatId;
 }
 
-void DocumentFormatType::setFormatId(const QString &formatId)
+void DocumentFormatType::setDocumentFormatId(const QString &formatId)
 {
-    m_formatId = formatId;
+    m_documentFormatId = formatId;
 }
 
-QString DocumentFormatType::formatName() const
+QString DocumentFormatType::documentFormatName() const
 {
-    return m_formatName;
+    return m_documentFormatName;
 }
 
-void DocumentFormatType::setFormatName(const QString &formatName)
+void DocumentFormatType::setDocumentFormatName(const QString &formatName)
 {
-    m_formatName = formatName;
+    m_documentFormatName = formatName;
 }
 
-QString DocumentFormatType::formatDefinition() const
+QString DocumentFormatType::documentFormatDefinition() const
 {
-    return m_formatDefinition;
+    return m_documentFormatDefinition;
 }
 
-void DocumentFormatType::setFormatDefinition(const QString &formatDefinition)
+void DocumentFormatType::setDocumentFormatDefinition(const QString &formatDefinition)
 {
-    m_formatDefinition = formatDefinition;
+    m_documentFormatDefinition = formatDefinition;
+}
+
+int DocumentFormatType::wordCount() const
+{
+    return m_wordCount;
+}
+
+void DocumentFormatType::setWordCount(const int &wordCount)
+{
+    m_wordCount = wordCount;
 }
 
 unsigned int DocumentFormatType::regionDelimX() const
@@ -647,6 +657,16 @@ LengthType *DocumentFormatType::width() const
 void DocumentFormatType::setHeight(LengthType *height)
 {
     m_height = height;
+}
+
+LengthType *DocumentFormatType::height() const
+{
+    return m_height;
+}
+
+void DocumentFormatType::setWidth(LengthType *width)
+{
+    m_width = width;
 }
 
 TechnicalAttributes *DocumentFormatType::technicalAttributes() const

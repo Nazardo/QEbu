@@ -290,12 +290,14 @@ public:
     DocumentFormatType();
     // Attributes
     QString formatId() const;
-    void setFormatId(const QString &formatId);
-    QString formatName() const;
-    void setFormatName(const QString &formatName);
-    QString formatDefinition() const;
-    void setFormatDefinition(const QString &formatDefinition);
+    void setDocumentFormatId(const QString &formatId);
+    QString documentFormatName() const;
+    void setDocumentFormatName(const QString &documentFormatName);
+    QString documentFormatDefinition() const;
+    void setDocumentFormatDefinition(const QString &documentFormatDefinition);
     // Elements
+    int wordCount() const;
+    void setWordCount(const int &wordCount);
     unsigned int regionDelimX() const;
     void setRegionDelimX(const unsigned int &regionDelimX);
     unsigned int regionDelimY() const;
@@ -309,12 +311,13 @@ public:
 
 private:
     // Attributes
-    QString m_formatId;
-    QString m_formatName;
-    QString m_formatDefinition;
+    QString m_documentFormatId;
+    QString m_documentFormatName;
+    QString m_documentFormatDefinition;
     // Elements (all optional)
     unsigned int m_regionDelimX;    //nonNegativeInteger
     unsigned int m_regionDelimY;    //nonNegativeInteger
+    int m_wordCount;
     LengthType *m_width;
     LengthType *m_height;
     TechnicalAttributes *m_technicalAttributes;
