@@ -2,6 +2,13 @@
 
 CoreMetadataType::CoreMetadataType()
 {
+    m_version = 0;
+    m_publicationHistory = 0;
+}
+
+TitleType::TitleType()
+{
+    m_title = 0;
 }
 
 QDateTime TitleType::attributionDate() const
@@ -34,6 +41,11 @@ void TitleType::setTitle(ElementType *title)
     m_title = title;
 }
 
+AlternativeTitleType::AlternativeTitleType()
+{
+    m_title = 0;
+}
+
 QString AlternativeTitleType::note() const
 {
     return m_note;
@@ -52,6 +64,12 @@ ElementType *AlternativeTitleType::title() const
 void AlternativeTitleType::setTitle(ElementType *title)
 {
     m_title = title;
+}
+
+SubjectType::SubjectType()
+{
+    m_subject = 0;
+    m_attributor = 0;
 }
 
 QString SubjectType::note() const
@@ -104,6 +122,11 @@ void SubjectType::setAttributor(EntityType *attributor)
     m_attributor = attributor;
 }
 
+DescriptionType::DescriptionType()
+{
+    m_description = 0;
+}
+
 QString DescriptionType::note() const
 {
     return m_note;
@@ -122,6 +145,14 @@ ElementType *DescriptionType::description() const
 void DescriptionType::setDescription(ElementType *description)
 {
     m_description = description;
+}
+
+DateType::DateType()
+{
+    m_created = 0;
+    m_issued = 0;
+    m_modified = 0;
+    m_digitised = 0;
 }
 
 QList<ElementType *> &DateType::date()

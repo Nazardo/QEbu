@@ -114,6 +114,7 @@ private:
 class TitleType
 {
 public:
+    TitleType();
     QDateTime attributionDate() const;
     void setAttributionDate (const QDateTime &attributionDate);
     QString note() const;
@@ -129,6 +130,7 @@ private:
 class AlternativeTitleType : public TypeGroup, public StatusGroup, public DateGroup
 {
 public:
+    AlternativeTitleType();
     QString note() const;
     void setNote(const QString &note);
     ElementType *title() const;
@@ -141,6 +143,7 @@ private:
 class SubjectType : public TypeGroup
 {
 public:
+    SubjectType();
     QString note() const;
     void setNote(const QString &note);
     ElementType *subject() const;
@@ -162,6 +165,7 @@ private:
 class DescriptionType : public TypeGroup
 {
 public:
+    DescriptionType();
     QString note() const;
     void setNote(const QString &note);
     ElementType *description() const;
@@ -176,6 +180,7 @@ class AlternativeType : public DateGroup, public TypeGroup { };
 class DateType
 {
 public:
+    DateType();
     QList<ElementType *> &date();
     DateGroup *created() const;
     void setCreated (DateGroup *created);

@@ -2,6 +2,13 @@
 
 
 /* ------------------------------ ImageFormatType -------------------------- */
+ImageFormatType::ImageFormatType()
+{
+    m_width = 0;
+    m_height = 0;
+    m_technicalAttributes = 0;
+}
+
 QString ImageFormatType::imageFormatId() const
 {
     return m_imageFormatId;
@@ -140,6 +147,10 @@ void VideoTrackType::setTrackName(const QString &trackName)
 /* ------------------------------ VideoFormatType -------------------------- */
 VideoFormatType::VideoFormatType()
 {
+    m_width = 0;
+    m_height = 0;
+    m_aspectRatio = 0;
+    m_technicalAttributes = 0;
 }
 
 QString VideoFormatType::videoFormatId() const
@@ -280,6 +291,8 @@ void AudioTrackType::setTrackName(const QString &trackName)
 /* ------------------------------ AudioFormatType -------------------------- */
 AudioFormatType::AudioFormatType()
 {
+    m_audioTrackConfiguration = 0;
+    m_technicalAttributes = 0;
 }
 
 QString AudioFormatType::audioFormatId() const
@@ -440,6 +453,7 @@ void AncillarityDataFormatType::setWrappingType(const int &wrappingType)
 /* ------------------------------ DataFormatType -------------------------- */
 DataFormatType::DataFormatType()
 {
+    m_technicalAttributes = 0;
 }
 
 QString DataFormatType::dataFormatId() const
@@ -570,6 +584,9 @@ void SigningFormatType::setSigningFormatDefinition(const QString &signingFormatD
 /* ------------------------------ DocumentFormatType -------------------------- */
 DocumentFormatType::DocumentFormatType()
 {
+    m_width = 0;
+    m_height = 0;
+    m_technicalAttributes = 0;
 }
 
 QString DocumentFormatType::formatId() const
@@ -645,6 +662,17 @@ void DocumentFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAt
 /* ------------------------------ FormatType -------------------------- */
 FormatType::FormatType()
 {
+    m_format = 0;
+    m_width = 0;
+    m_height = 0;
+    m_start = 0;
+    m_end = 0;
+    m_duration = 0;
+    m_locator = 0;
+    m_documentFormat = 0;
+    m_technicalAttributes = 0;
+    m_dateCreated = 0;
+    m_dateModified = 0;
 }
 
 QString FormatType::formatId() const

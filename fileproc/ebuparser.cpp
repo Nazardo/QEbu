@@ -1362,8 +1362,7 @@ ImageFormatType *EbuParser::parseImageFormatType(const QDomElement &element)
         m_errorMsg = "ImageFormatType is null";
         return 0;
     }
-    // CANNOT RESOLVE new ImageFormatType()
-    ImageFormatType *imageFormat;// = new ImageFormatType();
+    ImageFormatType *imageFormat = new ImageFormatType();
 
     // Get attributes.
 
