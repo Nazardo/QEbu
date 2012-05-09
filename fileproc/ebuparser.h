@@ -11,12 +11,11 @@ class EbuParser
 public:
     EbuParser();
     bool parseFromFile(QFile &file);
-    QString errorMsg();
-
-
+    QString errorMsg();    
 private:
     CoreMetadataType *parseCoreMetadataType(const QDomElement &element);
     AlternativeType *parseAlternativeType(const QDomElement &element);
+    TechnicalAttributes *parseTechnicalAttributes(const QDomElement &element);
     EntityType *parseEntityType(const QDomElement &element);
     ContactDetailsType *parseContactDetailsType(const QDomElement &element);
     DetailsType *parseDetailsType(const QDomElement &element);
@@ -45,6 +44,19 @@ private:
     DataFormatType *parseDataFormatType(const QDomElement &element);
     ImageFormatType *parseImageFormatType(const QDomElement &element);
     VideoFormatType *parseVideoFormatType(const QDomElement &element);
+    String *parseString(const QDomElement &element);
+    Int8 *parseInt8(const QDomElement &element);
+    Int16 *parseInt16(const QDomElement &element);
+    Int32 *parseInt32(const QDomElement &element);
+    Int64 *parseInt64(const QDomElement &element);
+    UInt8 *parseUInt8(const QDomElement &element);
+    UInt16 *parseUInt16(const QDomElement &element);
+    UInt32 *parseUInt32(const QDomElement &element);
+    UInt64 *parseUInt64(const QDomElement &element);
+    Boolean *parseBoolean(const QDomElement &element);
+    Float *parseFloat(const QDomElement &element);
+    TechnicalAttributeRationalType *parseTechnicalAttributeRationalType(const QDomElement &element);
+    TechnicalAttributeUriType *parseTechnicalAttributeUriType(const QDomElement &element);
     void parseTypeGroup(const QDomElement &element, TypeGroup* const typeGroup);
     void parseStatusGroup(const QDomElement &element, StatusGroup* const statusGroup);
     void parseFormatGroup(const QDomElement &element, FormatGroup* const formatGroup);

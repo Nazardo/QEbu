@@ -104,7 +104,7 @@ class Int64 : public TypeGroup
 public:
     Int64();
     //Attributes
-    double value() const;
+    long value() const;
     void setValue(double value);
 private:
     long m_value;

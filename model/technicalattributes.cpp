@@ -205,7 +205,7 @@ Int64::Int64()
 {
 }
 
-double Int64::value() const
+long Int64::value() const
 {
     return m_value;
 }

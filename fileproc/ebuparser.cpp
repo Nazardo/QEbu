@@ -1365,12 +1365,216 @@ ImageFormatType *EbuParser::parseImageFormatType(const QDomElement &element)
     ImageFormatType *imageFormat = new ImageFormatType();
 
     // Get attributes.
+    QString imageFormatId = element.attribute("imageFormatId");
+    if (!imageFormatId.isEmpty())
+        imageFormat->setImageFormatId(imageFormatId);
+    QString imageFormatName = element.attribute("imageFormatName");
+    if (!imageFormatName.isEmpty())
+        imageFormat->setImageFormatName(imageFormatName);
+    QString imageFormatDefinition = element.attribute("imageFormatDefinition");
+    if (!imageFormatDefinition.isEmpty())
+        imageFormat->setImageFormatDefinition(imageFormatDefinition);
 
-    // Get element.
+    // Get elemens.
+    bool ok;
+
+    QDomElement el = element.elementsByTagName("ebucore:regionDelimX").at(0).toElement();
+    qint32 regionDelimX = el.text().toInt(&ok, 10);
+    if(ok)
+        imageFormat->setRegionDelimX(regionDelimX);
+    el = element.elementsByTagName("ebucore:regionDelimY").at(0).toElement();
+    qint32 regionDelimY = el.text().toInt(&ok, 10);
+    if(ok)
+        imageFormat->setRegionDelimY(regionDelimY);
+
+    el = element.elementsByTagName("ebucore:width").at(0).toElement();
+    if (!el.isNull()) {
+        LengthType *width = parseLengthType(el);
+        if (!width) {
+            delete imageFormat;
+            return 0;
+        }
+        imageFormat->setWidth(width);
+    }
+    el = element.elementsByTagName("ebucore:width").at(0).toElement();
+    if (!el.isNull()) {
+        LengthType *length = parseLengthType(el);
+        if (!length) {
+            delete imageFormat;
+            return 0;
+        }
+        imageFormat->setWidth(length);
+    }
+
+    el = element.elementsByTagName("ebucore:orientation").at(0).toElement();
+    if (!el.isNull()) {
+        // THIS DOES NOTHING!
+        ImageFormatType::Orientation *orientation = new ImageFormatType::Orientation();
+        imageFormat->setOrientation(*orientation);
+    }
+    QDomNodeList el_list = element.elementsByTagName("ebucore:imageEncoding");
+    for (int i=0; i < el_list.size(); ++i) {
+        QDomElement el = el_list.at(i).toElement();
+        if(el.isNull())
+        {
+            delete imageFormat;
+            return 0;
+        }
+        imageFormat->imageEncoding().append(new TypeGroup());
+        parseTypeGroup(el, imageFormat->imageEncoding().at(i));
+    }
+    TechnicalAttributes *technicalAttributes = parseTechnicalAttributes(element);
+    if(technicalAttributes)
+    {
+        imageFormat->setTechnicalAttributes(technicalAttributes);
+    }
+
 
     return imageFormat;
 
     return 0;
+}
+
+TechnicalAttributes *EbuParser::parseTechnicalAttributes(const QDomElement &element)
+{
+    // There is no need to check for null element, since this call is made within another
+    // parse function...
+    TechnicalAttributes *ta = new TechnicalAttributes();
+
+    // Get elements.
+    QDomNodeList technicalAttributeStringList = element.elementsByTagName("ebucore:technicalAttributeString");
+    for (int i=0; i < technicalAttributeStringList.size(); ++i) {
+        QDomElement el = technicalAttributeStringList.item(i).toElement();
+        String *technicalAttributeString = parseString(el);
+        if (!technicalAttributeString) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeString().append(technicalAttributeString);
+    }
+    QDomNodeList technicalAttributeByteList = element.elementsByTagName("ebucore:technicalAttributeByte");
+    for (int i=0; i < technicalAttributeByteList.size(); ++i) {
+        QDomElement el = technicalAttributeByteList.item(i).toElement();
+        Int8 *technicalAttributeByte = parseInt8(el);
+        if (!technicalAttributeByte) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeByte().append(technicalAttributeByte);
+    }
+    QDomNodeList technicalAttributeShortList = element.elementsByTagName("ebucore:technicalAttributeShort");
+    for (int i=0; i < technicalAttributeShortList.size(); ++i) {
+        QDomElement el = technicalAttributeShortList.item(i).toElement();
+        Int16 *technicalAttributeShort = parseInt16(el);
+        if (!technicalAttributeShort) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeShort().append(technicalAttributeShort);
+    }
+    QDomNodeList technicalAttributeIntegerList = element.elementsByTagName("ebucore:technicalAttributeInteger");
+    for (int i=0; i < technicalAttributeIntegerList.size(); ++i) {
+        QDomElement el = technicalAttributeIntegerList.item(i).toElement();
+        Int32 *technicalAttributeInteger = parseInt32(el);
+        if (!technicalAttributeInteger) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeInteger().append(technicalAttributeInteger);
+    }
+    QDomNodeList technicalAttributeLongList = element.elementsByTagName("ebucore:technicalAttributeLong");
+    for (int i=0; i < technicalAttributeLongList.size(); ++i) {
+        QDomElement el = technicalAttributeLongList.item(i).toElement();
+        Int64 *technicalAttributeLong = parseInt64(el);
+        if (!technicalAttributeLong) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeLong().append(technicalAttributeLong);
+    }
+    QDomNodeList technicalAttributeUnsignedByteList = element.elementsByTagName("ebucore:technicalAttributeUnsignedByte");
+    for (int i=0; i < technicalAttributeUnsignedByteList.size(); ++i) {
+        QDomElement el = technicalAttributeUnsignedByteList.item(i).toElement();
+        UInt8 *technicalAttributeUnsignedByte = parseUInt8(el);
+        if (!technicalAttributeUnsignedByte) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeUnsignedByte().append(technicalAttributeUnsignedByte);
+    }
+    QDomNodeList technicalAttributeUnsignedShortList = element.elementsByTagName("ebucore:technicalAttributeUnsignedShort");
+    for (int i=0; i < technicalAttributeUnsignedShortList.size(); ++i) {
+        QDomElement el = technicalAttributeUnsignedShortList.item(i).toElement();
+        UInt16 *technicalAttributeUnsignedShort = parseUInt16(el);
+        if (!technicalAttributeUnsignedShort) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeUnsignedShort().append(technicalAttributeUnsignedShort);
+    }
+    QDomNodeList technicalAttributeUnsignedIntegerList = element.elementsByTagName("ebucore:technicalAttributeUnsignedInteger");
+    for (int i=0; i < technicalAttributeUnsignedIntegerList.size(); ++i) {
+        QDomElement el = technicalAttributeUnsignedIntegerList.item(i).toElement();
+        UInt32 *technicalAttributeUnsignedInteger = parseUInt32(el);
+        if (!technicalAttributeUnsignedInteger) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeUnsignedInteger().append(technicalAttributeUnsignedInteger);
+    }
+    QDomNodeList technicalAttributeUnsignedLongList = element.elementsByTagName("ebucore:technicalAttributeUnsignedLong");
+    for (int i=0; i < technicalAttributeUnsignedLongList.size(); ++i) {
+        QDomElement el = technicalAttributeUnsignedLongList.item(i).toElement();
+        UInt64 *technicalAttributeUnsignedLong = parseUInt64(el);
+        if (!technicalAttributeUnsignedLong) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeUnsignedLong().append(technicalAttributeUnsignedLong);
+    }
+    QDomNodeList technicalAttributeBooleanList = element.elementsByTagName("ebucore:technicalAttributeBoolean");
+    for (int i=0; i < technicalAttributeBooleanList.size(); ++i) {
+        QDomElement el = technicalAttributeBooleanList.item(i).toElement();
+        Boolean *technicalAttributeBoolean = parseBoolean(el);
+        if (!technicalAttributeBoolean) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeBoolean().append(technicalAttributeBoolean);
+    }
+    QDomNodeList technicalAttributeFloatList = element.elementsByTagName("ebucore:technicalAttributeFloat");
+    for (int i=0; i < technicalAttributeFloatList.size(); ++i) {
+        QDomElement el = technicalAttributeFloatList.item(i).toElement();
+        Float *technicalAttributeFloat = parseFloat(el);
+        if (!technicalAttributeFloat) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeFloat().append(technicalAttributeFloat);
+    }
+    QDomNodeList technicalAttributeRationalList = element.elementsByTagName("ebucore:technicalAttributeRational");
+    for (int i=0; i < technicalAttributeRationalList.size(); ++i) {
+        QDomElement el = technicalAttributeRationalList.item(i).toElement();
+        TechnicalAttributeRationalType *technicalAttributeRational = parseTechnicalAttributeRationalType(el);
+        if (!technicalAttributeRational) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeRational().append(technicalAttributeRational);
+    }
+    QDomNodeList technicalAttributeUriList = element.elementsByTagName("ebucore:technicalAttributeUri");
+    for (int i=0; i < technicalAttributeUriList.size(); ++i) {
+        QDomElement el = technicalAttributeUriList.item(i).toElement();
+        TechnicalAttributeUriType *technicalAttributeUri = parseTechnicalAttributeUriType(el);
+        if (!technicalAttributeUri) {
+            delete ta;
+            return 0;
+        }
+        ta->technicalAttributeUri().append(technicalAttributeUri);
+    }
+
+
+    return ta;
 }
 
 DataFormatType *EbuParser::parseDataFormatType(const QDomElement &element)
@@ -1473,4 +1677,145 @@ DescriptionType *EbuParser::parseDescriptionType(const QDomElement &element)
 
      return description;
 }
+
+String *EbuParser::parseString(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "String is null";
+        return 0;
+    }
+    String *s = new String();
+    parseTypeGroup(element, s);
+    parseFormatGroup(element, s);
+    QString value = element.attribute("value");
+    if(!value.isEmpty())
+        s->setValue(value);
+    return s;
+}
+Int8 *EbuParser::parseInt8(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "Int8 is null";
+        return 0;
+    }
+    bool ok;
+    Int8 *int8 = new Int8();
+    parseTypeGroup(element, int8);
+    qint8 value = element.attribute("value").toInt(&ok,10);
+    if(ok)
+        int8->setValue(value);
+    return int8;
+}
+Int16 *EbuParser::parseInt16(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "Int16 is null";
+        return 0;
+    }
+    bool ok;
+    Int16 *int16 = new Int16();
+    parseTypeGroup(element, int16);
+    short value = element.attribute("value").toShort(&ok, 10);
+    if(ok)
+        int16->setValue(value);
+    return int16;
+}
+Int32 *EbuParser::parseInt32(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "Int32 is null";
+        return 0;
+    }
+    bool ok;
+    Int32 *int32 = new Int32();
+    parseTypeGroup(element, int32);
+    int value = element.attribute("value").toInt(&ok, 10);
+    if(ok)
+        int32->setValue(value);
+    return int32;
+}
+Int64 *EbuParser::parseInt64(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "Int64 is null";
+        return 0;
+    }
+    bool ok;
+    Int64 *int64 = new Int64();
+    parseTypeGroup(element, int64);
+    long value = element.attribute("value").toLong(&ok, 10);
+    if(ok)
+        int64->setValue(value);
+    return int64;
+}
+UInt8 *EbuParser::parseUInt8(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "UInt8 is null";
+        return 0;
+    }
+}
+UInt16 *EbuParser::parseUInt16(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "UInt16 is null";
+        return 0;
+    }
+}
+UInt32 *EbuParser::parseUInt32(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "UInt32 is null";
+        return 0;
+    }
+}
+UInt64 *EbuParser::parseUInt64(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "UInt64 is null";
+        return 0;
+    }
+}
+Boolean *EbuParser::parseBoolean(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "Boolean is null";
+        return 0;
+    }
+}
+Float *EbuParser::parseFloat(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "Float is null";
+        return 0;
+    }
+}
+TechnicalAttributeRationalType *EbuParser::parseTechnicalAttributeRationalType(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "TechnicalAttributeRationalType is null";
+        return 0;
+    }
+}
+TechnicalAttributeUriType *EbuParser::parseTechnicalAttributeUriType(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "TechnicalAttributeUriType is null";
+        return 0;
+    }
+}
+
 
