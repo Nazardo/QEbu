@@ -5,6 +5,11 @@ DetailsType::DetailsType()
     m_address = 0;
 }
 
+DetailsType::~DetailsType()
+{
+    delete m_address;
+}
+
 QString DetailsType::emailAddress() const
 {
     return m_emailAddress;
@@ -57,6 +62,12 @@ void DetailsType::setMobileTelephoneNumber(const QString &mobileTelephoneNumber)
 
 AddressType::AddressType()
 {
+    m_country = 0;
+}
+
+AddressType::~AddressType()
+{
+    delete m_country;
 }
 
 QList<QString> AddressType::lines() const

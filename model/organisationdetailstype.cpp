@@ -6,6 +6,20 @@ OrganisationDetailsType::OrganisationDetailsType()
     m_organisationDepartment = 0;
 }
 
+OrganisationDetailsType::~OrganisationDetailsType()
+{
+    delete m_organisationName;
+    delete m_organisationDepartment;
+    int s = m_details.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_details.takeAt(0));
+    }
+    s = m_contacts.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_contacts.takeAt(0));
+    }
+}
+
 QString OrganisationDetailsType::organisationId() const
 {
     return m_organisationId;

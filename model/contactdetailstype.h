@@ -28,6 +28,7 @@ class ContactDetailsType
 {
 public:
     ContactDetailsType();
+    ~ContactDetailsType();
     QString contactId() const;
     void setContactId(const QString &contactId);
     Name name() const;

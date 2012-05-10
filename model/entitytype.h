@@ -14,6 +14,7 @@ class EntityType
 {
 public:
     EntityType();
+    ~EntityType();
     // Attributes
     QString entityId() const;
     void setEntityId(const QString &entityId);

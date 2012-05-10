@@ -34,6 +34,7 @@ class CoreMetadataType
 {
 public:
     CoreMetadataType();
+    ~CoreMetadataType();
     QList<TitleType *> &title();
     QList<AlternativeTitleType *> &alternativeTitle();
     QList<EntityType *> &creator();
@@ -115,6 +116,7 @@ class TitleType
 {
 public:
     TitleType();
+    ~TitleType();
     QDateTime attributionDate() const;
     void setAttributionDate (const QDateTime &attributionDate);
     QString note() const;
@@ -131,6 +133,7 @@ class AlternativeTitleType : public TypeGroup, public StatusGroup, public DateGr
 {
 public:
     AlternativeTitleType();
+    ~AlternativeTitleType();
     QString note() const;
     void setNote(const QString &note);
     ElementType *title() const;
@@ -144,6 +147,7 @@ class SubjectType : public TypeGroup
 {
 public:
     SubjectType();
+    ~SubjectType();
     QString note() const;
     void setNote(const QString &note);
     ElementType *subject() const;
@@ -166,6 +170,7 @@ class DescriptionType : public TypeGroup
 {
 public:
     DescriptionType();
+    ~DescriptionType();
     QString note() const;
     void setNote(const QString &note);
     ElementType *description() const;
@@ -181,6 +186,7 @@ class DateType
 {
 public:
     DateType();
+    ~DateType();
     QList<ElementType *> &date();
     DateGroup *created() const;
     void setCreated (DateGroup *created);
@@ -203,6 +209,7 @@ private:
 class TypeType
 {
 public:
+    ~TypeType();
     QString note() const;
     void setNote(const QString &note);
     QList<ElementType *> &type();
@@ -221,6 +228,8 @@ private:
 class IdentifierType : public TypeGroup, public FormatGroup
 {
 public:
+    IdentifierType();
+    ~IdentifierType();
     QString note() const;
     void setNote(const QString &note);
     ElementType *identifier() const;
@@ -236,6 +245,8 @@ private:
 class LanguageType : public TypeGroup
 {
 public:
+    LanguageType();
+    ~LanguageType();
     QString note() const;
     void setNote(const QString &note);
     ElementType *language() const;
@@ -248,6 +259,8 @@ private:
 class RelationType : public TypeGroup
 {
 public:
+    RelationType();
+    ~RelationType();
     int runningOrderNumber() const;
     void setRunningOrderNumber(int runningOrderNumber);
     QString note() const;
@@ -269,6 +282,8 @@ private:
 class HasTrackPartType : public RelationType
 {
 public:
+    HasTrackPartType();
+    ~HasTrackPartType();
     AlternativeTitleType *trackPartTitle() const;
     void setTrackPartTitle(AlternativeTitleType *trackPartTitle);
     TimeType *destinationStart() const;
@@ -290,6 +305,8 @@ private:
 class TemporalType : public TypeGroup
 {
 public:
+    TemporalType();
+    ~TemporalType();
     QString note() const;
     void setNote(const QString &note);
     QString periodId() const;
@@ -317,6 +334,8 @@ private:
 class LocationType : public TypeGroup
 {
 public:
+    LocationType();
+    ~LocationType();
     QString note() const;
     void setNote(const QString &note);
     QString locationId() const;
@@ -338,6 +357,8 @@ private:
 class CoverageType
 {
 public:
+    CoverageType();
+    ~CoverageType();
     ElementType *coverage() const;
     void setCoverage(ElementType *coverage);
     TemporalType *temporal() const;
@@ -352,6 +373,8 @@ private:
 class RightsType : public TypeGroup
 {
 public:
+    RightsType();
+    ~RightsType();
     QString note() const;
     void setNote(const QString &note);
     QList<FormatType *> &formats();
@@ -387,6 +410,8 @@ private:
 class PublicationType
 {
 public:
+    PublicationType();
+    ~PublicationType();
     QDateTime date() const;
     void setDate (const QDateTime &date);
     QTime time() const;
@@ -402,6 +427,8 @@ private:
 class PublicationHistoryType
 {
 public:
+    PublicationHistoryType();
+    ~PublicationHistoryType();
     PublicationType *firstPublication() const;
     void setFirstPublication(PublicationType *firstPublication);
     QList<PublicationType *> &repetitions();
@@ -413,6 +440,8 @@ private:
 class RatingType : public TypeGroup, public FormatGroup
 {
 public:
+    RatingType();
+    ~RatingType();
     QString ratingValue() const;
     void setRatingValue(const QString &ratingValue);
     QString ratingScaleMaxValue() const;

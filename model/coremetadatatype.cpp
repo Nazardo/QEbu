@@ -6,9 +6,152 @@ CoreMetadataType::CoreMetadataType()
     m_publicationHistory = 0;
 }
 
+CoreMetadataType::~CoreMetadataType()
+{
+    int s = m_title.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_title.takeAt(0));
+    }
+    s = m_alternativeTitle.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_alternativeTitle.takeAt(0));
+    }
+    s = m_creator.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_creator.takeAt(0));
+    }
+    s = m_subject.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_subject.takeAt(0));
+    }
+    s = m_description.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_description.takeAt(0));
+    }
+    s = m_publisher.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_publisher.takeAt(0));
+    }
+    s = m_contributor.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_contributor.takeAt(0));
+    }
+    s = m_date.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_date.takeAt(0));
+    }
+    s = m_type.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_type.takeAt(0));
+    }
+    s = m_format.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_format.takeAt(0));
+    }
+    s = m_identifier.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_identifier.takeAt(0));
+    }
+    s = m_source.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_source.takeAt(0));
+    }
+    s = m_language.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_language.takeAt(0));
+    }
+    s = m_relation.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_relation.takeAt(0));
+    }
+    s = m_isVersionOf.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_isVersionOf.takeAt(0));
+    }
+    s = m_hasVersion.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_hasVersion.takeAt(0));
+    }
+    s = m_isReplacedBy.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_isReplacedBy.takeAt(0));
+    }
+    s = m_replaces.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_replaces.takeAt(0));
+    }
+    s = m_isRequiredBy.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_isRequiredBy.takeAt(0));
+    }
+    s = m_requires.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_requires.takeAt(0));
+    }
+    s = m_isPartOf.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_isPartOf.takeAt(0));
+    }
+    s = m_hasPart.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_hasPart.takeAt(0));
+    }
+    s = m_hasTrackPart.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_hasTrackPart.takeAt(0));
+    }
+    s = m_isReferencedBy.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_isReferencedBy.takeAt(0));
+    }
+    s = m_references.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_references.takeAt(0));
+    }
+    s = m_isFormatOf.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_isFormatOf.takeAt(0));
+    }
+    s = m_hasFormat.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_hasFormat.takeAt(0));
+    }
+    s = m_isEpisodeOf.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_isEpisodeOf.takeAt(0));
+    }
+    s = m_isMemberOf.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_isMemberOf.takeAt(0));
+    }
+    s = m_coverage.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_coverage.takeAt(0));
+    }
+    s = m_rights.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_rights.takeAt(0));
+    }
+    delete m_version;
+    delete m_publicationHistory;
+    s = m_rating.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_rating.takeAt(0));
+    }
+    s = m_part.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_part.takeAt(0));
+    }
+}
+
 TitleType::TitleType()
 {
     m_title = 0;
+}
+
+TitleType::~TitleType()
+{
+    delete m_title;
 }
 
 QDateTime TitleType::attributionDate() const
@@ -46,6 +189,11 @@ AlternativeTitleType::AlternativeTitleType()
     m_title = 0;
 }
 
+AlternativeTitleType::~AlternativeTitleType()
+{
+    delete m_title;
+}
+
 QString AlternativeTitleType::note() const
 {
     return m_note;
@@ -70,6 +218,12 @@ SubjectType::SubjectType()
 {
     m_subject = 0;
     m_attributor = 0;
+}
+
+SubjectType::~SubjectType()
+{
+    delete m_subject;
+    delete m_attributor;
 }
 
 QString SubjectType::note() const
@@ -127,6 +281,11 @@ DescriptionType::DescriptionType()
     m_description = 0;
 }
 
+DescriptionType::~DescriptionType()
+{
+    delete m_description;
+}
+
 QString DescriptionType::note() const
 {
     return m_note;
@@ -153,6 +312,22 @@ DateType::DateType()
     m_issued = 0;
     m_modified = 0;
     m_digitised = 0;
+}
+
+DateType::~DateType()
+{
+    int s = m_date.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_date.takeAt(0));
+    }
+    delete m_created;
+    delete m_issued;
+    delete m_modified;
+    delete m_digitised;
+    s = m_alternative.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_alternative.takeAt(0));
+    }
 }
 
 QList<ElementType *> &DateType::date()
@@ -205,6 +380,26 @@ QList<AlternativeType *> &DateType::alternative()
     return m_alternative;
 }
 
+TypeType::~TypeType()
+{
+    int s = m_type.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_type.takeAt(0));
+    }
+    s = m_genre.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_genre.takeAt(0));
+    }
+    s = m_objectType.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_objectType.takeAt(0));
+    }
+    s = m_targetAudience.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_targetAudience.takeAt(0));
+    }
+}
+
 QString TypeType::note() const
 {
     return m_note;
@@ -235,6 +430,18 @@ QList<TypeGroup *> &TypeType::targetAudience()
     return m_targetAudience;
 }
 
+IdentifierType::IdentifierType()
+{
+    m_identifier = 0;
+    m_attributor = 0;
+}
+
+IdentifierType::~IdentifierType()
+{
+    delete m_identifier;
+    delete m_attributor;
+}
+
 QString IdentifierType::note() const
 {
     return m_note;
@@ -263,6 +470,16 @@ EntityType *IdentifierType::attributor() const
 void IdentifierType::setAttributor(EntityType *attributor)
 {
     m_attributor = attributor;
+}
+
+LanguageType::LanguageType()
+{
+    m_language = 0;
+}
+
+LanguageType::~LanguageType()
+{
+    delete m_language;
 }
 
 QString LanguageType::note() const
@@ -325,6 +542,24 @@ void RelationType::setRelationLink(const QString &relationLink)
     m_relationLink = relationLink;
 }
 
+HasTrackPartType::HasTrackPartType()
+{
+    m_trackPartTitle = 0;
+    m_destinationStart = 0;
+    m_destinationEnd = 0;
+    m_sourceStart = 0;
+    m_sourceEnd = 0;
+}
+
+HasTrackPartType::~HasTrackPartType()
+{
+    delete m_trackPartTitle;
+    delete m_destinationStart;
+    delete m_destinationEnd;
+    delete m_sourceStart;
+    delete m_sourceEnd;
+}
+
 AlternativeTitleType *HasTrackPartType::trackPartTitle() const
 {
     return m_trackPartTitle;
@@ -375,6 +610,18 @@ void HasTrackPartType::setSourceEnd(TimeType *sourceEnd)
     m_sourceEnd = sourceEnd;
 }
 
+RelationType::RelationType()
+{
+    m_relation = 0;
+    m_relationIdentifier = 0;
+}
+
+RelationType::~RelationType()
+{
+    delete m_relation;
+    delete m_relationIdentifier;
+}
+
 int RelationType::runningOrderNumber() const
 {
     return m_runningOrderNumber;
@@ -383,6 +630,16 @@ int RelationType::runningOrderNumber() const
 void RelationType::setRunningOrderNumber(int runningOrderNumber)
 {
     m_runningOrderNumber = runningOrderNumber;
+}
+
+TemporalType::TemporalType()
+{
+    m_periodOfTime = 0;
+}
+
+TemporalType::~TemporalType()
+{
+    delete m_periodOfTime;
 }
 
 QString TemporalType::note() const
@@ -435,6 +692,16 @@ void CoordinatesType::setPosx(float posx)
     m_posx = posx;
 }
 
+LocationType::LocationType()
+{
+    m_coordinates = 0;
+}
+
+LocationType::~LocationType()
+{
+    delete m_coordinates;
+}
+
 QString LocationType::note() const
 {
     return m_note;
@@ -485,6 +752,22 @@ void LocationType::setCode(const QString &code)
     m_code = code;
 }
 
+CoverageType::CoverageType()
+{
+    m_coverage = 0;
+    m_temporal = 0;
+}
+
+CoverageType::~CoverageType()
+{
+    delete m_coverage;
+    delete m_temporal;
+    int s = m_location.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_location.takeAt(0));
+    }
+}
+
 ElementType *CoverageType::coverage() const
 {
     return m_coverage;
@@ -508,6 +791,38 @@ void CoverageType::setTemporal(TemporalType *temporal)
 QList<LocationType *> &CoverageType::location()
 {
     return m_location;
+}
+
+RightsType::RightsType()
+{
+    m_rights = 0;
+    m_rightsHolder = 0;
+    m_exploitationIssues = 0;
+    m_coverage = 0;
+}
+
+RightsType::~RightsType()
+{
+    int s = m_formats.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_formats.takeAt(0));
+    }
+    delete m_rights;
+    delete m_rightsHolder;
+    delete m_exploitationIssues;
+    delete m_coverage;
+    s = m_disclaimer.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_disclaimer.takeAt(0));
+    }
+    s = m_rightsId.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_rightsId.takeAt(0));
+    }
+    s = m_contactDetails.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_contactDetails.takeAt(0));
+    }
 }
 
 QString RightsType::note() const
@@ -600,6 +915,16 @@ QList<ContactDetailsType *> &RightsType::contactDetails()
     return m_contactDetails;
 }
 
+PublicationType::PublicationType()
+{
+    m_channel = 0;
+}
+
+PublicationType::~PublicationType()
+{
+    delete m_channel;
+}
+
 QDateTime PublicationType::date() const
 {
     return m_date;
@@ -630,6 +955,20 @@ void PublicationType::setChannel(FormatType *channel)
     m_channel = channel;
 }
 
+PublicationHistoryType::PublicationHistoryType()
+{
+    m_firstPublication = 0;
+}
+
+PublicationHistoryType::~PublicationHistoryType()
+{
+    delete m_firstPublication;
+    int s = m_repetitions.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_repetitions.takeAt(0));
+    }
+}
+
 PublicationType *PublicationHistoryType::firstPublication() const
 {
     return m_firstPublication;
@@ -643,6 +982,16 @@ void PublicationHistoryType::setFirstPublication(PublicationType *firstPublicati
 QList<PublicationType *> &PublicationHistoryType::repetitions()
 {
     return m_repetitions;
+}
+
+RatingType::RatingType()
+{
+    m_ratingProvider = 0;
+}
+
+RatingType::~RatingType()
+{
+    delete m_ratingProvider;
 }
 
 QString RatingType::ratingValue() const
@@ -889,22 +1238,3 @@ void CoreMetadataType::setPubblicationHistory(PublicationHistoryType *publicatio
 {
     m_publicationHistory = publicationHistory;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

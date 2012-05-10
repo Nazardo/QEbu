@@ -4,6 +4,18 @@ ContactDetailsType::ContactDetailsType()
 {
 }
 
+ContactDetailsType::~ContactDetailsType()
+{
+    int s = m_details.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_details.takeAt(0));
+    }
+    s = m_relatedContacts.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_relatedContacts.takeAt(0));
+    }
+}
+
 QString ContactDetailsType::contactId() const
 {
     return m_contactId;

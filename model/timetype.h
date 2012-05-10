@@ -13,6 +13,7 @@ public:
     TimeType();
     TimeType(const QString &timecode,
              const QTime &normalPlayTime);
+    ~TimeType();
     QString timecode() const;
     void setTimecode(const QString &timecode);
     QTime normalPlayTime() const;

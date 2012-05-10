@@ -5,6 +5,19 @@ EntityType::EntityType()
     m_organisationDetails = 0;
 }
 
+EntityType::~EntityType()
+{
+    int s = m_contactDetails.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_contactDetails.takeAt(0));
+    }
+    delete m_organisationDetails;
+    s = m_roles.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_roles.takeAt(0));
+    }
+}
+
 QString EntityType::entityId() const
 {
     return m_entityId;

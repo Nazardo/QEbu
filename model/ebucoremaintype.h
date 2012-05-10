@@ -9,6 +9,7 @@ class EbuCoreMainType
 {
 public:
     EbuCoreMainType();
+    ~EbuCoreMainType();
     // Attributes
     QDateTime dateLastModified() const;
     void setDateLastModified(const QDateTime &dateLastModified);

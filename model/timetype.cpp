@@ -2,14 +2,19 @@
 
 TimeType::TimeType()
 {
-
+    m_time = 0;
 }
 
 TimeType::TimeType(const QString &timecode,
                    const QTime &normalPlayTime)
     : m_timecode(timecode), m_normalPlayTime(normalPlayTime)
 {
+    m_time = 0;
+}
 
+TimeType::~TimeType()
+{
+    delete m_time;
 }
 
 QString TimeType::timecode() const

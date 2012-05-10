@@ -4,6 +4,62 @@ TechnicalAttributes::TechnicalAttributes()
 {
 }
 
+TechnicalAttributes::~TechnicalAttributes()
+{
+    int s = m_technicalAttributeString.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeString.takeAt(0));
+    }
+    s = m_technicalAttributeByte.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeByte.takeAt(0));
+    }
+    s = m_technicalAttributeShort.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeShort.takeAt(0));
+    }
+    s = m_technicalAttributeInteger.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeInteger.takeAt(0));
+    }
+    s = m_technicalAttributeLong.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeLong.takeAt(0));
+    }
+    s = m_technicalAttributeUnsignedByte.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeUnsignedByte.takeAt(0));
+    }
+    s = m_technicalAttributeUnsignedShort.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeUnsignedShort.takeAt(0));
+    }
+    s = m_technicalAttributeUnsignedInteger.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeUnsignedInteger.takeAt(0));
+    }
+    s = m_technicalAttributeUnsignedLong.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeUnsignedLong.takeAt(0));
+    }
+    s = m_technicalAttributeBoolean.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeBoolean.takeAt(0));
+    }
+    s = m_technicalAttributeFloat.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeFloat.takeAt(0));
+    }
+    s = m_technicalAttributeRational.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeRational.takeAt(0));
+    }
+    s = m_technicalAttributeUri.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_technicalAttributeUri.takeAt(0));
+    }
+}
+
 QList<String *> &TechnicalAttributes::technicalAttributeString()
 {
     return m_technicalAttributeString;
@@ -149,12 +205,12 @@ UInt64::UInt64()
 {
 }
 
-unsigned long UInt64::value() const
+quint64 UInt64::value() const
 {
     return m_value;
 }
 
-void UInt64::setValue(unsigned long value)
+void UInt64::setValue(quint64 value)
 {
     m_value = value;
 }
@@ -163,12 +219,12 @@ UInt32::UInt32()
 {
 }
 
-unsigned int UInt32::value() const
+quint32 UInt32::value() const
 {
     return m_value;
 }
 
-void UInt32::setValue(unsigned int value)
+void UInt32::setValue(quint32 value)
 {
     m_value = value;
 }
@@ -177,12 +233,12 @@ UInt16::UInt16()
 {
 }
 
-unsigned short UInt16::value() const
+quint16 UInt16::value() const
 {
     return m_value;
 }
 
-void UInt16::setValue(unsigned short value)
+void UInt16::setValue(quint16 value)
 {
     m_value = value;
 }
@@ -205,12 +261,12 @@ Int64::Int64()
 {
 }
 
-long Int64::value() const
+qint64 Int64::value() const
 {
     return m_value;
 }
 
-void Int64::setValue(long value)
+void Int64::setValue(qint64 value)
 {
     m_value = value;
 }
@@ -219,12 +275,12 @@ Int32::Int32()
 {
 }
 
-int Int32::value() const
+qint32 Int32::value() const
 {
     return m_value;
 }
 
-void Int32::setValue(int value)
+void Int32::setValue(qint32 value)
 {
     m_value = value;
 }
@@ -233,12 +289,12 @@ Int16::Int16()
 {
 }
 
-short Int16::value() const
+qint16 Int16::value() const
 {
     return m_value;
 }
 
-void Int16::setValue(short value)
+void Int16::setValue(qint16 value)
 {
     m_value = value;
 }

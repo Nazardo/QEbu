@@ -23,6 +23,7 @@ class TechnicalAttributes
 {
 public:
     TechnicalAttributes();
+    ~TechnicalAttributes();
     //Elements
     QList<String *> &technicalAttributeString();
     QList<Int8 *> &technicalAttributeByte();
@@ -82,10 +83,10 @@ class Int16 : public TypeGroup
 public:
     Int16();
     //Attributes
-    short value() const;
-    void setValue(short value);
+    qint16 value() const;
+    void setValue(qint16 value);
 private:
-    short m_value;
+    qint16 m_value;
 };
 
 class Int32 : public TypeGroup
@@ -93,10 +94,10 @@ class Int32 : public TypeGroup
 public:
     Int32();
     //Attributes
-    int value() const;
-    void setValue(int value);
+    qint32 value() const;
+    void setValue(qint32 value);
 private:
-    int m_value;
+    qint32 m_value;
 };
 
 class Int64 : public TypeGroup
@@ -104,10 +105,10 @@ class Int64 : public TypeGroup
 public:
     Int64();
     //Attributes
-    long value() const;
-    void setValue(long value);
+    qint64 value() const;
+    void setValue(qint64 value);
 private:
-    long m_value;
+    qint64 m_value;
 };
 
 class UInt8 : public TypeGroup
@@ -126,10 +127,10 @@ class UInt16 : public TypeGroup
 public:
     UInt16();
     //Attributes
-    unsigned short value() const;
-    void setValue(unsigned short value);
+    quint16 value() const;
+    void setValue(quint16 value);
 private:
-    unsigned short m_value;
+    quint16 m_value;
 };
 
 class UInt32 : public TypeGroup
@@ -137,10 +138,10 @@ class UInt32 : public TypeGroup
 public:
     UInt32();
     //Attributes
-    unsigned int value() const;
-    void setValue(unsigned int value);
+    quint32 value() const;
+    void setValue(quint32 value);
 private:
-    unsigned int m_value;
+    quin32 m_value;
 };
 
 class UInt64 : public TypeGroup
@@ -148,10 +149,10 @@ class UInt64 : public TypeGroup
 public:
     UInt64();
     //Attributes
-    unsigned long value() const;
-    void setValue(unsigned long value);
+    quint64 value() const;
+    void setValue(quint64 value);
 private:
-    unsigned long m_value;
+    quint64 m_value;
 };
 
 class Boolean : public TypeGroup
@@ -205,11 +206,6 @@ private:
     int m_factorNumerator;
     int m_factorDenominator;
 };
-
-
-
-
-
 
 #endif // TECHNICALATTRIBUTES_H
 

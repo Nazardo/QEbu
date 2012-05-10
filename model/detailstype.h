@@ -9,6 +9,7 @@ class AddressType
 {
 public:
     AddressType();
+    ~AddressType();
     QList<QString> lines() const;
     void lines(const QList<QString> &lines);
     QString townCity() const;
@@ -31,6 +32,7 @@ class DetailsType : public TypeGroup
 {
 public:
     DetailsType();
+    ~DetailsType();
     QString emailAddress() const;
     void setEmailAddress(const QString &emailAddress);
     QString webAddress() const;

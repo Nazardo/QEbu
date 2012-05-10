@@ -15,6 +15,7 @@ class OrganisationDetailsType
 {
 public:
     OrganisationDetailsType();
+    ~OrganisationDetailsType();
     // Attributes
     QString organisationId() const;
     void setOrganisationId(const QString &organisationId);

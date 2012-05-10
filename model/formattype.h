@@ -18,6 +18,7 @@ class ImageFormatType
 {
 public:
     ImageFormatType();
+    ~ImageFormatType();
     enum Orientation { Landscape, Portrait };
 
     // Attributes
@@ -88,6 +89,7 @@ class VideoFormatType
 {
 public:
     VideoFormatType();
+    ~VideoFormatType();
     // Attributes
     QString videoFormatId() const;
     void setVideoFormatId(const QString &videoFormatId);
@@ -149,6 +151,7 @@ class AudioFormatType
 {
 public:
     AudioFormatType();
+    ~AudioFormatType();
     // Attributes
     QString audioFormatId() const;
     void setAudioFormatId(const QString &audioFormatId);
@@ -229,6 +232,7 @@ class DataFormatType
 {
 public:
     DataFormatType();
+    ~DataFormatType();
     // Attributes
     QString dataFormatId() const;
     void setDataFormatId(const QString &dataFormatId);
@@ -288,6 +292,7 @@ class DocumentFormatType : public TypeGroup, public FormatGroup
 {
 public:
     DocumentFormatType();
+    ~DocumentFormatType();
     // Attributes
     QString formatId() const;
     void setDocumentFormatId(const QString &formatId);
@@ -328,6 +333,7 @@ class FormatType
 {
 public:
     FormatType();
+    ~FormatType();
     // Attributes
     QString formatId() const;
     void setFormatId(const QString &formatId);

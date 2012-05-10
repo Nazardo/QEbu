@@ -9,6 +9,17 @@ ImageFormatType::ImageFormatType()
     m_technicalAttributes = 0;
 }
 
+ImageFormatType::~ImageFormatType()
+{
+    delete m_width;
+    delete m_height;
+    int s = m_imageEncoding.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_imageEncoding.takeAt(0));
+    }
+    delete m_technicalAttributes;
+}
+
 QString ImageFormatType::imageFormatId() const
 {
     return m_imageFormatId;
@@ -153,6 +164,22 @@ VideoFormatType::VideoFormatType()
     m_technicalAttributes = 0;
 }
 
+VideoFormatType::~VideoFormatType()
+{
+    delete m_width;
+    delete m_height;
+    delete m_aspectRatio;
+    int s = m_videoEncoding.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_videoEncoding.takeAt(0));
+    }
+    s = m_videoTrack.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_videoTrack.takeAt(0));
+    }
+    delete m_technicalAttributes;
+}
+
 QString VideoFormatType::videoFormatId() const
 {
     return m_videoFormatId;
@@ -293,6 +320,20 @@ AudioFormatType::AudioFormatType()
 {
     m_audioTrackConfiguration = 0;
     m_technicalAttributes = 0;
+}
+
+AudioFormatType::~AudioFormatType()
+{
+    int s = m_audioEncoding.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_audioEncoding.takeAt(0));
+    }
+    delete m_audioTrackConfiguration;
+    s = m_audioTrack.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_audioTrack.takeAt(0));
+    }
+    delete m_technicalAttributes;
 }
 
 QString AudioFormatType::audioFormatId() const
@@ -456,6 +497,19 @@ DataFormatType::DataFormatType()
     m_technicalAttributes = 0;
 }
 
+DataFormatType::~DataFormatType()
+{
+    int s = m_captioningFormat.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_captioningFormat.takeAt(0));
+    }
+    s = m_ancillarityDataFormat.size();
+    for (int i=0; i < s; ++i) {
+        delete (m_ancillarityDataFormat.takeAt(0));
+    }
+    delete m_technicalAttributes;
+}
+
 QString DataFormatType::dataFormatId() const
 {
     return m_dataFormatId;
@@ -589,6 +643,13 @@ DocumentFormatType::DocumentFormatType()
     m_technicalAttributes = 0;
 }
 
+DocumentFormatType::~DocumentFormatType()
+{
+    delete m_width;
+    delete m_height;
+    delete m_technicalAttributes;
+}
+
 QString DocumentFormatType::formatId() const
 {
     return m_documentFormatId;
@@ -693,6 +754,53 @@ FormatType::FormatType()
     m_technicalAttributes = 0;
     m_dateCreated = 0;
     m_dateModified = 0;
+}
+
+FormatType::~FormatType()
+{
+    delete m_format;
+    delete m_width;
+    delete m_height;
+    int s = m_medium.size();
+    for (int i=0; i < s; ++i) {
+            delete (m_medium.takeAt(0));
+    }
+    s = m_mimeType.size();
+    for (int i=0; i < s; ++i) {
+            delete (m_mimeType.takeAt(0));
+    }
+    s = m_imageFormat.size();
+    for (int i=0; i < s; ++i) {
+            delete (m_imageFormat.takeAt(0));
+    }
+    s = m_videoFormat.size();
+    for (int i=0; i < s; ++i) {
+            delete (m_videoFormat.takeAt(0));
+    }
+    s = m_audioFormat.size();
+    for (int i=0; i < s; ++i) {
+            delete (m_audioFormat.takeAt(0));
+    }
+    s = m_containerFormat.size();
+    for (int i=0; i < s; ++i) {
+            delete (m_containerFormat.takeAt(0));
+    }
+    s = m_dataFormat.size();
+    for (int i=0; i < s; ++i) {
+            delete (m_dataFormat.takeAt(0));
+    }
+    s = m_signingFormat.size();
+    for (int i=0; i < s; ++i) {
+            delete (m_signingFormat.takeAt(0));
+    }
+    delete m_start;
+    delete m_end;
+    delete m_duration;
+    delete m_locator;
+    delete m_documentFormat;
+    delete m_technicalAttributes;
+    delete m_dateCreated;
+    delete m_dateModified;
 }
 
 QString FormatType::formatId() const
