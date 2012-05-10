@@ -9,21 +9,52 @@ TypeConverter::TypeConverter()
 
 QDateTime TypeConverter::stringToDate(const QString &date)
 {
+    if(date.isNull()){
+        m_errorMsg = "stringToDate received an empty string";
+        return QDateTime();
+    }else{
+        m_errorMsg = "-no errors-";
+    }
+
     // Schema date format: '-'? yyyy '-' mm '-' dd zzzzzz?
 
-    if (date[0] == '-') {
-        m_errorMsg = "B.C. years are considered invalid";
+    // Find the year and the number of digits used for the year
+    int i=0;
+    QString yearString;
+    if (date[i] == '-'){
+        yearString+="-";
+        i++;
+    }
+
+    while(date[i].isDigit()){
+        yearString+=date[i];
+        i++;
+    }
+
+    if(yearString.toInt() == 0){
+        m_errorMsg = "Dates in year '0' are considered invalid (see QDateTime documentation)";
         return QDateTime();
     }
 
-    if (date.length() < 10) {
-        m_errorMsg = "Invalid date length (considering a 4 digits year)";
+    if(i > 5 || ( i > 4 && yearString.toInt() > 0) ){
+        m_errorMsg = "Year can be of max 4 digits";
         return QDateTime();
     }
 
-    QDateTime dateTime=QDateTime::fromString(date.left(10),"yyyy-MM-dd");
+    QDateTime dateTime=QDateTime::fromString(date.mid(i,6),"-MM-dd");
 
-    if (date.length() == 10) {
+    //Set the correct year
+    int yearDiff=yearString.toInt() - dateTime.date().year();
+    qDebug() <<yearDiff <<" yearDiff........";
+    if(yearString.toInt() > 0)
+        dateTime=dateTime.addYears(  yearDiff );
+    else
+        dateTime=dateTime.addYears( yearDiff + 1);
+
+
+    i+=6;   // Add the length of "-MM-dd"
+
+    if (date.length() == i) {
         // Unspecified timezone
         dateTime.setTimeSpec(Qt::LocalTime);
     } else {
@@ -31,7 +62,7 @@ QDateTime TypeConverter::stringToDate(const QString &date)
         int hours;
         int minutes;
 
-        if(date[10] == 'Z'){
+        if(date[i] == 'Z'){
             // UTC time
             dateTime.setTimeSpec(Qt::UTC);
             hours = 0;
@@ -39,10 +70,10 @@ QDateTime TypeConverter::stringToDate(const QString &date)
         } else {
             // Offset from the UTC time
             dateTime.setTimeSpec(Qt::OffsetFromUTC);
-            hours = date.mid(10,3).toInt();
-            minutes = date.mid(14,2).toInt();
-            if (date[13] != ':') {
-                m_errorMsg = "Invalid hours/minutes separator: " + date[13].toAscii();
+            hours = date.mid(i,3).toInt();
+            minutes = date.mid(i+4,2).toInt();
+            if (date[i+3] != ':') {
+                m_errorMsg = "Invalid hours/minutes separator: " + date[i+3].toAscii();
                 return QDateTime();
             }
             if (hours < -14 || hours > 14) {
@@ -59,12 +90,7 @@ QDateTime TypeConverter::stringToDate(const QString &date)
             }
         }
 
-        //qDebug() <<"ora:" + QString::number(hours) + " minuti: " + QString::number(minutes);
-        //if(dateTime->isValid()==false) qDebug() <<"dateTime is invalid!";
-
         dateTime.setUtcOffset( (hours * 60 + minutes) * 60);
-
-        //if(dateTime->isValid()==false) qDebug() <<"dateTime is invalid!";
     }
 
     return dateTime;
@@ -72,6 +98,13 @@ QDateTime TypeConverter::stringToDate(const QString &date)
 
 QString TypeConverter::dateToString(const QDateTime &date)
 {
+    if(date.isNull()){
+        m_errorMsg = "dateToString received an empty object";
+        return QString();
+    }else{
+        m_errorMsg = "-no errors-";
+    }
+
     QString d(date.toString("yyyy-MM-dd"));
     int utcOffset = date.utcOffset();
 
@@ -102,6 +135,13 @@ QString TypeConverter::dateToString(const QDateTime &date)
 
 QDateTime TypeConverter::stringToDuration(const QString &duration)
 {
+    if(duration.isNull()){
+        m_errorMsg = "stringToDuration received an empty string";
+        return QDateTime();
+    }else{
+        m_errorMsg = "-no errors-";
+    }
+
     //Schema duration format: PnYnMnDTnHnMnS
 
     int i = 0;
@@ -120,38 +160,47 @@ QDateTime TypeConverter::stringToDuration(const QString &duration)
     int years = 0;
     int months = 0;
     int days = 0;
-    while (i < duration.length()) {
-
-        for (; i < duration.length() && duration[i].isDigit(); i++) {}
-
-        if(i < duration.length()){
-            switch(duration[i]) {
-            case 'Y':
-                break;
-            case 'M':
-                break;
-            case 'D':
-                break;
-            case 'T':
-                break;
-            default:
-
-            }
-
-            i++;
-        }
-
-
-    }
-
-
     int hours = 0;
     int minutes = 0;
     int seconds = 0;
+    while (i < duration.length()) {
+
+        QString buf;
+        for (; i < duration.length() && duration[i].isDigit(); i++) {
+            buf+=duration[i];
+        }
+
+        bool codeTAppeared = false;
+        if(i < duration.length()){
+            switch(duration[i]) {
+            case 'Y':
+                years=buf.toInt();
+                break;
+
+            case 'M':
+                months=buf.toInt();
+                break;
+
+            case 'D':
+                days=buf.toInt();
+                break;
+
+            case 'T':
+                codeTAppeared = true;
+                break;
+
+            default:
+                m_errorMsg = "Invalid duration string: " + duration;
+                return QDateTime();
+            }
 
 
+            return QDateTime();
+        }
+    }
 
-    return QDateTime(); //TODO
+    m_errorMsg = "Invalid duration string: " + duration;
+    return QDateTime();
 }
 
 QString TypeConverter::durationToString(const QDateTime &duration)
