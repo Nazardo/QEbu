@@ -1071,7 +1071,7 @@ DateType *EbuParser::parseDateType(const QDomElement &element)
          }
          date->alternative().append(alternative);
      }
-     return 0;
+     return date;
 }
 
 AlternativeType *EbuParser::parseAlternativeType(const QDomElement &element)
