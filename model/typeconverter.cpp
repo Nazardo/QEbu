@@ -11,7 +11,6 @@ QDateTime TypeConverter::stringToDate(const QString &date)
 {
     // Schema date format: '-'? yyyy '-' mm '-' dd zzzzzz?
 
-
     if (date[0] == '-') {
         m_errorMsg = "B.C. years are considered invalid";
         return QDateTime();
@@ -22,7 +21,7 @@ QDateTime TypeConverter::stringToDate(const QString &date)
         return QDateTime();
     }
 
-    QDateTime dateTime(QDateTime::fromString(date.left(10),"yyyy-MM-dd"));
+    QDateTime dateTime=QDateTime::fromString(date.left(10),"yyyy-MM-dd");
 
     if (date.length() == 10) {
         // Unspecified timezone
@@ -103,6 +102,55 @@ QString TypeConverter::dateToString(const QDateTime &date)
 
 QDateTime TypeConverter::stringToDuration(const QString &duration)
 {
+    //Schema duration format: PnYnMnDTnHnMnS
+
+    int i = 0;
+    bool negative = false;
+    if (duration[i] == '-') {
+        negative=true;
+        i++;
+    }
+
+    if (duration[i] != 'P') {
+        m_errorMsg = "Invalid duration string: " + duration;
+        return QDateTime();
+    }
+
+    i++;
+    int years = 0;
+    int months = 0;
+    int days = 0;
+    while (i < duration.length()) {
+
+        for (; i < duration.length() && duration[i].isDigit(); i++) {}
+
+        if(i < duration.length()){
+            switch(duration[i]) {
+            case 'Y':
+                break;
+            case 'M':
+                break;
+            case 'D':
+                break;
+            case 'T':
+                break;
+            default:
+
+            }
+
+            i++;
+        }
+
+
+    }
+
+
+    int hours = 0;
+    int minutes = 0;
+    int seconds = 0;
+
+
+
     return QDateTime(); //TODO
 }
 
