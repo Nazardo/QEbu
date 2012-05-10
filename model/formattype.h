@@ -18,7 +18,7 @@ class ImageFormatType
 {
 public:
     ImageFormatType();
-    enum Orientation {landscape, portrait};
+    enum Orientation { Landscape, Portrait };
 
     // Attributes
     QString imageFormatId() const;

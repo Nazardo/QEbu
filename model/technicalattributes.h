@@ -105,7 +105,7 @@ public:
     Int64();
     //Attributes
     long value() const;
-    void setValue(double value);
+    void setValue(long value);
 private:
     long m_value;
 };

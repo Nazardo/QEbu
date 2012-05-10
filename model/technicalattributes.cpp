@@ -210,7 +210,7 @@ long Int64::value() const
     return m_value;
 }
 
-void Int64::setValue(double value)
+void Int64::setValue(long value)
 {
     m_value = value;
 }

@@ -12,6 +12,7 @@ public:
     EbuParser();
     bool parseFromFile(QFile &file);
     QString errorMsg();
+    EbuCoreMainType *root();
 
 
 private:
