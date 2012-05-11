@@ -3,6 +3,7 @@
 
 #include <QDateTime>
 #include <QUrl>
+#include "model/durationtype.h"
 
 class TypeConverter
 {
@@ -10,11 +11,11 @@ public:
     static QDateTime stringToDate(const QString &date);
     static QString dateToString(const QDateTime &date);
 
-    static QDateTime stringToDuration(const QString &duration);
-    static QString durationToString(const QDateTime &duration);
+    static DurationType *stringToDuration(const QString &duration);
+    static QString durationToString(const DurationType &duration);
 
-    static QTime stringToTime(const QString &time);
-    static QString timeToString(const QTime &time);
+    static QDateTime stringToTime(const QString &time);
+    static QString timeToString(const QDateTime &time);
 
     static bool validateUri(const QString &uri);
 
