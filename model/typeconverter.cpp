@@ -263,62 +263,70 @@ QDateTime TypeConverter::stringToTime(const QString &time)
     int minutes = time.mid(3,2).toInt();
     int seconds = time.mid(6,2).toInt();
     int mseconds = 0;
-
-    int i = 8;
-    if (i < time.length() && time[i] == '.') {
-        QString buf;
-        for (i = 8; time[i].isDigit() && i < time.length(); i++) {
-            buf += time[i];
-        }
-        mseconds = buf.toInt();
-    }
-
     // Timezone datas will be stored in the year part of QDataTime
     int minutesUTCOffset = -1;
     int offsetSignFlag = 1;
     Qt::TimeSpec timeZone=Qt::LocalTime;
 
+    int i = 8;
     if (i < time.length()) {
 
-       if (time[i] == 'Z') {
-           // UTC time
-           timeZone = Qt::UTC;
-           minutesUTCOffset = -1;
+        // Milliseconds
+        if (time[i] == '.') {
+            QString buf;
+            for (i++; i < time.length() && time[i].isDigit(); i++)
+                buf += time[i];
+            mseconds = buf.toInt();
+        }
 
-       } else {
+        // Timezone datas (will be stored in the year part of QDataTime)
+        if (i < time.length()) {
 
-           if(time[i] == '-')
-               offsetSignFlag = 2;
-           i++;
-
-           // Offset from the UTC time
-           timeZone = Qt::OffsetFromUTC;
-           int hours = time.mid(i,2).toInt();
-           int minutes = time.mid(i+4,2).toInt();
-           minutesUTCOffset = hours*60 + minutes;
-           if(minutesUTCOffset == 0)
+           if (time[i] == 'Z') {
+               // UTC time
+               timeZone = Qt::UTC;
                minutesUTCOffset = -1;
 
-           if (time[i+3] != ':') {
-               m_errorMsg = "Invalid hours/minutes separator: " + time[i+3].toAscii();
-               return QDateTime();
-           }
-           if (hours < -14 || hours > 14) {
-               m_errorMsg = "Invalid hours value: "+ QString::number(hours);
-               return QDateTime();
-           }
-           if (minutes < 0 || minutes > 59) {
-               m_errorMsg = "Invalid minutes value: "+ QString::number(minutes);
-               return QDateTime();
-           }
-           if ((hours == 14 || hours == -14) && minutes != 0) {
-               m_errorMsg = "Invalid hours/minutes value: " + QString::number(hours) + "/" + QString::number(minutes);
-               return QDateTime();
-           }
-       }
-    }
+           } else {
 
-    return QDateTime(QDate(minutesUTCOffset,offsetSignFlag,1), QTime(hours,minutes,seconds,mseconds),timeZone);
+               if (time[i] == '-')
+                   offsetSignFlag = 2;
+               i++;
+
+               // Offset from the UTC time
+               timeZone = Qt::OffsetFromUTC;
+
+               int hours = time.mid(i,2).toInt();
+               int minutes = time.mid(i+4,2).toInt();
+               minutesUTCOffset = hours*60 + minutes;
+               if (minutesUTCOffset == 0)
+                   minutesUTCOffset = -1;
+
+               if (time[i+2] != ':') {
+                   m_errorMsg = "Invalid hours/minutes separator: " + time[i+2].toAscii();
+                   return QDateTime();
+               }
+
+               if (hours < -14 || hours > 14) {
+                   m_errorMsg = "Invalid hours value: "+ QString::number(hours);
+                   return QDateTime();
+               }
+
+               if (minutes < 0 || minutes > 59) {
+                   m_errorMsg = "Invalid minutes value: "+ QString::number(minutes);
+                   return QDateTime();
+               }
+
+               if ((hours == 14 || hours == -14) && minutes != 0) {
+                   m_errorMsg = "Invalid hours/minutes value: " + QString::number(hours) + "/" + QString::number(minutes);
+                   return QDateTime();
+               }
+           }
+        }
+    }
+    QDateTime dt = QDateTime(QDate(minutesUTCOffset,offsetSignFlag,1), QTime(hours,minutes,seconds,mseconds));
+    dt.setTimeSpec(timeZone);
+    return dt;
 }
 
 QString TypeConverter::timeToString(const QDateTime &time)
@@ -351,43 +359,46 @@ QString TypeConverter::timeToString(const QDateTime &time)
     if (mseconds > 0)
         timeString += "." + QString::number(mseconds);
 
-    if (time.timeSpec() != Qt::LocalTime) {
-       // Add the timezone
-        if (time.timeSpec() == Qt::UTC) {
-            timeString += "Z";
-        } else {
-            int offsetSignFlag = time.date().month();
+    switch (time.timeSpec()) {
+    case Qt::LocalTime: // Nothing to add
+        break;
 
-            switch (offsetSignFlag) {
-            case 1:
-                timeString += "+";
-                break;
-            case 2:
-                timeString += "-";
-                break;
-            default:
-                m_errorMsg = "Invalid month value, should be used as flag for the sign of timezone offset (1 or 2)";
-                return QString();
-            }
+    case Qt::UTC:
+        timeString += "Z";
+        break;
 
-            int minutesUTCOffset = time.date().year();
+    case Qt::OffsetFromUTC:
 
-            if(minutesUTCOffset <= 0) {
-                m_errorMsg = "Invalid year value, should be used as flag for the timezone offset (in minutes)";
-                return QString();
-            }
+        // Add the timezone
+        int offsetSignFlag = time.date().month();
 
-            int hoursOffset=minutesUTCOffset/60;
-            int minutesOffset=minutesUTCOffset%60;
-
-            if (hoursOffset < 10)
-                timeString += "0";
-            timeString += QString::number(hoursOffset) + ":";
-
-            if (minutesOffset < 10)
-                timeString += "0";
-            timeString += QString::number(minutesOffset);
+        switch (offsetSignFlag) {
+        case 1:
+            timeString += "+";
+            break;
+        case 2:
+            timeString += "-";
+            break;
+        default:
+            m_errorMsg = "Invalid month value, should be used as flag for the sign of timezone offset (1 or 2)";
+            return QString();
         }
+
+        int minutesUTCOffset = time.date().year();
+
+        if(minutesUTCOffset == -1)
+            minutesUTCOffset = 0;
+
+        int hoursOffset=minutesUTCOffset/60;
+        int minutesOffset=minutesUTCOffset%60;
+
+        if (hoursOffset < 10)
+            timeString += "0";
+        timeString += QString::number(hoursOffset) + ":";
+
+        if (minutesOffset < 10)
+            timeString += "0";
+        timeString += QString::number(minutesOffset);
     }
 
     return timeString;
