@@ -167,7 +167,8 @@ DurationType *TypeConverter::stringToDuration(const QString &duration)
         if (i < duration.length()) {
 
             if (codeTAppeared == false) {
-                // After T (PnYnMnD T nHnMnS)
+
+                // Before T (PnYnMnD T nHnMnS)
                 switch (duration[i].toAscii()) {
                 case 'Y':
                     durationType->setYears(buf.toInt());
@@ -192,7 +193,7 @@ DurationType *TypeConverter::stringToDuration(const QString &duration)
                 }
 
             } else {
-                // Before T (PnYnMnD T nHnMnS)
+                // After T (PnYnMnD T nHnMnS)
                 switch (duration[i].toAscii()) {
                 case 'H':
                     durationType->setHours(buf.toInt());
@@ -206,11 +207,11 @@ DurationType *TypeConverter::stringToDuration(const QString &duration)
                     // Decimal point may be present in Seconds value
                     durationType->setSeconds(buf.toInt());
                     buf="";
-                    for (i++; i < duration.length() && duration[i].isDigit(); i++) {
+                    for (i++; duration[i].isDigit() && i < duration.length(); i++) {
                         buf += duration[i];
                     }
 
-                    if (i < duration.length() || duration[i] != 'S') {
+                    if(duration[i] != 'S' || i >= duration.length()) {
                         m_errorMsg = "Error in duration, S not found after decimal point";
                         delete durationType;
                         return new DurationType();
@@ -237,15 +238,15 @@ DurationType *TypeConverter::stringToDuration(const QString &duration)
     return durationType;
 }
 
-QString TypeConverter::durationToString(const DurationType &duration)
+QString TypeConverter::durationToString(const DurationType *duration)
 {
-    if (duration.isNull()) {
-        m_errorMsg = "stringToDuration received an empty string";
+    if (duration->isNull()) {
+        m_errorMsg = "durationToString received an empty object";
         return QString();
     }
     m_errorMsg = "-no errors-";
 
-    return duration.toString();
+    return duration->toString();
 }
 
 QDateTime TypeConverter::stringToTime(const QString &time)
@@ -398,6 +399,12 @@ QDateTime TypeConverter::stringToTime(const QString &time)
 
 QString TypeConverter::timeToString(const QDateTime &time)
 {
+    if (time.isNull()) {
+        m_errorMsg = "timeToString received an empty object";
+        return QString();
+    }
+    m_errorMsg = "-no errors-";
+
     return QString(); //TODO
 }
 

@@ -12,7 +12,7 @@ public:
     static QString dateToString(const QDateTime &date);
 
     static DurationType *stringToDuration(const QString &duration);
-    static QString durationToString(const DurationType &duration);
+    static QString durationToString(const DurationType *duration);
 
     static QDateTime stringToTime(const QString &time);
     static QString timeToString(const QDateTime &time);

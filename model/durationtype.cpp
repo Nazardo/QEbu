@@ -1,4 +1,5 @@
 #include "durationtype.h"
+#include <QDebug>
 
 DurationType::DurationType(const bool &positive, const int &years, const int &months, const int &days, const int &hours, const int &minutes, const int &seconds, const int &mseconds)
 {
@@ -120,24 +121,26 @@ QString DurationType::toString() const
 
     durationString+="P";
     if (m_years != 0)
-        durationString += m_years + "Y";
+        durationString += QString::number(m_years) + "Y";
     if (m_months != 0)
-        durationString += m_months + "M";
+        durationString += QString::number(m_months) + "M";
     if (m_days != 0)
-        durationString += m_days + "D";
+        durationString += QString::number(m_days) + "D";
+
     if (m_hours != 0 || m_minutes != 0 || m_seconds != 0 || m_mseconds != 0) {
-        durationString += m_months + "T";
+        durationString += "T";
         if (m_hours != 0)
-            durationString += m_hours + "H";
+            durationString += QString::number(m_hours) + "H";
         if (m_minutes != 0)
-            durationString += m_minutes + "M";
+            durationString += QString::number(m_minutes) + "M";
         if (m_seconds != 0 || m_mseconds != 0) {
-            durationString += m_seconds;
-            if (m_seconds != 0 || m_mseconds != 0)
-                durationString += "." + m_mseconds;
+            durationString += QString::number(m_seconds);
+            if (m_mseconds != 0)
+                durationString += "." + QString::number(m_mseconds);
             durationString += "S";
         }
     }
 
     return durationString;
 }
+

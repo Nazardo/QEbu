@@ -25,7 +25,6 @@ public:
     void setSeconds(const int &seconds);
     int mseconds() const;
     void setMseconds(const int &mseconds);
-
     bool isValid() const;
     bool isNull() const;
     QString toString() const;
