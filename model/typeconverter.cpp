@@ -12,9 +12,8 @@ QDateTime TypeConverter::stringToDate(const QString &date)
     if(date.isNull()){
         m_errorMsg = "stringToDate received an empty string";
         return QDateTime();
-    }else{
-        m_errorMsg = "-no errors-";
     }
+    m_errorMsg = "-no errors-";
 
     // Schema date format: '-'? yyyy '-' mm '-' dd zzzzzz?
 
@@ -36,7 +35,7 @@ QDateTime TypeConverter::stringToDate(const QString &date)
         return QDateTime();
     }
 
-    if(i > 5 || ( i > 4 && yearString.toInt() > 0) ){
+    if(i > 5 || (i > 4 && yearString.toInt() > 0)){
         m_errorMsg = "Year can be of max 4 digits";
         return QDateTime();
     }
@@ -80,7 +79,7 @@ QDateTime TypeConverter::stringToDate(const QString &date)
                 m_errorMsg = "Invalid hours value: "+ QString::number(hours);
                 return QDateTime();
             }
-            if (minutes<0 || minutes>59) {
+            if (minutes < 0 || minutes > 59) {
                 m_errorMsg = "Invalid minutes value: "+ QString::number(minutes);
                 return QDateTime();
             }
@@ -90,7 +89,7 @@ QDateTime TypeConverter::stringToDate(const QString &date)
             }
         }
 
-        dateTime.setUtcOffset( (hours * 60 + minutes) * 60);
+        dateTime.setUtcOffset((hours * 60 + minutes) * 60);
     }
 
     return dateTime;
@@ -101,9 +100,8 @@ QString TypeConverter::dateToString(const QDateTime &date)
     if(date.isNull()){
         m_errorMsg = "dateToString received an empty object";
         return QString();
-    }else{
-        m_errorMsg = "-no errors-";
     }
+    m_errorMsg = "-no errors-";
 
     QString d(date.toString("yyyy-MM-dd"));
     int utcOffset = date.utcOffset();
@@ -135,20 +133,22 @@ QString TypeConverter::dateToString(const QDateTime &date)
 
 QDateTime TypeConverter::stringToDuration(const QString &duration)
 {
-    if(duration.isNull()){
+
+    if (duration.isNull()) {
         m_errorMsg = "stringToDuration received an empty string";
         return QDateTime();
-    }else{
-        m_errorMsg = "-no errors-";
     }
+    m_errorMsg = "-no errors-";
 
+    /* // duration schema type
     //Schema duration format: PnYnMnDTnHnMnS
 
     int i = 0;
     bool negative = false;
     if (duration[i] == '-') {
-        negative=true;
+        negative = true;
         i++;
+        qDebug() <<"WUT";
     }
 
     if (duration[i] != 'P') {
@@ -157,60 +157,302 @@ QDateTime TypeConverter::stringToDuration(const QString &duration)
     }
 
     i++;
-    int years = 0;
+    int years = 4712;   // Invalid year value (0 is not accepted by QDateTime, 4713 is the lower bound)
     int months = 0;
     int days = 0;
     int hours = 0;
     int minutes = 0;
     int seconds = 0;
+    int milliseconds = 0;
+    bool codeTAppeared = false;
     while (i < duration.length()) {
 
         QString buf;
         for (; i < duration.length() && duration[i].isDigit(); i++) {
-            buf+=duration[i];
+            buf += duration[i];
         }
 
-        bool codeTAppeared = false;
-        if(i < duration.length()){
-            switch(duration[i]) {
-            case 'Y':
-                years=buf.toInt();
-                break;
+        if (i < duration.length()) {
 
-            case 'M':
-                months=buf.toInt();
-                break;
+            if (codeTAppeared == false) {
+                // After T (PnYnMnD T nHnMnS)
+                switch (duration[i].toAscii()) {
+                case 'Y':
+                    years  =buf.toInt();
+                    break;
 
-            case 'D':
-                days=buf.toInt();
-                break;
+                case 'M':
+                    months = buf.toInt();
+                    break;
 
-            case 'T':
-                codeTAppeared = true;
-                break;
+                case 'D':
+                    days = buf.toInt();
+                    break;
 
-            default:
-                m_errorMsg = "Invalid duration string: " + duration;
-                return QDateTime();
+                case 'T':
+                    codeTAppeared = true;
+                    break;
+
+                default:
+                    m_errorMsg = "Invalid duration string: " + duration;
+                    return QDateTime();
+                }
+
+            } else {
+                // Before T (PnYnMnD T nHnMnS)
+                switch (duration[i].toAscii()) {
+                case 'H':
+                    hours = buf.toInt();
+                    break;
+
+                case 'M':
+                    minutes = buf.toInt();
+                    break;
+
+                case '.':
+                    // Decimal point may be present in Seconds value
+                    buf="";
+                    for (i++; i < duration.length() && duration[i].isDigit(); i++) {
+                        buf += duration[i];
+                    }
+
+                    if (i < duration.length() || duration[i] != 'S') {
+                        m_errorMsg = "Error in duration, S not found after decimal point";
+                        return QDateTime();
+                    }
+
+                    milliseconds = buf.toInt();
+                    break;
+
+                case 'S':
+                    seconds = buf.toInt();
+                    break;
+
+                default:
+                    m_errorMsg = "Invalid duration string: " + duration;
+                    return QDateTime();
+                }
+
             }
-
-
-            return QDateTime();
+            i++;
         }
     }
 
-    m_errorMsg = "Invalid duration string: " + duration;
+    if (negative) {
+        // Mark negative duration with a negative year
+        years = years*-1 +1;    // Must be incremented by 1
+    }
+
+    qDebug() <<years <<"Y";
+    qDebug() <<months <<"M";
+    qDebug() <<days <<"D";
+
+    QDateTime dateTime(QDate(years,months,days),QTime(hours,minutes,seconds,milliseconds));
+
+    qDebug() <<dateTime.date().year() <<"Y";
+    qDebug() <<dateTime.date().month() <<"M";
+    qDebug() <<dateTime.date().day() <<"D";
+
+    return dateTime;
+    */
     return QDateTime();
 }
 
 QString TypeConverter::durationToString(const QDateTime &duration)
 {
-    return QString(); //TODO
+    if (duration.isNull()) {
+        m_errorMsg = "stringToDuration received an empty string";
+        return QString();
+    }
+    m_errorMsg = "-no errors-";
+
+    /* //duration schema type
+    //Schema duration format: PnYnMnDTnHnMnS
+
+    int years = duration.date().year();
+    int months = duration.date().month();
+    int days = duration.date().day();
+    int hours = duration.time().hour();
+    int minutes = duration.time().minute();
+    int seconds = duration.time().second();
+    int milliseconds = duration.time().msec();
+
+    QString durationString;
+    if (years < 0) {
+        durationString+="-";
+        years *= -1;
+    }
+    durationString+="P";
+    if (years != 4712)  // Invalid year value
+        durationString += years + "Y";
+    if (months != 0)
+        durationString += months + "M";
+    if (days != 0)
+        durationString += days + "D";
+    if (hours != 0 || minutes != 0 || seconds != 0) {
+        durationString += months + "T";
+        if (hours != 0)
+            durationString += hours + "H";
+        if (minutes != 0)
+            durationString += minutes + "M";
+        if (seconds != 0 || milliseconds != 0) {
+            durationString += seconds;
+            if (seconds != 0 || milliseconds != 0)
+                durationString += "." + milliseconds;
+            durationString += "S";
+        }
+    }
+
+    return durationString;
+    */
+    return QString;
 }
 
 QTime TypeConverter::stringToTime(const QString &time)
 {
-    return QTime(); //TODO
+    if (time.isNull()) {
+        m_errorMsg = "stringToTime received an empty string";
+        return QTime();
+    }
+    m_errorMsg = "-no errors-";
+
+    // Time schama format: hh:mm:ss('.'s+)?(zzzzzz)?
+
+    int hours = time.mid(0,2).toInt();
+    int minutes = time.mid(3,2).toInt();
+    int seconds = time.mid(6,2).toInt();
+    QTime t(hours,minutes,seconds);
+    int milliseconds = 0;
+    int i=9;
+    if (time.length() > 10) {
+       while (i < time.length() && time[i].isDigit())
+           i++;
+
+       milliseconds = time.mid(9,i-9).toInt();
+
+       if(time[i] == 'Z'){
+           // UTC time
+           t..setTimeSpec(Qt::UTC);
+           hours = 0;
+           minutes = 0;
+       } else {
+           // Offset from the UTC time
+           dateTime.setTimeSpec(Qt::OffsetFromUTC);
+           hours = date.mid(i,3).toInt();
+           minutes = date.mid(i+4,2).toInt();
+           if (date[i+3] != ':') {
+               m_errorMsg = "Invalid hours/minutes separator: " + date[i+3].toAscii();
+               return QDateTime();
+           }
+           if (hours < -14 || hours > 14) {
+               m_errorMsg = "Invalid hours value: "+ QString::number(hours);
+               return QDateTime();
+           }
+           if (minutes < 0 || minutes > 59) {
+               m_errorMsg = "Invalid minutes value: "+ QString::number(minutes);
+               return QDateTime();
+           }
+           if ((hours == 14 || hours == -14) && minutes != 0) {
+               m_errorMsg = "Invalid hours/minutes value: " + QString::number(hours) + "/" + QString::number(minutes);
+               return QDateTime();
+           }
+       }
+
+       dateTime.setUtcOffset((hours * 60 + minutes) * 60);
+    }
+
+
+    while (i < duration.length()) {
+
+        QString buf;
+        for (; i < duration.length() && duration[i].isDigit(); i++) {
+            buf += duration[i];
+        }
+
+        if (i < duration.length()) {
+
+            if (codeTAppeared == false) {
+                // After T (PnYnMnD T nHnMnS)
+                switch (duration[i].toAscii()) {
+                case 'Y':
+                    years  =buf.toInt();
+                    break;
+
+                case 'M':
+                    months = buf.toInt();
+                    break;
+
+                case 'D':
+                    days = buf.toInt();
+                    break;
+
+                case 'T':
+                    codeTAppeared = true;
+                    break;
+
+                default:
+                    m_errorMsg = "Invalid duration string: " + duration;
+                    return QDateTime();
+                }
+
+            } else {
+                // Before T (PnYnMnD T nHnMnS)
+                switch (duration[i].toAscii()) {
+                case 'H':
+                    hours = buf.toInt();
+                    break;
+
+                case 'M':
+                    minutes = buf.toInt();
+                    break;
+
+                case '.':
+                    // Decimal point may be present in Seconds value
+                    buf="";
+                    for (i++; i < duration.length() && duration[i].isDigit(); i++) {
+                        buf += duration[i];
+                    }
+
+                    if (i < duration.length() || duration[i] != 'S') {
+                        m_errorMsg = "Error in duration, S not found after decimal point";
+                        return QDateTime();
+                    }
+
+                    milliseconds = buf.toInt();
+                    break;
+
+                case 'S':
+                    seconds = buf.toInt();
+                    break;
+
+                default:
+                    m_errorMsg = "Invalid duration string: " + duration;
+                    return QDateTime();
+                }
+
+            }
+            i++;
+        }
+    }
+
+    if (negative) {
+        // Mark negative duration with a negative year
+        years = years*-1 +1;    // Must be incremented by 1
+    }
+
+    qDebug() <<years <<"Y";
+    qDebug() <<months <<"M";
+    qDebug() <<days <<"D";
+
+    QDateTime dateTime(QDate(years,months,days),QTime(hours,minutes,seconds,milliseconds));
+
+    qDebug() <<dateTime.date().year() <<"Y";
+    qDebug() <<dateTime.date().month() <<"M";
+    qDebug() <<dateTime.date().day() <<"D";
+
+    return dateTime;
+    */
+    return QDateTime();
 }
 
 QString TypeConverter::timeToString(const QTime &time)
