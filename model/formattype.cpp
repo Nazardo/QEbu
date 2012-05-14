@@ -650,7 +650,7 @@ DocumentFormatType::~DocumentFormatType()
     delete m_technicalAttributes;
 }
 
-QString DocumentFormatType::formatId() const
+QString DocumentFormatType::documentFormatId() const
 {
     return m_documentFormatId;
 }

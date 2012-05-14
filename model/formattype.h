@@ -294,7 +294,7 @@ public:
     DocumentFormatType();
     ~DocumentFormatType();
     // Attributes
-    QString formatId() const;
+    QString documentFormatId() const;
     void setDocumentFormatId(const QString &formatId);
     QString documentFormatName() const;
     void setDocumentFormatName(const QString &documentFormatName);
