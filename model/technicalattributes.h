@@ -141,7 +141,7 @@ public:
     quint32 value() const;
     void setValue(quint32 value);
 private:
-    quin32 m_value;
+    quint32 m_value;
 };
 
 class UInt64 : public TypeGroup
