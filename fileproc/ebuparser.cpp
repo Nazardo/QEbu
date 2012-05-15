@@ -2695,21 +2695,27 @@ TimeType *EbuParser::parseTimeType(const QDomElement &element)
 
     // Get attributes.
     bool ok;
-    QString timeCode = element.attribute("timeCode");
+    QString timeCode = element.elementsByTagName("timeCode").at(0).toElement().text();
     if(!timeCode.isEmpty())
         time->setTimecode(timeCode);
-    unsigned int editRate = element.attribute("ediRate").toUInt(&ok, 10);
-    if(ok)
-        time->setEditRate(editRate);
-    unsigned int factorNumerator = element.attribute("factorNumerator").toUInt(&ok, 10);
-    if(ok)
-        time->setFactorNumerator(factorNumerator);
-    unsigned int factorDenominator = element.attribute("factorDenominator").toUInt(&ok, 10);
-    if(ok)
-        time->setFactorDenominator(factorDenominator);
-
+    QString normalPlayTime = element.elementsByTagName("normalPlayTime").at(0).toElement().text();
+    if(!normalPlayTime.isEmpty())
+        time->setNormalPlayTime(TypeConverter::stringToTime(normalPlayTime));
+    QDomElement unit = element.elementsByTagName("editUnitNumber").at(0).toElement();
+    if(!unit.isNull()) {
+        unsigned int editRate = element.elementsByTagName("editRate").at(0).toElement().text().toUInt(&ok, 10);
+        if(ok)
+            time->setEditRate(editRate);
+        unsigned int factorNumerator = unit.attribute("factorNumerator").toUInt(&ok, 10);
+        if(ok)
+            time->setFactorNumerator(factorNumerator);
+        unsigned int factorDenominator = unit.attribute("factorDenominator").toUInt(&ok, 10);
+        if(ok)
+            time->setFactorDenominator(factorDenominator);
+    }
+    QDomElement timeEl = element.elementsByTagName("time").at(0).toElement();
     FormatGroup *t = new FormatGroup();
-    parseFormatGroup(element, t);
+    parseFormatGroup(timeEl, t);
     time->setTime(t);
 
     return time;
@@ -2726,21 +2732,27 @@ DurationType *EbuParser::parseDurationType(const QDomElement &element)
 
     // Get attributes.
     bool ok;
-    QString timeCode = element.attribute("timeCode");
+    QString timeCode = element.elementsByTagName("timeCode").at(0).toElement().text();
     if(!timeCode.isEmpty())
         duration->setTimecode(timeCode);
-    unsigned int editRate = element.attribute("ediRate").toUInt(&ok, 10);
-    if(ok)
-        duration->setEditRate(editRate);
-    unsigned int factorNumerator = element.attribute("factorNumerator").toUInt(&ok, 10);
-    if(ok)
-        duration->setFactorNumerator(factorNumerator);
-    unsigned int factorDenominator = element.attribute("factorDenominator").toUInt(&ok, 10);
-    if(ok)
-        duration->setFactorDenominator(factorDenominator);
-
+    QString normalPlayTime = element.elementsByTagName("normalPlayTime").at(0).toElement().text();
+    if(!normalPlayTime.isEmpty())
+        duration->setNormalPlayTime(TypeConverter::stringToDuration(normalPlayTime));
+    QDomElement unit = element.elementsByTagName("editUnitNumber").at(0).toElement();
+    if(!unit.isNull()) {
+        unsigned int editRate = element.elementsByTagName("editRate").at(0).toElement().text().toUInt(&ok, 10);
+        if(ok)
+            duration->setEditRate(editRate);
+        unsigned int factorNumerator = unit.attribute("factorNumerator").toUInt(&ok, 10);
+        if(ok)
+            duration->setFactorNumerator(factorNumerator);
+        unsigned int factorDenominator = unit.attribute("factorDenominator").toUInt(&ok, 10);
+        if(ok)
+            duration->setFactorDenominator(factorDenominator);
+    }
+    QDomElement timeEl = element.elementsByTagName("time").at(0).toElement();
     FormatGroup *t = new FormatGroup();
-    parseFormatGroup(element, t);
+    parseFormatGroup(timeEl, t);
     duration->setTime(t);
 
     return duration;

@@ -28,7 +28,7 @@ TimeType::TimeType(const unsigned int &editRate, const unsigned int &factorNumer
 TimeType::TimeType(const QString &timeString, FormatGroup *time)
 {
     m_timeTypeRepresentation = TimeType::enumTime;
-    m_timeString = timeString;
+    m_timeValue = timeString;
     m_time = time;
 }
 
@@ -92,15 +92,25 @@ void TimeType::setFactorDenominator(unsigned int factorDenominator)
     m_factorDenominator = factorDenominator;
 }
 
-QString TimeType::timeString() const
+unsigned long TimeType::editUnitNumberValue() const
 {
-    return m_timeString;
+    return m_editUnitNumberValue;
 }
 
-void TimeType::setTimeString(const QString &timeString)
+void TimeType::setEditUnitNumberValue(unsigned long editUnitNumberValue)
+{
+    m_editUnitNumberValue = editUnitNumberValue;
+}
+
+QString TimeType::timeValue() const
+{
+    return m_timeValue;
+}
+
+void TimeType::setTimeValue(const QString &timeString)
 {
     m_timeTypeRepresentation = TimeType::enumTime;
-    m_timeString = timeString;
+    m_timeValue = timeString;
 }
 
 FormatGroup *TimeType::time() const

@@ -25,7 +25,7 @@ public:
     TimeType(const unsigned int &editRate,
              const unsigned int &factorNumerator,
              const unsigned int &factorDenominator);
-    TimeType(const QString &timeString, FormatGroup *time);
+    TimeType(const QString &timeValue, FormatGroup *time);
     ~TimeType();
 
     enum TimeTypeRepresentation timeTypeRepresentation() const;
@@ -40,8 +40,10 @@ public:
     void setFactorNumerator(unsigned int factorNumerator);
     unsigned int factorDenominator() const;
     void setFactorDenominator(unsigned int factorDenominator);
-    QString timeString() const;
-    void setTimeString(const QString &timeString);
+    unsigned long editUnitNumberValue() const;
+    void setEditUnitNumberValue(unsigned long editUnitNumberValue);
+    QString timeValue() const;
+    void setTimeValue(const QString &timeValue);
     FormatGroup *time() const;
     void setTime(FormatGroup *time);
 
@@ -55,8 +57,9 @@ private:
     unsigned int m_editRate;
     unsigned int m_factorNumerator;
     unsigned int m_factorDenominator;
+    unsigned long m_editUnitNumberValue;
 
-    QString m_timeString;
+    QString m_timeValue;
     FormatGroup *m_time;
 };
 

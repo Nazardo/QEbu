@@ -28,7 +28,7 @@ DurationType::DurationType(const unsigned int &editRate, const unsigned int &fac
 DurationType::DurationType(const QString &timeString, FormatGroup *time)
 {
     m_durationTypeRepresentation = DurationType::enumTime;
-    m_timeString = timeString;
+    m_timeValue = timeString;
     m_time = time;
 }
 
@@ -103,15 +103,25 @@ void DurationType::setFactorDenominator(unsigned int factorDenominator)
     m_factorDenominator = factorDenominator;
 }
 
-QString DurationType::timeString() const
+unsigned long DurationType::editUnitNumberValue() const
 {
-    return m_timeString;
+    return m_editUnitNumberValue;
 }
 
-void DurationType::setTimeString(const QString &timeString)
+void DurationType::setEditUnitNumberValue(unsigned long editUnitNumberValue)
+{
+    m_editUnitNumberValue = editUnitNumberValue;
+}
+
+QString DurationType::timeValue() const
+{
+    return m_timeValue;
+}
+
+void DurationType::setTimeValue(const QString &timeString)
 {
     m_durationTypeRepresentation = DurationType::enumTime;
-    m_timeString = timeString;
+    m_timeValue = timeString;
 }
 
 FormatGroup *DurationType::time() const
