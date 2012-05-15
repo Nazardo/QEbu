@@ -943,12 +943,12 @@ void FormatType::setEnd(TimeType *end)
     m_end = end;
 }
 
-TimeType *FormatType::duration() const
+DurationType *FormatType::duration() const
 {
     return m_duration;
 }
 
-void FormatType::setDuration(TimeType *duration)
+void FormatType::setDuration(DurationType *duration)
 {
     m_duration = duration;
 }

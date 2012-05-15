@@ -44,6 +44,7 @@ QString TimeType::timecode() const
 
 void TimeType::setTimecode(const QString &timecode)
 {
+    m_timeTypeRepresentation = TimeType::enumTimecode;
     m_timecode = timecode;
 }
 
@@ -54,6 +55,7 @@ QDateTime TimeType::normalPlayTime() const
 
 void TimeType::setNormalPlayTime(const QDateTime &normalPlayTime)
 {
+    m_timeTypeRepresentation = TimeType::enumNormalPlayTime;
     m_normalPlayTime = normalPlayTime;
 }
 
@@ -64,6 +66,7 @@ unsigned int TimeType::editRate() const
 
 void TimeType::setEditRate(unsigned int editRate)
 {
+    m_timeTypeRepresentation = TimeType::enumEditUnitNumber;
     m_editRate = editRate;
 }
 
@@ -74,6 +77,7 @@ unsigned int TimeType::factorNumerator() const
 
 void TimeType::setFactorNumerator(unsigned int factorNumerator)
 {
+    m_timeTypeRepresentation = TimeType::enumEditUnitNumber;
     m_factorNumerator = factorNumerator;
 }
 
@@ -84,7 +88,19 @@ unsigned int TimeType::factorDenominator() const
 
 void TimeType::setFactorDenominator(unsigned int factorDenominator)
 {
+    m_timeTypeRepresentation = TimeType::enumEditUnitNumber;
     m_factorDenominator = factorDenominator;
+}
+
+QString TimeType::timeString() const
+{
+    return m_timeString;
+}
+
+void TimeType::setTimeString(const QString &timeString)
+{
+    m_timeTypeRepresentation = TimeType::enumTime;
+    m_timeString = timeString;
 }
 
 FormatGroup *TimeType::time() const
@@ -94,6 +110,8 @@ FormatGroup *TimeType::time() const
 
 void TimeType::setTime(FormatGroup *time)
 {
+    m_timeTypeRepresentation = TimeType::enumTime;
+    delete m_time;
     m_time = time;
 }
 

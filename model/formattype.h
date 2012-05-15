@@ -3,16 +3,17 @@
 
 #include <QList>
 #include <QString>
+#include "timetype.h"
+#include "durationtype.h"
 #include "entitytype.h"
 #include "lengthtype.h"
 #include "dategroup.h"
 #include "formatgroup.h"
 #include "typegroup.h"
-#include "timetype.h"
 #include "technicalattributes.h"
-#include "dategroup.h"
 
 class TimeType;
+class DurationType;
 
 class ImageFormatType
 {
@@ -364,8 +365,8 @@ public:
     void setStart(TimeType *start);
     TimeType *end() const;
     void setEnd(TimeType *end);
-    TimeType *duration() const;
-    void setDuration(TimeType *duration);
+    DurationType *duration() const;
+    void setDuration(DurationType *duration);
     long fileSize() const;
     void setFileSize(const long &fileSize);
     QString fileName() const;
@@ -402,7 +403,7 @@ private:
     QList<SigningFormatType*> m_signingFormat;
     TimeType *m_start;
     TimeType *m_end;
-    TimeType *m_duration;
+    DurationType *m_duration;
     long m_fileSize;
     QString m_fileName;
     TypeGroup *m_locator;

@@ -6,6 +6,7 @@
 #include "formattype.h"
 
 class FormatType;
+class FormatGroup;
 
 class TimeType
 {
@@ -40,7 +41,7 @@ public:
     unsigned int factorDenominator() const;
     void setFactorDenominator(unsigned int factorDenominator);
     QString timeString() const;
-    void setTimeString(QString time);
+    void setTimeString(const QString &timeString);
     FormatGroup *time() const;
     void setTime(FormatGroup *time);
 

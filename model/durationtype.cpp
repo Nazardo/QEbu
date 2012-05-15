@@ -32,6 +32,7 @@ DurationType::DurationType(const QString &timeString, FormatGroup *time)
     m_time = time;
 }
 
+
 DurationType::~DurationType()
 {
     delete m_time;
@@ -44,6 +45,7 @@ QString DurationType::timecode() const
 
 void DurationType::setTimecode(const QString &timecode)
 {
+    m_durationTypeRepresentation = DurationType::enumTimecode;
     m_timecode = timecode;
 }
 
@@ -54,6 +56,7 @@ Duration DurationType::normalPlayTime() const
 
 void DurationType::setNormalPlayTime(const Duration &normalPlayTime)
 {
+    m_durationTypeRepresentation = DurationType::enumNormalPlayTime;
     m_normalPlayTime = normalPlayTime;
 }
 
@@ -64,6 +67,7 @@ unsigned int DurationType::editRate() const
 
 void DurationType::setEditRate(unsigned int editRate)
 {
+    m_durationTypeRepresentation = DurationType::enumEditUnitNumber;
     m_editRate = editRate;
 }
 
@@ -74,6 +78,7 @@ unsigned int DurationType::factorNumerator() const
 
 void DurationType::setFactorNumerator(unsigned int factorNumerator)
 {
+    m_durationTypeRepresentation = DurationType::enumEditUnitNumber;
     m_factorNumerator = factorNumerator;
 }
 
@@ -84,7 +89,19 @@ unsigned int DurationType::factorDenominator() const
 
 void DurationType::setFactorDenominator(unsigned int factorDenominator)
 {
+    m_durationTypeRepresentation = DurationType::enumEditUnitNumber;
     m_factorDenominator = factorDenominator;
+}
+
+QString DurationType::timeString() const
+{
+    return m_timeString;
+}
+
+void DurationType::setTimeString(const QString &timeString)
+{
+    m_durationTypeRepresentation = DurationType::enumTime;
+    m_timeString = timeString;
 }
 
 FormatGroup *DurationType::time() const
@@ -94,6 +111,7 @@ FormatGroup *DurationType::time() const
 
 void DurationType::setTime(FormatGroup *time)
 {
+    m_durationTypeRepresentation = DurationType::enumTime;
     delete m_time;
     m_time = time;
 }

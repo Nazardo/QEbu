@@ -18,6 +18,7 @@ private:
     QDomElement serializeAudioTrack(AudioTrackType *);
     QDomElement serializeDocumentFormat(DocumentFormatType *);
     QDomElement serializeTime(TimeType *);
+    QDomElement serializeDuration(DurationType *duration);
     QDomElement serializeTemporal(TemporalType *);
     QDomElement serializeLocation(LocationType *);
     QDomElement serializeCoordinates(CoordinatesType *);

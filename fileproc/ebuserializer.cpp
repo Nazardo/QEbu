@@ -434,6 +434,41 @@ QDomElement EbuSerializer::serializeTime(TimeType *time)
     return t;
 }
 
+QDomElement EbuSerializer::serializeDuration(DurationType *duration)
+{
+    QDomElement d = m_doc.createElement(" ");
+
+    if(!duration->timecode().isEmpty()) {
+        QDomElement e = m_doc.createElement(" ");
+        QDomText textNode = m_doc.createTextNode(duration->timecode());
+        e.appendChild(textNode);
+        e.setTagName("timecode");
+        d.appendChild(e);
+    }
+    if(!duration->normalPlayTime().isValid()) {
+        QDomElement e = m_doc.createElement(" ");
+        QDomText textNode = m_doc.createTextNode(duration->timecode());
+        e.appendChild(textNode);
+        e.setTagName("normalPlayTime");
+        d.appendChild(e);
+    }
+    if(true) {
+        QDomElement e = m_doc.createElement(" ");
+        e.setTagName("editUnitNumber");
+        e.setAttribute("editRate", duration->editRate());
+        e.setAttribute("factorNumerator", duration->factorNumerator());
+        e.setAttribute("factorDenominator", duration->factorDenominator());
+        d.appendChild(e);
+    }
+    if(!duration->time()) {
+        QDomElement e = m_doc.createElement(" ");
+        serializeFormatGroup(duration->time(), &e);
+        e.setTagName("time");
+        d.appendChild(e);
+    }
+    return d;
+}
+
 QDomElement EbuSerializer::serializeTemporal(TemporalType *temporal)
 {
     QDomElement t = m_doc.createElement(" ");
@@ -1070,7 +1105,7 @@ QDomElement EbuSerializer::serializeFormat(FormatType *format)
         f.appendChild(e);
     }
     if(format->duration()) {
-        QDomElement e = serializeTime(format->duration());
+        QDomElement e = serializeDuration(format->duration());
         e.setTagName("duration");
         f.appendChild(e);
     }

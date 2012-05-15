@@ -6,6 +6,8 @@
 #include "formattype.h"
 #include "duration.h"
 
+class FormatGroup;
+
 class DurationType
 {
 public:
@@ -39,7 +41,7 @@ public:
     unsigned int factorDenominator() const;
     void setFactorDenominator(unsigned int factorDenominator);
     QString timeString() const;
-    void setTimeString(QString time);
+    void setTimeString(const QString &timeString);
     FormatGroup *time() const;
     void setTime(FormatGroup *time);
 
