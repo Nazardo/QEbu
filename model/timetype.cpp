@@ -5,11 +5,31 @@ TimeType::TimeType()
     m_time = 0;
 }
 
-TimeType::TimeType(const QString &timecode,
-                   const QTime &normalPlayTime)
-    : m_timecode(timecode), m_normalPlayTime(normalPlayTime)
+TimeType::TimeType(const QString &timecode)
 {
-    m_time = 0;
+    m_timeTypeRepresentation = TimeType::enumTimecode;
+    m_timecode = timecode;
+}
+
+TimeType::TimeType(const QDateTime &normalPlayTime)
+{
+    m_timeTypeRepresentation = TimeType::enumNormalPlayTime;
+    m_normalPlayTime = normalPlayTime;
+}
+
+TimeType::TimeType(const unsigned int &editRate, const unsigned int &factorNumerator, const unsigned int &factorDenominator)
+{
+    m_timeTypeRepresentation = TimeType::enumEditUnitNumber;
+    m_editRate = editRate;
+    m_factorNumerator = factorNumerator;
+    m_factorDenominator = factorDenominator;
+}
+
+TimeType::TimeType(const QString &timeString, FormatGroup *time)
+{
+    m_timeTypeRepresentation = TimeType::enumTime;
+    m_timeString = timeString;
+    m_time = time;
 }
 
 TimeType::~TimeType()
@@ -27,12 +47,12 @@ void TimeType::setTimecode(const QString &timecode)
     m_timecode = timecode;
 }
 
-QTime TimeType::normalPlayTime() const
+QDateTime TimeType::normalPlayTime() const
 {
     return m_normalPlayTime;
 }
 
-void TimeType::setNormalPlayTime(const QTime &normalPlayTime)
+void TimeType::setNormalPlayTime(const QDateTime &normalPlayTime)
 {
     m_normalPlayTime = normalPlayTime;
 }
