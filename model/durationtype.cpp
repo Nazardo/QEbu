@@ -1,146 +1,99 @@
 #include "durationtype.h"
-#include <QDebug>
 
-DurationType::DurationType(const bool &positive, const int &years, const int &months, const int &days, const int &hours, const int &minutes, const int &seconds, const int &mseconds)
+DurationType::DurationType()
 {
-    m_positive = positive;
-    m_years = years;
-    m_months = months;
-    m_days = days;
-    m_hours = hours;
-    m_minutes = minutes;
-    m_seconds = seconds;
-    m_mseconds = mseconds;
+    m_time = 0;
 }
 
-bool DurationType::positive() const
+DurationType::DurationType(const QString &timecode)
 {
-    return m_positive;
+    m_durationTypeRepresentation = DurationType::enumTimecode;
+    m_timecode = timecode;
 }
 
-void DurationType::setPositive(const bool &positive)
+DurationType::DurationType(const Duration &normalPlayTime)
 {
-    m_positive = positive;
+    m_durationTypeRepresentation = DurationType::enumNormalPlayTime;
+    m_normalPlayTime = normalPlayTime;
 }
 
-int DurationType::years() const
+DurationType::DurationType(const unsigned int &editRate, const unsigned int &factorNumerator, const unsigned int &factorDenominator)
 {
-    return m_years;
+    m_durationTypeRepresentation = DurationType::enumEditUnitNumber;
+    m_editRate = editRate;
+    m_factorNumerator = factorNumerator;
+    m_factorDenominator = factorDenominator;
 }
 
-void DurationType::setYears(const int &years)
+DurationType::DurationType(const QString &timeString, FormatGroup *time)
 {
-    m_years = years;
+    m_durationTypeRepresentation = DurationType::enumTime;
+    m_timeString = timeString;
+    m_time = time;
 }
 
-int DurationType::months() const
+DurationType::~DurationType()
 {
-    return m_months;
+    delete m_time;
 }
 
-void DurationType::setMonths(const int &months)
+QString DurationType::timecode() const
 {
-    m_months = months;
+    return m_timecode;
 }
 
-int DurationType::days() const
+void DurationType::setTimecode(const QString &timecode)
 {
-    return m_days;
+    m_timecode = timecode;
 }
 
-void DurationType::setDays(const int &days)
+Duration DurationType::normalPlayTime() const
 {
-    m_days = days;
+    return m_normalPlayTime;
 }
 
-int DurationType::hours() const
+void DurationType::setNormalPlayTime(const Duration &normalPlayTime)
 {
-    return m_hours;
+    m_normalPlayTime = normalPlayTime;
 }
 
-void DurationType::setHours(const int &hours)
+unsigned int DurationType::editRate() const
 {
-    m_hours = hours;
+    return m_editRate;
 }
 
-int DurationType::minutes() const
+void DurationType::setEditRate(unsigned int editRate)
 {
-    return m_minutes;
+    m_editRate = editRate;
 }
 
-void DurationType::setMinutes(const int &minutes)
+unsigned int DurationType::factorNumerator() const
 {
-    m_minutes = minutes;
+    return m_factorNumerator;
 }
 
-int DurationType::seconds() const
+void DurationType::setFactorNumerator(unsigned int factorNumerator)
 {
-    return m_seconds;
+    m_factorNumerator = factorNumerator;
 }
 
-void DurationType::setSeconds(const int &seconds)
+unsigned int DurationType::factorDenominator() const
 {
-    m_seconds = seconds;
+    return m_factorDenominator;
 }
 
-int DurationType::mseconds() const
+void DurationType::setFactorDenominator(unsigned int factorDenominator)
 {
-    return m_mseconds;
+    m_factorDenominator = factorDenominator;
 }
 
-void DurationType::setMseconds(const int &mseconds)
+FormatGroup *DurationType::time() const
 {
-    m_mseconds = mseconds;
+    return m_time;
 }
 
-bool DurationType::isValid() const
+void DurationType::setTime(FormatGroup *time)
 {
-    return !isNull();
+    delete m_time;
+    m_time = time;
 }
-
-bool DurationType::isNull() const
-{
-    if (m_years != 0
-            || m_months != 0
-            || m_days != 0
-            || m_hours != 0
-            || m_minutes != 0
-            || m_seconds != 0
-            || m_mseconds != 0)
-        return false;
-    return true;
-}
-
-QString DurationType::toString() const
-{
-    //Schema duration format: PnYnMnDTnHnMnS
-
-    QString durationString;
-    if (!m_positive)
-        durationString+="-";
-
-    durationString+="P";
-    if (m_years != 0)
-        durationString += QString::number(m_years) + "Y";
-    if (m_months != 0)
-        durationString += QString::number(m_months) + "M";
-    if (m_days != 0)
-        durationString += QString::number(m_days) + "D";
-
-    if (m_hours != 0 || m_minutes != 0 || m_seconds != 0 || m_mseconds != 0) {
-        durationString += "T";
-        if (m_hours != 0)
-            durationString += QString::number(m_hours) + "H";
-        if (m_minutes != 0)
-            durationString += QString::number(m_minutes) + "M";
-        if (m_seconds != 0 || m_mseconds != 0) {
-            durationString += QString::number(m_seconds);
-            if (m_mseconds != 0)
-                durationString += "." + QString::number(m_mseconds);
-            durationString += "S";
-        }
-    }
-
-    return durationString;
-}
-

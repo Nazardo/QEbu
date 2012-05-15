@@ -15,6 +15,7 @@ HEADERS += \
     model/lengthtype.h \
     model/timetype.h \
     model/typeconverter.h \
+    model/duration.h \
     model/durationtype.h
 
 SOURCES += \
@@ -34,4 +35,5 @@ SOURCES += \
     model/lengthtype.cpp \
     model/timetype.cpp \
     model/typeconverter.cpp \
+    model/duration.cpp \
     model/durationtype.cpp

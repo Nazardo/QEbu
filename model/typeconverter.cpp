@@ -44,7 +44,6 @@ QDateTime TypeConverter::stringToDate(const QString &date)
 
     //Set the correct year
     int yearDiff=yearString.toInt() - dateTime.date().year();
-    qDebug() <<yearDiff <<" yearDiff........";
     if(yearString.toInt() > 0)
         dateTime=dateTime.addYears(  yearDiff );
     else
@@ -131,28 +130,28 @@ QString TypeConverter::dateToString(const QDateTime &date)
     return d;
 }
 
-DurationType *TypeConverter::stringToDuration(const QString &duration)
+Duration *TypeConverter::stringToDuration(const QString &duration)
 {
 
     if (duration.isNull()) {
         m_errorMsg = "stringToDuration received an empty string";
-        return new DurationType();
+        return new Duration();
     }
     m_errorMsg = "-no errors-";
 
     //Schema duration format: PnYnMnDTnHnMnS
 
-    DurationType *durationType = new DurationType();
+    Duration *d = new Duration();
     int i = 0;
     if (duration[i] == '-') {
-        durationType->setPositive(false);
+        d->setPositive(false);
         i++;
     }
 
     if (duration[i] != 'P') {
         m_errorMsg = "Invalid duration string: " + duration;
-        delete durationType;
-        return new DurationType();
+        delete d;
+        return new Duration();
     }
 
     i++;
@@ -171,15 +170,15 @@ DurationType *TypeConverter::stringToDuration(const QString &duration)
                 // Before T (PnYnMnD T nHnMnS)
                 switch (duration[i].toAscii()) {
                 case 'Y':
-                    durationType->setYears(buf.toInt());
+                    d->setYears(buf.toInt());
                     break;
 
                 case 'M':
-                    durationType->setMonths(buf.toInt());
+                    d->setMonths(buf.toInt());
                     break;
 
                 case 'D':
-                    durationType->setDays(buf.toInt());
+                    d->setDays(buf.toInt());
                     break;
 
                 case 'T':
@@ -188,24 +187,24 @@ DurationType *TypeConverter::stringToDuration(const QString &duration)
 
                 default:
                     m_errorMsg = "Invalid duration string: " + duration;
-                    delete durationType;
-                    return new DurationType();
+                    delete d;
+                    return new Duration();
                 }
 
             } else {
                 // After T (PnYnMnD T nHnMnS)
                 switch (duration[i].toAscii()) {
                 case 'H':
-                    durationType->setHours(buf.toInt());
+                    d->setHours(buf.toInt());
                     break;
 
                 case 'M':
-                    durationType->setMinutes(buf.toInt());
+                    d->setMinutes(buf.toInt());
                     break;
 
                 case '.':
                     // Decimal point may be present in Seconds value
-                    durationType->setSeconds(buf.toInt());
+                    d->setSeconds(buf.toInt());
                     buf="";
                     for (i++; duration[i].isDigit() && i < duration.length(); i++) {
                         buf += duration[i];
@@ -213,21 +212,21 @@ DurationType *TypeConverter::stringToDuration(const QString &duration)
 
                     if(duration[i] != 'S' || i >= duration.length()) {
                         m_errorMsg = "Error in duration, S not found after decimal point";
-                        delete durationType;
-                        return new DurationType();
+                        delete d;
+                        return new Duration();
                     }
 
-                    durationType->setMseconds(buf.toInt());
+                    d->setMseconds(buf.toInt());
                     break;
 
                 case 'S':
-                    durationType->setSeconds(buf.toInt());
+                    d->setSeconds(buf.toInt());
                     break;
 
                 default:
                     m_errorMsg = "Invalid duration string: " + duration;
-                    delete durationType;
-                    return new DurationType();
+                    delete d;
+                    return new Duration();
                 }
 
             }
@@ -235,10 +234,10 @@ DurationType *TypeConverter::stringToDuration(const QString &duration)
         }
     }
 
-    return durationType;
+    return d;
 }
 
-QString TypeConverter::durationToString(const DurationType *duration)
+QString TypeConverter::durationToString(const Duration *duration)
 {
     if (duration->isNull()) {
         m_errorMsg = "durationToString received an empty object";
