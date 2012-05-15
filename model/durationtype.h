@@ -28,8 +28,8 @@ public:
     DurationType(const QString &timeString, FormatGroup *time);
     ~DurationType();
 
-    enum TimeTypeRepresentation timeTypeRepresentation() const;
-    void setTimeTypeRepresentation(const enum TimeTypeRepresentation timeTypeRepresentation);
+    enum DurationTypeRepresentation durationTypeRepresentation() const;
+    void setDurationTypeRepresentation(const enum DurationTypeRepresentation durationTypeRepresentation);
     QString timecode() const;
     void setTimecode(const QString &timecode);
     Duration normalPlayTime() const;

@@ -38,6 +38,16 @@ DurationType::~DurationType()
     delete m_time;
 }
 
+DurationType::DurationTypeRepresentation DurationType::durationTypeRepresentation() const
+{
+    return m_durationTypeRepresentation;
+}
+
+void DurationType::setDurationTypeRepresentation(const DurationType::DurationTypeRepresentation durationTypeRepresentation)
+{
+    m_durationTypeRepresentation = durationTypeRepresentation;
+}
+
 QString DurationType::timecode() const
 {
     return m_timecode;
