@@ -1314,7 +1314,7 @@ FormatType *EbuParser::parseFormatType(const QDomElement &element)
 
      el = element.elementsByTagName("duration").at(0).toElement();
      if (!el.isNull()) {
-         TimeType *duration = parseTimeType(el);
+         DurationType *duration = parseDurationType(el);
          if (!duration) {
              delete format;
              return 0;
@@ -2713,6 +2713,37 @@ TimeType *EbuParser::parseTimeType(const QDomElement &element)
     time->setTime(t);
 
     return time;
+}
+
+DurationType *EbuParser::parseDurationType(const QDomElement &element)
+{
+    if(element.isNull())
+    {
+        m_errorMsg = "DurationType is null";
+        return 0;
+    }
+    DurationType *duration = new DurationType();
+
+    // Get attributes.
+    bool ok;
+    QString timeCode = element.attribute("timeCode");
+    if(!timeCode.isEmpty())
+        duration->setTimecode(timeCode);
+    unsigned int editRate = element.attribute("ediRate").toUInt(&ok, 10);
+    if(ok)
+        duration->setEditRate(editRate);
+    unsigned int factorNumerator = element.attribute("factorNumerator").toUInt(&ok, 10);
+    if(ok)
+        duration->setFactorNumerator(factorNumerator);
+    unsigned int factorDenominator = element.attribute("factorDenominator").toUInt(&ok, 10);
+    if(ok)
+        duration->setFactorDenominator(factorDenominator);
+
+    FormatGroup *t = new FormatGroup();
+    parseFormatGroup(element, t);
+    duration->setTime(t);
+
+    return duration;
 }
 
 DocumentFormatType *EbuParser::parseDocumentFormatType(const QDomElement &element)

@@ -22,6 +22,7 @@ private:
     AudioTrackType *parseAudioTrackType(const QDomElement &element);
     DocumentFormatType *parseDocumentFormatType(const QDomElement &element);
     TimeType *parseTimeType(const QDomElement &element);
+    DurationType *parseDurationType(const QDomElement &element);
     TemporalType *parseTemporalType(const QDomElement &element);
     LocationType *parseLocationType(const QDomElement &element);
     CoordinatesType *parseCoordinatesType(const QDomElement &element);
