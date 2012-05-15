@@ -30,10 +30,10 @@ public:
     QString imageFormatDefinition() const;
     void setImageFormatDefinition(const QString &imageFormatDefinition);
     // Elements
-    unsigned int regionDelimX() const;
-    void setRegionDelimX(const unsigned int &regionDelimX);
-    unsigned int regionDelimY() const;
-    void setRegionDelimY(const unsigned int &width);
+    unsigned int *regionDelimX() const;
+    void setRegionDelimX(unsigned int regionDelimX);
+    unsigned int *regionDelimY() const;
+    void setRegionDelimY(unsigned int width);
     LengthType *width() const;
     void setWidth(LengthType *length);
     LengthType *height() const;
@@ -50,8 +50,8 @@ private:
     QString m_imageFormatName;
     QString m_imageFormatDefinition;
     // Elements (all optional)
-    unsigned int m_regionDelimX;    //nonNegativeInteger
-    unsigned int m_regionDelimY;    //nonNegativeInteger
+    unsigned int *m_regionDelimX;    //nonNegativeInteger
+    unsigned int *m_regionDelimY;    //nonNegativeInteger
     LengthType *m_width;
     LengthType *m_height;
     enum Orientation m_orientation;
@@ -99,10 +99,10 @@ public:
     QString videoFormatDefinition() const;
     void setVideoFormatDefinition(const QString &videoFormatDefinition);
     // Elements
-    unsigned int regionDelimX() const;
-    void setRegionDelimX(const unsigned int &regionDelimX);
-    unsigned int regionDelimY() const;
-    void setRegionDelimY(const unsigned int &regionDelimY);
+    unsigned int *regionDelimX() const;
+    void setRegionDelimX(unsigned int regionDelimX);
+    unsigned int *regionDelimY() const;
+    void setRegionDelimY(unsigned int regionDelimY);
     LengthType *width() const;
     void setWidth(LengthType *width);
     LengthType *height() const;
@@ -120,8 +120,8 @@ private:
     QString m_videoFormatName;
     QString m_videoFormatDefinition;
     // Elements (all optional)
-    unsigned int m_regionDelimX;    //nonNegativeInteger
-    unsigned int m_regionDelimY;    //nonNegativeInteger
+    unsigned int *m_regionDelimX;    //nonNegativeInteger
+    unsigned int *m_regionDelimY;    //nonNegativeInteger
     LengthType *m_width;
     LengthType *m_height;
     AspectRatioType *m_aspectRatio;
@@ -203,29 +203,30 @@ class AncillarityDataFormatType
 {
 public:
     AncillarityDataFormatType();
+    ~AncillarityDataFormatType();
     // Attributes
     QString ancillaryDataFormatId() const;
     void setAncillaryDataFormatId(const QString &ancillaryDataFormatId);
     QString ancillaryDataFormatName() const;
     void setAncillaryDataFormatName(const QString &ancillaryDataFormatName);
     // Elements (all optional)
-    int DID() const;
-    void setDID(const int &DID);
-    int SDID() const;
-    void setSDID(const int &SDID);
+    int *DID() const;
+    void setDID(int DID);
+    int *SDID() const;
+    void setSDID(int SDID);
     QList<int> &lineNumber();
-    int wrappingType() const;
-    void setWrappingType(const int &wrappingType);
+    int *wrappingType() const;
+    void setWrappingType(int wrappingType);
 
 private:
     // Attributes
     QString m_ancillaryDataFormatId;
     QString m_ancillaryDataFormatName;
     // Elements (all optional)
-    int m_DID;
-    int m_SDID;
+    int *m_DID;
+    int *m_SDID;
     QList<int> m_lineNumber;
-    int m_wrappingType;
+    int *m_wrappingType;
 };
 
 
@@ -302,12 +303,12 @@ public:
     QString documentFormatDefinition() const;
     void setDocumentFormatDefinition(const QString &documentFormatDefinition);
     // Elements
-    int wordCount() const;
-    void setWordCount(const int &wordCount);
-    unsigned int regionDelimX() const;
-    void setRegionDelimX(const unsigned int &regionDelimX);
-    unsigned int regionDelimY() const;
-    void setRegionDelimY(const unsigned int &regionDelimY);
+    int *wordCount() const;
+    void setWordCount(int wordCount);
+    unsigned int *regionDelimX() const;
+    void setRegionDelimX(unsigned int regionDelimX);
+    unsigned int *regionDelimY() const;
+    void setRegionDelimY(unsigned int regionDelimY);
     LengthType *width() const;
     void setWidth(LengthType *length);
     LengthType *height() const;
@@ -321,9 +322,9 @@ private:
     QString m_documentFormatName;
     QString m_documentFormatDefinition;
     // Elements (all optional)
-    unsigned int m_regionDelimX;    //nonNegativeInteger
-    unsigned int m_regionDelimY;    //nonNegativeInteger
-    int m_wordCount;
+    unsigned int *m_regionDelimX;    //nonNegativeInteger
+    unsigned int *m_regionDelimY;    //nonNegativeInteger
+    int *m_wordCount;
     LengthType *m_width;
     LengthType *m_height;
     TechnicalAttributes *m_technicalAttributes;
@@ -345,9 +346,9 @@ public:
     // Elements
     ElementType *format() const;
     void setFormat(ElementType *format);
-    unsigned int regionDelimX() const;
+    unsigned int *regionDelimX() const;
     void setRegionDelimX(const unsigned int &regionDelimX);
-    unsigned int regionDelimY() const;
+    unsigned int *regionDelimY() const;
     void setRegionDelimY(const unsigned int &regionDelimY);
     LengthType *width() const;
     void setWidth(LengthType *width);
@@ -367,7 +368,7 @@ public:
     void setEnd(TimeType *end);
     DurationType *duration() const;
     void setDuration(DurationType *duration);
-    long fileSize() const;
+    long *fileSize() const;
     void setFileSize(const long &fileSize);
     QString fileName() const;
     void setFileName(const QString &fileName);
@@ -389,8 +390,8 @@ private:
     QString m_formatDefinition;
     // Elements (all optional)
     ElementType *m_format;
-    unsigned int m_regionDelimX;    //nonNegativeInteger
-    unsigned int m_regionDelimY;    //nonNegativeInteger
+    unsigned int *m_regionDelimX;    //nonNegativeInteger
+    unsigned int *m_regionDelimY;    //nonNegativeInteger
     LengthType *m_width;
     LengthType *m_height;
     QList<TypeGroup*> m_medium;
@@ -404,7 +405,7 @@ private:
     TimeType *m_start;
     TimeType *m_end;
     DurationType *m_duration;
-    long m_fileSize;
+    long *m_fileSize;
     QString m_fileName;
     TypeGroup *m_locator;
     DocumentFormatType *m_documentFormat;

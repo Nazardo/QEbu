@@ -40,6 +40,8 @@ OrganisationDetailsType *EntityType::organisationDetails() const
 
 void EntityType::setOrganisationDetails(OrganisationDetailsType *organisationDetails)
 {
+    if (organisationDetails != m_organisationDetails)
+        delete m_organisationDetails;
     m_organisationDetails = organisationDetails;
 }
 

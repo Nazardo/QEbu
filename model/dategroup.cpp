@@ -2,27 +2,25 @@
 
 DateGroup::DateGroup()
 {
+    m_startYear = 0;
+    m_endYear = 0;
 }
 
-DateGroup::DateGroup(const DateGroup &copy)
+DateGroup::~DateGroup()
 {
-    m_startYear = copy.startYear();
-    m_startDate = copy.startDate();
-    m_startTime = copy.startTime();
-    m_endYear = copy.endYear();
-    m_endDate = copy.endDate();
-    m_endTime = copy.endTime();
-    m_period = copy.period();
+    delete m_startYear;
+    delete m_endYear;
 }
 
-qint32 DateGroup::startYear() const
+qint32 *DateGroup::startYear() const
 {
     return m_startYear;
 }
 
 void DateGroup::setStartYear(const qint32 startYear)
 {
-    m_startYear = startYear;
+    delete m_startYear;
+    m_startYear = new qint32(startYear);
 }
 
 QDateTime DateGroup::startDate() const
@@ -45,14 +43,15 @@ void DateGroup::setStartTime(const QDateTime &startTime)
     m_startTime = startTime;
 }
 
-qint32 DateGroup::endYear() const
+qint32 *DateGroup::endYear() const
 {
     return m_endYear;
 }
 
 void DateGroup::setEndYear(const qint32 endYear)
 {
-    m_endYear = endYear;
+    delete m_endYear;
+    m_endYear = new qint32(endYear);
 }
 
 QDateTime DateGroup::endDate() const

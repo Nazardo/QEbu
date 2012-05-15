@@ -37,6 +37,8 @@ AddressType *DetailsType::address() const
 
 void DetailsType::setAddress(AddressType *address)
 {
+    if (address != m_address)
+        delete m_address;
     m_address = address;
 }
 
@@ -117,6 +119,8 @@ TypeGroup *AddressType::country() const
 
 void AddressType::setCountry(TypeGroup *country)
 {
+    if (country != m_country)
+        delete m_country;
     m_country = country;
 }
 

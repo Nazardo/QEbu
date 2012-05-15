@@ -181,6 +181,8 @@ ElementType *TitleType::title() const
 
 void TitleType::setTitle(ElementType *title)
 {
+    if (title != m_title)
+        delete m_title;
     m_title = title;
 }
 
@@ -211,6 +213,8 @@ ElementType *AlternativeTitleType::title() const
 
 void AlternativeTitleType::setTitle(ElementType *title)
 {
+    if (title != m_title)
+        delete m_title;
     m_title = title;
 }
 
@@ -243,6 +247,8 @@ ElementType *SubjectType::subject() const
 
 void SubjectType::setSubject(ElementType *subject)
 {
+    if (subject != m_subject)
+        delete m_subject;
     m_subject = subject;
 }
 
@@ -273,6 +279,8 @@ EntityType *SubjectType::attributor() const
 
 void SubjectType::setAttributor(EntityType *attributor)
 {
+    if (attributor != m_attributor)
+        delete m_attributor;
     m_attributor = attributor;
 }
 
@@ -303,6 +311,8 @@ ElementType *DescriptionType::description() const
 
 void DescriptionType::setDescription(ElementType *description)
 {
+    if (description != m_description)
+        delete m_description;
     m_description = description;
 }
 
@@ -342,6 +352,8 @@ DateGroup *DateType::created() const
 
 void DateType::setCreated(DateGroup *created)
 {
+    if (created != m_created)
+        delete m_created;
     m_created = created;
 }
 
@@ -352,6 +364,8 @@ DateGroup *DateType::issued() const
 
 void DateType::setIssued(DateGroup *issued)
 {
+    if (issued != m_issued)
+        delete m_issued;
     m_issued = issued;
 }
 
@@ -362,6 +376,8 @@ DateGroup *DateType::modified() const
 
 void DateType::setModified(DateGroup *modified)
 {
+    if (modified != m_modified)
+        delete m_modified;
     m_modified = modified;
 }
 
@@ -372,6 +388,8 @@ DateGroup *DateType::digitised() const
 
 void DateType::setDigitised(DateGroup *digitised)
 {
+    if (digitised != m_digitised)
+        delete m_digitised;
     m_digitised = digitised;
 }
 
@@ -459,6 +477,8 @@ ElementType *IdentifierType::identifier() const
 
 void IdentifierType::setIdentifier(ElementType *identifier)
 {
+    if (identifier != m_identifier)
+        delete m_identifier;
     m_identifier = identifier;
 }
 
@@ -469,6 +489,8 @@ EntityType *IdentifierType::attributor() const
 
 void IdentifierType::setAttributor(EntityType *attributor)
 {
+    if (attributor != m_attributor)
+        delete m_attributor;
     m_attributor = attributor;
 }
 
@@ -499,6 +521,8 @@ ElementType *LanguageType::language() const
 
 void LanguageType::setLanguage(ElementType *language)
 {
+    if (language != m_language)
+        delete m_language;
     m_language = language;
 }
 
@@ -519,6 +543,8 @@ ElementType *RelationType::relation() const
 
 void RelationType::setRelation(ElementType *relation)
 {
+    if (relation != m_relation)
+        delete m_relation;
     m_relation = relation;
 }
 
@@ -529,6 +555,8 @@ IdentifierType *RelationType::relationIdentifier() const
 
 void RelationType::setRelationIdentifier(IdentifierType *relationIdentifier)
 {
+    if (relationIdentifier != m_relationIdentifier)
+        delete m_relationIdentifier;
     m_relationIdentifier = relationIdentifier;
 }
 
@@ -567,6 +595,8 @@ AlternativeTitleType *HasTrackPartType::trackPartTitle() const
 
 void HasTrackPartType::setTrackPartTitle(AlternativeTitleType *trackPartTitle)
 {
+    if (trackPartTitle != m_trackPartTitle)
+        delete m_trackPartTitle;
     m_trackPartTitle = trackPartTitle;
 }
 
@@ -577,6 +607,8 @@ TimeType *HasTrackPartType::destinationStart() const
 
 void HasTrackPartType::setDestinationStart(TimeType *destinationStart)
 {
+    if (destinationStart != m_destinationStart)
+        delete m_destinationStart;
     m_destinationStart = destinationStart;
 }
 
@@ -587,6 +619,8 @@ TimeType *HasTrackPartType::destinationEnd() const
 
 void HasTrackPartType::setDestinationEnd(TimeType *destinationEnd)
 {
+    if (destinationEnd != m_destinationEnd)
+    delete m_destinationEnd;
     m_destinationEnd = destinationEnd;
 }
 
@@ -597,6 +631,8 @@ TimeType *HasTrackPartType::sourceStart() const
 
 void HasTrackPartType::setSourceStart(TimeType *sourceStart)
 {
+    if (sourceStart != m_sourceStart)
+        delete m_sourceStart;
     m_sourceStart = sourceStart;
 }
 
@@ -607,6 +643,8 @@ TimeType *HasTrackPartType::sourceEnd() const
 
 void HasTrackPartType::setSourceEnd(TimeType *sourceEnd)
 {
+    if (sourceEnd != m_sourceEnd)
+        delete m_sourceEnd;
     m_sourceEnd = sourceEnd;
 }
 
@@ -614,22 +652,25 @@ RelationType::RelationType()
 {
     m_relation = 0;
     m_relationIdentifier = 0;
+    m_runningOrderNumber = 0;
 }
 
 RelationType::~RelationType()
 {
     delete m_relation;
     delete m_relationIdentifier;
+    delete m_runningOrderNumber;
 }
 
-int RelationType::runningOrderNumber() const
+int *RelationType::runningOrderNumber() const
 {
     return m_runningOrderNumber;
 }
 
 void RelationType::setRunningOrderNumber(int runningOrderNumber)
 {
-    m_runningOrderNumber = runningOrderNumber;
+    delete m_runningOrderNumber;
+    m_runningOrderNumber = new int(runningOrderNumber);
 }
 
 TemporalType::TemporalType()
@@ -669,27 +710,43 @@ DateGroup *TemporalType::periodOfTime() const
 
 void TemporalType::setPeriodOfTime(DateGroup *periodOfTime)
 {
+    if (periodOfTime != m_periodOfTime)
+        delete m_periodOfTime;
     m_periodOfTime = periodOfTime;
 }
 
-float CoordinatesType::posy() const
+CoordinatesType::CoordinatesType()
+{
+    m_posy = 0;
+    m_posx = 0;
+}
+
+CoordinatesType::~CoordinatesType()
+{
+    delete m_posy;
+    delete m_posx;
+}
+
+float *CoordinatesType::posy() const
 {
     return m_posy;
 }
 
 void CoordinatesType::setPosy(float posy)
 {
-    m_posy = posy;
+    delete m_posy;
+    m_posy = new float(posy);
 }
 
-float CoordinatesType::posx() const
+float *CoordinatesType::posx() const
 {
     return m_posx;
 }
 
 void CoordinatesType::setPosx(float posx)
 {
-    m_posx = posx;
+    delete m_posx;
+    m_posx = new float(posx);
 }
 
 LocationType::LocationType()
@@ -739,6 +796,8 @@ CoordinatesType *LocationType::coordinates() const
 
 void LocationType::setCoordinates(CoordinatesType *coordinates)
 {
+    if (coordinates != m_coordinates)
+        delete m_coordinates;
     m_coordinates = coordinates;
 }
 
@@ -775,6 +834,8 @@ ElementType *CoverageType::coverage() const
 
 void CoverageType::setCoverage(ElementType *coverage)
 {
+    if (coverage != m_coverage)
+        delete m_coverage;
     m_coverage = coverage;
 }
 
@@ -785,6 +846,8 @@ TemporalType *CoverageType::temporal() const
 
 void CoverageType::setTemporal(TemporalType *temporal)
 {
+    if (temporal != m_temporal)
+        delete m_temporal;
     m_temporal = temporal;
 }
 
@@ -799,6 +862,7 @@ RightsType::RightsType()
     m_rightsHolder = 0;
     m_exploitationIssues = 0;
     m_coverage = 0;
+    m_rightsClearanceFlag = 0;
 }
 
 RightsType::~RightsType()
@@ -811,6 +875,7 @@ RightsType::~RightsType()
     delete m_rightsHolder;
     delete m_exploitationIssues;
     delete m_coverage;
+    delete m_rightsClearanceFlag;
     s = m_disclaimer.size();
     for (int i=0; i < s; ++i) {
         delete (m_disclaimer.takeAt(0));
@@ -847,6 +912,8 @@ ElementType *RightsType::rights() const
 
 void RightsType::setRights(ElementType *rights)
 {
+    if (rights != m_rights)
+        delete m_rights;
     m_rights = rights;
 }
 
@@ -867,6 +934,8 @@ EntityType *RightsType::rightsHolder() const
 
 void RightsType::setRightsHolder(EntityType *rightsHolder)
 {
+    if (rightsHolder != m_rightsHolder)
+        delete m_rightsHolder;
     m_rightsHolder = rightsHolder;
 }
 
@@ -877,6 +946,8 @@ ElementType *RightsType::exploitationIssues() const
 
 void RightsType::setExploitationIssues(ElementType *exploitationIssues)
 {
+    if (exploitationIssues != m_exploitationIssues)
+        delete m_exploitationIssues;
     m_exploitationIssues = exploitationIssues;
 }
 
@@ -887,17 +958,20 @@ CoverageType *RightsType::coverage() const
 
 void RightsType::setCoverage(CoverageType *coverage)
 {
+    if (coverage != m_coverage)
+        delete m_coverage;
     m_coverage = coverage;
 }
 
-bool RightsType::isRightsClearanceFlagSet() const
+bool *RightsType::rightsClearanceFlag() const
 {
     return m_rightsClearanceFlag;
 }
 
-void RightsType::setRightsClearanceFlagSet(bool rightsClearanceFlag)
+void RightsType::setRightsClearanceFlag(bool rightsClearanceFlag)
 {
-    m_rightsClearanceFlag = rightsClearanceFlag;
+    delete m_rightsClearanceFlag;
+    m_rightsClearanceFlag = new bool(rightsClearanceFlag);
 }
 
 QList<ElementType *> &RightsType::disclaimer()
@@ -952,6 +1026,8 @@ FormatType *PublicationType::channel() const
 
 void PublicationType::setChannel(FormatType *channel)
 {
+    if (channel != m_channel)
+        delete m_channel;
     m_channel = channel;
 }
 
@@ -976,6 +1052,8 @@ PublicationType *PublicationHistoryType::firstPublication() const
 
 void PublicationHistoryType::setFirstPublication(PublicationType *firstPublication)
 {
+    if (firstPublication != m_firstPublication)
+        delete m_firstPublication;
     m_firstPublication = firstPublication;
 }
 
@@ -1031,6 +1109,8 @@ EntityType *RatingType::ratingProvider() const
 
 void RatingType::setRatingProvider(EntityType *ratingProvider)
 {
+    if (ratingProvider != m_ratingProvider)
+        delete m_ratingProvider;
     m_ratingProvider = ratingProvider;
 }
 
@@ -1226,6 +1306,8 @@ ElementType *CoreMetadataType::version() const
 
 void CoreMetadataType::setVersion(ElementType *version)
 {
+    if (version != m_version)
+        delete m_version;
     m_version = version;
 }
 
@@ -1236,5 +1318,7 @@ PublicationHistoryType *CoreMetadataType::publicationHistory() const
 
 void CoreMetadataType::setPubblicationHistory(PublicationHistoryType *publicationHistory)
 {
+    if (publicationHistory != m_publicationHistory)
+        delete m_publicationHistory;
     m_publicationHistory = publicationHistory;
 }

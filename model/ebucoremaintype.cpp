@@ -50,6 +50,8 @@ CoreMetadataType *EbuCoreMainType::coreMetadata() const
 
 void EbuCoreMainType::setCoreMetadata(CoreMetadataType *coreMetadata)
 {
+    if (coreMetadata != m_coreMetadata)
+        delete m_coreMetadata;
     m_coreMetadata = coreMetadata;
 }
 
@@ -60,5 +62,7 @@ EntityType *EbuCoreMainType::metadataProvider() const
 
 void EbuCoreMainType::setMetadataProvider(EntityType *metadataProvider)
 {
+    if (metadataProvider != m_metadataProvider)
+        delete m_metadataProvider;
     m_metadataProvider = metadataProvider;
 }

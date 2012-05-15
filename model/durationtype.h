@@ -23,24 +23,24 @@ public:
     DurationType(const QString &timecode);
     DurationType(const Duration &normalPlayTime);
     DurationType(const unsigned int &editRate,
+                 const unsigned long &editUnitNumberValue,
                 const unsigned int &factorNumerator,
                 const unsigned int &factorDenominator);
     DurationType(const QString &timeValue, FormatGroup *time);
     ~DurationType();
 
     enum DurationTypeRepresentation durationTypeRepresentation() const;
-    void setDurationTypeRepresentation(const enum DurationTypeRepresentation durationTypeRepresentation);
     QString timecode() const;
     void setTimecode(const QString &timecode);
     Duration normalPlayTime() const;
     void setNormalPlayTime(const Duration &normalPlayTime);
-    unsigned int editRate() const;
+    unsigned int *editRate() const;
     void setEditRate(unsigned int editRate);
     unsigned int factorNumerator() const;
     void setFactorNumerator(unsigned int factorNumerator);
     unsigned int factorDenominator() const;
     void setFactorDenominator(unsigned int factorDenominator);
-    unsigned long editUnitNumberValue() const;
+    unsigned long *editUnitNumberValue() const;
     void setEditUnitNumberValue(unsigned long editUnitNumberValue);
     QString timeValue() const;
     void setTimeValue(const QString &timeValue);
@@ -54,10 +54,10 @@ private:
 
     Duration m_normalPlayTime;
 
-    unsigned int m_editRate;
+    unsigned int *m_editRate;
     unsigned int m_factorNumerator;
     unsigned int m_factorDenominator;
-    unsigned long m_editUnitNumberValue;
+    unsigned long *m_editUnitNumberValue;
 
     QString m_timeValue;
     FormatGroup *m_time;

@@ -8,14 +8,14 @@ class DateGroup
 {
 public:
     DateGroup();
-    DateGroup(const DateGroup &copy);
-    qint32 startYear() const;
+    ~DateGroup();
+    qint32 *startYear() const;
     void setStartYear(const qint32 startYear);
     QDateTime startDate() const;
     void setStartDate(const QDateTime &startDate);
     QDateTime startTime() const;
     void setStartTime(const QDateTime &startTime);
-    qint32 endYear() const;
+    qint32 *endYear() const;
     void setEndYear(const qint32 endYear);
     QDateTime endDate() const;
     void setEndDate(const QDateTime &endDate);
@@ -25,10 +25,10 @@ public:
     void setPeriod(const QString &period);
 
 private:
-    qint32 m_startYear;
+    qint32 *m_startYear;
     QDateTime m_startDate;
     QDateTime m_startTime;
-    qint32 m_endYear;
+    qint32 *m_endYear;
     QDateTime m_endDate;
     QDateTime m_endTime;
     QString m_period;

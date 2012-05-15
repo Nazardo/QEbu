@@ -7,13 +7,14 @@ class LengthType
 {
 public:
     LengthType();
+    ~LengthType();
     LengthType(const unsigned int &value, const QString &unit);
-    unsigned int value() const;
+    unsigned int *value() const;
     void setValue(const unsigned int &value);
     QString unit() const;
     void setUnit(const QString &unit);
 private:
-    unsigned int m_value;    // nonNegativeInteger
+    unsigned int *m_value;    // nonNegativeInteger
     QString m_unit;
 };
 

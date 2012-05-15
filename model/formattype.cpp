@@ -7,6 +7,8 @@ ImageFormatType::ImageFormatType()
     m_width = 0;
     m_height = 0;
     m_technicalAttributes = 0;
+    m_regionDelimX = 0;
+    m_regionDelimY = 0;
 }
 
 ImageFormatType::~ImageFormatType()
@@ -17,6 +19,8 @@ ImageFormatType::~ImageFormatType()
     for (int i=0; i < s; ++i) {
         delete (m_imageEncoding.takeAt(0));
     }
+    delete m_regionDelimX;
+    delete m_regionDelimY;
     delete m_technicalAttributes;
 }
 
@@ -50,24 +54,26 @@ void ImageFormatType::setImageFormatDefinition(const QString &imageFormatDefinit
     m_imageFormatDefinition = imageFormatDefinition;
 }
 
-unsigned int ImageFormatType::regionDelimX() const
+unsigned int *ImageFormatType::regionDelimX() const
 {
     return m_regionDelimX;
 }
 
-void ImageFormatType::setRegionDelimX(const unsigned int &regionDelimX)
+void ImageFormatType::setRegionDelimX(unsigned int regionDelimX)
 {
-    m_regionDelimX = regionDelimX;
+    delete m_regionDelimX;
+    m_regionDelimX = new unsigned int(regionDelimX);
 }
 
-unsigned int ImageFormatType::regionDelimY() const
+unsigned int *ImageFormatType::regionDelimY() const
 {
     return m_regionDelimY;
 }
 
-void ImageFormatType::setRegionDelimY(const unsigned int &regionDelimY)
+void ImageFormatType::setRegionDelimY(unsigned int regionDelimY)
 {
-    m_regionDelimY = regionDelimY;
+    delete m_regionDelimY;
+    m_regionDelimY = new unsigned int(regionDelimY);
 }
 
 LengthType *ImageFormatType::width() const
@@ -77,6 +83,8 @@ LengthType *ImageFormatType::width() const
 
 void ImageFormatType::setWidth(LengthType *width)
 {
+    if (width != m_width)
+        delete m_width;
     m_width = width;
 }
 
@@ -87,6 +95,8 @@ LengthType *ImageFormatType::height() const
 
 void ImageFormatType::setHeight(LengthType *height)
 {
+    if (height != m_height)
+        delete m_height;
     m_height = height;
 }
 
@@ -112,6 +122,8 @@ TechnicalAttributes *ImageFormatType::technicalAttributes() const
 
 void ImageFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
+    if (technicalAttributes != m_technicalAttributes)
+        delete m_technicalAttributes;
     m_technicalAttributes = technicalAttributes;
 }
 
@@ -162,6 +174,8 @@ VideoFormatType::VideoFormatType()
     m_height = 0;
     m_aspectRatio = 0;
     m_technicalAttributes = 0;
+    m_regionDelimX = 0;
+    m_regionDelimY = 0;
 }
 
 VideoFormatType::~VideoFormatType()
@@ -178,6 +192,8 @@ VideoFormatType::~VideoFormatType()
         delete (m_videoTrack.takeAt(0));
     }
     delete m_technicalAttributes;
+    delete m_regionDelimX;
+    delete m_regionDelimY;
 }
 
 QString VideoFormatType::videoFormatId() const
@@ -210,24 +226,26 @@ void VideoFormatType::setVideoFormatDefinition(const QString &videoFormatDefinit
     m_videoFormatDefinition = videoFormatDefinition;
 }
 
-unsigned int VideoFormatType::regionDelimX() const
+unsigned int *VideoFormatType::regionDelimX() const
 {
     return m_regionDelimX;
 }
 
-void VideoFormatType::setRegionDelimX(const unsigned int &regionDelimX)
+void VideoFormatType::setRegionDelimX(unsigned int regionDelimX)
 {
-    m_regionDelimX = regionDelimX;
+    delete m_regionDelimX;
+    m_regionDelimX = new unsigned int(regionDelimX);
 }
 
-unsigned int VideoFormatType::regionDelimY() const
+unsigned int *VideoFormatType::regionDelimY() const
 {
     return m_regionDelimY;
 }
 
-void VideoFormatType::setRegionDelimY(const unsigned int &regionDelimY)
+void VideoFormatType::setRegionDelimY(unsigned int regionDelimY)
 {
-    m_regionDelimY = regionDelimY;
+    delete m_regionDelimY;
+    m_regionDelimY = new unsigned int(regionDelimY);
 }
 
 LengthType *VideoFormatType::width() const
@@ -237,6 +255,8 @@ LengthType *VideoFormatType::width() const
 
 void VideoFormatType::setWidth(LengthType *width)
 {
+    if (width != m_width)
+        delete m_width;
     m_width = width;
 }
 
@@ -247,6 +267,8 @@ LengthType *VideoFormatType::height() const
 
 void VideoFormatType::setHeight(LengthType *height)
 {
+    if (height != m_height)
+        delete m_height;
     m_height = height;
 }
 
@@ -257,6 +279,8 @@ AspectRatioType *VideoFormatType::aspectRatio() const
 
 void VideoFormatType::setAspectRatio(AspectRatioType *aspectRatio)
 {
+    if (aspectRatio != m_aspectRatio)
+        delete m_aspectRatio;
     m_aspectRatio = aspectRatio;
 }
 
@@ -277,6 +301,8 @@ TechnicalAttributes *VideoFormatType::technicalAttributes() const
 
 void VideoFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
+    if (technicalAttributes != m_technicalAttributes)
+        delete m_technicalAttributes;
     m_technicalAttributes = technicalAttributes;
 }
 
@@ -378,6 +404,8 @@ TypeGroup *AudioFormatType::audioTrackConfiguration() const
 
 void AudioFormatType::setAudioTrackConfiguration(TypeGroup *audioTrackConfiguration)
 {
+    if (audioTrackConfiguration != m_audioTrackConfiguration)
+        delete m_audioTrackConfiguration;
     m_audioTrackConfiguration = audioTrackConfiguration;
 }
 
@@ -393,6 +421,8 @@ TechnicalAttributes *AudioFormatType::technicalAttributes() const
 
 void AudioFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
+    if (technicalAttributes != m_technicalAttributes)
+        delete m_technicalAttributes;
     m_technicalAttributes = technicalAttributes;
 }
 
@@ -434,6 +464,16 @@ void CaptioningFormatType::setCaptioningFormatName(const QString &captioningForm
 /* ------------------------------ AncillarityDataFormatType -------------------------- */
 AncillarityDataFormatType::AncillarityDataFormatType()
 {
+    m_DID = 0;
+    m_SDID = 0;
+    m_wrappingType = 0;
+}
+
+AncillarityDataFormatType::~AncillarityDataFormatType()
+{
+    delete m_DID;
+    delete m_SDID;
+    delete m_wrappingType;
 }
 
 QString AncillarityDataFormatType::ancillaryDataFormatId() const
@@ -456,24 +496,26 @@ void AncillarityDataFormatType::setAncillaryDataFormatName(const QString &ancill
     m_ancillaryDataFormatName = ancillaryDataFormatName;
 }
 
-int AncillarityDataFormatType::DID() const
+int *AncillarityDataFormatType::DID() const
 {
     return m_DID;
 }
 
-void AncillarityDataFormatType::setDID(const int &DID)
+void AncillarityDataFormatType::setDID(int DID)
 {
-    m_DID = DID;
+    delete m_DID;
+    m_DID = new int(DID);
 }
 
-int AncillarityDataFormatType::SDID() const
+int *AncillarityDataFormatType::SDID() const
 {
     return m_SDID;
 }
 
-void AncillarityDataFormatType::setSDID(const int &SDID)
+void AncillarityDataFormatType::setSDID(int SDID)
 {
-    m_SDID = SDID;
+    delete m_SDID;
+    m_SDID = new int(SDID);
 }
 
 QList<int> &AncillarityDataFormatType::lineNumber()
@@ -481,14 +523,15 @@ QList<int> &AncillarityDataFormatType::lineNumber()
     return m_lineNumber;
 }
 
-int AncillarityDataFormatType::wrappingType() const
+int *AncillarityDataFormatType::wrappingType() const
 {
     return m_wrappingType;
 }
 
-void AncillarityDataFormatType::setWrappingType(const int &wrappingType)
+void AncillarityDataFormatType::setWrappingType(int wrappingType)
 {
-    m_wrappingType = wrappingType;
+    delete m_wrappingType;
+    m_wrappingType = new int(wrappingType);
 }
 
 /* ------------------------------ DataFormatType -------------------------- */
@@ -557,6 +600,8 @@ TechnicalAttributes *DataFormatType::technicalAttributes() const
 
 void DataFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
+    if (technicalAttributes != m_technicalAttributes)
+        delete m_technicalAttributes;
     m_technicalAttributes = technicalAttributes;
 }
 
@@ -640,6 +685,9 @@ DocumentFormatType::DocumentFormatType()
 {
     m_width = 0;
     m_height = 0;
+    m_regionDelimX = 0;
+    m_regionDelimY = 0;
+    m_wordCount = 0;
     m_technicalAttributes = 0;
 }
 
@@ -647,6 +695,9 @@ DocumentFormatType::~DocumentFormatType()
 {
     delete m_width;
     delete m_height;
+    delete m_regionDelimX;
+    delete m_regionDelimY;
+    delete m_wordCount;
     delete m_technicalAttributes;
 }
 
@@ -680,34 +731,37 @@ void DocumentFormatType::setDocumentFormatDefinition(const QString &formatDefini
     m_documentFormatDefinition = formatDefinition;
 }
 
-int DocumentFormatType::wordCount() const
+int *DocumentFormatType::wordCount() const
 {
     return m_wordCount;
 }
 
-void DocumentFormatType::setWordCount(const int &wordCount)
+void DocumentFormatType::setWordCount(int wordCount)
 {
-    m_wordCount = wordCount;
+    delete m_wordCount;
+    m_wordCount = new int(wordCount);
 }
 
-unsigned int DocumentFormatType::regionDelimX() const
+unsigned int *DocumentFormatType::regionDelimX() const
 {
     return m_regionDelimX;
 }
 
-void DocumentFormatType::setRegionDelimX(const unsigned int &regionDelimX)
+void DocumentFormatType::setRegionDelimX(unsigned int regionDelimX)
 {
-    m_regionDelimX = regionDelimX;
+    delete m_regionDelimX;
+    m_regionDelimX = new unsigned int(regionDelimX);
 }
 
-unsigned int DocumentFormatType::regionDelimY() const
+unsigned int *DocumentFormatType::regionDelimY() const
 {
     return m_regionDelimY;
 }
 
-void DocumentFormatType::setRegionDelimY(const unsigned int &regionDelimY)
+void DocumentFormatType::setRegionDelimY(unsigned int regionDelimY)
 {
-    m_regionDelimY = regionDelimY;
+    delete m_regionDelimY;
+    m_regionDelimY = new unsigned int(regionDelimY);
 }
 
 LengthType *DocumentFormatType::width() const
@@ -717,6 +771,8 @@ LengthType *DocumentFormatType::width() const
 
 void DocumentFormatType::setHeight(LengthType *height)
 {
+    if (height != m_height)
+        delete m_height;
     m_height = height;
 }
 
@@ -727,6 +783,8 @@ LengthType *DocumentFormatType::height() const
 
 void DocumentFormatType::setWidth(LengthType *width)
 {
+    if (width != m_width)
+        delete m_width;
     m_width = width;
 }
 
@@ -737,6 +795,8 @@ TechnicalAttributes *DocumentFormatType::technicalAttributes() const
 
 void DocumentFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
+    if (technicalAttributes != m_technicalAttributes)
+        delete m_technicalAttributes;
     m_technicalAttributes = technicalAttributes;
 }
 
@@ -840,27 +900,31 @@ ElementType *FormatType::format() const
 
 void FormatType::setFormat(ElementType *format)
 {
+    if (format != m_format)
+        delete m_format;
     m_format = format;
 }
 
-unsigned int FormatType::regionDelimX() const
+unsigned int *FormatType::regionDelimX() const
 {
     return m_regionDelimX;
 }
 
 void FormatType::setRegionDelimX(const unsigned int &regionDelimX)
 {
-    m_regionDelimX = regionDelimX;
+    delete m_regionDelimX;
+    m_regionDelimX = new unsigned int(regionDelimX);
 }
 
-unsigned int FormatType::regionDelimY() const
+unsigned int *FormatType::regionDelimY() const
 {
     return m_regionDelimY;
 }
 
 void FormatType::setRegionDelimY(const unsigned int &regionDelimY)
 {
-    m_regionDelimY = regionDelimY;
+    delete m_regionDelimY;
+    m_regionDelimY = new unsigned int(regionDelimY);
 }
 
 LengthType *FormatType::width() const
@@ -930,6 +994,8 @@ TimeType *FormatType::start() const
 
 void FormatType::setStart(TimeType *start)
 {
+    if (start != m_start)
+        delete m_start;
     m_start = start;
 }
 
@@ -940,6 +1006,8 @@ TimeType *FormatType::end() const
 
 void FormatType::setEnd(TimeType *end)
 {
+    if (end != m_end)
+        delete m_end;
     m_end = end;
 }
 
@@ -950,17 +1018,20 @@ DurationType *FormatType::duration() const
 
 void FormatType::setDuration(DurationType *duration)
 {
+    if (duration != m_duration)
+        delete m_duration;
     m_duration = duration;
 }
 
-long FormatType::fileSize() const
+long *FormatType::fileSize() const
 {
     return m_fileSize;
 }
 
 void FormatType::setFileSize(const long &fileSize)
 {
-    m_fileSize = fileSize;
+    delete m_fileSize;
+    m_fileSize = new long(fileSize);
 }
 
 QString FormatType::fileName() const
@@ -980,6 +1051,8 @@ TypeGroup *FormatType::locator() const
 
 void FormatType::setLocator(TypeGroup *locator)
 {
+    if (locator != m_locator)
+        delete m_locator;
     m_locator = locator;
 }
 
@@ -990,6 +1063,8 @@ DocumentFormatType *FormatType::documentFormat() const
 
 void FormatType::setDocumentFormat(DocumentFormatType *documentFormat)
 {
+    if (documentFormat != m_documentFormat)
+        delete m_documentFormat;
     m_documentFormat = documentFormat;
 }
 
@@ -1000,6 +1075,8 @@ TechnicalAttributes *FormatType::technicalAttributes() const
 
 void FormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttributes)
 {
+    if (technicalAttributes != m_technicalAttributes)
+        delete m_technicalAttributes;
     m_technicalAttributes = technicalAttributes;
 }
 
@@ -1010,6 +1087,8 @@ DateGroup *FormatType::dateCreated() const
 
 void FormatType::setDateCreated(DateGroup *dateCreated)
 {
+    if (dateCreated != m_dateCreated)
+        delete m_dateCreated;
     m_dateCreated = dateCreated;
 }
 
@@ -1020,5 +1099,7 @@ DateGroup *FormatType::dateModified() const
 
 void FormatType::setDateModified(DateGroup *dateModified)
 {
+    if (dateModified != m_dateModified)
+        delete m_dateModified;
     m_dateModified = dateModified;
 }

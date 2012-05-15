@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     EbuParser parser;
-    QFile ifile("C:\\Users\\Pas\\Desktop\\MAT\\raiexample001_2011.xml");
+    QFile ifile("D:\\Dropbox\\ProgettoMAT\\EbuCore\\Example\\raiexample001_2011.xml");
     ifile.open(QFile::ReadOnly);
     if (!ifile.isOpen()) {
         qDebug("Invalid file");
@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     EbuCoreMainType *t = parser.root();
 
     EbuSerializer s(t);
-    QFile ofile("C:\\Users\\Pas\\Desktop\\MAT\\out.xml");
+    QFile ofile("D:\\Documenti\\Politecnico\\MultimediaArchivalTechniques\\QEbu\\out.xml");
     ofile.open(QFile::WriteOnly);
     s.serializeToFile(ofile);
 

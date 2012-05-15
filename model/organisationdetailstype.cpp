@@ -37,6 +37,8 @@ ElementType *OrganisationDetailsType::organisationName() const
 
 void OrganisationDetailsType::setOrganisationName(ElementType *organisationName)
 {
+    if (organisationName != m_organisationName)
+        delete m_organisationName;
     m_organisationName = organisationName;
 }
 
@@ -47,6 +49,8 @@ OrganisationDepartmentType *OrganisationDetailsType::organisationDepartment() co
 
 void OrganisationDetailsType::setOrganisationDepartment(OrganisationDepartmentType *organisationDepartment)
 {
+    if (organisationDepartment != m_organisationDepartment)
+        delete m_organisationDepartment;
     m_organisationDepartment = organisationDepartment;
 }
 

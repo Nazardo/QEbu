@@ -127,36 +127,49 @@ QList<TechnicalAttributeUriType *> &TechnicalAttributes::technicalAttributeUri()
 
 TechnicalAttributeRationalType::TechnicalAttributeRationalType()
 {
+    m_value = 0;
+    m_factorNumerator = 0;
+    m_factorDenominator = 0;
 }
 
-long TechnicalAttributeRationalType::value() const
+TechnicalAttributeRationalType::~TechnicalAttributeRationalType()
+{
+    delete m_value;
+    delete m_factorNumerator;
+    delete m_factorDenominator;
+}
+
+long *TechnicalAttributeRationalType::value() const
 {
     return m_value;
 }
 
 void TechnicalAttributeRationalType::setValue(long value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new long(value);
 }
 
-int TechnicalAttributeRationalType::factorNumerator() const
+int *TechnicalAttributeRationalType::factorNumerator() const
 {
     return m_factorNumerator;
 }
 
 void TechnicalAttributeRationalType::setFactorNumerator(int factorNumerator)
 {
-    m_factorNumerator = factorNumerator;
+    delete m_factorNumerator;
+    m_factorNumerator = new int(factorNumerator);
 }
 
-int TechnicalAttributeRationalType::factorDenominator() const
+int *TechnicalAttributeRationalType::factorDenominator() const
 {
     return m_factorDenominator;
 }
 
 void TechnicalAttributeRationalType::setFactorDenominator(int factorDenominator)
 {
-    m_factorDenominator = factorDenominator;
+    delete m_factorDenominator;
+    m_factorDenominator = new int(factorDenominator);
 }
 
 TechnicalAttributeUriType::TechnicalAttributeUriType()
@@ -175,142 +188,212 @@ void TechnicalAttributeUriType::setValue(const QString &value)
 
 Float::Float()
 {
+    m_value = 0;
 }
 
-double Float::value() const
+Float::~Float()
+{
+    delete m_value;
+}
+
+double *Float::value() const
 {
     return m_value;
 }
 
 void Float::setValue(double value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new double(value);
 }
 
 Boolean::Boolean()
 {
+    m_value = 0;
 }
 
-bool Boolean::value() const
+Boolean::~Boolean()
+{
+    delete m_value;
+}
+
+bool *Boolean::value() const
 {
     return m_value;
 }
 
 void Boolean::setValue(bool value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new bool(value);
 }
 
 UInt64::UInt64()
 {
+    m_value = 0;
 }
 
-quint64 UInt64::value() const
+UInt64::~UInt64()
+{
+    delete m_value;
+}
+
+quint64 *UInt64::value() const
 {
     return m_value;
 }
 
 void UInt64::setValue(quint64 value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new quint64(value);
 }
 
 UInt32::UInt32()
 {
+    m_value = 0;
 }
 
-quint32 UInt32::value() const
+UInt32::~UInt32()
+{
+    delete m_value;
+}
+
+quint32 *UInt32::value() const
 {
     return m_value;
 }
 
 void UInt32::setValue(quint32 value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new quint32(value);
 }
 
 UInt16::UInt16()
 {
+    m_value = 0;
 }
 
-quint16 UInt16::value() const
+UInt16::~UInt16()
+{
+    delete m_value;
+}
+
+quint16 *UInt16::value() const
 {
     return m_value;
 }
 
 void UInt16::setValue(quint16 value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new quint16(value);
 }
 
 UInt8::UInt8()
 {
+    m_value = 0;
 }
 
-quint8 UInt8::value() const
+UInt8::~UInt8()
+{
+    delete m_value;
+}
+
+quint8 *UInt8::value() const
 {
     return m_value;
 }
 
 void UInt8::setValue(quint8 value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new quint8(value);
 }
 
 Int64::Int64()
 {
+    m_value = 0;
 }
 
-qint64 Int64::value() const
+Int64::~Int64()
+{
+    delete m_value;
+}
+
+qint64 *Int64::value() const
 {
     return m_value;
 }
 
 void Int64::setValue(qint64 value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new qint64(value);
 }
 
 Int32::Int32()
 {
+    m_value = 0;
 }
 
-qint32 Int32::value() const
+Int32::~Int32()
+{
+    delete m_value;
+}
+
+qint32 *Int32::value() const
 {
     return m_value;
 }
 
 void Int32::setValue(qint32 value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new qint32(value);
 }
 
 Int16::Int16()
 {
+    m_value = 0;
 }
 
-qint16 Int16::value() const
+Int16::~Int16()
+{
+    delete m_value;
+}
+
+qint16 *Int16::value() const
 {
     return m_value;
 }
 
 void Int16::setValue(qint16 value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new qint16(value);
 }
 
 Int8::Int8()
 {
+    m_value = 0;
 }
 
-qint8 Int8::value() const
+Int8::~Int8()
+{
+    delete m_value;
+}
+
+qint8 *Int8::value() const
 {
     return m_value;
 }
 
 void Int8::setValue(qint8 value)
 {
-    m_value = value;
+    delete m_value;
+    m_value = new qint8(value);
 }
 
 String::String()

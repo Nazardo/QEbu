@@ -2116,10 +2116,15 @@ RightsType *EbuParser::parseRightsType(const QDomElement &element)
         }
         rights->setCoverage(coverage);
     }
-    bool ok;
-    bool flag = element.elementsByTagName("rightsLink").at(0).toElement().text().toInt(&ok, 10);
-    if(ok)
-        rights->setRightsClearanceFlagSet(flag);
+
+    QString flagString = element.elementsByTagName("rightsLink").at(0).toElement().text();
+    if (!flagString.isEmpty()) {
+        if (flagString.trimmed().toLower() == "true") {
+            rights->setRightsClearanceFlag(true);
+        } else {
+            rights->setRightsClearanceFlag(false);
+        }
+    }
 
     QDomNodeList el_list = el.elementsByTagName("disclaimer");
     for (int i=0; i<el_list.size(); ++i) {

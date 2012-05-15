@@ -15,6 +15,14 @@ bool EbuSerializer::serializeToFile(QFile &file)
     m_doc = doc;
 
     QDomElement rootNode = doc.createElement("ebuCoreMain");
+    rootNode.setAttribute("xsi:schemaLocation",
+                          "urn:ebu:metadata-schema:ebuCore_2011 EBU_CORE_20110915.xsd");
+    rootNode.setAttribute("xmlns:dc",
+                          "http://purl.org/dc/elements/1.1/");
+    rootNode.setAttribute("xmlns:xsi",
+                          "http://www.w3.org/2001/XMLSchema-instance");
+    rootNode.setAttribute("xmlns:ebucore",
+                          "urn:ebu:metadata-schema:ebuCore_2011");
     if(m_root->dateLastModified().isValid())
         rootNode.setAttribute("dateLastModified", TypeConverter::dateToString(m_root->dateLastModified()));
     if(!m_root->lang().isEmpty())
@@ -32,7 +40,7 @@ bool EbuSerializer::serializeToFile(QFile &file)
     rootNode.appendChild(provider);
 
     QTextStream out(&file);
-    QDomNode xmlNode = doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"ISO-8859-1\"");
+    QDomNode xmlNode = doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
     doc.insertBefore(xmlNode, doc.firstChild());
     doc.save(out, 4);
 
@@ -363,24 +371,24 @@ QDomElement EbuSerializer::serializeDocumentFormat(DocumentFormatType *format)
         f.setAttribute("documentFormatName",format->documentFormatName());
     if(!format->documentFormatDefinition().isEmpty())
         f.setAttribute("documentFormatDefinition",format->documentFormatDefinition());
-    if(format->wordCount() >= 0) {
+    if(format->wordCount()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("wordCount");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->wordCount(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->wordCount()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
-    if(format->regionDelimX() >= 0) {
+    if(format->regionDelimX()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("regionDelimX");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->regionDelimX(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->regionDelimX()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
-    if(format->regionDelimY() >= 0) {
+    if(format->regionDelimY()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("regionDelimY");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->regionDelimY(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->regionDelimY()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
@@ -403,38 +411,47 @@ QDomElement EbuSerializer::serializeTime(TimeType *time)
 {
     QDomElement t = m_doc.createElement(" ");
 
-    if(!time->timecode().isEmpty()) {
-        QDomElement e = m_doc.createElement(" ");
+    QDomElement e = m_doc.createElement(" ");
+    switch (time->timeTypeRepresentation()) {
+    case TimeType::enumTimecode:
+    {
         QDomText textNode = m_doc.createTextNode(time->timecode());
         e.appendChild(textNode);
         e.setTagName("timecode");
-        t.appendChild(e);
+        break;
     }
-    if(!time->normalPlayTime().isValid()) {
-        QDomElement e = m_doc.createElement(" ");
+    case TimeType::enumEditUnitNumber:
+    {
+        e.setTagName("editUnitNumber");
+        if (time->editRate())
+            e.setAttribute("editRate", *(time->editRate()));
+        e.setAttribute("factorNumerator", time->factorNumerator());
+        e.setAttribute("factorDenominator", time->factorDenominator());
+        if (time->editUnitNumberValue()) {
+            QDomText textNode = m_doc.createTextNode(
+                        QString::number(*(time->editUnitNumberValue()), 'g', 3));
+            e.appendChild(textNode);
+        }
+        break;
+    }
+    case TimeType::enumNormalPlayTime:
+    {
         QDomText textNode = m_doc.createTextNode(time->timecode());
         e.appendChild(textNode);
         e.setTagName("normalPlayTime");
-        t.appendChild(e);
+        break;
     }
-    if(true) {
-        QDomElement e = m_doc.createElement(" ");
-        e.setTagName("editUnitNumber");
-        e.setAttribute("editRate", time->editRate());
-        e.setAttribute("factorNumerator", time->factorNumerator());
-        e.setAttribute("factorDenominator", time->factorDenominator());
-        QDomText textNode = m_doc.createTextNode(QString::number(time->editUnitNumberValue(), 'g', 3));
-        e.appendChild(textNode);
-        t.appendChild(e);
-    }
-    if(!time->time()) {
-        QDomElement e = m_doc.createElement(" ");
-        serializeFormatGroup(time->time(), &e);
+    case TimeType::enumTime:
+    {
+        if (time->time())
+            serializeFormatGroup(time->time(), &e);
         e.setTagName("time");
         QDomText textNode = m_doc.createTextNode(time->timeValue());
         e.appendChild(textNode);
-        t.appendChild(e);
+        break;
     }
+    }
+    t.appendChild(e);
     return t;
 }
 
@@ -442,38 +459,47 @@ QDomElement EbuSerializer::serializeDuration(DurationType *duration)
 {
     QDomElement d = m_doc.createElement(" ");
 
-    if(!duration->timecode().isEmpty()) {
-        QDomElement e = m_doc.createElement(" ");
+    QDomElement e = m_doc.createElement(" ");
+    switch (duration->durationTypeRepresentation()) {
+    case DurationType::enumTimecode:
+    {
         QDomText textNode = m_doc.createTextNode(duration->timecode());
         e.appendChild(textNode);
         e.setTagName("timecode");
-        d.appendChild(e);
+        break;
     }
-    if(!duration->normalPlayTime().isValid()) {
-        QDomElement e = m_doc.createElement(" ");
+    case DurationType::enumEditUnitNumber:
+    {
+        e.setTagName("editUnitNumber");
+        if (duration->editRate())
+            e.setAttribute("editRate", *(duration->editRate()));
+        e.setAttribute("factorNumerator", duration->factorNumerator());
+        e.setAttribute("factorDenominator", duration->factorDenominator());
+        if (duration->editUnitNumberValue()) {
+            QDomText textNode = m_doc.createTextNode(
+                        QString::number(*(duration->editUnitNumberValue()), 'g', 3));
+            e.appendChild(textNode);
+        }
+        break;
+    }
+    case DurationType::enumNormalPlayTime:
+    {
         QDomText textNode = m_doc.createTextNode(duration->timecode());
         e.appendChild(textNode);
         e.setTagName("normalPlayTime");
-        d.appendChild(e);
+        break;
     }
-    if(true) {
-        QDomElement e = m_doc.createElement(" ");
-        e.setTagName("editUnitNumber");
-        e.setAttribute("editRate", duration->editRate());
-        e.setAttribute("factorNumerator", duration->factorNumerator());
-        e.setAttribute("factorDenominator", duration->factorDenominator());
-        QDomText textNode = m_doc.createTextNode(QString::number(duration->editUnitNumberValue(),'g',3));
-        e.appendChild(textNode);
-        d.appendChild(e);
-    }
-    if(!duration->time()) {
-        QDomElement e = m_doc.createElement(" ");
-        serializeFormatGroup(duration->time(), &e);
+    case DurationType::enumTime:
+    {
+        if (duration->time())
+            serializeFormatGroup(duration->time(), &e);
         e.setTagName("time");
         QDomText textNode = m_doc.createTextNode(duration->timeValue());
         e.appendChild(textNode);
-        d.appendChild(e);
+        break;
     }
+    }
+    d.appendChild(e);
     return d;
 }
 
@@ -531,10 +557,10 @@ QDomElement EbuSerializer::serializeCoordinates(CoordinatesType *coordinates)
 {
     QDomElement c = m_doc.createElement(" ");
     serializeFormatGroup(coordinates, &c);
-    if(true)
-        c.setAttribute("posx", coordinates->posx());
-    if(true)
-        c.setAttribute("posy", coordinates->posy());
+    if(coordinates->posx())
+        c.setAttribute("posx", *(coordinates->posx()));
+    if(coordinates->posy())
+        c.setAttribute("posy", *(coordinates->posy()));
 
     return c;
 }
@@ -694,35 +720,35 @@ QDomElement EbuSerializer::serializeAncillarityDataFormat(AncillarityDataFormatT
 {
     QDomElement a = m_doc.createElement(" ");
 
-    if(!ancillary->ancillaryDataFormatId().isEmpty())
+    if (!ancillary->ancillaryDataFormatId().isEmpty())
         a.setAttribute("ancillaryDataFormatId", ancillary->ancillaryDataFormatId());
-    if(!ancillary->ancillaryDataFormatName().isEmpty())
+    if (!ancillary->ancillaryDataFormatName().isEmpty())
         a.setAttribute("ancillaryDataFormatName", ancillary->ancillaryDataFormatName());
-    if(true) {
+    if (ancillary->DID()) {
         QDomElement e = m_doc.createElement(" ");
-        QDomText textNode = m_doc.createTextNode(QString::number(ancillary->DID(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(ancillary->DID()), 10));
         e.appendChild(textNode);
         e.setTagName("DID");
         a.appendChild(e);
     }
-    if(true) {
+    if (ancillary->SDID()) {
         QDomElement e = m_doc.createElement(" ");
-        QDomText textNode = m_doc.createTextNode(QString::number(ancillary->SDID(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(ancillary->SDID()), 10));
         e.appendChild(textNode);
         e.setTagName("SDID");
         a.appendChild(e);
     }
     QList<int> lines = ancillary->lineNumber();
-    for(int i=0; i<lines.size(); ++i) {
+    for (int i=0; i<lines.size(); ++i) {
         QDomElement e = m_doc.createElement(" ");
         QDomText textNode = m_doc.createTextNode(QString::number(lines.at(i), 10));
         e.appendChild(textNode);
         e.setTagName("lineNumber");
         a.appendChild(e);
     }
-    if(true) {
+    if (ancillary->wrappingType()) {
         QDomElement e = m_doc.createElement(" ");
-        QDomText textNode = m_doc.createTextNode(QString::number(ancillary->wrappingType(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(ancillary->wrappingType()), 10));
         e.appendChild(textNode);
         e.setTagName("wrappingType");
         a.appendChild(e);
@@ -734,10 +760,10 @@ QDomElement EbuSerializer::serializeOrganisationDetails(OrganisationDetailsType 
 {
     QDomElement o = m_doc.createElement(" ");
 
-    if(!organisationDetails->organisationId().isEmpty()) {
+    if (!organisationDetails->organisationId().isEmpty()) {
         o.setAttribute("organisationId", organisationDetails->organisationId());
     }
-    if(organisationDetails->organisationDepartment()) {
+    if (organisationDetails->organisationDepartment()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("organisationDepartment");
         e.setAttribute("lang", organisationDetails->organisationDepartment()->lang());
@@ -745,20 +771,20 @@ QDomElement EbuSerializer::serializeOrganisationDetails(OrganisationDetailsType 
         QDomText textNode = m_doc.createTextNode(organisationDetails->organisationDepartment()->value());
         e.appendChild(textNode);
     }
-    if(organisationDetails->organisationName()) {
+    if (organisationDetails->organisationName()) {
         QDomElement e = serializeElement(organisationDetails->organisationName());
         e.setTagName("organisationName");
         o.appendChild(e);
     }
     QList<DetailsType *> details = organisationDetails->details();
-    for(int i=0; i<details.size(); ++i)
+    for (int i=0; i<details.size(); ++i)
     {
         QDomElement d = serializeDetails(details.at(i));
         d.setTagName("details");
         o.appendChild(d);
     }
     QList<EntityType *> contacts = organisationDetails->contacts();
-    for(int i=0; i<contacts.size(); ++i)
+    for (int i=0; i<contacts.size(); ++i)
     {
         QDomElement c = serializeEntity(contacts.at(i));
         c.setTagName("contacts");
@@ -784,20 +810,21 @@ QDomElement EbuSerializer::serializeRelation(RelationType *rel)
     QDomElement r = m_doc.createElement(" ");
 
     serializeTypeGroup(rel, &r);
-    if(!rel->note().isEmpty())
+    if (!rel->note().isEmpty())
         r.setAttribute("note", rel->note());
-    r.setAttribute("runningOrderNumber", rel->runningOrderNumber());
-    if(rel->relation()) {
+    if (rel->runningOrderNumber())
+        r.setAttribute("runningOrderNumber", *(rel->runningOrderNumber()));
+    if (rel->relation()) {
         QDomElement e = serializeElement(rel->relation());
         e.setTagName("relation");
         r.appendChild(e);
     }
-    if(rel->relationIdentifier()) {
+    if (rel->relationIdentifier()) {
         QDomElement e = serializeIdentifier(rel->relationIdentifier());
         e.setTagName("relationIdentifier");
         r.appendChild(e);
     }
-    if(!rel->relationLink().isEmpty()) {
+    if (!rel->relationLink().isEmpty()) {
         QDomElement e = m_doc.createElement(" ");
         QDomText textNode = m_doc.createTextNode(rel->relationLink());
         e.appendChild(textNode);
@@ -815,14 +842,14 @@ QDomElement EbuSerializer::serializeIdentifier(IdentifierType *identifier)
 
     serializeTypeGroup(identifier, &i);
     serializeFormatGroup(identifier, &i);
-    if(!identifier->note().isEmpty())
+    if (!identifier->note().isEmpty())
         i.setAttribute("note", identifier->note());
-    if(identifier->identifier()) {
+    if (identifier->identifier()) {
         QDomElement e = serializeElement(identifier->identifier());
         e.setTagName("identifier");
         i.appendChild(e);
     }
-    if(identifier->attributor()) {
+    if (identifier->attributor()) {
         QDomElement e = serializeEntity(identifier->attributor());
         e.setTagName("attributor");
         i.appendChild(e);
@@ -835,21 +862,21 @@ QDomElement EbuSerializer::serializeSigningFormat(SigningFormatType *sign)
 {
     QDomElement s = m_doc.createElement(" ");
 
-    if(!sign->trackId().isEmpty())
+    if (!sign->trackId().isEmpty())
         s.setAttribute("trackId", sign->trackId());
-    if(!sign->trackName().isEmpty())
+    if (!sign->trackName().isEmpty())
         s.setAttribute("trackName", sign->trackName());
-    if(!sign->language().isEmpty())
+    if (!sign->language().isEmpty())
         s.setAttribute("language", sign->language());
     serializeTypeGroup(sign, &s);
     serializeFormatGroup(sign, &s);
-    if(!sign->signingSourceUri().isEmpty())
+    if (!sign->signingSourceUri().isEmpty())
         s.setAttribute("signingSourceUri", sign->signingSourceUri());
-    if(!sign->signingFormatId().isEmpty())
+    if (!sign->signingFormatId().isEmpty())
         s.setAttribute("signingFormatId", sign->signingFormatId());
-    if(!sign->signingFormatName().isEmpty())
+    if (!sign->signingFormatName().isEmpty())
         s.setAttribute("signingFormatName", sign->signingFormatName());
-    if(!sign->signingFormatDefinition().isEmpty())
+    if (!sign->signingFormatDefinition().isEmpty())
         s.setAttribute("signingFormatDefinition", sign->signingFormatDefinition());
 
     return s;
@@ -859,11 +886,11 @@ QDomElement EbuSerializer::serializeTitle(TitleType *title)
 {
     QDomElement t = m_doc.createElement(" ");
 
-    if(title->attributionDate().isValid())
+    if (title->attributionDate().isValid())
         t.setAttribute("attributionDate", TypeConverter::dateToString(title->attributionDate()));
-    if(!title->note().isEmpty())
+    if (!title->note().isEmpty())
         t.setAttribute("note", title->note());
-    if(title->title()) {
+    if (title->title()) {
         QDomElement e = serializeElement(title->title());
         e.setTagName("title");
         t.appendChild(e);
@@ -879,9 +906,9 @@ QDomElement EbuSerializer::serializeAlternativeTitle(AlternativeTitleType *title
     serializeTypeGroup(title, &a);
     serializeStatusGroup(title, &a);
     serializeDateGroup(title, &a);
-    if(!title->note().isEmpty())
+    if (!title->note().isEmpty())
         a.setAttribute("note", title->note());
-    if(title->title()) {
+    if (title->title()) {
         QDomElement e = serializeElement(title->title());
         e.setTagName("title");
         a.appendChild(e);
@@ -895,26 +922,26 @@ QDomElement EbuSerializer::serializeSubject(SubjectType *subject)
     QDomElement s = m_doc.createElement(" ");
 
     serializeTypeGroup(subject, &s);
-    if(!subject->note().isEmpty())
+    if (!subject->note().isEmpty())
         s.setAttribute("note", subject->note());
-    if(subject->subject()) {
+    if (subject->subject()) {
         QDomElement e = serializeElement(subject->subject());
         e.setTagName("subject");
         s.appendChild(e);
     }
-    if(subject->attributor()) {
+    if (subject->attributor()) {
         QDomElement e = serializeEntity(subject->attributor());
         e.setTagName("attributor");
         s.appendChild(e);
     }
-    if(!subject->subjectCode().isEmpty()) {
+    if (!subject->subjectCode().isEmpty()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("subjectCode");
         QDomText textNode = m_doc.createTextNode(subject->subjectCode());
         e.appendChild(textNode);
         s.appendChild(e);
     }
-    if(!subject->subjectDefinition().isEmpty()) {
+    if (!subject->subjectDefinition().isEmpty()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("subjectDefinition");
         QDomText textNode = m_doc.createTextNode(subject->subjectDefinition());
@@ -930,37 +957,37 @@ QDomElement EbuSerializer::serializeDate(DateType *date)
     QDomElement d = m_doc.createElement(" ");
 
     QList<ElementType *> dates = date->date();
-    for(int i=0; i<dates.size(); i++) {
+    for (int i=0; i<dates.size(); i++) {
         QDomElement e = serializeElement(dates.at(i));
         e.setTagName("date");
         d.appendChild(e);
     }
-    if(date->created()) {
+    if (date->created()) {
         QDomElement e = m_doc.createElement(" ");
         serializeDateGroup(date->created(), &e);
         e.setTagName("created");
         d.appendChild(e);
     }
-    if(date->issued()) {
+    if (date->issued()) {
         QDomElement e = m_doc.createElement(" ");
         serializeDateGroup(date->issued(), &e);
         e.setTagName("issued");
         d.appendChild(e);
     }
-    if(date->modified()) {
+    if (date->modified()) {
         QDomElement e = m_doc.createElement(" ");
         serializeDateGroup(date->modified(), &e);
         e.setTagName("modified");
         d.appendChild(e);
     }
-    if(date->digitised()) {
+    if (date->digitised()) {
         QDomElement e = m_doc.createElement(" ");
         serializeDateGroup(date->digitised(), &e);
         e.setTagName("digitised");
         d.appendChild(e);
     }
     QList<AlternativeType *> alternative = date->alternative();
-    for(int i=0; i<alternative.size(); i++) {
+    for (int i=0; i<alternative.size(); i++) {
         QDomElement e = serializeAlternative(alternative.at(i));
         e.setTagName("alternative");
         d.appendChild(e);
@@ -973,19 +1000,19 @@ QDomElement EbuSerializer::serializeType(TypeType *type)
 {
     QDomElement t = m_doc.createElement(" ");
 
-    if(!type->note().isEmpty()) {
+    if (!type->note().isEmpty()) {
         t.setAttribute("note", type->note());
     }
 
     QList<ElementType *> types = type->type();
-    for(int i=0; i<types.size(); ++i)
+    for (int i=0; i<types.size(); ++i)
     {
         QDomElement e = serializeElement(types.at(i));
         e.setTagName("type");
         t.appendChild(e);
     }
     QList<TypeGroup *> genre = type->genre();
-    for(int i=0; i<genre.size(); ++i)
+    for (int i=0; i<genre.size(); ++i)
     {
         QDomElement e = m_doc.createElement(" ");
         serializeTypeGroup(genre.at(i), &e);
@@ -993,7 +1020,7 @@ QDomElement EbuSerializer::serializeType(TypeType *type)
         t.appendChild(e);
     }
     QList<TypeGroup *> objectType = type->objectType();
-    for(int i=0; i<genre.size(); ++i)
+    for (int i=0; i<genre.size(); ++i)
     {
         QDomElement e = m_doc.createElement(" ");
         serializeTypeGroup(objectType.at(i), &e);
@@ -1001,7 +1028,7 @@ QDomElement EbuSerializer::serializeType(TypeType *type)
         t.appendChild(e);
     }
     QList<TypeGroup *> targetAudience = type->targetAudience();
-    for(int i=0; i<targetAudience.size(); ++i)
+    for (int i=0; i<targetAudience.size(); ++i)
     {
         QDomElement e = m_doc.createElement(" ");
         serializeTypeGroup(targetAudience.at(i), &e);
@@ -1027,17 +1054,17 @@ QDomElement EbuSerializer::serializeFormat(FormatType *format)
         e.setTagName("format");
         f.appendChild(e);
     }
-    if(format->regionDelimX() >= 0) {
+    if(format->regionDelimX()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("regionDelimX");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->regionDelimX(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->regionDelimX()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
-    if(format->regionDelimY() >= 0) {
+    if(format->regionDelimY()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("regionDelimY");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->regionDelimY(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->regionDelimY()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
@@ -1117,10 +1144,10 @@ QDomElement EbuSerializer::serializeFormat(FormatType *format)
         e.setTagName("duration");
         f.appendChild(e);
     }
-    if(format->fileSize() >= 0) {
+    if(format->fileSize()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("fileSize");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->fileSize(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->fileSize()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
@@ -1282,9 +1309,9 @@ QDomElement EbuSerializer::serializeRights(RightsType *right)
         e.setTagName("coverage");
         r.appendChild(e);
     }
-    if(true) {
+    if(right->rightsClearanceFlag()) {
         QDomElement e = m_doc.createElement(" ");
-        QString value = right->isRightsClearanceFlagSet() ? "true" : "false";
+        QString value = *(right->rightsClearanceFlag()) ? "true" : "false";
         QDomText textNode = m_doc.createTextNode(value);
         e.appendChild(textNode);
         e.setTagName("rightsClearanceFlag");
@@ -1425,8 +1452,8 @@ QDomElement EbuSerializer::serializeLength(LengthType *len)
 
     if(!len->unit().isEmpty())
         l.setAttribute("unit", len->unit());
-    if(len->value() >= 0) {
-        QDomText textNode = m_doc.createTextNode(QString::number(len->value(), 10));
+    if(len->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(len->value()), 10));
         l.appendChild(textNode);
     }
 
@@ -1504,17 +1531,17 @@ QDomElement EbuSerializer::serializeImageFormat(ImageFormatType *format)
         f.setAttribute("imageFormatName",format->imageFormatName());
     if(!format->imageFormatDefinition().isEmpty())
         f.setAttribute("imageFormatDefinition",format->imageFormatDefinition());
-    if(format->regionDelimX() >= 0) {
+    if(format->regionDelimX()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("regionDelimX");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->regionDelimX(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->regionDelimX()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
-    if(format->regionDelimY() >= 0) {
+    if(format->regionDelimY()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("regionDelimY");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->regionDelimY(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->regionDelimY()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
@@ -1558,17 +1585,17 @@ QDomElement EbuSerializer::serializeVideoFormat(VideoFormatType *format)
         f.setAttribute("videoFormatName",format->videoFormatName());
     if(!format->videoFormatDefinition().isEmpty())
         f.setAttribute("videoFormatDefinition",format->videoFormatDefinition());
-    if(format->regionDelimX() >= 0) {
+    if(format->regionDelimX()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("regionDelimX");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->regionDelimX(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->regionDelimX()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
-    if(format->regionDelimY() >= 0) {
+    if(format->regionDelimY()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("regionDelimY");
-        QDomText textNode = m_doc.createTextNode(QString::number(format->regionDelimY(), 10));
+        QDomText textNode = m_doc.createTextNode(QString::number(*(format->regionDelimY()), 10));
         e.appendChild(textNode);
         f.appendChild(e);
     }
@@ -1624,9 +1651,10 @@ QDomElement EbuSerializer::serializeInt8(Int8 *integer)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(integer, &i);
-    QDomText textNode = m_doc.createTextNode(QString::number(integer->value(), 10));
-    i.appendChild(textNode);
-
+    if (integer->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(integer->value()), 10));
+        i.appendChild(textNode);
+    }
     return i;
 }
 
@@ -1635,8 +1663,10 @@ QDomElement EbuSerializer::serializeInt16(Int16 *integer)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(integer, &i);
-    QDomText textNode = m_doc.createTextNode(QString::number(integer->value(), 10));
-    i.appendChild(textNode);
+    if (integer->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(integer->value()), 10));
+        i.appendChild(textNode);
+    }
     return i;
 }
 
@@ -1645,8 +1675,10 @@ QDomElement EbuSerializer::serializeInt32(Int32 *integer)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(integer, &i);
-    QDomText textNode = m_doc.createTextNode(QString::number(integer->value(), 10));
-    i.appendChild(textNode);
+    if (integer->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(integer->value()), 10));
+        i.appendChild(textNode);
+    }
     return i;
 }
 
@@ -1655,8 +1687,10 @@ QDomElement EbuSerializer::serializeInt64(Int64 *integer)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(integer, &i);
-    QDomText textNode = m_doc.createTextNode(QString::number(integer->value(), 10));
-    i.appendChild(textNode);
+    if (integer->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(integer->value()), 10));
+        i.appendChild(textNode);
+    }
     return i;
 }
 
@@ -1665,8 +1699,10 @@ QDomElement EbuSerializer::serializeUInt8(UInt8 *integer)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(integer, &i);
-    QDomText textNode = m_doc.createTextNode(QString::number(integer->value(), 10));
-    i.appendChild(textNode);
+    if (integer->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(integer->value()), 10));
+        i.appendChild(textNode);
+    }
     return i;
 }
 
@@ -1675,8 +1711,10 @@ QDomElement EbuSerializer::serializeUInt16(UInt16 *integer)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(integer, &i);
-    QDomText textNode = m_doc.createTextNode(QString::number(integer->value(), 10));
-    i.appendChild(textNode);
+    if (integer->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(integer->value()), 10));
+        i.appendChild(textNode);
+    }
     return i;
 }
 
@@ -1685,8 +1723,10 @@ QDomElement EbuSerializer::serializeUInt32(UInt32 *integer)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(integer, &i);
-    QDomText textNode = m_doc.createTextNode(QString::number(integer->value(), 10));
-    i.appendChild(textNode);
+    if (integer->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(integer->value()), 10));
+        i.appendChild(textNode);
+    }
     return i;
 }
 
@@ -1695,8 +1735,10 @@ QDomElement EbuSerializer::serializeUInt64(UInt64 *integer)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(integer, &i);
-    QDomText textNode = m_doc.createTextNode(QString::number(integer->value(), 10));
-    i.appendChild(textNode);
+    if (integer->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(integer->value()), 10));
+        i.appendChild(textNode);
+    }
     return i;
 }
 
@@ -1705,9 +1747,11 @@ QDomElement EbuSerializer::serializeBoolean(Boolean *boolean)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(boolean, &i);
-    QString value = boolean->value() ? "true" : "false";
-    QDomText textNode = m_doc.createTextNode(value);
-    i.appendChild(textNode);
+    if (boolean->value()) {
+        QString value = (*(boolean->value())) ? "true" : "false";
+        QDomText textNode = m_doc.createTextNode(value);
+        i.appendChild(textNode);
+    }
     return i;
 }
 
@@ -1716,8 +1760,10 @@ QDomElement EbuSerializer::serializeFloat(Float *f)
     QDomElement i = m_doc.createElement(" ");
 
     serializeTypeGroup(f, &i);
-    QDomText textNode = m_doc.createTextNode(QString::number(f->value(),'g',3));
-    i.appendChild(textNode);
+    if (f->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(f->value()),'g',3));
+        i.appendChild(textNode);
+    }
 
     return i;
 }
@@ -1727,10 +1773,14 @@ QDomElement EbuSerializer::serializeTechnicalAttributeRational(TechnicalAttribut
     QDomElement r = m_doc.createElement(" ");
 
     serializeTypeGroup(ratio, &r);
-    r.setAttribute("factorNumerator", ratio->factorNumerator());
-    r.setAttribute("factorDenominator", ratio->factorDenominator());
-    QDomText textNode = m_doc.createTextNode(QString::number(ratio->value(), 10));
-    r.appendChild(textNode);
+    if (ratio->factorNumerator())
+        r.setAttribute("factorNumerator", *(ratio->factorNumerator()));
+    if (ratio->factorDenominator())
+        r.setAttribute("factorDenominator", *(ratio->factorDenominator()));
+    if (ratio->value()) {
+        QDomText textNode = m_doc.createTextNode(QString::number(*(ratio->value()), 10));
+        r.appendChild(textNode);
+    }
 
     return r;
 }
@@ -1962,9 +2012,9 @@ void EbuSerializer::serializeDateGroup(DateGroup *dateGroup, QDomElement *d)
     if (!dateGroup->period().isNull())
         d->setAttribute("period", dateGroup->period());
     if (dateGroup->startYear())
-        d->setAttribute("startYear", dateGroup->startYear());
+        d->setAttribute("startYear", *(dateGroup->startYear()));
     if (dateGroup->endYear())
-        d->setAttribute("endYear", dateGroup->endYear());
+        d->setAttribute("endYear", *(dateGroup->endYear()));
     if (dateGroup->startDate().isValid())
         d->setAttribute("startDate", TypeConverter::dateToString(dateGroup->startDate()));
     if (dateGroup->endDate().isValid())

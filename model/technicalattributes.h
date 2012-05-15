@@ -71,110 +71,120 @@ class Int8 : public TypeGroup
 {
 public:
     Int8();
+    ~Int8();
     //Attributes
-    qint8 value() const;
+    qint8 *value() const;
     void setValue(qint8 value);
 private:
-    qint8 m_value;
+    qint8 *m_value;
 };
 
 class Int16 : public TypeGroup
 {
 public:
     Int16();
+    ~Int16();
     //Attributes
-    qint16 value() const;
+    qint16 *value() const;
     void setValue(qint16 value);
 private:
-    qint16 m_value;
+    qint16 *m_value;
 };
 
 class Int32 : public TypeGroup
 {
 public:
     Int32();
+    ~Int32();
     //Attributes
-    qint32 value() const;
+    qint32 *value() const;
     void setValue(qint32 value);
 private:
-    qint32 m_value;
+    qint32 *m_value;
 };
 
 class Int64 : public TypeGroup
 {
 public:
     Int64();
+    ~Int64();
     //Attributes
-    qint64 value() const;
+    qint64 *value() const;
     void setValue(qint64 value);
 private:
-    qint64 m_value;
+    qint64 *m_value;
 };
 
 class UInt8 : public TypeGroup
 {
 public:
     UInt8();
+    ~UInt8();
     //Attributes
-    quint8 value() const;
+    quint8 *value() const;
     void setValue(quint8 value);
 private:
-    quint8 m_value;
+    quint8 *m_value;
 };
 
 class UInt16 : public TypeGroup
 {
 public:
     UInt16();
+    ~UInt16();
     //Attributes
-    quint16 value() const;
+    quint16 *value() const;
     void setValue(quint16 value);
 private:
-    quint16 m_value;
+    quint16 *m_value;
 };
 
 class UInt32 : public TypeGroup
 {
 public:
     UInt32();
+    ~UInt32();
     //Attributes
-    quint32 value() const;
+    quint32 *value() const;
     void setValue(quint32 value);
 private:
-    quint32 m_value;
+    quint32 *m_value;
 };
 
 class UInt64 : public TypeGroup
 {
 public:
     UInt64();
+    ~UInt64();
     //Attributes
-    quint64 value() const;
+    quint64 *value() const;
     void setValue(quint64 value);
 private:
-    quint64 m_value;
+    quint64 *m_value;
 };
 
 class Boolean : public TypeGroup
 {
 public:
     Boolean();
+    ~Boolean();
     //Attributes
-    bool value() const;
+    bool *value() const;
     void setValue(bool value);
 private:
-    bool m_value;
+    bool *m_value;
 };
 
 class Float : public TypeGroup
 {
 public:
     Float();
+    ~Float();
     //Attributes
-    double value() const;
+    double *value() const;
     void setValue(double value);
 private:
-    double m_value;
+    double *m_value;
 };
 
 class TechnicalAttributeUriType : public TypeGroup
@@ -192,19 +202,20 @@ class TechnicalAttributeRationalType : public TypeGroup
 {
 public:
     TechnicalAttributeRationalType();
+    ~TechnicalAttributeRationalType();
     //Attributes
-    long value() const;
+    long *value() const;
     void setValue(long value);
-    int factorNumerator() const;
+    int *factorNumerator() const;
     void setFactorNumerator (int factorNumerator);
-    int factorDenominator() const;
+    int *factorDenominator() const;
     void setFactorDenominator (int factorDenominator);
 
 private:
     //Attributes
-    long m_value;
-    int m_factorNumerator;
-    int m_factorDenominator;
+    long *m_value;
+    int *m_factorNumerator;
+    int *m_factorDenominator;
 };
 
 #endif // TECHNICALATTRIBUTES_H

@@ -261,7 +261,7 @@ class RelationType : public TypeGroup
 public:
     RelationType();
     ~RelationType();
-    int runningOrderNumber() const;
+    int *runningOrderNumber() const;
     void setRunningOrderNumber(int runningOrderNumber);
     QString note() const;
     void setNote(const QString &note);
@@ -272,7 +272,7 @@ public:
     QString relationLink() const;
     void setRelationLink(const QString &relationLink);
 private:
-    int m_runningOrderNumber;
+    int *m_runningOrderNumber;
     QString m_note;
     ElementType *m_relation;
     IdentifierType *m_relationIdentifier;
@@ -322,13 +322,15 @@ private:
 class CoordinatesType : public FormatGroup
 {
 public:
-    float posy() const;
+    CoordinatesType();
+    ~CoordinatesType();
+    float *posy() const;
     void setPosy(float posy);
-    float posx() const;
+    float *posx() const;
     void setPosx(float posx);
 private:
-    float m_posy;
-    float m_posx;
+    float *m_posy;
+    float *m_posx;
 };
 
 class LocationType : public TypeGroup
@@ -388,8 +390,8 @@ public:
     void setExploitationIssues(ElementType *exploitationIssues);
     CoverageType *coverage() const;
     void setCoverage(CoverageType *coverage);
-    bool isRightsClearanceFlagSet() const;
-    void setRightsClearanceFlagSet(bool rightsClearanceFlag);
+    bool *rightsClearanceFlag() const;
+    void setRightsClearanceFlag(bool rightsClearanceFlag);
     QList<ElementType *> &disclaimer();
     QList<IdentifierType *> &rightsID();
     QList<ContactDetailsType *> &contactDetails();
@@ -401,7 +403,7 @@ private:
     EntityType *m_rightsHolder;
     ElementType *m_exploitationIssues;
     CoverageType *m_coverage;
-    bool m_rightsClearanceFlag;
+    bool *m_rightsClearanceFlag;
     QList<ElementType *> m_disclaimer;
     QList<IdentifierType *> m_rightsId;
     QList<ContactDetailsType *> m_contactDetails;
