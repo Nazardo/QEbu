@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     EbuParser parser;
-    QFile ifile("D:\\Dropbox\\ProgettoMAT\\EbuCore\\Example\\raiexample001_2011.xml");
+    QFile ifile("D:\\Documenti\\Politecnico\\MultimediaArchivalTechniques\\EBU_CORE_20110915\\prova\\NewFile.xml");
     ifile.open(QFile::ReadOnly);
     if (!ifile.isOpen()) {
         qDebug("Invalid file");

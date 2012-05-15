@@ -14,9 +14,8 @@ public:
     QString errorMsg();
     EbuCoreMainType *root();
 
-
 private:
-    CoreMetadataType *parseCoreMetadataType(const QDomElement &element);
+    CoreMetadataType *parseCoreMetadataType(CoreMetadataType *coreMetadata, const QDomElement &element);
     AlternativeType *parseAlternativeType(const QDomElement &element);
     TechnicalAttributes *parseTechnicalAttributes(const QDomElement &element);
     AudioTrackType *parseAudioTrackType(const QDomElement &element);
@@ -37,6 +36,7 @@ private:
     OrganisationDetailsType *parseOrganisationDetailsType(const QDomElement &element);
     ElementType *parseElementType(const QDomElement &element);
     RelationType *parseRelationType(const QDomElement &element);
+    RelationType *parseRelationType(RelationType *relation, const QDomElement &element);
     IdentifierType *parseIdentifierType(const QDomElement &element);
     SigningFormatType *parseSigningFormatType(const QDomElement &element);
     TitleType *parseTitleType(const QDomElement &element);

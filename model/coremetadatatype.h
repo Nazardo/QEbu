@@ -323,14 +323,13 @@ class CoordinatesType : public FormatGroup
 {
 public:
     CoordinatesType();
-    ~CoordinatesType();
-    float *posy() const;
+    float posy() const;
     void setPosy(float posy);
-    float *posx() const;
+    float posx() const;
     void setPosx(float posx);
 private:
-    float *m_posy;
-    float *m_posx;
+    float m_posy;
+    float m_posx;
 };
 
 class LocationType : public TypeGroup

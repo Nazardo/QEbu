@@ -42,7 +42,7 @@ bool EbuParser::parseFromFile(QFile &file)
     {
         QDomNodeList list = root.elementsByTagName("coreMetadata");
         QDomElement element = list.item(0).toElement();
-        CoreMetadataType *coreMetadata = parseCoreMetadataType(element);
+        CoreMetadataType *coreMetadata = parseCoreMetadataType(m_root->coreMetadata(), element);
         if (!coreMetadata)
             return false;
         m_root->setCoreMetadata(coreMetadata);
@@ -71,18 +71,19 @@ EbuCoreMainType *EbuParser::root()
     return m_root;
 }
 
-CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
+CoreMetadataType *EbuParser::parseCoreMetadataType(CoreMetadataType *coreMetadata, const QDomElement &element)
 {
     if (element.isNull()) {
         m_errorMsg = "CoreMetadataType is null";
         return 0;
     }
-    CoreMetadataType *coreMetadata = new CoreMetadataType();
 
     // title [0..*]
     QDomNodeList titleList = element.elementsByTagName("title");
     for (int i=0; i < titleList.size(); ++i) {
         QDomElement el = titleList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         TitleType *title = parseTitleType(el);
         if (!title) {
             delete coreMetadata;
@@ -119,6 +120,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList subjectList = element.elementsByTagName("subject");
     for (int i=0; i < subjectList.size(); ++i) {
         QDomElement el = subjectList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         SubjectType *subject = parseSubjectType(el);
         if (!subject) {
             delete coreMetadata;
@@ -131,6 +134,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList descriptionList = element.elementsByTagName("description");
     for (int i=0; i < descriptionList.size(); ++i) {
         QDomElement el = descriptionList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         DescriptionType *description = parseDescriptionType(el);
         if (!description) {
             delete coreMetadata;
@@ -143,6 +148,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList publisherList = element.elementsByTagName("publisher");
     for (int i=0; i < publisherList.size(); ++i) {
         QDomElement el = publisherList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         EntityType *publisher = parseEntityType(el);
         if (!publisher) {
             delete coreMetadata;
@@ -155,6 +162,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList contributorList = element.elementsByTagName("contributor");
     for (int i=0; i < contributorList.size(); ++i) {
         QDomElement el = contributorList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         EntityType *contributor = parseEntityType(el);
         if (!contributor) {
             delete coreMetadata;
@@ -167,6 +176,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList dateList = element.elementsByTagName("date");
     for (int i=0; i < dateList.size(); ++i) {
         QDomElement el = dateList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         DateType *date = parseDateType(el);
         if (!date) {
             delete coreMetadata;
@@ -179,6 +190,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList typeList = element.elementsByTagName("type");
     for (int i=0; i < typeList.size(); ++i) {
         QDomElement el = typeList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         TypeType *type = parseTypeType(el);
         if (!type) {
             delete coreMetadata;
@@ -191,6 +204,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList formatList = element.elementsByTagName("format");
     for (int i=0; i < formatList.size(); ++i) {
         QDomElement el = formatList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         FormatType *format = parseFormatType(el);
         if (!format) {
             delete coreMetadata;
@@ -203,6 +218,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList identifierList = element.elementsByTagName("identifier");
     for (int i=0; i < identifierList.size(); ++i) {
         QDomElement el = identifierList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         IdentifierType *identifier = parseIdentifierType(el);
         if (!identifier) {
             delete coreMetadata;
@@ -215,6 +232,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList sourceList = element.elementsByTagName("source");
     for (int i=0; i < sourceList.size(); ++i) {
         QDomElement el = sourceList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         ElementType *source = parseElementType(el);
         if (!source) {
             delete coreMetadata;
@@ -227,6 +246,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList languageList = element.elementsByTagName("language");
     for (int i=0; i < languageList.size(); ++i) {
         QDomElement el = languageList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         LanguageType *language = parseLanguageType(el);
         if (!language) {
             delete coreMetadata;
@@ -239,6 +260,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList relationList = element.elementsByTagName("relation");
     for (int i=0; i < relationList.size(); ++i) {
         QDomElement el = relationList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         RelationType *relation = parseRelationType(el);
         if (!relation) {
             delete coreMetadata;
@@ -347,6 +370,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList hasTrackPartList = element.elementsByTagName("hasTrackPart");
     for (int i=0; i < hasTrackPartList.size(); ++i) {
         QDomElement el = hasTrackPartList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         HasTrackPartType *hasTrackPart = parseHasTrackPartType(el);
         if (!hasTrackPart) {
             delete coreMetadata;
@@ -431,6 +456,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList coverageList = element.elementsByTagName("coverage");
     for (int i=0; i < coverageList.size(); ++i) {
         QDomElement el = coverageList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         CoverageType *coverage = parseCoverageType(el);
         if (!coverage) {
             delete coreMetadata;
@@ -443,6 +470,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList rightsList = element.elementsByTagName("rights");
     for (int i=0; i < rightsList.size(); ++i) {
         QDomElement el = rightsList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         RightsType *rights = parseRightsType(el);
         if (!rights) {
             delete coreMetadata;
@@ -477,6 +506,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList ratingList = element.elementsByTagName("rating");
     for (int i=0; i < ratingList.size(); ++i) {
         QDomElement el = ratingList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         RatingType *rating = parseRatingType(el);
         if (!rating) {
             delete coreMetadata;
@@ -489,6 +520,8 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(const QDomElement &element)
     QDomNodeList partList = element.elementsByTagName("part");
     for (int i=0; i < partList.size(); ++i) {
         QDomElement el = partList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         PartType *part = parsePartType(el);
         if (!part) {
             delete coreMetadata;
@@ -822,12 +855,16 @@ void EbuParser::parseStatusGroup(const QDomElement &element, StatusGroup* const 
 
 RelationType *EbuParser::parseRelationType(const QDomElement &element)
 {
+    RelationType *relation = new RelationType();
+    return parseRelationType(relation, element);
+}
+
+RelationType *EbuParser::parseRelationType(RelationType *relation, const QDomElement &element)
+{
     if (element.isNull()) {
         m_errorMsg = "RelationType is null";
         return 0;
     }
-
-    RelationType *relation = new RelationType();
 
     // Get attributes.
     parseTypeGroup(element, relation);
@@ -1496,12 +1533,14 @@ VideoFormatType *EbuParser::parseVideoFormatType(const QDomElement &element)
     }
 
     el = element.elementsByTagName("aspectRatio").at(0).toElement();
-    AspectRatioType *aspectRatio = parseAspectRatioType(el);
-    if (!aspectRatio) {
-        delete videoFormat;
-        return 0;
+    if (!el.isNull()) {
+        AspectRatioType *aspectRatio = parseAspectRatioType(el);
+        if (!aspectRatio) {
+            delete videoFormat;
+            return 0;
+        }
+        videoFormat->setAspectRatio(aspectRatio);
     }
-    videoFormat->setAspectRatio(aspectRatio);
 
     TechnicalAttributes *technicalAttributes = parseTechnicalAttributes(element);
     if(technicalAttributes)
@@ -1869,6 +1908,7 @@ HasTrackPartType *EbuParser::parseHasTrackPartType(const QDomElement &element)
     }
     HasTrackPartType *hasTrackPart = new HasTrackPartType();
 
+    parseRelationType(hasTrackPart, element);
     // Get elements.
     QDomElement el = element.elementsByTagName("trackPartTitle").at(0).toElement();
     if (!el.isNull()) {
@@ -2011,7 +2051,7 @@ LocationType *EbuParser::parseLocationType(const QDomElement &element)
     el = element.elementsByTagName("name").at(0).toElement();
     if(!el.isNull())
         location->setName(el.text());
-    el = element.elementsByTagName("name").at(0).toElement();
+    el = element.elementsByTagName("coordinates").at(0).toElement();
     if (!el.isNull()) {
         CoordinatesType *coordinates = parseCoordinatesType(el);
         if(!coordinates) {
@@ -2037,10 +2077,10 @@ CoordinatesType *EbuParser::parseCoordinatesType(const QDomElement &element)
     // Get elements.
     bool ok;
     float posx = element.elementsByTagName("posx").at(0).toElement().text().toFloat(&ok);
-    if(ok)
+    if (ok)
         coordinates->setPosx(posx);
     float posy = element.elementsByTagName("posy").at(0).toElement().text().toFloat(&ok);
-    if(ok)
+    if (ok)
         coordinates->setPosy(posy);
 
     return coordinates;
@@ -2098,7 +2138,7 @@ RightsType *EbuParser::parseRightsType(const QDomElement &element)
         }
         rights->setRightsHolder(holder);
     }
-    el = element.elementsByTagName("exploitationIssue").at(0).toElement();
+    el = element.elementsByTagName("exploitationIssues").at(0).toElement();
     if (!el.isNull()) {
         ElementType *exploitation = parseElementType(el);
         if (!exploitation) {
@@ -2117,7 +2157,7 @@ RightsType *EbuParser::parseRightsType(const QDomElement &element)
         rights->setCoverage(coverage);
     }
 
-    QString flagString = element.elementsByTagName("rightsLink").at(0).toElement().text();
+    QString flagString = element.elementsByTagName("rightsClearanceFlag").at(0).toElement().text();
     if (!flagString.isEmpty()) {
         if (flagString.trimmed().toLower() == "true") {
             rights->setRightsClearanceFlag(true);
@@ -2294,7 +2334,7 @@ RatingType *EbuParser::parseRatingType(const QDomElement &element)
         rating->setRatingScaleMaxValue(el.text());
     el = element.elementsByTagName("ratingScaleMinValue").at(0).toElement();
     if(!el.isNull())
-        rating->setRatingScaleMaxValue(el.text());
+        rating->setRatingScaleMinValue(el.text());
     el = element.elementsByTagName("ratingProvider").at(0).toElement();
     if (!el.isNull()) {
         EntityType *provider = parseEntityType(el);
@@ -2315,13 +2355,15 @@ PartType *EbuParser::parsePartType(const QDomElement &element)
     }
     PartType *part = new PartType();
 
+    parseCoreMetadataType(part, element);
+
     // Get attributes.
-    QDomElement el = element.elementsByTagName("partId").at(0).toElement();
-    if(!el.isNull())
-        part->setPartId(el.text());
-    el = element.elementsByTagName("oartName").at(0).toElement();
-    if(!el.isNull())
-        part->setPartName(el.text());
+    QString id = element.attribute("partId");
+    if(!id.isEmpty())
+        part->setPartId(id);
+    QString name = element.attribute("partName");
+    if(!name.isEmpty())
+        part->setPartName(name);
 
     return part;
 }

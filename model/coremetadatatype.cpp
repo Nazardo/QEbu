@@ -721,32 +721,24 @@ CoordinatesType::CoordinatesType()
     m_posx = 0;
 }
 
-CoordinatesType::~CoordinatesType()
-{
-    delete m_posy;
-    delete m_posx;
-}
-
-float *CoordinatesType::posy() const
+float CoordinatesType::posy() const
 {
     return m_posy;
 }
 
 void CoordinatesType::setPosy(float posy)
 {
-    delete m_posy;
-    m_posy = new float(posy);
+    m_posy = posy;
 }
 
-float *CoordinatesType::posx() const
+float CoordinatesType::posx() const
 {
     return m_posx;
 }
 
 void CoordinatesType::setPosx(float posx)
 {
-    delete m_posx;
-    m_posx = new float(posx);
+    m_posx = posx;
 }
 
 LocationType::LocationType()
