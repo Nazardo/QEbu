@@ -14,7 +14,8 @@ HEADERS += \
     model/formattype.h \
     model/lengthtype.h \
     model/timetype.h \
-    model/typeconverter.h
+    model/typeconverter.h \
+    model/durationtype.h
 
 SOURCES += \
     model/ebucoremaintype.cpp \
@@ -32,4 +33,5 @@ SOURCES += \
     model/formattype.cpp \
     model/lengthtype.cpp \
     model/timetype.cpp \
-    model/typeconverter.cpp
+    model/typeconverter.cpp \
+    model/durationtype.cpp

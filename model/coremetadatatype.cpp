@@ -935,12 +935,12 @@ void PublicationType::setDate(const QDateTime &date)
     m_date = date;
 }
 
-QTime PublicationType::time() const
+QDateTime PublicationType::time() const
 {
     return m_time;
 }
 
-void PublicationType::setTime(const QTime &time)
+void PublicationType::setTime(const QDateTime &time)
 {
     m_time = time;
 }

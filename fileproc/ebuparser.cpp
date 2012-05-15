@@ -799,10 +799,10 @@ void EbuParser::parseDateGroup(const QDomElement &element, DateGroup* const date
     QDateTime endDate = TypeConverter::stringToDate(element.attribute("endDate"));
     if(endDate.isValid())
         dateGroup->setEndDate(endDate);
-    QTime startTime = TypeConverter::stringToTime(element.attribute("startTime"));
+    QDateTime startTime = TypeConverter::stringToTime(element.attribute("startTime"));
     if(startTime.isValid())
         dateGroup->setStartTime(startTime);
-    QTime endTime = TypeConverter::stringToTime(element.attribute("endTime"));
+    QDateTime endTime = TypeConverter::stringToTime(element.attribute("endTime"));
     if(endTime.isValid())
         dateGroup->setEndTime(endTime);
 }
@@ -2175,7 +2175,7 @@ PublicationHistoryType *EbuParser::parsePublicationHistoryType(const QDomElement
     if (!el.isNull()) {
         if (!pub)
             pub = new PublicationType();
-        QTime d = TypeConverter::stringToTime(el.text());
+        QDateTime d = TypeConverter::stringToTime(el.text());
         if (d.isValid())
             pub->setTime(d);
     }
@@ -2226,7 +2226,7 @@ PublicationHistoryType *EbuParser::parsePublicationHistoryType(const QDomElement
                 pub = 0;
             }
             i = 2;
-            QTime t = TypeConverter::stringToTime(el.text());
+            QDateTime t = TypeConverter::stringToTime(el.text());
             if (t.isValid()) {
                 if (!pub)
                     pub = new PublicationType();

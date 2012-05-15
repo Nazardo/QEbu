@@ -414,13 +414,13 @@ public:
     ~PublicationType();
     QDateTime date() const;
     void setDate (const QDateTime &date);
-    QTime time() const;
-    void setTime (const QTime &time);
+    QDateTime time() const;
+    void setTime (const QDateTime &time);
     FormatType *channel() const;
     void setChannel(FormatType *channel);
 private:
     QDateTime m_date;
-    QTime m_time;
+    QDateTime m_time;
     FormatType *m_channel;
 };
 

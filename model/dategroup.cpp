@@ -35,12 +35,12 @@ void DateGroup::setStartDate(const QDateTime &startDate)
     m_startDate = startDate;
 }
 
-QTime DateGroup::startTime() const
+QDateTime DateGroup::startTime() const
 {
     return m_startTime;
 }
 
-void DateGroup::setStartTime(const QTime &startTime)
+void DateGroup::setStartTime(const QDateTime &startTime)
 {
     m_startTime = startTime;
 }
@@ -65,12 +65,12 @@ void DateGroup::setEndDate(const QDateTime &endDate)
     m_endDate = endDate;
 }
 
-QTime DateGroup::endTime() const
+QDateTime DateGroup::endTime() const
 {
     return m_endTime;
 }
 
-void DateGroup::setEndTime(const QTime &endTime)
+void DateGroup::setEndTime(const QDateTime &endTime)
 {
     m_endTime = endTime;
 }
