@@ -20,6 +20,7 @@ public:
     void setDeliveryCode(const QString &deliveryCode);
     TypeGroup *country() const;
     void setCountry(TypeGroup *country);
+    QString toString() const;
 private:
     QList<QString> m_lines;
     QString m_townCity;
@@ -43,6 +44,7 @@ public:
     void setTelephoneNumber(const QString &telephoneNumber);
     QString mobileTelephoneNumber() const;
     void setMobileTelephoneNumber(const QString &mobileTelephoneNumber);
+    QString toString() const;
 private:
     QString m_emailAddress;
     QString m_webAddress;

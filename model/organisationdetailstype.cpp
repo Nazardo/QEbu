@@ -64,6 +64,11 @@ QList<EntityType*> &OrganisationDetailsType::contacts()
     return m_contacts;
 }
 
+QString OrganisationDetailsType::toString() const
+{
+    return m_organisationId;
+}
+
 OrganisationDepartmentType::OrganisationDepartmentType()
 {
 }
@@ -76,4 +81,9 @@ QString OrganisationDepartmentType::departmentId() const
 void OrganisationDepartmentType::setDepartmentId(const QString &departmentId)
 {
     m_departmentId = departmentId;
+}
+
+QString OrganisationDepartmentType::toString() const
+{
+   return m_departmentId;
 }

@@ -66,6 +66,7 @@ public:
     // Attributes
     QString note() const;
     void setNote(const QString &note);
+    QString toString() const;
 private:
     // Attributes
     QString m_note;
@@ -80,6 +81,7 @@ public:
     void setTrackId(const QString &trackId);
     QString trackName() const;
     void setTrackName(const QString &trackName);
+    QString toString() const;
 private:
     // Attributes
     QString m_trackId;
@@ -113,7 +115,7 @@ public:
     QList<VideoTrackType*> &videoTrack();
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
-
+    QString toString() const;
 private:
     // Attributes
     QString m_videoFormatId;
@@ -141,6 +143,7 @@ public:
     void setTrackId(const QString &trackId);
     QString trackName() const;
     void setTrackName(const QString &trackName);
+    QString toString() const;
 private:
     // Attributes
     QString m_trackLanguage;
@@ -167,7 +170,7 @@ public:
     QList<AudioTrackType*> &audioTrack();
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
-
+    QString toString() const;
 private:
     // Attributes
     QString m_audioFormatId;
@@ -191,7 +194,7 @@ public:
     void setCaptioningFormatId(const QString &captioningFormatId);
     QString captioningFormatName() const;
     void setCaptioningFormatName(const QString &captioningFormatName);
-
+    QString toString() const;
 private:
     // Attributes
     QString m_captioningSourceUri;
@@ -217,7 +220,7 @@ public:
     QList<int> &lineNumber();
     int *wrappingType() const;
     void setWrappingType(int wrappingType);
-
+    QString toString() const;
 private:
     // Attributes
     QString m_ancillaryDataFormatId;
@@ -247,7 +250,7 @@ public:
     QList<AncillarityDataFormatType*> &ancillarityDataFormat();
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
-
+    QString toString() const;
 private:
     // Attributes
     QString m_dataFormatId;
@@ -278,7 +281,7 @@ public:
     void setSigningFormatName(const QString &signingFormatName);
     QString signingFormatDefinition() const;
     void setSigningFormatDefinition(const QString &signingFormatDefinition);
-
+    QString toString() const;
 private:
     // Attributes
     QString m_trackId;
@@ -315,7 +318,7 @@ public:
     void setHeight(LengthType *height);
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
-
+    QString toString() const;
 private:
     // Attributes
     QString m_documentFormatId;
@@ -382,7 +385,7 @@ public:
     void setDateCreated(DateGroup *dateCreated);
     DateGroup *dateModified() const;
     void setDateModified(DateGroup *dateModified);
-
+    QString toString() const;
 private:
     // Attributes
     QString m_formatId;

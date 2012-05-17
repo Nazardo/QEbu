@@ -49,3 +49,8 @@ QList<TypeGroup *> &EntityType::roles()
 {
     return m_roles;
 }
+
+QString EntityType::toString() const
+{
+    return m_entityId;
+}

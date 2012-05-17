@@ -17,6 +17,7 @@ public:
     QString getName() const;
     QString getGivenName() const;
     QString getFamilyName() const;
+    QString toString() const;
 private:
     QString m_name;
     QString m_givenName;
@@ -40,6 +41,8 @@ public:
     QList<DetailsType*> &details();
     QList<QString> &stageNames();
     QList<EntityType*> &relatedContacts();
+    QString toString() const;
+
 private:
     QString m_contactId; // anyURI
     Name m_name; // (required)

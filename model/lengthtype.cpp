@@ -36,3 +36,8 @@ void LengthType::setUnit(const QString &unit)
 {
     m_unit = unit;
 }
+
+QString LengthType::toString() const
+{
+    return QString::number(*m_value);
+}

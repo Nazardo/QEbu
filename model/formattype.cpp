@@ -142,6 +142,11 @@ void AspectRatioType::setNote(const QString &note)
     m_note = note;
 }
 
+QString AspectRatioType::toString() const
+{
+    return "TODO:aspectRatio";
+}
+
 /* ------------------------------ VideoTrackType -------------------------- */
 VideoTrackType::VideoTrackType()
 {
@@ -165,6 +170,11 @@ QString VideoTrackType::trackName() const
 void VideoTrackType::setTrackName(const QString &trackName)
 {
     m_trackName = trackName;
+}
+
+QString VideoTrackType::toString() const
+{
+    return m_trackId;
 }
 
 /* ------------------------------ VideoFormatType -------------------------- */
@@ -306,6 +316,11 @@ void VideoFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttri
     m_technicalAttributes = technicalAttributes;
 }
 
+QString VideoFormatType::toString() const
+{
+    return "TODO:videoFormat";
+}
+
 /* ------------------------------ AudioTrackType -------------------------- */
 AudioTrackType::AudioTrackType()
 {
@@ -339,6 +354,11 @@ QString AudioTrackType::trackName() const
 void AudioTrackType::setTrackName(const QString &trackName)
 {
     m_trackName = trackName;
+}
+
+QString AudioTrackType::toString() const
+{
+    return m_trackId;
 }
 
 /* ------------------------------ AudioFormatType -------------------------- */
@@ -426,6 +446,11 @@ void AudioFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttri
     m_technicalAttributes = technicalAttributes;
 }
 
+QString AudioFormatType::toString() const
+{
+    return "TODO:videoFormat";
+}
+
 /* ------------------------------ CaptioningFormatType -------------------------- */
 CaptioningFormatType::CaptioningFormatType()
 {
@@ -459,6 +484,11 @@ QString CaptioningFormatType::captioningFormatName() const
 void CaptioningFormatType::setCaptioningFormatName(const QString &captioningFormatName)
 {
     m_captioningFormatName = captioningFormatName;
+}
+
+QString CaptioningFormatType::toString() const
+{
+    return m_captioningFormatId;
 }
 
 /* ------------------------------ AncillarityDataFormatType -------------------------- */
@@ -534,6 +564,11 @@ void AncillarityDataFormatType::setWrappingType(int wrappingType)
     m_wrappingType = new int(wrappingType);
 }
 
+QString AncillarityDataFormatType::toString() const
+{
+    return m_ancillaryDataFormatId;
+}
+
 /* ------------------------------ DataFormatType -------------------------- */
 DataFormatType::DataFormatType()
 {
@@ -603,6 +638,11 @@ void DataFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttrib
     if (technicalAttributes != m_technicalAttributes)
         delete m_technicalAttributes;
     m_technicalAttributes = technicalAttributes;
+}
+
+QString DataFormatType::toString() const
+{
+    return "TODO:dataFormat";
 }
 
 /* ------------------------------ SigningFormatType -------------------------- */
@@ -678,6 +718,11 @@ QString SigningFormatType::signingFormatDefinition() const
 void SigningFormatType::setSigningFormatDefinition(const QString &signingFormatDefinition)
 {
     m_signingFormatDefinition = signingFormatDefinition;
+}
+
+QString SigningFormatType::toString() const
+{
+    return m_signingFormatId;
 }
 
 /* ------------------------------ DocumentFormatType -------------------------- */
@@ -798,6 +843,11 @@ void DocumentFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAt
     if (technicalAttributes != m_technicalAttributes)
         delete m_technicalAttributes;
     m_technicalAttributes = technicalAttributes;
+}
+
+QString DocumentFormatType::toString() const
+{
+    return m_documentFormatId;
 }
 
 /* ------------------------------ FormatType -------------------------- */
@@ -1102,4 +1152,9 @@ void FormatType::setDateModified(DateGroup *dateModified)
     if (dateModified != m_dateModified)
         delete m_dateModified;
     m_dateModified = dateModified;
+}
+
+QString FormatType::toString() const
+{
+    return m_format->toString();
 }

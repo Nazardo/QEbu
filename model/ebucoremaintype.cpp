@@ -66,3 +66,8 @@ void EbuCoreMainType::setMetadataProvider(EntityType *metadataProvider)
         delete m_metadataProvider;
     m_metadataProvider = metadataProvider;
 }
+
+QString EbuCoreMainType::toString() const
+{
+    return m_documentId;
+}

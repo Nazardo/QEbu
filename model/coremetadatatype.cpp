@@ -186,6 +186,11 @@ void TitleType::setTitle(ElementType *title)
     m_title = title;
 }
 
+QString TitleType::toString() const
+{
+    return m_title->toString();
+}
+
 AlternativeTitleType::AlternativeTitleType()
 {
     m_title = 0;
@@ -216,6 +221,11 @@ void AlternativeTitleType::setTitle(ElementType *title)
     if (title != m_title)
         delete m_title;
     m_title = title;
+}
+
+QString AlternativeTitleType::toString() const
+{
+    return m_title->toString();
 }
 
 SubjectType::SubjectType()
@@ -284,6 +294,11 @@ void SubjectType::setAttributor(EntityType *attributor)
     m_attributor = attributor;
 }
 
+QString SubjectType::toString() const
+{
+    return m_subject->toString();
+}
+
 DescriptionType::DescriptionType()
 {
     m_description = 0;
@@ -314,6 +329,11 @@ void DescriptionType::setDescription(ElementType *description)
     if (description != m_description)
         delete m_description;
     m_description = description;
+}
+
+QString DescriptionType::toString() const
+{
+    return m_description->toString();
 }
 
 DateType::DateType()
@@ -398,6 +418,11 @@ QList<AlternativeType *> &DateType::alternative()
     return m_alternative;
 }
 
+QString DateType::toString() const
+{
+    return "TODO:date";
+}
+
 TypeType::~TypeType()
 {
     int s = m_type.size();
@@ -448,6 +473,11 @@ QList<TypeGroup *> &TypeType::targetAudience()
     return m_targetAudience;
 }
 
+QString TypeType::toString() const
+{
+    return "TODO:type";
+}
+
 IdentifierType::IdentifierType()
 {
     m_identifier = 0;
@@ -494,6 +524,11 @@ void IdentifierType::setAttributor(EntityType *attributor)
     m_attributor = attributor;
 }
 
+QString IdentifierType::toString() const
+{
+    return m_identifier->toString();
+}
+
 LanguageType::LanguageType()
 {
     m_language = 0;
@@ -524,6 +559,11 @@ void LanguageType::setLanguage(ElementType *language)
     if (language != m_language)
         delete m_language;
     m_language = language;
+}
+
+QString LanguageType::toString() const
+{
+    return m_language->toString();
 }
 
 QString RelationType::note() const
@@ -568,6 +608,11 @@ QString RelationType::relationLink() const
 void RelationType::setRelationLink(const QString &relationLink)
 {
     m_relationLink = relationLink;
+}
+
+QString RelationType::toString() const
+{
+    return m_relation->toString();
 }
 
 HasTrackPartType::HasTrackPartType()
@@ -648,6 +693,11 @@ void HasTrackPartType::setSourceEnd(TimeType *sourceEnd)
     m_sourceEnd = sourceEnd;
 }
 
+QString HasTrackPartType::toString() const
+{
+    return m_trackPartTitle->toString();
+}
+
 RelationType::RelationType()
 {
     m_relation = 0;
@@ -715,6 +765,11 @@ void TemporalType::setPeriodOfTime(DateGroup *periodOfTime)
     m_periodOfTime = periodOfTime;
 }
 
+QString TemporalType::toString() const
+{
+    return m_periodId;
+}
+
 CoordinatesType::CoordinatesType()
 {
     m_posy = 0;
@@ -739,6 +794,11 @@ float CoordinatesType::posx() const
 void CoordinatesType::setPosx(float posx)
 {
     m_posx = posx;
+}
+
+QString CoordinatesType::toString() const
+{
+    return "("+QString::number(m_posx)+","+QString::number(m_posy)+")";
 }
 
 LocationType::LocationType()
@@ -803,6 +863,11 @@ void LocationType::setCode(const QString &code)
     m_code = code;
 }
 
+QString LocationType::toString() const
+{
+    return m_locationId;
+}
+
 CoverageType::CoverageType()
 {
     m_coverage = 0;
@@ -846,6 +911,11 @@ void CoverageType::setTemporal(TemporalType *temporal)
 QList<LocationType *> &CoverageType::location()
 {
     return m_location;
+}
+
+QString CoverageType::toString() const
+{
+    return m_coverage->toString();
 }
 
 RightsType::RightsType()
@@ -981,6 +1051,11 @@ QList<ContactDetailsType *> &RightsType::contactDetails()
     return m_contactDetails;
 }
 
+QString RightsType::toString() const
+{
+    return m_rights->toString();
+}
+
 PublicationType::PublicationType()
 {
     m_channel = 0;
@@ -1023,6 +1098,11 @@ void PublicationType::setChannel(FormatType *channel)
     m_channel = channel;
 }
 
+QString PublicationType::toString() const
+{
+    return "TODO:publication";
+}
+
 PublicationHistoryType::PublicationHistoryType()
 {
     m_firstPublication = 0;
@@ -1052,6 +1132,11 @@ void PublicationHistoryType::setFirstPublication(PublicationType *firstPublicati
 QList<PublicationType *> &PublicationHistoryType::repetitions()
 {
     return m_repetitions;
+}
+
+QString PublicationHistoryType::toString() const
+{
+    return m_firstPublication->toString();
 }
 
 RatingType::RatingType()
@@ -1106,6 +1191,11 @@ void RatingType::setRatingProvider(EntityType *ratingProvider)
     m_ratingProvider = ratingProvider;
 }
 
+QString RatingType::toString() const
+{
+    return m_ratingValue;
+}
+
 QString PartType::partId() const
 {
     return m_partId;
@@ -1124,6 +1214,11 @@ QString PartType::partName() const
 void PartType::setPartName(const QString &partName)
 {
     m_partName = partName;
+}
+
+QString PartType::toString() const
+{
+    return m_partId;
 }
 
 QList<TitleType *> &CoreMetadataType::title()

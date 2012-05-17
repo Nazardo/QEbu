@@ -71,6 +71,11 @@ QList<EntityType *>& ContactDetailsType::relatedContacts()
     return m_relatedContacts;
 }
 
+QString ContactDetailsType::toString() const
+{
+    return m_name.toString();
+}
+
 Name::Name()
 {
 }
@@ -104,3 +109,14 @@ QString Name::getFamilyName() const
 {
     return m_familyName;
 }
+
+QString Name::toString() const
+{
+    if(m_complexName)
+        return getFamilyName()+" "+getGivenName();
+    else {
+        return getName();
+    }
+
+}
+

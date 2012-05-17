@@ -1,4 +1,5 @@
 #include "durationtype.h"
+#include "typeconverter.h"
 
 DurationType::DurationType()
 {
@@ -155,4 +156,19 @@ void DurationType::setTime(FormatGroup *time)
     if (time != m_time)
         delete m_time;
     m_time = time;
+}
+
+QString DurationType::toString() const
+{
+    switch (m_durationTypeRepresentation) {
+        case DurationType::enumEditUnitNumber:
+            return QString::number(*m_editUnitNumberValue, 10);
+        case DurationType::enumNormalPlayTime:
+            return TypeConverter::durationToString(&m_normalPlayTime);
+        case DurationType::enumTime:
+            return m_timeValue;
+        case DurationType::enumTimecode:
+            return m_timecode;
+    }
+    return QString();
 }

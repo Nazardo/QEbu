@@ -13,6 +13,7 @@ public:
     void setValue(const unsigned int &value);
     QString unit() const;
     void setUnit(const QString &unit);
+    QString toString() const;
 private:
     unsigned int *m_value;    // nonNegativeInteger
     QString m_unit;

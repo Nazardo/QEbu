@@ -23,6 +23,7 @@ public:
     OrganisationDetailsType *organisationDetails() const;
     void setOrganisationDetails(OrganisationDetailsType *organisationDetails);
     QList<TypeGroup *> &roles();
+    QString toString() const;
 private:
     // Attributes
     QString m_entityId; // anyURI

@@ -30,3 +30,8 @@ void ElementType::setLang(const QString &lang)
 {
     m_lang = lang;
 }
+
+QString ElementType::toString() const
+{
+    return m_value;
+}

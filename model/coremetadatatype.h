@@ -123,6 +123,7 @@ public:
     void setNote(const QString &note);
     ElementType *title() const;
     void setTitle(ElementType *title);
+    QString toString() const;
 private:
     QDateTime m_attributionDate;
     QString m_note;
@@ -138,6 +139,7 @@ public:
     void setNote(const QString &note);
     ElementType *title() const;
     void setTitle(ElementType *title);
+    QString toString() const;
 private:
     QString m_note;
     ElementType *m_title;
@@ -158,6 +160,7 @@ public:
     void setSubjectDefinition(const QString &subjectDefinition);
     EntityType *attributor() const;
     void setAttributor (EntityType *attributor);
+    QString toString() const;
 private:
     QString m_note;
     ElementType *m_subject;
@@ -175,6 +178,7 @@ public:
     void setNote(const QString &note);
     ElementType *description() const;
     void setDescription(ElementType *description);
+    QString toString() const;
 private:
     QString m_note;
     ElementType *m_description;
@@ -197,6 +201,7 @@ public:
     DateGroup *digitised() const;
     void setDigitised (DateGroup *digitised);
     QList<AlternativeType *> &alternative();
+    QString toString() const;
 private:
     QList<ElementType *> m_date;
     DateGroup *m_created;
@@ -216,6 +221,7 @@ public:
     QList<TypeGroup *> &genre();
     QList<TypeGroup *> &objectType();
     QList<TypeGroup *> &targetAudience();
+    QString toString() const;
 private:
     QString m_note;
     QList<ElementType *> m_type;
@@ -236,6 +242,7 @@ public:
     void setIdentifier(ElementType *identifier);
     EntityType *attributor() const;
     void setAttributor(EntityType *attributor);
+    QString toString() const;
 private:
     QString m_note;
     ElementType *m_identifier;
@@ -251,6 +258,7 @@ public:
     void setNote(const QString &note);
     ElementType *language() const;
     void setLanguage(ElementType *language);
+    QString toString() const;
 private:
     QString m_note;
     ElementType *m_language;
@@ -271,6 +279,7 @@ public:
     void setRelationIdentifier(IdentifierType *relationIdentifier);
     QString relationLink() const;
     void setRelationLink(const QString &relationLink);
+    QString toString() const;
 private:
     int *m_runningOrderNumber;
     QString m_note;
@@ -294,6 +303,7 @@ public:
     void setSourceStart(TimeType *sourceStart);
     TimeType *sourceEnd() const;
     void setSourceEnd(TimeType *sourceEnd);
+    QString toString() const;
 private:
     AlternativeTitleType *m_trackPartTitle;
     TimeType *m_destinationStart;
@@ -313,6 +323,7 @@ public:
     void setPeriodId(const QString &periodId);
     DateGroup *periodOfTime() const;
     void setPeriodOfTime(DateGroup *periodOfTime);
+    QString toString() const;
 private:
     QString m_note;
     QString m_periodId; // anyURI
@@ -327,6 +338,7 @@ public:
     void setPosy(float posy);
     float posx() const;
     void setPosx(float posx);
+    QString toString() const;
 private:
     float m_posy;
     float m_posx;
@@ -347,6 +359,7 @@ public:
     void setCoordinates(CoordinatesType *coordinates);
     QString code() const;
     void setCode(const QString &code);
+    QString toString() const;
 private:
     QString m_note;
     QString m_locationId; // anyURI
@@ -365,6 +378,7 @@ public:
     TemporalType *temporal() const;
     void setTemporal(TemporalType *temporal);
     QList<LocationType *> &location();
+    QString toString() const;
 private:
     ElementType *m_coverage;
     TemporalType *m_temporal;
@@ -394,6 +408,7 @@ public:
     QList<ElementType *> &disclaimer();
     QList<IdentifierType *> &rightsID();
     QList<ContactDetailsType *> &contactDetails();
+    QString toString() const;
 private:
     QString m_note;
     QList<FormatType *> m_formats;
@@ -419,6 +434,7 @@ public:
     void setTime (const QDateTime &time);
     FormatType *channel() const;
     void setChannel(FormatType *channel);
+    QString toString() const;
 private:
     QDateTime m_date;
     QDateTime m_time;
@@ -433,6 +449,7 @@ public:
     PublicationType *firstPublication() const;
     void setFirstPublication(PublicationType *firstPublication);
     QList<PublicationType *> &repetitions();
+    QString toString() const;
 private:
     PublicationType *m_firstPublication;
     QList<PublicationType *> m_repetitions;
@@ -451,6 +468,7 @@ public:
     void setRatingScaleMinValue(const QString &ratingScaleMinValue);
     EntityType *ratingProvider() const;
     void setRatingProvider(EntityType *ratingProvider);
+    QString toString() const;
 private:
     QString m_ratingValue;
     QString m_ratingScaleMaxValue;
@@ -465,6 +483,7 @@ public:
     void setPartId(const QString &partId);
     QString partName() const;
     void setPartName(const QString &partName);
+    QString toString() const;
 private:
     QString m_partId;
     QString m_partName;

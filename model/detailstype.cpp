@@ -62,6 +62,11 @@ void DetailsType::setMobileTelephoneNumber(const QString &mobileTelephoneNumber)
     m_mobileTelephoneNumber = mobileTelephoneNumber;
 }
 
+QString DetailsType::toString() const
+{
+    return "TODO:details";
+}
+
 AddressType::AddressType()
 {
     m_country = 0;
@@ -122,6 +127,11 @@ void AddressType::setCountry(TypeGroup *country)
     if (country != m_country)
         delete m_country;
     m_country = country;
+}
+
+QString AddressType::toString() const
+{
+    return "TODO:address";
 }
 
 

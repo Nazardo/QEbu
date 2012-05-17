@@ -46,7 +46,7 @@ public:
     void setTimeValue(const QString &timeValue);
     FormatGroup *time() const;
     void setTime(FormatGroup *time);
-
+    QString toString() const;
 private:
     enum DurationTypeRepresentation m_durationTypeRepresentation;
 

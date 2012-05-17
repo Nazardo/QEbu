@@ -1,4 +1,5 @@
 #include "timetype.h"
+#include "typeconverter.h"
 
 TimeType::TimeType()
 {
@@ -150,6 +151,21 @@ void TimeType::setTime(FormatGroup *time)
     m_timeTypeRepresentation = TimeType::enumTime;
     delete m_time;
     m_time = time;
+}
+
+QString TimeType::toString() const
+{
+    switch (m_timeTypeRepresentation) {
+        case DurationType::enumEditUnitNumber:
+            return QString::number(*m_editUnitNumberValue, 10);
+        case DurationType::enumNormalPlayTime:
+            return TypeConverter::dateToString(m_normalPlayTime);
+        case DurationType::enumTime:
+            return m_timeValue;
+        case DurationType::enumTimecode:
+            return m_timecode;
+    }
+    return QString();
 }
 
 

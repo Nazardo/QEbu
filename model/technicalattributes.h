@@ -63,6 +63,7 @@ public:
     //Attributes
     QString value() const;
     void setValue(const QString &value);
+    QString toString() const;
 private:
     QString m_value;
 };
@@ -75,6 +76,7 @@ public:
     //Attributes
     qint8 *value() const;
     void setValue(qint8 value);
+    QString toString() const;
 private:
     qint8 *m_value;
 };
@@ -87,6 +89,7 @@ public:
     //Attributes
     qint16 *value() const;
     void setValue(qint16 value);
+    QString toString() const;
 private:
     qint16 *m_value;
 };
@@ -99,6 +102,7 @@ public:
     //Attributes
     qint32 *value() const;
     void setValue(qint32 value);
+    QString toString() const;
 private:
     qint32 *m_value;
 };
@@ -111,6 +115,7 @@ public:
     //Attributes
     qint64 *value() const;
     void setValue(qint64 value);
+    QString toString() const;
 private:
     qint64 *m_value;
 };
@@ -123,6 +128,7 @@ public:
     //Attributes
     quint8 *value() const;
     void setValue(quint8 value);
+    QString toString() const;
 private:
     quint8 *m_value;
 };
@@ -135,6 +141,7 @@ public:
     //Attributes
     quint16 *value() const;
     void setValue(quint16 value);
+    QString toString() const;
 private:
     quint16 *m_value;
 };
@@ -147,6 +154,7 @@ public:
     //Attributes
     quint32 *value() const;
     void setValue(quint32 value);
+    QString toString() const;
 private:
     quint32 *m_value;
 };
@@ -159,6 +167,7 @@ public:
     //Attributes
     quint64 *value() const;
     void setValue(quint64 value);
+    QString toString() const;
 private:
     quint64 *m_value;
 };
@@ -171,6 +180,7 @@ public:
     //Attributes
     bool *value() const;
     void setValue(bool value);
+    QString toString() const;
 private:
     bool *m_value;
 };
@@ -183,6 +193,7 @@ public:
     //Attributes
     double *value() const;
     void setValue(double value);
+    QString toString() const;
 private:
     double *m_value;
 };
@@ -194,6 +205,7 @@ public:
     //Attributes
     QString value() const;
     void setValue (const QString &value);
+    QString toString() const;
 private:
     QString m_value;
 };
@@ -210,6 +222,7 @@ public:
     void setFactorNumerator (int factorNumerator);
     int *factorDenominator() const;
     void setFactorDenominator (int factorDenominator);
+    QString toString() const;
 
 private:
     //Attributes

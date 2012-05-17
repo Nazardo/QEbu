@@ -12,6 +12,7 @@ public:
     void setValue(const QString &value);
     QString lang() const;
     void setLang(const QString &lang);
+    QString toString() const;
 private:
     QString m_value;
     QString m_lang;

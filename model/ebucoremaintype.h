@@ -22,6 +22,7 @@ public:
     void setCoreMetadata(CoreMetadataType *coreMetadata);
     EntityType *metadataProvider() const;
     void setMetadataProvider(EntityType *metadataProvider);
+    QString toString() const;
 private:
     // Attributes
     QDateTime m_dateLastModified;

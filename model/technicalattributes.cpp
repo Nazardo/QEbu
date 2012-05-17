@@ -172,6 +172,11 @@ void TechnicalAttributeRationalType::setFactorDenominator(int factorDenominator)
     m_factorDenominator = new int(factorDenominator);
 }
 
+QString TechnicalAttributeRationalType::toString() const
+{
+    return QString::number(*m_value, 10);
+}
+
 TechnicalAttributeUriType::TechnicalAttributeUriType()
 {
 }
@@ -184,6 +189,11 @@ QString TechnicalAttributeUriType::value() const
 void TechnicalAttributeUriType::setValue(const QString &value)
 {
     m_value = value;
+}
+
+QString TechnicalAttributeUriType::toString() const
+{
+    return m_value;
 }
 
 Float::Float()
@@ -207,6 +217,11 @@ void Float::setValue(double value)
     m_value = new double(value);
 }
 
+QString Float::toString() const
+{
+    return QString::number(*m_value);
+}
+
 Boolean::Boolean()
 {
     m_value = 0;
@@ -226,6 +241,11 @@ void Boolean::setValue(bool value)
 {
     delete m_value;
     m_value = new bool(value);
+}
+
+QString Boolean::toString() const
+{
+    return m_value ? "true" : "false";
 }
 
 UInt64::UInt64()
@@ -249,6 +269,11 @@ void UInt64::setValue(quint64 value)
     m_value = new quint64(value);
 }
 
+QString UInt64::toString() const
+{
+    return QString::number(*m_value, 10);
+}
+
 UInt32::UInt32()
 {
     m_value = 0;
@@ -268,6 +293,11 @@ void UInt32::setValue(quint32 value)
 {
     delete m_value;
     m_value = new quint32(value);
+}
+
+QString UInt32::toString() const
+{
+    return QString::number(*m_value, 10);
 }
 
 UInt16::UInt16()
@@ -291,6 +321,11 @@ void UInt16::setValue(quint16 value)
     m_value = new quint16(value);
 }
 
+QString UInt16::toString() const
+{
+    return QString::number(*m_value, 10);
+}
+
 UInt8::UInt8()
 {
     m_value = 0;
@@ -310,6 +345,11 @@ void UInt8::setValue(quint8 value)
 {
     delete m_value;
     m_value = new quint8(value);
+}
+
+QString UInt8::toString() const
+{
+    return QString::number(*m_value, 10);
 }
 
 Int64::Int64()
@@ -333,6 +373,11 @@ void Int64::setValue(qint64 value)
     m_value = new qint64(value);
 }
 
+QString Int64::toString() const
+{
+    return QString::number(*m_value, 10);
+}
+
 Int32::Int32()
 {
     m_value = 0;
@@ -352,6 +397,11 @@ void Int32::setValue(qint32 value)
 {
     delete m_value;
     m_value = new qint32(value);
+}
+
+QString Int32::toString() const
+{
+    return QString::number(*m_value, 10);
 }
 
 Int16::Int16()
@@ -375,6 +425,11 @@ void Int16::setValue(qint16 value)
     m_value = new qint16(value);
 }
 
+QString Int16::toString() const
+{
+    return QString::number(*m_value, 10);
+}
+
 Int8::Int8()
 {
     m_value = 0;
@@ -396,6 +451,11 @@ void Int8::setValue(qint8 value)
     m_value = new qint8(value);
 }
 
+QString Int8::toString() const
+{
+    return QString::number(*m_value, 10);
+}
+
 String::String()
 {
 }
@@ -408,6 +468,11 @@ QString String::value() const
 void String::setValue(const QString &value)
 {
     m_value = value;
+}
+
+QString String::toString() const
+{
+    return m_value;
 }
 
 
