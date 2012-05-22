@@ -1,4 +1,5 @@
 #include "ebuparser.h"
+#include "validator.h"
 #include "../model/typeconverter.h"
 
 #include <QtXml>
@@ -15,7 +16,11 @@ bool EbuParser::parseFromFile(QFile &file)
         return false;
     }
 
-    /// @todo: Validation !!!
+    if (!Validator::isValid(file.fileName())) {
+        qDebug() <<"error found at: " <<Validator::errorRow();
+        qDebug() <<Validator::parsedStatusMsg();
+        return false;
+    }
 
     /*
      * Check for root correctness
