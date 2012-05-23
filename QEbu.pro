@@ -6,6 +6,7 @@
 
 include(model/model.pri)
 include(fileproc/fileproc.pri)
+include(ui/ui.pri)
 
 QT       += core gui xml
 
