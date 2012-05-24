@@ -11,7 +11,7 @@ EntityTypeForm::EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, Q
         m_entityType = new EntityType;
     else
         m_entityType = entity;
-    m_listView = 0;
+    // Layout
     m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
@@ -23,25 +23,32 @@ EntityTypeForm::EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, Q
     }
     {
         QFormLayout *fl = new QFormLayout;
-        m_buttonContactDetails = new QPushButton("...");
+        m_buttonContactDetails = new QPushButton(">>");
         fl->addRow(tr("Contact details"), m_buttonContactDetails);
         QObject::connect(m_buttonContactDetails,
-                         SIGNAL(clicked()),
+                         SIGNAL(toggled(bool)),
                          this,
-                         SLOT(contactDetailsClicked()));
-        m_buttonOrganisationDetails = new QPushButton("...");
+                         SLOT(contactDetailsChecked(bool)));
+        m_buttonOrganisationDetails = new QPushButton(">>");
         fl->addRow(tr("Organisation details"), m_buttonOrganisationDetails);
         QObject::connect(m_buttonOrganisationDetails,
-                         SIGNAL(clicked()),
+                         SIGNAL(toggled(bool)),
                          this,
-                         SLOT(organisationDetailsClicked()));
-        m_buttonRole = new QPushButton("...");
+                         SLOT(organisationDetailsChecked(bool)));
+        m_buttonRole = new QPushButton(">>");
         fl->addRow(tr("Roles"), m_buttonRole);
         QObject::connect(m_buttonRole,
-                         SIGNAL(clicked()),
+                         SIGNAL(toggled(bool)),
                          this,
-                         SLOT(roleClicked()));
+                         SLOT(roleChecked(bool)));
         l->addLayout(fl);
+        QButtonGroup *group = new QButtonGroup(this);
+        m_buttonContactDetails->setCheckable(true);
+        group->addButton(m_buttonContactDetails);
+        m_buttonOrganisationDetails->setCheckable(true);
+        group->addButton(m_buttonOrganisationDetails);
+        m_buttonRole->setCheckable(true);
+        group->addButton(m_buttonRole);
     }
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -56,9 +63,20 @@ EntityTypeForm::EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, Q
         l->addLayout(hl);
     }
     m_mainHLayout->addLayout(l);
+    // Add list view on the right
+    m_listView = new ListView();
+    QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
+                     this, SLOT(addClicked()));
+    QObject::connect(m_listView->buttonEdit(), SIGNAL(clicked()),
+                     this, SLOT(editClicked()));
+    QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
+                     this, SLOT(removeClicked()));
+    m_mainHLayout->addWidget(m_listView);
     this->setLayout(m_mainHLayout);
-    // Set text fields...
+
+    // Set data fields...
     m_editEntityId->setText(m_entityType->entityId());
+    m_buttonContactDetails->setChecked(true);
 }
 
 QString EntityTypeForm::toString()
@@ -146,15 +164,12 @@ void EntityTypeForm::removeClicked()
     }
 }
 
-void EntityTypeForm::closeClicked()
+void EntityTypeForm::contactDetailsChecked(bool checked)
 {
-    hideListView();
-}
-
-void EntityTypeForm::contactDetailsClicked()
-{
+    if (!checked)
+        return;
     m_currentEditMode = ContactDetails;
-    showListView(tr("Contact details"));
+    updateListAndButtons();
     int s = m_entityType->contactDetails().size();
     for (int i=0; i < s; ++i) {
         ContactDetailsType *cdt = m_entityType->contactDetails().at(i);
@@ -164,20 +179,24 @@ void EntityTypeForm::contactDetailsClicked()
     }
 }
 
-void EntityTypeForm::organisationDetailsClicked()
+void EntityTypeForm::organisationDetailsChecked(bool checked)
 {
+    if (!checked)
+        return;
     m_currentEditMode = OrganisationDetails;
-    showListView(tr("Organisation details"));
+    updateListAndButtons();
     OrganisationDetailsType *odt = m_entityType->organisationDetails();
     if (odt) {
         m_listView->addItem(odt->toString());
     }
 }
 
-void EntityTypeForm::roleClicked()
+void EntityTypeForm::roleChecked(bool checked)
 {
+    if (!checked)
+        return;
     m_currentEditMode = Roles;
-    showListView(tr("Roles"));
+    updateListAndButtons();
     int s = m_entityType->roles().size();
     for (int i=0; i < s; ++i) {
         TypeGroup *tg = m_entityType->roles().at(i);
@@ -201,40 +220,23 @@ void EntityTypeForm::roleFormClosed(Operation op, QVariant value)
     }
 }
 
-void EntityTypeForm::enableButtons(bool enable)
+void EntityTypeForm::updateListAndButtons()
 {
-    m_buttonContactDetails->setEnabled(enable);
-    m_buttonOrganisationDetails->setEnabled(enable);
-    m_buttonRole->setEnabled(enable);
-}
-
-void EntityTypeForm::showListView(QString name)
-{
-    enableButtons(false);
-    m_listView = new ListView("<h3>"+name+"</h3>");
-    m_mainHLayout->addWidget(m_listView);
-    QObject::connect(m_listView->buttonAdd(),
-                     SIGNAL(clicked()),
-                     this,
-                     SLOT(addClicked()));
-    QObject::connect(m_listView->buttonEdit(),
-                     SIGNAL(clicked()),
-                     this,
-                     SLOT(editClicked()));
-    QObject::connect(m_listView->buttonRemove(),
-                     SIGNAL(clicked()),
-                     this,
-                     SLOT(removeClicked()));
-    QObject::connect(m_listView->buttonClose(),
-                     SIGNAL(clicked()),
-                     this,
-                     SLOT(closeClicked()));
-
-}
-
-void EntityTypeForm::hideListView()
-{
-    m_listView->hide();
-    m_mainHLayout->removeWidget(m_listView);
-    enableButtons(true);
+    // Disable one button and enable all the others
+//    m_buttonContactDetails->setEnabled(true);
+//    m_buttonOrganisationDetails->setEnabled(true);
+//    m_buttonRole->setEnabled(true);
+    QString title;
+    if (m_currentEditMode == ContactDetails) {
+//        m_buttonContactDetails->setEnabled(false);
+        title = tr("Contact Details");
+    } else if (m_currentEditMode == OrganisationDetails) {
+//        m_buttonOrganisationDetails->setEnabled(false);
+        title = tr("Organisation Details");
+    } else if (m_currentEditMode == Roles) {
+//        m_buttonRole->setEnabled(false);
+        title = tr("Roles");
+    }
+    m_listView->setTitle(title);
+    m_listView->clear();
 }

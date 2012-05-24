@@ -5,23 +5,26 @@
 #include <QList>
 #include <QPushButton>
 #include <QListWidget>
+#include <QLabel>
 
 class ListView : public QWidget
 {
     Q_OBJECT
 public:
-    ListView(QString name, QWidget *parent = 0);
+    ListView(QString name = QString(), QWidget *parent = 0);
+    void setTitle(QString &title);
     void setContent(const QList<QListWidgetItem *> &items);
-    void addItem(QString label);
-    void setItem(int row, QString label);
+    void addItem(const QString &label);
+    void setItem(int row, const QString &label);
     void removeAt(int row);
     int selected();
+    void clear();
     QPushButton *buttonAdd();
     QPushButton *buttonEdit();
     QPushButton *buttonRemove();
-    QPushButton *buttonClose();
 
 private:
+    QLabel *m_labelTitle;
     QListWidget *m_listWidget;
     QPushButton *m_buttonClose;
     QPushButton *m_buttonAdd;

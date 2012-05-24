@@ -22,18 +22,16 @@ private slots:
     void addClicked();
     void editClicked();
     void removeClicked();
-    void closeClicked();
+//    void closeClicked();
     // -
-    void contactDetailsClicked();
-    void organisationDetailsClicked();
-    void roleClicked();
+    void contactDetailsChecked(bool checked);
+    void organisationDetailsChecked(bool checked);
+    void roleChecked(bool checked);
     // -
     void roleFormClosed(Operation op, QVariant value);
 private:
     enum EditMode { ContactDetails, OrganisationDetails, Roles };
-    void enableButtons(bool enable = true);
-    void showListView(QString name);
-    void hideListView();
+    void updateListAndButtons();
 
     QHBoxLayout *m_mainHLayout;
     ListView *m_listView;

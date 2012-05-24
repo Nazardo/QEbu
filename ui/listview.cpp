@@ -4,13 +4,8 @@ ListView::ListView(QString name, QWidget *parent) :
     QWidget(parent)
 {
     QVBoxLayout *verticalLayout = new QVBoxLayout;
-
-    QHBoxLayout *header = new QHBoxLayout;
-    header->addWidget(new QLabel(name));
-    m_buttonClose = new QPushButton("<<");
-    header->addWidget(m_buttonClose);
-    verticalLayout->addLayout(header);
-
+    m_labelTitle = new QLabel;
+    verticalLayout->addWidget(m_labelTitle);
     m_listWidget = new QListWidget(this);
     verticalLayout->addWidget(m_listWidget);
     QHBoxLayout *horizontalLayout = new QHBoxLayout;
@@ -27,6 +22,11 @@ ListView::ListView(QString name, QWidget *parent) :
     this->setLayout(verticalLayout);
 }
 
+void ListView::setTitle(QString &title)
+{
+    m_labelTitle->setText("<h4>"+title+"</h4>");
+}
+
 void ListView::setContent(const QList<QListWidgetItem *> &items)
 {
     int s = items.size();
@@ -34,12 +34,12 @@ void ListView::setContent(const QList<QListWidgetItem *> &items)
         m_listWidget->addItem(items.at(i));
 }
 
-void ListView::addItem(QString label)
+void ListView::addItem(const QString &label)
 {
     m_listWidget->addItem(new QListWidgetItem(label));
 }
 
-void ListView::setItem(int row, QString label)
+void ListView::setItem(int row, const QString &label)
 {
     QListWidgetItem *wi = m_listWidget->item(row);
     if (wi)
@@ -56,6 +56,11 @@ int ListView::selected()
     return m_listWidget->currentIndex().row();
 }
 
+void ListView::clear()
+{
+    m_listWidget->clear();
+}
+
 QPushButton *ListView::buttonAdd()
 {
     return m_buttonAdd;
@@ -69,9 +74,4 @@ QPushButton *ListView::buttonEdit()
 QPushButton *ListView::buttonRemove()
 {
     return m_buttonRemove;
-}
-
-QPushButton *ListView::buttonClose()
-{
-    return m_buttonClose;
 }
