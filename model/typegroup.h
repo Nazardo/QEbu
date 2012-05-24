@@ -13,7 +13,7 @@ public:
     void setTypeDefinition(const QString &typeDefinition);
     QString typeLink() const;
     void setTypeLink(const QString &typeLink);
-
+    QString toString() const;
 private:
     QString m_typeLabel;
     QString m_typeDefinition;

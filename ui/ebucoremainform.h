@@ -3,6 +3,7 @@
 
 #include "stackablewidget.h"
 #include "../model/ebucoremaintype.h"
+#include <QLineEdit>
 
 class EbuCoreMainForm : public StackableWidget
 {
@@ -10,12 +11,14 @@ class EbuCoreMainForm : public StackableWidget
 public:
     explicit EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *mainWindow, QWidget *parent = 0);
     QString toString();
-    void updateData();
 signals:
 private slots:
-    void onMetadataProviderClicked();
+    void metadataProviderRemoveClicked();
+    void metadataProviderClicked();
+    void metadataProviderClosed(Operation op, QVariant value);
 private:
     EbuCoreMainType *m_ebuCoreMain;
+    QLineEdit *m_editMetadataProvider;
 };
 
 #endif // EBUCOREMAINFORM_H

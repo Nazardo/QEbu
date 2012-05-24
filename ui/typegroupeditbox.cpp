@@ -14,17 +14,17 @@ TypeGroupEditBox::TypeGroupEditBox(QWidget *parent) :
     this->setLayout(formL);
 }
 
-const QLineEdit *TypeGroupEditBox::typeLabel()
+QLineEdit *TypeGroupEditBox::typeLabel()
 {
     return m_typeLabel;
 }
 
-const QLineEdit *TypeGroupEditBox::typeDefinition()
+QLineEdit *TypeGroupEditBox::typeDefinition()
 {
     return m_typeDefinition;
 }
 
-const QLineEdit *TypeGroupEditBox::typeLink()
+QLineEdit *TypeGroupEditBox::typeLink()
 {
     return m_typeLink;
 }

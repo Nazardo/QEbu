@@ -9,9 +9,9 @@ class TypeGroupEditBox : public QWidget
     Q_OBJECT
 public:
     explicit TypeGroupEditBox(QWidget *parent = 0);
-    QLineEdit const *typeLabel();
-    QLineEdit const *typeDefinition();
-    QLineEdit const *typeLink();
+    QLineEdit *typeLabel();
+    QLineEdit *typeDefinition();
+    QLineEdit *typeLink();
 signals:
     
 public slots:

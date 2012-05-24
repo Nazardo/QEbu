@@ -2,6 +2,7 @@
 #define STACKABLEWIDGET_H
 
 #include <QWidget>
+#include <QVariant>
 #include "qebumainwindow.h"
 
 class QEbuMainWindow;
@@ -10,13 +11,13 @@ class StackableWidget : public QWidget
 {
     Q_OBJECT
 public:
+    enum Operation { Add, Edit };
     StackableWidget(QEbuMainWindow *mainWindow, QWidget *parent = 0) : QWidget(parent)
     {
         m_mainWindow = mainWindow;
     }
 
     virtual QString toString() = 0;
-    virtual void updateData() = 0;
 protected:
     QEbuMainWindow *mainWindow()
     {
@@ -24,7 +25,7 @@ protected:
     }
     
 signals:
-    void closed();
+    void closed(enum Operation op, QVariant value);
 public slots:
 
 private:

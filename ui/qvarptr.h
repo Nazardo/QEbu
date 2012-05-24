@@ -1,6 +1,8 @@
 #ifndef QVARPTR_H
 #define QVARPTR_H
 
+#include <QVariant>
+
 template <class T> class QVarPtr
 {
 public:

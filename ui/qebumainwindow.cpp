@@ -27,7 +27,7 @@ void QEbuMainWindow::pushWidget(StackableWidget *widget)
 {
     m_stackedWidget->addWidget(widget);
     m_stackedWidget->setCurrentWidget(widget);
-    QObject::connect(widget, SIGNAL(closed()), this, SLOT(childClosed()));
+    QObject::connect(widget, SIGNAL(closed(Operation,QVariant)), this, SLOT(childClosed()));
 }
 
 void QEbuMainWindow::childClosed()
@@ -35,6 +35,5 @@ void QEbuMainWindow::childClosed()
     QWidget *currentWidget = m_stackedWidget->currentWidget();
     m_stackedWidget->removeWidget(currentWidget);
 //    currentWidget->deleteLater();
-    StackableWidget *old = dynamic_cast<StackableWidget *>(m_stackedWidget->currentWidget());
-    old->updateData();
+//    StackableWidget *old = dynamic_cast<StackableWidget *>(m_stackedWidget->currentWidget());
 }

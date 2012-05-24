@@ -11,8 +11,8 @@ ListView::ListView(QString name, QWidget *parent) :
     header->addWidget(m_buttonClose);
     verticalLayout->addLayout(header);
 
-    listWidget = new QListWidget(this);
-    verticalLayout->addWidget(listWidget);
+    m_listWidget = new QListWidget(this);
+    verticalLayout->addWidget(m_listWidget);
     QHBoxLayout *horizontalLayout = new QHBoxLayout;
     m_buttonAdd = new QPushButton(this);
     m_buttonAdd->setText(tr("Add"));
@@ -31,12 +31,29 @@ void ListView::setContent(const QList<QListWidgetItem *> &items)
 {
     int s = items.size();
     for (int i=0; i < s; ++i)
-        listWidget->addItem(items.at(i));
+        m_listWidget->addItem(items.at(i));
 }
 
-void ListView::addItem(QListWidgetItem *item)
+void ListView::addItem(QString label)
 {
-    listWidget->addItem(item);
+    m_listWidget->addItem(new QListWidgetItem(label));
+}
+
+void ListView::setItem(int row, QString label)
+{
+    QListWidgetItem *wi = m_listWidget->item(row);
+    if (wi)
+        wi->setText(label);
+}
+
+void ListView::removeAt(int row)
+{
+    delete m_listWidget->item(row);
+}
+
+int ListView::selected()
+{
+    return m_listWidget->currentIndex().row();
 }
 
 QPushButton *ListView::buttonAdd()

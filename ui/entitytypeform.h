@@ -14,7 +14,6 @@ class EntityTypeForm : public StackableWidget
 public:
     explicit EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, QWidget *parent = 0);
     QString toString();
-    void updateData();
 signals:
 private slots:
     void cancelClicked();
@@ -28,6 +27,8 @@ private slots:
     void contactDetailsClicked();
     void organisationDetailsClicked();
     void roleClicked();
+    // -
+    void roleFormClosed(Operation op, QVariant value);
 private:
     enum EditMode { ContactDetails, OrganisationDetails, Roles };
     void enableButtons(bool enable = true);
@@ -40,8 +41,9 @@ private:
     QPushButton *m_buttonContactDetails;
     QPushButton *m_buttonOrganisationDetails;
     QPushButton *m_buttonRole;
-    EntityType *m_entity;
-    enum EditMode m_currentEditMode;
+    EntityType *m_entityType;
+    Operation m_op;
+    EditMode m_currentEditMode;
 };
 
 #endif // ENTITYTYPEFORM_H

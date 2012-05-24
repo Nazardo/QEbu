@@ -12,14 +12,17 @@ class ListView : public QWidget
 public:
     ListView(QString name, QWidget *parent = 0);
     void setContent(const QList<QListWidgetItem *> &items);
-    void addItem(QListWidgetItem *item);
+    void addItem(QString label);
+    void setItem(int row, QString label);
+    void removeAt(int row);
+    int selected();
     QPushButton *buttonAdd();
     QPushButton *buttonEdit();
     QPushButton *buttonRemove();
     QPushButton *buttonClose();
 
 private:
-    QListWidget *listWidget;
+    QListWidget *m_listWidget;
     QPushButton *m_buttonClose;
     QPushButton *m_buttonAdd;
     QPushButton *m_buttonEdit;
