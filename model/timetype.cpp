@@ -165,7 +165,7 @@ QString TimeType::toString() const
         case DurationType::enumTimecode:
             return m_timecode;
     }
-    return QString();
+    return QObject::tr("Undefined time");
 }
 
 

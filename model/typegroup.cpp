@@ -1,4 +1,5 @@
 #include "typegroup.h"
+#include <QObject>
 
 TypeGroup::TypeGroup()
 {
@@ -37,7 +38,7 @@ QString TypeGroup::toString() const
         return m_typeDefinition;
     if (!m_typeLink.isEmpty())
         return m_typeLink;
-    return "---";
+    return QObject::tr("Undefined type");
 }
 
 QString TypeGroup::typeLink() const

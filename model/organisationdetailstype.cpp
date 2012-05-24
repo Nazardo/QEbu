@@ -1,4 +1,5 @@
 #include "organisationdetailstype.h"
+#include <QObject>
 
 OrganisationDetailsType::OrganisationDetailsType()
 {
@@ -66,6 +67,8 @@ QList<EntityType*> &OrganisationDetailsType::contacts()
 
 QString OrganisationDetailsType::toString() const
 {
+    if (m_organisationId.isEmpty())
+        return QObject::tr("Unnamed organisation");
     return m_organisationId;
 }
 
@@ -85,5 +88,7 @@ void OrganisationDepartmentType::setDepartmentId(const QString &departmentId)
 
 QString OrganisationDepartmentType::toString() const
 {
-   return m_departmentId;
+    if (m_departmentId.isEmpty())
+        return QObject::tr("Unnamed department");
+    return m_departmentId;
 }

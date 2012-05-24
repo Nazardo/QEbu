@@ -69,5 +69,7 @@ void EbuCoreMainType::setMetadataProvider(EntityType *metadataProvider)
 
 QString EbuCoreMainType::toString() const
 {
+    if (m_documentId.isEmpty())
+        return QObject::tr("Unnamed document");
     return m_documentId;
 }

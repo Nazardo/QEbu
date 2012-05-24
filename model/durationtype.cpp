@@ -1,5 +1,6 @@
 #include "durationtype.h"
 #include "typeconverter.h"
+#include <QObject>
 
 DurationType::DurationType()
 {
@@ -170,5 +171,5 @@ QString DurationType::toString() const
         case DurationType::enumTimecode:
             return m_timecode;
     }
-    return QString();
+    return QObject::tr("Undefined duration");
 }

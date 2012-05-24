@@ -1,4 +1,5 @@
 #include "formattype.h"
+#include <QObject>
 
 
 /* ------------------------------ ImageFormatType -------------------------- */
@@ -174,6 +175,8 @@ void VideoTrackType::setTrackName(const QString &trackName)
 
 QString VideoTrackType::toString() const
 {
+    if (m_trackId.isEmpty())
+        return QObject::tr("Unnamed video track");
     return m_trackId;
 }
 
@@ -358,6 +361,8 @@ void AudioTrackType::setTrackName(const QString &trackName)
 
 QString AudioTrackType::toString() const
 {
+    if (m_trackId.isEmpty())
+        return QObject::tr("Unnamed audio track");
     return m_trackId;
 }
 
@@ -488,6 +493,8 @@ void CaptioningFormatType::setCaptioningFormatName(const QString &captioningForm
 
 QString CaptioningFormatType::toString() const
 {
+    if (m_captioningFormatId.isEmpty())
+        return QObject::tr("Unnamed captioning format");
     return m_captioningFormatId;
 }
 
@@ -566,6 +573,8 @@ void AncillarityDataFormatType::setWrappingType(int wrappingType)
 
 QString AncillarityDataFormatType::toString() const
 {
+    if (m_ancillaryDataFormatId.isEmpty())
+        return QObject::tr("Unnamed ancillary data format");
     return m_ancillaryDataFormatId;
 }
 
@@ -722,6 +731,8 @@ void SigningFormatType::setSigningFormatDefinition(const QString &signingFormatD
 
 QString SigningFormatType::toString() const
 {
+    if (m_signingFormatId.isEmpty())
+        return QObject::tr("Unnamed signing format");
     return m_signingFormatId;
 }
 
@@ -847,6 +858,8 @@ void DocumentFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAt
 
 QString DocumentFormatType::toString() const
 {
+    if (m_documentFormatId.isEmpty())
+        return QObject::tr("Unnamed document format");
     return m_documentFormatId;
 }
 
@@ -1156,5 +1169,7 @@ void FormatType::setDateModified(DateGroup *dateModified)
 
 QString FormatType::toString() const
 {
-    return m_format->toString();
+    if (m_format)
+        return m_format->toString();
+    return QObject::tr("Undefined format");
 }

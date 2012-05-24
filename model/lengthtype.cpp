@@ -1,4 +1,5 @@
 #include "lengthtype.h"
+#include <QObject>
 
 LengthType::LengthType()
 {
@@ -39,5 +40,7 @@ void LengthType::setUnit(const QString &unit)
 
 QString LengthType::toString() const
 {
-    return QString::number(*m_value);
+    if (m_value)
+        return QString::number(*m_value);
+    return QObject::tr("Undefined length");
 }

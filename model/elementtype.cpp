@@ -1,4 +1,5 @@
 #include "elementtype.h"
+#include <QObject>
 
 ElementType::ElementType()
 {
@@ -33,5 +34,7 @@ void ElementType::setLang(const QString &lang)
 
 QString ElementType::toString() const
 {
+    if (m_value.isEmpty())
+        return QObject::tr("Undefined element");
     return m_value;
 }

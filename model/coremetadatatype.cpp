@@ -1,4 +1,5 @@
 #include "coremetadatatype.h"
+#include <QObject>
 
 CoreMetadataType::CoreMetadataType()
 {
@@ -188,7 +189,9 @@ void TitleType::setTitle(ElementType *title)
 
 QString TitleType::toString() const
 {
-    return m_title->toString();
+    if (m_title)
+        return m_title->toString();
+    return QObject::tr("Untitled core metadata");
 }
 
 AlternativeTitleType::AlternativeTitleType()
@@ -225,7 +228,9 @@ void AlternativeTitleType::setTitle(ElementType *title)
 
 QString AlternativeTitleType::toString() const
 {
-    return m_title->toString();
+    if (m_title)
+        return m_title->toString();
+    return QObject::tr("Untitled title");
 }
 
 SubjectType::SubjectType()
@@ -296,7 +301,9 @@ void SubjectType::setAttributor(EntityType *attributor)
 
 QString SubjectType::toString() const
 {
-    return m_subject->toString();
+    if (m_subject)
+        return m_subject->toString();
+    return QObject::tr("Unnamed subject");
 }
 
 DescriptionType::DescriptionType()
@@ -333,7 +340,9 @@ void DescriptionType::setDescription(ElementType *description)
 
 QString DescriptionType::toString() const
 {
-    return m_description->toString();
+    if (m_description)
+        return m_description->toString();
+    return QObject::tr("Unnamed description");
 }
 
 DateType::DateType()
@@ -526,7 +535,9 @@ void IdentifierType::setAttributor(EntityType *attributor)
 
 QString IdentifierType::toString() const
 {
-    return m_identifier->toString();
+    if (m_identifier)
+        return m_identifier->toString();
+    return QObject::tr("Unnamed identifier");
 }
 
 LanguageType::LanguageType()
@@ -563,7 +574,9 @@ void LanguageType::setLanguage(ElementType *language)
 
 QString LanguageType::toString() const
 {
-    return m_language->toString();
+    if (m_language)
+        return m_language->toString();
+    return QObject::tr("Unnamed language");
 }
 
 QString RelationType::note() const
@@ -612,7 +625,9 @@ void RelationType::setRelationLink(const QString &relationLink)
 
 QString RelationType::toString() const
 {
-    return m_relation->toString();
+    if (m_relation)
+        return m_relation->toString();
+    QObject::tr("Unnamed relation");
 }
 
 HasTrackPartType::HasTrackPartType()
@@ -695,7 +710,9 @@ void HasTrackPartType::setSourceEnd(TimeType *sourceEnd)
 
 QString HasTrackPartType::toString() const
 {
-    return m_trackPartTitle->toString();
+    if (m_trackPartTitle)
+        return m_trackPartTitle->toString();
+    return QObject::tr("Untitled track part");
 }
 
 RelationType::RelationType()
@@ -767,6 +784,8 @@ void TemporalType::setPeriodOfTime(DateGroup *periodOfTime)
 
 QString TemporalType::toString() const
 {
+    if (m_periodId.isEmpty())
+        return QObject::tr("Unnamed period");
     return m_periodId;
 }
 
@@ -865,6 +884,8 @@ void LocationType::setCode(const QString &code)
 
 QString LocationType::toString() const
 {
+    if (m_locationId.isEmpty())
+        return QObject::tr("Unnamed location");
     return m_locationId;
 }
 
@@ -915,7 +936,9 @@ QList<LocationType *> &CoverageType::location()
 
 QString CoverageType::toString() const
 {
-    return m_coverage->toString();
+    if (m_coverage)
+        return m_coverage->toString();
+    return QObject::tr("Unnamed coverage");
 }
 
 RightsType::RightsType()
@@ -1053,7 +1076,9 @@ QList<ContactDetailsType *> &RightsType::contactDetails()
 
 QString RightsType::toString() const
 {
-    return m_rights->toString();
+    if (m_rights)
+        return m_rights->toString();
+    return QObject::tr("Unnamed rights");
 }
 
 PublicationType::PublicationType()
@@ -1136,7 +1161,9 @@ QList<PublicationType *> &PublicationHistoryType::repetitions()
 
 QString PublicationHistoryType::toString() const
 {
-    return m_firstPublication->toString();
+    if (m_firstPublication)
+        return m_firstPublication->toString();
+    return QObject::tr("Unnamed publication");
 }
 
 RatingType::RatingType()
@@ -1193,6 +1220,8 @@ void RatingType::setRatingProvider(EntityType *ratingProvider)
 
 QString RatingType::toString() const
 {
+    if (m_ratingValue.isEmpty())
+        return QObject::tr("Undefined rating");
     return m_ratingValue;
 }
 
@@ -1218,6 +1247,8 @@ void PartType::setPartName(const QString &partName)
 
 QString PartType::toString() const
 {
+    if (m_partId.isEmpty())
+        return QObject::tr("Unnamed part");
     return m_partId;
 }
 
