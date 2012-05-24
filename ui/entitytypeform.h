@@ -22,7 +22,6 @@ private slots:
     void addClicked();
     void editClicked();
     void removeClicked();
-//    void closeClicked();
     // -
     void contactDetailsChecked(bool checked);
     void organisationDetailsChecked(bool checked);
@@ -39,7 +38,7 @@ private:
     QPushButton *m_buttonContactDetails;
     QPushButton *m_buttonOrganisationDetails;
     QPushButton *m_buttonRole;
-    EntityType *m_entityType;
+    EntityType *m_entity;
     Operation m_op;
     EditMode m_currentEditMode;
 };
