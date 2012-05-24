@@ -6,7 +6,8 @@ HEADERS += \
     ui/qvarptr.h \
     ui/ebucoremainform.h \
     ui/entitytypeform.h \
-    ui/typegroupform.h
+    ui/typegroupform.h \
+    ui/elementtypeeditbox.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -15,4 +16,5 @@ SOURCES += \
     ui/stackablewidget.cpp \
     ui/ebucoremainform.cpp \
     ui/entitytypeform.cpp \
-    ui/typegroupform.cpp
+    ui/typegroupform.cpp \
+    ui/elementtypeeditbox.cpp
