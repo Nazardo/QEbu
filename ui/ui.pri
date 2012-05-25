@@ -7,7 +7,8 @@ HEADERS += \
     ui/ebucoremainform.h \
     ui/entitytypeform.h \
     ui/typegroupform.h \
-    ui/elementtypeeditbox.h
+    ui/elementtypeeditbox.h \
+    ui/elementtypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -17,4 +18,5 @@ SOURCES += \
     ui/ebucoremainform.cpp \
     ui/entitytypeform.cpp \
     ui/typegroupform.cpp \
-    ui/elementtypeeditbox.cpp
+    ui/elementtypeeditbox.cpp \
+    ui/elementtypeform.cpp
