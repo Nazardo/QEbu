@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     s.serializeToFile(ofile);
 
     return 0;*/
+
     QEbuMainWindow mainWindow;
     mainWindow.show();
     return a.exec();

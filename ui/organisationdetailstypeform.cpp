@@ -76,8 +76,10 @@ OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(OrganisationDetailsType
     this->setLayout(m_mainHLayout);
 
     // Set data fields...
-    m_editOrganisationName->editLang()->setText(m_organisationDetails->organisationName()->lang());
-    m_editOrganisationName->editValue()->setText(m_organisationDetails->organisationName()->value());
+    if(m_organisationDetails->organisationName()) {
+        m_editOrganisationName->editLang()->setText(m_organisationDetails->organisationName()->lang());
+        m_editOrganisationName->editValue()->setText(m_organisationDetails->organisationName()->value());
+    }
     m_editOrganisationId->setText(m_organisationDetails->organisationId());
     m_buttonOrganisationDepartment->setChecked(true);
 }

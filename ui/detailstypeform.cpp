@@ -31,7 +31,7 @@ DetailsTypeForm::DetailsTypeForm(DetailsType *details, QEbuMainWindow *mainWindo
         m_buttonAddress = new QPushButton(">>");
         fl->addRow(tr("Address"), m_buttonAddress);
         QObject::connect(m_buttonAddress, SIGNAL(toggled(bool)),
-                         this, SLOT(contactDetailsChecked(bool)));
+                         this, SLOT(addressChecked(bool)));
         l->addLayout(fl);
         QButtonGroup *group = new QButtonGroup(this);
         m_buttonAddress->setCheckable(true);
@@ -117,6 +117,7 @@ void DetailsTypeForm::editClicked()
 
 void DetailsTypeForm::removeClicked()
 {
+    m_listView->removeAt(0);
     m_details->setAddress(0);
 }
 

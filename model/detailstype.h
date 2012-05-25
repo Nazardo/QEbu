@@ -10,7 +10,7 @@ class AddressType
 public:
     AddressType();
     ~AddressType();
-    QList<QString> lines() const;
+    QList<QString> &lines();
     void lines(const QList<QString> &lines);
     QString townCity() const;
     void setTownCity(const QString &townCity);

@@ -77,7 +77,7 @@ AddressType::~AddressType()
     delete m_country;
 }
 
-QList<QString> AddressType::lines() const
+QList<QString> &AddressType::lines()
 {
     return m_lines;
 }

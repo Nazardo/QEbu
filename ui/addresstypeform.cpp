@@ -13,6 +13,7 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
         m_address = new AddressType;
     else
         m_address = address;
+
     // Layout
     m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
@@ -24,6 +25,7 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
         fl->addRow(tr("County"), m_editAddressCountryState);
         m_editAddressDeliveryCode = new QLineEdit;
         fl->addRow(tr("Delivery"), m_editAddressDeliveryCode);
+        l->addLayout(fl);
     }
     {
         QVBoxLayout *v = new QVBoxLayout;
@@ -151,7 +153,7 @@ void AddressTypeForm::addressLineChecked(bool checked)
     int s = m_address->lines().size();
     for (int i=0; i < s; ++i) {
         QString line = m_address->lines().at(i);
-        if (!line.isEmpty())
+        if (line.isEmpty())
             continue;
         m_listView->addItem(line);
     }

@@ -35,15 +35,15 @@ ContactDetailsTypeForm::ContactDetailsTypeForm(ContactDetailsType *contactDetail
         fl->addRow(tr("Occupation"), m_editOccupation);
 
         m_buttonDetails = new QPushButton(">>");
-        fl->addRow(tr("Contact details"), m_buttonDetails);
+        fl->addRow(tr("Details"), m_buttonDetails);
         QObject::connect(m_buttonDetails, SIGNAL(toggled(bool)),
                          this, SLOT(contactDetailsChecked(bool)));
         m_buttonStageName = new QPushButton(">>");
-        fl->addRow(tr("Organisation details"), m_buttonStageName);
+        fl->addRow(tr("Stage Name"), m_buttonStageName);
         QObject::connect(m_buttonStageName, SIGNAL(toggled(bool)),
                          this, SLOT(stageNameChecked(bool)));
         m_buttonRelatedContacts = new QPushButton(">>");
-        fl->addRow(tr("Roles"), m_buttonRelatedContacts);
+        fl->addRow(tr("Related Contacts"), m_buttonRelatedContacts);
         QObject::connect(m_buttonRelatedContacts, SIGNAL(toggled(bool)),
                          this, SLOT(relatedContactsChecked(bool)));
         l->addLayout(fl);
@@ -241,7 +241,7 @@ void ContactDetailsTypeForm::stageNameChecked(bool checked)
     int s = m_contactDetails->stageNames().size();
     for (int i=0; i < s; ++i) {
         QString sn = m_contactDetails->stageNames().at(i);
-        if (!sn.isEmpty())
+        if (sn.isEmpty())
             continue;
         m_listView->addItem(sn);
     }
