@@ -627,7 +627,7 @@ QString RelationType::toString() const
 {
     if (m_relation)
         return m_relation->toString();
-    QObject::tr("Unnamed relation");
+    return QObject::tr("Unnamed relation");
 }
 
 HasTrackPartType::HasTrackPartType()

@@ -1,5 +1,4 @@
 #include "qebumainwindow.h"
-#include "technicalattributesform.h"
 #include "ebucoremainform.h"
 #include "../model/ebucoremaintype.h"
 #include <QtGui>
