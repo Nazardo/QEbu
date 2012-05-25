@@ -8,6 +8,11 @@ HEADERS += \
     ui/entitytypeform.h \
     ui/typegroupform.h \
     ui/elementtypeeditbox.h \
+    ui/addresstypeform.h \
+    ui/organisationdetailstypeform.h \
+    ui/organisationdepartmenttypeform.h \
+    ui/detailstypeform.h \
+    ui/contactdetailstypeform.h \
     ui/elementtypeform.h
 
 SOURCES += \
@@ -19,4 +24,9 @@ SOURCES += \
     ui/entitytypeform.cpp \
     ui/typegroupform.cpp \
     ui/elementtypeeditbox.cpp \
+    ui/addresstypeform.cpp \
+    ui/organisationdetailstypeform.cpp \
+    ui/organisationdepartmenttypeform.cpp \
+    ui/detailstypeform.cpp \
+    ui/contactdetailstypeform.cpp \
     ui/elementtypeform.cpp

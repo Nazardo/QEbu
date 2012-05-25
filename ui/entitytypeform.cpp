@@ -1,5 +1,7 @@
 #include "entitytypeform.h"
 #include "qvarptr.h"
+#include "organisationdetailstypeform.h"
+#include "contactdetailstypeform.h"
 #include "typegroupform.h"
 #include <QtGui>
 
@@ -97,8 +99,20 @@ void EntityTypeForm::addClicked()
 {
     switch (m_currentEditMode) {
     case ContactDetails:
+    {
+        ContactDetailsTypeForm *contactDetailsForm = new ContactDetailsTypeForm(0, this->mainWindow());
+        QObject::connect(contactDetailsForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(contactDetailsFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(contactDetailsForm);
+    }
         break;
     case OrganisationDetails:
+    {
+        OrganisationDetailsTypeForm *organisationDetailForm = new OrganisationDetailsTypeForm(0, this->mainWindow());
+        QObject::connect(organisationDetailForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(organisationDetailFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(organisationDetailForm);
+    }
         break;
     case Roles:
     {
@@ -118,8 +132,22 @@ void EntityTypeForm::editClicked()
         return;
     switch (m_currentEditMode) {
     case ContactDetails:
+    {
+        ContactDetailsTypeForm *contactDetailsForm = new ContactDetailsTypeForm(
+                    m_entity->contactDetails().at(index), this->mainWindow());
+        QObject::connect(contactDetailsForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(contactDetailsFormFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(contactDetailsForm);
+    }
         break;
     case OrganisationDetails:
+    {
+        OrganisationDetailsTypeForm *organisationDetailsForm = new OrganisationDetailsTypeForm(
+                    m_entity->organisationDetails(), this->mainWindow());
+        QObject::connect(organisationDetailsForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(organisationDetailsFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(organisationDetailsForm);
+    }
         break;
     case Roles:
     {
@@ -200,6 +228,34 @@ void EntityTypeForm::roleChecked(bool checked)
     }
 }
 
+void EntityTypeForm::contactDetailsFormClosed(StackableWidget::Operation op, QVariant value)
+{
+    ContactDetailsType *contactDetails = QVarPtr<ContactDetailsType>::asPointer(value);
+    if(!contactDetails)
+        return;
+    if(op == Add) {
+        m_listView->addItem(contactDetails->toString());
+        m_entity->contactDetails().append(contactDetails);
+    } else if(op == Edit) {
+        int row = m_entity->contactDetails().indexOf(contactDetails);
+        m_listView->setItem(row, contactDetails->toString());
+    }
+}
+
+void EntityTypeForm::organisationDetailsFormFormClosed(StackableWidget::Operation op, QVariant value)
+{
+    OrganisationDetailsType *organisationDetails = QVarPtr<OrganisationDetailsType>::asPointer(value);
+    if(!organisationDetails)
+        return;
+    if(op == Add) {
+        m_listView->addItem(organisationDetails->toString());
+        m_entity->setOrganisationDetails(organisationDetails);
+    } else if(op == Edit) {
+        int row = 0;
+        m_listView->setItem(row, organisationDetails->toString());
+    }
+}
+
 void EntityTypeForm::roleFormClosed(Operation op, QVariant value)
 {
     TypeGroup *typeGroup = QVarPtr<TypeGroup>::asPointer(value);
@@ -226,3 +282,5 @@ void EntityTypeForm::updateListAndButtons()
     m_listView->setTitle(title);
     m_listView->clear();
 }
+
+
