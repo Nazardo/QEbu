@@ -19,6 +19,7 @@ public:
     void removeAt(int row);
     int selected();
     void clear();
+    void enableAdd(bool state);
     QPushButton *buttonAdd();
     QPushButton *buttonEdit();
     QPushButton *buttonRemove();

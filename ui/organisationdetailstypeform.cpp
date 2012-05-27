@@ -185,6 +185,7 @@ void OrganisationDetailsTypeForm::removeClicked()
     case OrganisationDepartment:
     {
         m_organisationDetails->setOrganisationDepartment(0);
+        m_listView->enableAdd(true);
     }
         break;
     case Details:
@@ -209,6 +210,7 @@ void OrganisationDetailsTypeForm::organisationDepartmentChecked(bool checked)
     OrganisationDepartmentType *odt = m_organisationDetails->organisationDepartment();
     if (odt) {
         m_listView->addItem(odt->toString());
+        m_listView->enableAdd(false);
     }
 }
 
@@ -250,6 +252,7 @@ void OrganisationDetailsTypeForm::organisationDepartmentFormClosed(StackableWidg
     if(op == Add) {
         m_listView->addItem(organisationDepartment->toString());
         m_organisationDetails->setOrganisationDepartment(organisationDepartment);
+        m_listView->enableAdd(false);
     } else if(op == Edit) {
         int row = 0;
         m_listView->setItem(row, organisationDepartment->toString());

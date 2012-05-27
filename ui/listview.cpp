@@ -59,6 +59,12 @@ int ListView::selected()
 void ListView::clear()
 {
     m_listWidget->clear();
+    m_buttonAdd->setEnabled(true);
+}
+
+void ListView::enableAdd(bool state)
+{
+    m_buttonAdd->setEnabled(state);
 }
 
 QPushButton *ListView::buttonAdd()

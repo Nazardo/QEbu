@@ -176,6 +176,7 @@ void EntityTypeForm::removeClicked()
     case OrganisationDetails:
     {
         m_entity->setOrganisationDetails(0);
+        m_listView->buttonAdd()->setEnabled(true);
     }
         break;
     case Roles:
@@ -210,6 +211,7 @@ void EntityTypeForm::organisationDetailsChecked(bool checked)
     OrganisationDetailsType *odt = m_entity->organisationDetails();
     if (odt) {
         m_listView->addItem(odt->toString());
+        m_listView->enableAdd(false);
     }
 }
 
@@ -250,6 +252,7 @@ void EntityTypeForm::organisationDetailsFormClosed(StackableWidget::Operation op
     if(op == Add) {
         m_listView->addItem(organisationDetails->toString());
         m_entity->setOrganisationDetails(organisationDetails);
+        m_listView->enableAdd(false);
     } else if(op == Edit) {
         int row = 0;
         m_listView->setItem(row, organisationDetails->toString());
