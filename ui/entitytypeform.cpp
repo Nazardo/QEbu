@@ -110,7 +110,7 @@ void EntityTypeForm::addClicked()
     {
         OrganisationDetailsTypeForm *organisationDetailForm = new OrganisationDetailsTypeForm(0, this->mainWindow());
         QObject::connect(organisationDetailForm, SIGNAL(closed(Operation,QVariant)),
-                         this, SLOT(organisationDetailFormClosed(Operation,QVariant)));
+                         this, SLOT(organisationDetailsFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(organisationDetailForm);
     }
         break;
@@ -136,7 +136,7 @@ void EntityTypeForm::editClicked()
         ContactDetailsTypeForm *contactDetailsForm = new ContactDetailsTypeForm(
                     m_entity->contactDetails().at(index), this->mainWindow());
         QObject::connect(contactDetailsForm, SIGNAL(closed(Operation,QVariant)),
-                         this, SLOT(contactDetailsFormFormClosed(Operation,QVariant)));
+                         this, SLOT(contactDetailsFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(contactDetailsForm);
     }
         break;
@@ -242,7 +242,7 @@ void EntityTypeForm::contactDetailsFormClosed(StackableWidget::Operation op, QVa
     }
 }
 
-void EntityTypeForm::organisationDetailsFormFormClosed(StackableWidget::Operation op, QVariant value)
+void EntityTypeForm::organisationDetailsFormClosed(StackableWidget::Operation op, QVariant value)
 {
     OrganisationDetailsType *organisationDetails = QVarPtr<OrganisationDetailsType>::asPointer(value);
     if(!organisationDetails)

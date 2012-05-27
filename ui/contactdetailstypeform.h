@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QPushButton>
+#include <QRadioButton>
 #include <QLineEdit>
 #include "stackablewidget.h"
 #include "listview.h"
@@ -14,6 +15,7 @@ class ContactDetailsTypeForm : public StackableWidget
 public:
     explicit ContactDetailsTypeForm(ContactDetailsType *contactDetails, QEbuMainWindow *mainWindow, QWidget *parent = 0);
     QString toString();
+    bool checkCompliance();
 signals:
 private slots:
     void cancelClicked();
@@ -26,6 +28,8 @@ private slots:
     void contactDetailsChecked(bool checked);
     void stageNameChecked(bool checked);
     void relatedContactsChecked(bool checked);
+    void simpleNameChecked(bool checked);
+    void complexNameChecked(bool checked);
     // -
     void detailsFormClosed(Operation op, QVariant value);
     void relatedContactsFormClosed(Operation op, QVariant value);
@@ -41,6 +45,8 @@ private:
     QLineEdit *m_editGivenName;
     QLineEdit *m_editUsername;
     QLineEdit *m_editOccupation;
+    QRadioButton *m_radioName;
+    QRadioButton *m_radioCName;
     QPushButton *m_buttonDetails;
     QPushButton *m_buttonStageName;
     QPushButton *m_buttonRelatedContacts;

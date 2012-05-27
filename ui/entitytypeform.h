@@ -28,7 +28,7 @@ private slots:
     void roleChecked(bool checked);
     // -
     void contactDetailsFormClosed(Operation op, QVariant value);
-    void organisationDetailsFormFormClosed(Operation op, QVariant value);
+    void organisationDetailsFormClosed(Operation op, QVariant value);
     void roleFormClosed(Operation op, QVariant value);
 private:
     enum EditMode { ContactDetails, OrganisationDetails, Roles };

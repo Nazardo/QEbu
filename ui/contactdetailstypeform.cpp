@@ -23,6 +23,31 @@ ContactDetailsTypeForm::ContactDetailsTypeForm(ContactDetailsType *contactDetail
         QFormLayout *fl = new QFormLayout;
         m_editContactId = new QLineEdit;
         fl->addRow(tr("Contact ID"), m_editContactId);
+        l->addLayout(fl);
+    }
+    {
+
+        m_radioName = new QRadioButton(tr("Simple name"));
+        m_radioCName = new QRadioButton(tr("Complex name"));
+        QButtonGroup *radio = new QButtonGroup;
+        m_radioName->setCheckable(true);
+        m_radioCName->setCheckable(true);
+
+        QObject::connect(m_radioName, SIGNAL(toggled(bool)),
+                         this, SLOT(simpleNameChecked(bool)));
+        QObject::connect(m_radioCName, SIGNAL(toggled(bool)),
+                         this, SLOT(complexNameChecked(bool)));
+
+        radio->addButton(m_radioName);
+        radio->addButton(m_radioCName);
+
+        QHBoxLayout *rl = new QHBoxLayout;
+        rl->addWidget(m_radioName);
+        rl->addWidget(m_radioCName);
+        l->addLayout(rl);
+    }
+    {
+        QFormLayout *fl = new QFormLayout;
         m_editName = new QLineEdit;
         fl->addRow(tr("Name"), m_editName);
         m_editGivenName = new QLineEdit;
@@ -87,6 +112,14 @@ ContactDetailsTypeForm::ContactDetailsTypeForm(ContactDetailsType *contactDetail
     m_editOccupation->setText(m_contactDetails->occupation());
     m_editUsername->setText(m_contactDetails->username());
     m_buttonDetails->setChecked(true);
+
+    if (m_contactDetails && !m_contactDetails->name().isComplexName())
+        m_radioName->setChecked(true);
+    else if (m_contactDetails && m_contactDetails->name().isComplexName())
+        m_radioCName->setChecked(true);
+    else
+        m_radioName->setChecked(true);
+
 }
 
 QString ContactDetailsTypeForm::toString()
@@ -105,14 +138,16 @@ void ContactDetailsTypeForm::cancelClicked()
 
 void ContactDetailsTypeForm::applyClicked()
 {
+    if(!checkCompliance())
+        return;
     m_contactDetails->setContactId(m_editContactId->text());
     m_contactDetails->setUsername(m_editUsername->text());
     m_contactDetails->setOccupation(m_editOccupation->text());
-    if (!m_editName->text().isEmpty()) {
+    if (m_radioName->isChecked()) {
         Name name(m_editName->text());
         m_contactDetails->setName(name);
 
-    } else if (!m_editFamilyName->text().isEmpty() || !m_editGivenName->text().isEmpty()) {
+    } else if (m_radioCName->isChecked()) {
         Name name(m_editGivenName->text(), m_editFamilyName->text());
         m_contactDetails->setName(name);
 
@@ -165,7 +200,7 @@ void ContactDetailsTypeForm::editClicked()
         DetailsTypeForm *detailsForm = new DetailsTypeForm(
                     m_contactDetails->details().at(index), this->mainWindow());
         QObject::connect(detailsForm, SIGNAL(closed(Operation,QVariant)),
-                         this, SLOT(contactDetailsFormFormClosed(Operation,QVariant)));
+                         this, SLOT(detailsFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(detailsForm);
     }
         break;
@@ -303,5 +338,43 @@ void ContactDetailsTypeForm::updateListAndButtons()
     m_listView->clear();
 }
 
+void ContactDetailsTypeForm::simpleNameChecked(bool checked)
+{
+    if (!checked)
+        return;
+    m_editName->setEnabled(true);
+    m_editFamilyName->setEnabled(false);
+    m_editGivenName->setEnabled(false);
+}
 
+void ContactDetailsTypeForm::complexNameChecked(bool checked)
+{
+    if (!checked)
+        return;
+    m_editName->setEnabled(false);
+    m_editFamilyName->setEnabled(true);
+    m_editGivenName->setEnabled(true);
+}
 
+bool ContactDetailsTypeForm::checkCompliance()
+{
+    bool ok = true;
+    QString error_msg = "";
+    if (m_radioName->isChecked()) {
+        if (m_editName->text().isEmpty()) {
+            ok = false;
+            error_msg += "Name\n";
+        }
+    }
+    else if(m_radioCName->isChecked()) {
+        if (m_editFamilyName->text().isEmpty() || m_editGivenName->text().isEmpty())
+        ok = false;
+        error_msg += "Family Name,\nGiven Name";
+    }
+    if(!ok) {
+        QErrorMessage *e = new QErrorMessage(this);
+        e->setWindowTitle(tr("Rrequired fields"));
+        e->showMessage(error_msg);
+    }
+    return ok;
+}

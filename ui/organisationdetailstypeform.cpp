@@ -100,6 +100,8 @@ void OrganisationDetailsTypeForm::cancelClicked()
 
 void OrganisationDetailsTypeForm::applyClicked()
 {
+    if (!checkCompliance())
+        return;
     m_organisationDetails->setOrganisationId(m_editOrganisationId->text());
     m_organisationDetails->setOrganisationName(new ElementType(
                                                    m_editOrganisationName->editValue()->text(),
@@ -293,4 +295,20 @@ void OrganisationDetailsTypeForm::updateListAndButtons()
         title = tr("Contacts");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool OrganisationDetailsTypeForm::checkCompliance()
+{
+    bool ok = true;
+    QString error_msg = "";
+    if(m_editOrganisationName->editValue()->text().isEmpty()) {
+        ok = false;
+        error_msg += "organisationName\n";
+    }
+    if(!ok) {
+        QErrorMessage *e = new QErrorMessage(this);
+        e->setWindowTitle(tr("Rrequired fields"));
+        e->showMessage(error_msg);
+    }
+    return ok;
 }
