@@ -27,6 +27,7 @@ OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(OrganisationDetailsType
         l->addLayout(hl);
     }
     m_editOrganisationName = new ElementTypeEditBox;
+    m_editOrganisationName->setLabel(tr("Organisation name"));
     l->addWidget(m_editOrganisationName);
     {
         QFormLayout *fl = new QFormLayout;

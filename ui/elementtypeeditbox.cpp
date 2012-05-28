@@ -12,6 +12,7 @@ ElementTypeEditBox::ElementTypeEditBox(QWidget *parent) :
     l->addWidget(m_label);
     l->addStretch();
     l->addWidget(m_editValue);
+    l->addWidget(new QLabel(tr("Lang")));
     l->addWidget(m_editLang);
     this->setLayout(l);
 }

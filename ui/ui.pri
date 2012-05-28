@@ -13,7 +13,9 @@ HEADERS += \
     ui/organisationdepartmenttypeform.h \
     ui/detailstypeform.h \
     ui/contactdetailstypeform.h \
-    ui/elementtypeform.h
+    ui/elementtypeform.h \
+    ui/formatgroupeditbox.h \
+    ui/formatgroupform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -29,4 +31,6 @@ SOURCES += \
     ui/organisationdepartmenttypeform.cpp \
     ui/detailstypeform.cpp \
     ui/contactdetailstypeform.cpp \
-    ui/elementtypeform.cpp
+    ui/elementtypeform.cpp \
+    ui/formatgroupeditbox.cpp \
+    ui/formatgroupform.cpp
