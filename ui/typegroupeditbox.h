@@ -3,23 +3,19 @@
 
 #include <QWidget>
 #include <QLineEdit>
+#include "../model/typegroup.h"
 
 class TypeGroupEditBox : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TypeGroupEditBox(QWidget *parent = 0);
-    QLineEdit *typeLabel();
-    QLineEdit *typeDefinition();
-    QLineEdit *typeLink();
-signals:
-    
-public slots:
-    
+    explicit TypeGroupEditBox(TypeGroup *typeGroup = 0, QWidget *parent = 0);
+    TypeGroup *typeGroup();
+    void updateExistingTypeGroup(TypeGroup *typeGroup);
 private:
-    QLineEdit *m_typeLabel;
-    QLineEdit *m_typeDefinition;
-    QLineEdit *m_typeLink;
+    QLineEdit *m_editTypeLabel;
+    QLineEdit *m_editTypeDefinition;
+    QLineEdit *m_editTypeLink;
 };
 
 #endif // TYPEGROUPEDITBOX_H

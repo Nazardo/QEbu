@@ -4,12 +4,7 @@
 #include <QtGui>
 
 // just for test
-#include "typetypeform.h"
-#include "languagetypeform.h"
-#include "descriptiontypeform.h"
 #include "timetypeform.h"
-#include "publicationhistorytypeform.h"
-#include "relationtypeform.h"
 
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -84,6 +79,6 @@ void EbuCoreMainForm::metadataProviderClosed(Operation op, QVariant value)
 void EbuCoreMainForm::testClicked()
 {
     // TEST PURPOSES!
-    TimeTypeForm *ttf = new TimeTypeForm(0, this->mainWindow());
-    this->mainWindow()->pushWidget(ttf);
+    TimeTypeForm *test = new TimeTypeForm(0, this->mainWindow());
+    this->mainWindow()->pushWidget(test);
 }

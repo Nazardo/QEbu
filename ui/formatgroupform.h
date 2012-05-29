@@ -19,8 +19,7 @@ private:
     QPushButton *m_buttonApply;
     QPushButton *m_buttonCancel;
     FormatGroupEditBox *m_editFormatGroup;
-    FormatGroup *m_formatGroup;
-    enum Operation m_op;
+    Operation m_op;
 };
 
 #endif // TYPEGROUPFORM_H

@@ -16,7 +16,7 @@ TemporalTypeForm::TemporalTypeForm(TemporalType *temporal, QEbuMainWindow *mainW
     QHBoxLayout *mainHLayout = new QHBoxLayout;
     {
         QVBoxLayout *vl = new QVBoxLayout;
-        m_editTypeGroup = new TypeGroupEditBox;
+        m_editTypeGroup = new TypeGroupEditBox(temporal);
         vl->addWidget(m_editTypeGroup);
         QFormLayout *fl = new QFormLayout;
         m_editPeriodId = new QLineEdit;
@@ -26,8 +26,9 @@ TemporalTypeForm::TemporalTypeForm(TemporalType *temporal, QEbuMainWindow *mainW
         vl->addLayout(fl);
         mainHLayout->addLayout(vl);
     }
-//    m_editDateGroup = new DateGroupEditBox;
-//    mainHLayout->addWidget(m_editDateGroup);
+    m_editPeriodOfTime = new DateGroupEditBox(m_temporal->periodOfTime());
+    m_editPeriodOfTime->setLabel(tr("Period of time"));
+    mainHLayout->addWidget(m_editPeriodOfTime);
     m_mainVLayout->addLayout(mainHLayout);
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -45,12 +46,8 @@ TemporalTypeForm::TemporalTypeForm(TemporalType *temporal, QEbuMainWindow *mainW
     this->setLayout(m_mainVLayout);
 
     // Set data fields
-    // TODO dategroup
     m_editPeriodId->setText(m_temporal->periodId());
     m_textNote->setText(m_temporal->note());
-    m_editTypeGroup->typeLabel()->setText(m_temporal->typeLabel());
-    m_editTypeGroup->typeLink()->setText(m_temporal->typeLink());
-    m_editTypeGroup->typeDefinition()->setText(m_temporal->typeDefinition());
 }
 
 QString TemporalTypeForm::toString()
@@ -69,11 +66,9 @@ void TemporalTypeForm::cancelClicked()
 
 void TemporalTypeForm::applyClicked()
 {
-    //TODO Dategroup
+    m_temporal->setPeriodOfTime(m_editPeriodOfTime->dateGroup());
     m_temporal->setPeriodId(m_editPeriodId->text());
     m_temporal->setNote(m_textNote->toPlainText());
-    m_temporal->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_temporal->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_temporal->setTypeLink(m_editTypeGroup->typeLink()->text());
+    m_editTypeGroup->updateExistingTypeGroup(m_temporal);
     emit closed(m_op, QVarPtr<TemporalType>::asQVariant(m_temporal));
 }

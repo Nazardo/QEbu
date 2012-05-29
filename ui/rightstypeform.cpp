@@ -20,7 +20,7 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
     QHBoxLayout *hl = new QHBoxLayout;
     {
         QVBoxLayout *l = new QVBoxLayout;
-        m_editTypeGroup = new TypeGroupEditBox;
+        m_editTypeGroup = new TypeGroupEditBox(rights);
         l->addWidget(m_editTypeGroup);
         QFormLayout *fl = new QFormLayout;
         m_editRightsLink = new QLineEdit;
@@ -119,9 +119,6 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
     m_textNote->setText(m_rights->note());
     m_checkRightsClearanceFlag->setChecked(m_rights->rightsClearanceFlag());
     m_buttonFormatIDRefs->setChecked(true);
-    m_editTypeGroup->typeDefinition()->setText(m_rights->typeDefinition());
-    m_editTypeGroup->typeLabel()->setText(m_rights->typeLabel());
-    m_editTypeGroup->typeLink()->setText(m_rights->typeLink());
 }
 
 QString RightsTypeForm::toString()
@@ -143,9 +140,7 @@ void RightsTypeForm::applyClicked()
     m_rights->setRightsLink(m_editRightsLink->text());
     m_rights->setNote(m_textNote->toPlainText());
     m_rights->setRightsClearanceFlag(m_checkRightsClearanceFlag->isChecked());
-    m_rights->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_rights->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_rights->setTypeLink(m_editTypeGroup->typeLink()->text());
+    m_editTypeGroup->updateExistingTypeGroup(m_rights);
     emit closed(m_op, QVarPtr<RightsType>::asQVariant(m_rights));
 }
 

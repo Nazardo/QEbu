@@ -15,7 +15,7 @@ LanguageTypeForm::LanguageTypeForm(LanguageType *language, QEbuMainWindow *mainW
 
     QVBoxLayout *vl = new QVBoxLayout;
     {
-        m_editTypeGroup = new TypeGroupEditBox;
+        m_editTypeGroup = new TypeGroupEditBox(language);
         vl->addWidget(m_editTypeGroup);
     }
     {
@@ -43,9 +43,6 @@ LanguageTypeForm::LanguageTypeForm(LanguageType *language, QEbuMainWindow *mainW
     }
     this->setLayout(vl);
     // Set text fields...
-    m_editTypeGroup->typeLabel()->setText(m_language->typeLabel());
-    m_editTypeGroup->typeDefinition()->setText(m_language->typeDefinition());
-    m_editTypeGroup->typeLink()->setText(m_language->typeLink());
     m_textNote->setText(m_language->note());
     if (m_language->language()) {
         m_editElementLanguage->editLang()->setText(m_language->language()->lang());
@@ -71,9 +68,7 @@ void LanguageTypeForm::applyClicked()
 {
     if (!checkCompliance())
         return;
-    m_language->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_language->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_language->setTypeLink(m_editTypeGroup->typeLink()->text());
+    m_editTypeGroup->updateExistingTypeGroup(m_language);
     m_language->setNote(m_textNote->toPlainText());
     m_language->setLanguage(new ElementType(
                               m_editElementLanguage->editValue()->text(),

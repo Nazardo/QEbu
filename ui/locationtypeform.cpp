@@ -13,7 +13,7 @@ LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainW
         m_location = location;
     // Layout
     m_mainVLayout = new QVBoxLayout;
-    m_editTypeGroup = new TypeGroupEditBox;
+    m_editTypeGroup = new TypeGroupEditBox(location);
     m_mainVLayout->addWidget(m_editTypeGroup);
     QFormLayout *fl = new QFormLayout;
     m_editLocationId = new QLineEdit;
@@ -60,9 +60,6 @@ LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainW
     m_textNote->setText(m_location->note());
     m_editName->setText(m_location->name());
     m_editCode->setText(m_location->code());
-    m_editTypeGroup->typeDefinition()->setText(m_location->typeDefinition());;
-    m_editTypeGroup->typeLabel()->setText(m_location->typeLabel());
-    m_editTypeGroup->typeLink()->setText(m_location->typeLink());
     if (m_location->coordinates())
         m_editCoordinates->setText(m_location->coordinates()->toString());
 }
@@ -83,14 +80,11 @@ void LocationTypeForm::cancelClicked()
 
 void LocationTypeForm::applyClicked()
 {
-    //TODO Typegroup
     m_location->setLocationId(m_editLocationId->text());
     m_location->setNote(m_textNote->toPlainText());
     m_location->setName(m_editName->text());
     m_location->setCode(m_editCode->text());
-    m_location->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_location->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_location->setTypeLink(m_editTypeGroup->typeLink()->text());
+    m_editTypeGroup->updateExistingTypeGroup(m_location);
     emit closed(m_op, QVarPtr<LocationType>::asQVariant(m_location));
 }
 

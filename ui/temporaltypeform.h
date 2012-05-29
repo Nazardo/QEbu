@@ -4,6 +4,7 @@
 #include "stackablewidget.h"
 #include "model/coremetadatatype.h"
 #include "typegroupeditbox.h"
+#include "dategroupeditbox.h"
 #include <QTextEdit>
 #include <QLineEdit>
 
@@ -21,7 +22,7 @@ private:
     TypeGroupEditBox *m_editTypeGroup;
     QLineEdit *m_editPeriodId;
     QTextEdit *m_textNote;
-    QLineEdit *m_editPeriodOfTime;
+    DateGroupEditBox *m_editPeriodOfTime;
     TemporalType *m_temporal;
     Operation m_op;
 };

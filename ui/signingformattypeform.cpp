@@ -25,11 +25,11 @@ SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, Q
         vl->addLayout(fl);
     }
     {
-        m_editTypeGroup = new TypeGroupEditBox;
+        m_editTypeGroup = new TypeGroupEditBox(m_signingFormat);
         vl->addWidget(m_editTypeGroup);
     }
     {
-        m_editFormatGroup = new FormatGroupEditBox;
+        m_editFormatGroup = new FormatGroupEditBox(m_signingFormat);
         vl->addWidget(m_editFormatGroup);
     }
     {
@@ -65,12 +65,6 @@ SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, Q
     m_editTrackId->setText(m_signingFormat->trackId());
     m_editTrackName->setText(m_signingFormat->trackName());
     m_editLanguage->setText(m_signingFormat->language());
-    m_editTypeGroup->typeLabel()->setText(m_signingFormat->typeLabel());
-    m_editTypeGroup->typeDefinition()->setText(m_signingFormat->typeDefinition());
-    m_editTypeGroup->typeLink()->setText(m_signingFormat->typeLink());
-    m_editFormatGroup->formatLabel()->setText(m_signingFormat->formatLabel());
-    m_editFormatGroup->formatDefinition()->setText(m_signingFormat->formatDefinition());
-    m_editFormatGroup->formatLink()->setText(m_signingFormat->formatLink());
     m_editSigningSourceUri->setText(m_signingFormat->signingSourceUri());
     m_editSigningFormatId->setText(m_signingFormat->signingSourceUri());
     m_editSigningFormatName->setText(m_signingFormat->signingSourceUri());
@@ -100,13 +94,8 @@ void SigningFormatTypeForm::applyClicked()
     m_signingFormat->setTrackName(m_editTrackName->text());
     m_signingFormat->setLanguage(m_editLanguage->text());
 
-    m_signingFormat->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_signingFormat->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_signingFormat->setTypeLink(m_editTypeGroup->typeLink()->text());
-
-    m_signingFormat->setFormatLabel(m_editFormatGroup->formatLabel()->text());
-    m_signingFormat->setFormatDefinition(m_editFormatGroup->formatDefinition()->text());
-    m_signingFormat->setFormatLink(m_editFormatGroup->formatLink()->text());
+    m_editFormatGroup->updateExistingFormatGroup(m_signingFormat);
+    m_editTypeGroup->updateExistingTypeGroup(m_signingFormat);
 
     m_signingFormat->setSigningSourceUri(m_editSigningSourceUri->text());
     m_signingFormat->setSigningFormatId(m_editSigningFormatId->text());

@@ -30,7 +30,7 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
     {
         QVBoxLayout *v = new QVBoxLayout;
         QGroupBox *group = new QGroupBox(tr("Country"));
-        m_editCountry = new TypeGroupEditBox;
+        m_editCountry = new TypeGroupEditBox(address->country());
         v->addWidget(m_editCountry);
         group->setLayout(v);
         l->addWidget(group);
@@ -74,11 +74,6 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
     m_editAddressTownCity->setText(m_address->townCity());
     m_editAddressCountryState->setText(m_address->countyState());
     m_editAddressDeliveryCode->setText(m_address->deliveryCode());
-    if (m_address->country()) {
-        m_editCountry->typeLabel()->setText(m_address->country()->typeLabel());
-        m_editCountry->typeLink()->setText(m_address->country()->typeLink());
-        m_editCountry->typeDefinition()->setText(m_address->country()->typeDefinition());
-    }
     m_buttonAddressLine->setChecked(true);
 }
 
@@ -101,11 +96,7 @@ void AddressTypeForm::applyClicked()
     m_address->setTownCity(m_editAddressTownCity->text());
     m_address->setCountyState(m_editAddressCountryState->text());
     m_address->setDeliveryCode(m_editAddressDeliveryCode->text());
-    TypeGroup *country = new TypeGroup();
-    country->setTypeDefinition(m_editCountry->typeDefinition()->text());
-    country->setTypeLabel(m_editCountry->typeLabel()->text());
-    country->setTypeLink(m_editCountry->typeLink()->text());
-    m_address->setCountry(country);
+    m_address->setCountry(m_editCountry->typeGroup());
     emit closed(m_op, QVarPtr<AddressType>::asQVariant(m_address));
 }
 

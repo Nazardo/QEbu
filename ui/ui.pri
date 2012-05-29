@@ -34,7 +34,10 @@ HEADERS += \
     ui/timetypeform.h \
     ui/publicationhistorytypeform.h \
     ui/publicationtypeform.h \
-    ui/durationtypeform.h
+    ui/durationtypeform.h \
+    ui/statusgroupeditbox.h \
+    ui/dategroupeditbox.h \
+    ui/dategroupform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -71,4 +74,7 @@ SOURCES += \
     ui/timetypeform.cpp \
     ui/publicationhistorytypeform.cpp \
     ui/publicationtypeform.cpp \
-    ui/durationtypeform.cpp
+    ui/durationtypeform.cpp \
+    ui/statusgroupeditbox.cpp \
+    ui/dategroupeditbox.cpp \
+    ui/dategroupform.cpp

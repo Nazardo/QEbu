@@ -15,7 +15,7 @@ DetailsTypeForm::DetailsTypeForm(DetailsType *details, QEbuMainWindow *mainWindo
     m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
-        m_editTypeGroup = new TypeGroupEditBox;
+        m_editTypeGroup = new TypeGroupEditBox(details);
         l->addWidget(m_editTypeGroup);
     }
     {
@@ -63,9 +63,6 @@ DetailsTypeForm::DetailsTypeForm(DetailsType *details, QEbuMainWindow *mainWindo
     this->setLayout(m_mainHLayout);
 
     // Set data fields...
-    m_editTypeGroup->typeLink()->setText(m_details->typeLink());
-    m_editTypeGroup->typeLabel()->setText(m_details->typeLabel());
-    m_editTypeGroup->typeDefinition()->setText(m_details->typeDefinition());
     m_editEmailAddress->setText(m_details->emailAddress());
     m_editWebAddress->setText(m_details->webAddress());
     m_editTelephoneNumber->setText(m_details->telephoneNumber());
@@ -92,10 +89,8 @@ void DetailsTypeForm::applyClicked()
     m_details->setEmailAddress(m_editEmailAddress->text());
     m_details->setMobileTelephoneNumber(m_editMobileTelephoneNumber->text());
     m_details->setTelephoneNumber(m_editTelephoneNumber->text());
-    m_details->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_details->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_details->setTypeLink(m_editTypeGroup->typeLink()->text());
     m_details->setWebAddress(m_editWebAddress->text());
+    m_editTypeGroup->updateExistingTypeGroup(m_details);
     emit closed(m_op, QVarPtr<DetailsType>::asQVariant(m_details));
 }
 

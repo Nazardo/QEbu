@@ -2,34 +2,39 @@
 #include <QFormLayout>
 #include <QGroupBox>
 
-TypeGroupEditBox::TypeGroupEditBox(QWidget *parent) :
+TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup, QWidget *parent) :
     QWidget(parent)
 {
-    m_typeLabel = new QLineEdit(this);
-    m_typeDefinition = new QLineEdit(this);
-    m_typeLink = new QLineEdit(this);
+    m_editTypeLabel = new QLineEdit(this);
+    m_editTypeDefinition = new QLineEdit(this);
+    m_editTypeLink = new QLineEdit(this);
     QHBoxLayout *l = new QHBoxLayout;
     QFormLayout *formL = new QFormLayout;
     QGroupBox *group = new QGroupBox(tr("Type"));
-    formL->addRow(tr("Label"), m_typeLabel);
-    formL->addRow(tr("Definition"), m_typeDefinition);
-    formL->addRow(tr("Link"), m_typeLink);
+    formL->addRow(tr("Label"), m_editTypeLabel);
+    formL->addRow(tr("Definition"), m_editTypeDefinition);
+    formL->addRow(tr("Link"), m_editTypeLink);
     group->setLayout(formL);
     l->addWidget(group);
     this->setLayout(l);
+    if (!typeGroup)
+        return;
+    // Set text fields
+    m_editTypeLabel->setText(typeGroup->typeLabel());
+    m_editTypeDefinition->setText(typeGroup->typeDefinition());
+    m_editTypeLink->setText(typeGroup->typeLink());
 }
 
-QLineEdit *TypeGroupEditBox::typeLabel()
+TypeGroup *TypeGroupEditBox::typeGroup()
 {
-    return m_typeLabel;
+    TypeGroup *typeGroup = new TypeGroup();
+    updateExistingTypeGroup(typeGroup);
+    return typeGroup;
 }
 
-QLineEdit *TypeGroupEditBox::typeDefinition()
+void TypeGroupEditBox::updateExistingTypeGroup(TypeGroup *typeGroup)
 {
-    return m_typeDefinition;
-}
-
-QLineEdit *TypeGroupEditBox::typeLink()
-{
-    return m_typeLink;
+    typeGroup->setTypeDefinition(m_editTypeDefinition->text());
+    typeGroup->setTypeLabel(m_editTypeLabel->text());
+    typeGroup->setTypeLink(m_editTypeLink->text());
 }

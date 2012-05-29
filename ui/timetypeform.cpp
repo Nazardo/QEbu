@@ -57,7 +57,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
         m_radioTime = new QRadioButton(tr("Time"));
         m_radioTime->setCheckable(true);
         l->addWidget(m_radioTime);
-        m_editFormatGroup = new FormatGroupEditBox;
+        m_editFormatGroup = new FormatGroupEditBox(m_time->time());
         l->addWidget(m_editFormatGroup);
     }
     {
@@ -100,11 +100,6 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
     m_editFactorDenomiantor->setValue(m_time->factorDenominator());
     if (m_time->editUnitNumberValue())
         m_editUnitNumberValue->setValue(*(m_time->editUnitNumberValue()));
-    if (m_time->time()) {
-        m_editFormatGroup->formatDefinition()->setText(m_time->time()->formatDefinition());
-        m_editFormatGroup->formatLabel()->setText(m_time->time()->formatLabel());
-        m_editFormatGroup->formatLink()->setText(m_time->time()->formatLink());
-    }
 
     if (time) {
         switch (time->timeTypeRepresentation()) {
@@ -159,10 +154,7 @@ void TimeTypeForm::applyClicked()
         m_time->setNormalPlayTime(TypeConverter::stringToDate(m_editNormalPlaytime->text()));
 
     } else if (m_radioTime->isChecked()) {
-        FormatGroup *fg = new FormatGroup;
-        fg->setFormatDefinition(m_editFormatGroup->formatDefinition()->text());
-        fg->setFormatLabel(m_editFormatGroup->formatLabel()->text());
-        fg->setFormatLink(m_editFormatGroup->formatLink()->text());
+        FormatGroup *fg = m_editFormatGroup->formatGroup();
         m_time->setTime(fg);
 
     } else if (m_radioEditUnitNumber->isChecked()) {
@@ -179,9 +171,7 @@ void TimeTypeForm::timeChecked(bool checked)
 {
     if (!checked)
         return;
-    m_editFormatGroup->formatDefinition()->setEnabled(true);
-    m_editFormatGroup->formatLabel()->setEnabled(true);
-    m_editFormatGroup->formatLink()->setEnabled(true);
+    m_editFormatGroup->setEnabled(true);
     m_editUnitNumberValue->setEnabled(false);
     m_editRate->setEnabled(false);
     m_editFactorNumerator->setEnabled(false);
@@ -194,9 +184,7 @@ void TimeTypeForm::timecodeChecked(bool checked)
 {
     if (!checked)
         return;
-    m_editFormatGroup->formatDefinition()->setEnabled(false);
-    m_editFormatGroup->formatLabel()->setEnabled(false);
-    m_editFormatGroup->formatLink()->setEnabled(false);
+    m_editFormatGroup->setEnabled(false);
     m_editUnitNumberValue->setEnabled(false);
     m_editRate->setEnabled(false);
     m_editFactorNumerator->setEnabled(false);
@@ -209,9 +197,7 @@ void TimeTypeForm::normalPlaytimeChecked(bool checked)
 {
     if (!checked)
         return;
-    m_editFormatGroup->formatDefinition()->setEnabled(false);
-    m_editFormatGroup->formatLabel()->setEnabled(false);
-    m_editFormatGroup->formatLink()->setEnabled(false);
+    m_editFormatGroup->setEnabled(false);
     m_editUnitNumberValue->setEnabled(false);
     m_editRate->setEnabled(false);
     m_editFactorNumerator->setEnabled(false);
@@ -224,9 +210,7 @@ void TimeTypeForm::editUnitNumberChecked(bool checked)
 {
     if (!checked)
         return;
-    m_editFormatGroup->formatDefinition()->setEnabled(false);
-    m_editFormatGroup->formatLabel()->setEnabled(false);
-    m_editFormatGroup->formatLink()->setEnabled(false);
+    m_editFormatGroup->setEnabled(false);
     m_editUnitNumberValue->setEnabled(true);
     m_editRate->setEnabled(true);
     m_editFactorNumerator->setEnabled(true);

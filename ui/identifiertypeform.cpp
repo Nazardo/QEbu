@@ -14,9 +14,9 @@ IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindo
 
     QVBoxLayout *vl = new QVBoxLayout;
     {
-        m_editTypeGroup = new TypeGroupEditBox;
+        m_editTypeGroup = new TypeGroupEditBox(identifier);
         vl->addWidget(m_editTypeGroup);
-        m_editFormatGroup = new FormatGroupEditBox;
+        m_editFormatGroup = new FormatGroupEditBox(identifier);
         vl->addWidget(m_editFormatGroup);
     }
     {
@@ -60,12 +60,6 @@ IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindo
     }
     this->setLayout(vl);
     // Set text fields...
-    m_editTypeGroup->typeDefinition()->setText(m_identifier->typeDefinition());
-    m_editTypeGroup->typeLabel()->setText(m_identifier->typeLabel());
-    m_editTypeGroup->typeLink()->setText(m_identifier->typeLink());
-    m_editFormatGroup->formatDefinition()->setText(m_identifier->formatDefinition());
-    m_editFormatGroup->formatLabel()->setText(m_identifier->formatLabel());
-    m_editFormatGroup->formatLink()->setText(m_identifier->formatLink());
     m_textNote->setText(m_identifier->note());
     if (m_identifier->identifier()) {
         m_editElementIdentifier->editLang()->setText(m_identifier->identifier()->lang());
@@ -122,12 +116,8 @@ void IdentifierTypeForm::applyClicked()
     if(!checkCompliance())
         return;
     m_identifier->setNote(m_textNote->toPlainText());
-    m_identifier->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_identifier->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_identifier->setTypeLink(m_editTypeGroup->typeLink()->text());
-    m_identifier->setFormatDefinition(m_editFormatGroup->formatDefinition()->text());
-    m_identifier->setFormatLabel(m_editFormatGroup->formatLabel()->text());
-    m_identifier->setFormatLink(m_editFormatGroup->formatLink()->text());
+    m_editTypeGroup->updateExistingTypeGroup(m_identifier);
+    m_editFormatGroup->updateExistingFormatGroup(m_identifier);
     m_identifier->setIdentifier(new ElementType(
                                 m_editElementIdentifier->editValue()->text(),
                                 m_editElementIdentifier->editLang()->text()));

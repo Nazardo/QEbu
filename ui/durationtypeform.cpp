@@ -57,7 +57,7 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
         m_radioTime = new QRadioButton(tr("Time"));
         m_radioTime->setCheckable(true);
         l->addWidget(m_radioTime);
-        m_editFormatGroup = new FormatGroupEditBox;
+        m_editFormatGroup = new FormatGroupEditBox(m_duration->time());
         l->addWidget(m_editFormatGroup);
     }
     {
@@ -100,11 +100,6 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
     m_editFactorDenomiantor->setValue(m_duration->factorDenominator());
     if (m_duration->editUnitNumberValue())
         m_editUnitNumberValue->setValue(*(m_duration->editUnitNumberValue()));
-    if (m_duration->time()) {
-        m_editFormatGroup->formatDefinition()->setText(m_duration->time()->formatDefinition());
-        m_editFormatGroup->formatLabel()->setText(m_duration->time()->formatLabel());
-        m_editFormatGroup->formatLink()->setText(m_duration->time()->formatLink());
-    }
 
     if (duration) {
         switch (duration->durationTypeRepresentation()) {
@@ -159,10 +154,7 @@ void DurationTypeForm::applyClicked()
         m_duration->setNormalPlayTime(TypeConverter::stringToDuration(m_editNormalPlaytime->text()));
 
     } else if (m_radioTime->isChecked()) {
-        FormatGroup *fg = new FormatGroup;
-        fg->setFormatDefinition(m_editFormatGroup->formatDefinition()->text());
-        fg->setFormatLabel(m_editFormatGroup->formatLabel()->text());
-        fg->setFormatLink(m_editFormatGroup->formatLink()->text());
+        FormatGroup *fg = m_editFormatGroup->formatGroup();
         m_duration->setTime(fg);
 
     } else if (m_radioEditUnitNumber->isChecked()) {
@@ -179,9 +171,7 @@ void DurationTypeForm::timeChecked(bool checked)
 {
     if (!checked)
         return;
-    m_editFormatGroup->formatDefinition()->setEnabled(true);
-    m_editFormatGroup->formatLabel()->setEnabled(true);
-    m_editFormatGroup->formatLink()->setEnabled(true);
+    m_editFormatGroup->setEnabled(true);
     m_editUnitNumberValue->setEnabled(false);
     m_editRate->setEnabled(false);
     m_editFactorNumerator->setEnabled(false);
@@ -194,9 +184,7 @@ void DurationTypeForm::timecodeChecked(bool checked)
 {
     if (!checked)
         return;
-    m_editFormatGroup->formatDefinition()->setEnabled(false);
-    m_editFormatGroup->formatLabel()->setEnabled(false);
-    m_editFormatGroup->formatLink()->setEnabled(false);
+    m_editFormatGroup->setEnabled(false);
     m_editUnitNumberValue->setEnabled(false);
     m_editRate->setEnabled(false);
     m_editFactorNumerator->setEnabled(false);
@@ -209,9 +197,7 @@ void DurationTypeForm::normalPlaytimeChecked(bool checked)
 {
     if (!checked)
         return;
-    m_editFormatGroup->formatDefinition()->setEnabled(false);
-    m_editFormatGroup->formatLabel()->setEnabled(false);
-    m_editFormatGroup->formatLink()->setEnabled(false);
+    m_editFormatGroup->setEnabled(false);
     m_editUnitNumberValue->setEnabled(false);
     m_editRate->setEnabled(false);
     m_editFactorNumerator->setEnabled(false);
@@ -224,9 +210,7 @@ void DurationTypeForm::editUnitNumberChecked(bool checked)
 {
     if (!checked)
         return;
-    m_editFormatGroup->formatDefinition()->setEnabled(false);
-    m_editFormatGroup->formatLabel()->setEnabled(false);
-    m_editFormatGroup->formatLink()->setEnabled(false);
+    m_editFormatGroup->setEnabled(false);
     m_editUnitNumberValue->setEnabled(true);
     m_editRate->setEnabled(true);
     m_editFactorNumerator->setEnabled(true);

@@ -23,6 +23,12 @@ void DateGroup::setStartYear(const qint32 startYear)
     m_startYear = new qint32(startYear);
 }
 
+void DateGroup::removeStartYear()
+{
+    delete m_startYear;
+    m_startYear = 0;
+}
+
 QDateTime DateGroup::startDate() const
 {
     return m_startDate;
@@ -52,6 +58,12 @@ void DateGroup::setEndYear(const qint32 endYear)
 {
     delete m_endYear;
     m_endYear = new qint32(endYear);
+}
+
+void DateGroup::removeEndYear()
+{
+    delete m_endYear;
+    m_endYear = 0;
 }
 
 QDateTime DateGroup::endDate() const

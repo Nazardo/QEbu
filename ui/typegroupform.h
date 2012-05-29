@@ -19,7 +19,6 @@ private:
     QPushButton *m_buttonApply;
     QPushButton *m_buttonCancel;
     TypeGroupEditBox *m_editTypeGroup;
-    TypeGroup *m_typeGroup;
     enum Operation m_op;
 };
 

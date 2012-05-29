@@ -14,7 +14,7 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
         m_subject = subject;
     QVBoxLayout *vl = new QVBoxLayout;
     {
-        m_editTypeGroup = new TypeGroupEditBox;
+        m_editTypeGroup = new TypeGroupEditBox(subject);
         vl->addWidget(m_editTypeGroup);
     }
     {
@@ -66,9 +66,6 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
     }
     this->setLayout(vl);
     // Set text fields...
-    m_editTypeGroup->typeLabel()->setText(m_subject->typeLabel());
-    m_editTypeGroup->typeDefinition()->setText(m_subject->typeDefinition());
-    m_editTypeGroup->typeLink()->setText(m_subject->typeLink());
     m_textNote->setText(m_subject->note());
     if (m_subject->subject()) {
         m_editElementSubject->editLang()->setText(m_subject->subject()->lang());
@@ -125,9 +122,7 @@ void SubjectTypeForm::applyClicked()
 {
     if (!checkCompliance())
         return;
-    m_subject->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_subject->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_subject->setTypeLink(m_editTypeGroup->typeLink()->text());
+    m_editTypeGroup->updateExistingTypeGroup(m_subject);
     m_subject->setNote(m_textNote->toPlainText());
     m_subject->setSubject(new ElementType(
                               m_editElementSubject->editValue()->text(),

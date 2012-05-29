@@ -15,11 +15,11 @@ RatingTypeForm::RatingTypeForm(RatingType *rating, QEbuMainWindow *mainWindow, Q
         m_rating = rating;
     QVBoxLayout *vl = new QVBoxLayout;
     {
-        m_editTypeGroup = new TypeGroupEditBox;
+        m_editTypeGroup = new TypeGroupEditBox(rating);
         vl->addWidget(m_editTypeGroup);
     }
     {
-        m_editFormatGroup = new FormatGroupEditBox;
+        m_editFormatGroup = new FormatGroupEditBox(rating);
         vl->addWidget(m_editFormatGroup);
     }
     {
@@ -66,12 +66,6 @@ RatingTypeForm::RatingTypeForm(RatingType *rating, QEbuMainWindow *mainWindow, Q
     }
     this->setLayout(vl);
     // Set text fields...
-    m_editTypeGroup->typeLabel()->setText(m_rating->typeLabel());
-    m_editTypeGroup->typeDefinition()->setText(m_rating->typeDefinition());
-    m_editTypeGroup->typeLink()->setText(m_rating->typeLink());
-    m_editFormatGroup->formatLabel()->setText(m_rating->formatLabel());
-    m_editFormatGroup->formatDefinition()->setText(m_rating->formatDefinition());
-    m_editFormatGroup->formatLink()->setText(m_rating->formatLink());
     m_editRatingValue->setText(m_rating->ratingValue());
     m_editRatingScaleMaxValue->setText(m_rating->ratingScaleMaxValue());
     m_editRatingScaleMinValue->setText(m_rating->ratingScaleMinValue());
@@ -124,13 +118,8 @@ void RatingTypeForm::applyClicked()
 {
     if (!checkCompliance())
         return;
-    m_rating->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_rating->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_rating->setTypeLink(m_editTypeGroup->typeLink()->text());
-
-    m_rating->setFormatLabel(m_editFormatGroup->formatLabel()->text());
-    m_rating->setFormatDefinition(m_editFormatGroup->formatDefinition()->text());
-    m_rating->setFormatLink(m_editFormatGroup->formatLink()->text());
+    m_editTypeGroup->updateExistingTypeGroup(m_rating);
+    m_editFormatGroup->updateExistingFormatGroup(m_rating);
 
     m_rating->setRatingValue(m_editRatingValue->text());
     m_rating->setRatingScaleMaxValue(m_editRatingScaleMaxValue->text());

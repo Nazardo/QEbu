@@ -15,7 +15,7 @@ RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainW
 		
     QVBoxLayout *vl = new QVBoxLayout;
     {
-        m_editTypeGroup = new TypeGroupEditBox;
+        m_editTypeGroup = new TypeGroupEditBox(relation);
         vl->addWidget(m_editTypeGroup);
     }
     {
@@ -67,9 +67,6 @@ RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainW
     }
     this->setLayout(vl);
     // Set text fields...
-    m_editTypeGroup->typeDefinition()->setText(m_relation->typeDefinition());
-    m_editTypeGroup->typeLabel()->setText(m_relation->typeLabel());
-    m_editTypeGroup->typeLink()->setText(m_relation->typeLink());
     if (m_relation->runningOrderNumber())
         m_editRunningOrderNumber->setValue(*(m_relation->runningOrderNumber()));
     m_textNote->setText(m_relation->note());
@@ -129,9 +126,9 @@ void RelationTypeForm::applyClicked()
     if(!checkCompliance())
         return;
     m_relation->setNote(m_textNote->toPlainText());
-    m_relation->setTypeDefinition(m_editTypeGroup->typeDefinition()->text());
-    m_relation->setTypeLabel(m_editTypeGroup->typeLabel()->text());
-    m_relation->setTypeLink(m_editTypeGroup->typeLink()->text());
+
+    m_editTypeGroup->updateExistingTypeGroup(m_relation);
+
     m_relation->setRunningOrderNumber(m_editRunningOrderNumber->value());
     m_relation->setRelation(new ElementType(
                                 m_editElementRelation->editValue()->text(),

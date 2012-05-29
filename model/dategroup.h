@@ -11,12 +11,14 @@ public:
     ~DateGroup();
     qint32 *startYear() const;
     void setStartYear(const qint32 startYear);
+    void removeStartYear();
     QDateTime startDate() const;
     void setStartDate(const QDateTime &startDate);
     QDateTime startTime() const;
     void setStartTime(const QDateTime &startTime);
     qint32 *endYear() const;
     void setEndYear(const qint32 endYear);
+    void removeEndYear();
     QDateTime endDate() const;
     void setEndDate(const QDateTime &endDate);
     QDateTime endTime() const;

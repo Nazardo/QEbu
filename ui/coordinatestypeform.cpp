@@ -12,7 +12,7 @@ CoordinatesTypeForm::CoordinatesTypeForm(CoordinatesType *coordinates, QEbuMainW
         m_coordinates = coordinates;
     // Layout
     m_mainVLayout = new QVBoxLayout;
-    m_editFormatGroup = new FormatGroupEditBox;
+    m_editFormatGroup = new FormatGroupEditBox(coordinates);
     m_mainVLayout->addWidget(m_editFormatGroup);
     QFormLayout *fl = new QFormLayout;
     m_spinPosx = new QDoubleSpinBox;
@@ -34,13 +34,9 @@ CoordinatesTypeForm::CoordinatesTypeForm(CoordinatesType *coordinates, QEbuMainW
     }
     this->setLayout(m_mainVLayout);
 
-    // Set data fields
-    // TODO formatgroup
+    // Set text fields
     m_spinPosx->setValue(m_coordinates->posx());
     m_spinPosy->setValue(m_coordinates->posy());
-    m_editFormatGroup->formatDefinition()->setText(m_coordinates->formatDefinition());
-    m_editFormatGroup->formatLabel()->setText(m_coordinates->formatLabel());
-    m_editFormatGroup->formatLink()->setText(m_coordinates->formatLink());
 }
 
 QString CoordinatesTypeForm::toString()
@@ -59,11 +55,8 @@ void CoordinatesTypeForm::cancelClicked()
 
 void CoordinatesTypeForm::applyClicked()
 {
-    //TODO Formatgroup
     m_coordinates->setPosx(m_spinPosx->value());
     m_coordinates->setPosy(m_spinPosy->value());
-    m_coordinates->setFormatDefinition(m_editFormatGroup->formatDefinition()->text());
-    m_coordinates->setFormatLabel(m_editFormatGroup->formatLabel()->text());
-    m_coordinates->setFormatLink(m_editFormatGroup->formatLink()->text());
+    m_editFormatGroup->updateExistingFormatGroup(m_coordinates);
     emit closed(m_op, QVarPtr<CoordinatesType>::asQVariant(m_coordinates));
 }
