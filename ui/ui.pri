@@ -15,7 +15,13 @@ HEADERS += \
     ui/contactdetailstypeform.h \
     ui/elementtypeform.h \
     ui/formatgroupeditbox.h \
-    ui/formatgroupform.h
+    ui/formatgroupform.h \
+    ui/titletypeform.h \
+    ui/temporaltypeform.h \
+    ui/rightstypeform.h \
+    ui/locationtypeform.h \
+    ui/coveragetypeform.h \
+    ui/coordinatestypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -33,4 +39,10 @@ SOURCES += \
     ui/contactdetailstypeform.cpp \
     ui/elementtypeform.cpp \
     ui/formatgroupeditbox.cpp \
-    ui/formatgroupform.cpp
+    ui/formatgroupform.cpp \
+    ui/titletypeform.cpp \
+    ui/temporaltypeform.cpp \
+    ui/rightstypeform.cpp \
+    ui/locationtypeform.cpp \
+    ui/coveragetypeform.cpp \
+    ui/coordinatestypeform.cpp
