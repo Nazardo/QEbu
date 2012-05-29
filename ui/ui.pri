@@ -21,7 +21,12 @@ HEADERS += \
     ui/rightstypeform.h \
     ui/locationtypeform.h \
     ui/coveragetypeform.h \
-    ui/coordinatestypeform.h
+    ui/coordinatestypeform.h \
+    ui/subjecttypeform.h \
+    ui/descriptiontypeform.h \
+    ui/ratingtypeform.h \
+    ui/lengthtypeform.h \
+    ui/signingformattypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -45,4 +50,9 @@ SOURCES += \
     ui/rightstypeform.cpp \
     ui/locationtypeform.cpp \
     ui/coveragetypeform.cpp \
-    ui/coordinatestypeform.cpp
+    ui/coordinatestypeform.cpp \
+    ui/subjecttypeform.cpp \
+    ui/descriptiontypeform.cpp \
+    ui/ratingtypeform.cpp \
+    ui/lengthtypeform.cpp \
+    ui/signingformattypeform.cpp
