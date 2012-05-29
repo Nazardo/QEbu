@@ -16,6 +16,8 @@ private slots:
     void metadataProviderRemoveClicked();
     void metadataProviderClicked();
     void metadataProviderClosed(Operation op, QVariant value);
+    // TEST!!!
+    void testClicked();
 private:
     EbuCoreMainType *m_ebuCoreMain;
     QLineEdit *m_editMetadataProvider;

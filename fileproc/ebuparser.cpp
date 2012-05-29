@@ -217,6 +217,7 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(CoreMetadataType *coreMetadat
             return 0;
         }
         coreMetadata->format().append(format);
+        m_root->formatMap().insert(format->toString(), format);
     }
 
     // identifier [0..*]
@@ -2205,7 +2206,6 @@ RightsType *EbuParser::parseRightsType(const QDomElement &element)
 
 PublicationHistoryType *EbuParser::parsePublicationHistoryType(const QDomElement &element)
 {
-    /// @todo Implement method.
     if (element.isNull()) {
         m_errorMsg = "PublicationHistoryType is null";
         return 0;
@@ -2233,17 +2233,10 @@ PublicationHistoryType *EbuParser::parsePublicationHistoryType(const QDomElement
     if (!el.isNull()) {
         if (!pub)
             pub = new PublicationType();
-        QList<FormatType *> &list = m_root->coreMetadata()->format();
-        bool found = false;
-        for (int i=0; i < list.size(); ++i) {
-            FormatType *f = list.at(0);
-            if (f->formatId() == el.text()) {
-                found = true;
-                pub->setChannel(f);
-                break;
-            }
-        }
-        if (!found) {
+        QMap<QString, FormatType*>::const_iterator iter = m_root->formatMap().find(el.text());
+        if (iter != m_root->formatMap().end())
+            pub->setChannel(iter.value());
+        else {
             m_errorMsg = "Invalid formatIDRef";
             delete pub;
             delete publicationHistory;
@@ -2288,19 +2281,10 @@ PublicationHistoryType *EbuParser::parsePublicationHistoryType(const QDomElement
                 pub = 0;
             }
             i = 3;
-            QList<FormatType *> &list = m_root->coreMetadata()->format();
-            bool found = false;
-            for (int i=0; i < list.size(); ++i) {
-                FormatType *f = list.at(0);
-                if (f->formatId() == el.text()) {
-                    found = true;
-                    if (!pub)
-                        pub = new PublicationType();
-                    pub->setChannel(f);
-                    break;
-                }
-            }
-            if (!found) {
+            QMap<QString, FormatType*>::const_iterator iter = m_root->formatMap().find(el.text());
+            if (iter != m_root->formatMap().end())
+                pub->setChannel(iter.value());
+            else {
                 m_errorMsg = "Invalid formatIDRef";
                 delete pub;
                 delete publicationHistory;

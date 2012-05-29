@@ -21,7 +21,7 @@ public:
 
     DurationType();
     DurationType(const QString &timecode);
-    DurationType(const Duration &normalPlayTime);
+    DurationType(Duration *normalPlayTime);
     DurationType(const unsigned int &editRate,
                  const unsigned long &editUnitNumberValue,
                 const unsigned int &factorNumerator,
@@ -32,8 +32,8 @@ public:
     enum DurationTypeRepresentation durationTypeRepresentation() const;
     QString timecode() const;
     void setTimecode(const QString &timecode);
-    Duration normalPlayTime() const;
-    void setNormalPlayTime(const Duration &normalPlayTime);
+    Duration *normalPlayTime();
+    void setNormalPlayTime(Duration *normalPlayTime);
     unsigned int *editRate() const;
     void setEditRate(unsigned int editRate);
     unsigned int factorNumerator() const;
@@ -52,7 +52,7 @@ private:
 
     QString m_timecode;
 
-    Duration m_normalPlayTime;
+    Duration *m_normalPlayTime;
 
     unsigned int *m_editRate;
     unsigned int m_factorNumerator;

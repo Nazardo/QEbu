@@ -26,7 +26,15 @@ HEADERS += \
     ui/descriptiontypeform.h \
     ui/ratingtypeform.h \
     ui/lengthtypeform.h \
-    ui/signingformattypeform.h
+    ui/signingformattypeform.h \
+    ui/relationtypeform.h \
+    ui/identifiertypeform.h \
+    ui/typetypeform.h \
+    ui/languagetypeform.h \
+    ui/timetypeform.h \
+    ui/publicationhistorytypeform.h \
+    ui/publicationtypeform.h \
+    ui/durationtypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -55,4 +63,12 @@ SOURCES += \
     ui/descriptiontypeform.cpp \
     ui/ratingtypeform.cpp \
     ui/lengthtypeform.cpp \
-    ui/signingformattypeform.cpp
+    ui/signingformattypeform.cpp \
+    ui/relationtypeform.cpp \
+    ui/identifiertypeform.cpp \
+    ui/typetypeform.cpp \
+    ui/languagetypeform.cpp \
+    ui/timetypeform.cpp \
+    ui/publicationhistorytypeform.cpp \
+    ui/publicationtypeform.cpp \
+    ui/durationtypeform.cpp

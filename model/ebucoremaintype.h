@@ -2,6 +2,8 @@
 #define EBUCOREMAINTYPE_H
 
 #include <QDateTime>
+#include <QList>
+#include <QMap>
 #include "coremetadatatype.h"
 #include "entitytype.h"
 
@@ -23,6 +25,7 @@ public:
     EntityType *metadataProvider() const;
     void setMetadataProvider(EntityType *metadataProvider);
     QString toString() const;
+    QMap<QString, FormatType*> &formatMap();
 private:
     // Attributes
     QDateTime m_dateLastModified;
@@ -31,6 +34,7 @@ private:
     // Elements
     CoreMetadataType *m_coreMetadata; // (required)
     EntityType *m_metadataProvider; // (optional)
+    QMap<QString, FormatType*> m_formatMap;
 };
 
 #endif // EBUCOREMAINTYPE_H

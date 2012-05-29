@@ -16,8 +16,8 @@ HEADERS += \
     model/timetype.h \
     model/typeconverter.h \
     model/duration.h \
-    model/durationtype.h
-
+    model/durationtype.h 
+	
 SOURCES += \
     model/ebucoremaintype.cpp \
     model/coremetadatatype.cpp \
@@ -36,4 +36,4 @@ SOURCES += \
     model/timetype.cpp \
     model/typeconverter.cpp \
     model/duration.cpp \
-    model/durationtype.cpp
+    model/durationtype.cpp 

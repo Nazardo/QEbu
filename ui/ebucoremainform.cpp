@@ -3,6 +3,14 @@
 #include "qvarptr.h"
 #include <QtGui>
 
+// just for test
+#include "typetypeform.h"
+#include "languagetypeform.h"
+#include "descriptiontypeform.h"
+#include "timetypeform.h"
+#include "publicationhistorytypeform.h"
+#include "relationtypeform.h"
+
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
@@ -22,6 +30,15 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *m
         QObject::connect(buttonMetadataProviderRemove, SIGNAL(clicked()),
                          this, SLOT(metadataProviderRemoveClicked()));
         hl->addWidget(buttonMetadataProviderRemove);
+
+        // TEST JUNK
+
+        QPushButton *buttonTest = new QPushButton("TEST");
+        QObject::connect(buttonTest, SIGNAL(clicked()), this, SLOT(testClicked()));
+        hl->addWidget(buttonTest);
+
+        // EOT
+
         vl->addLayout(hl);
     }
     this->setLayout(vl);
@@ -30,6 +47,7 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *m
         m_editMetadataProvider->setText(m_ebuCoreMain->metadataProvider()->toString());
     }
 }
+
 
 QString EbuCoreMainForm::toString()
 {
@@ -61,4 +79,11 @@ void EbuCoreMainForm::metadataProviderClosed(Operation op, QVariant value)
     if (op == Add)
         m_ebuCoreMain->setMetadataProvider(entityType);
     m_editMetadataProvider->setText(entityType->toString());
+}
+
+void EbuCoreMainForm::testClicked()
+{
+    // TEST PURPOSES!
+    TimeTypeForm *ttf = new TimeTypeForm(0, this->mainWindow());
+    this->mainWindow()->pushWidget(ttf);
 }

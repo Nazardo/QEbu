@@ -22,7 +22,7 @@ DurationType::DurationType(const QString &timecode)
     m_editUnitNumberValue = 0;
 }
 
-DurationType::DurationType(const Duration &normalPlayTime)
+DurationType::DurationType(Duration *normalPlayTime)
 {
     m_durationTypeRepresentation = DurationType::enumNormalPlayTime;
     m_normalPlayTime = normalPlayTime;
@@ -78,14 +78,15 @@ void DurationType::setTimecode(const QString &timecode)
     m_timecode = timecode;
 }
 
-Duration DurationType::normalPlayTime() const
+Duration *DurationType::normalPlayTime()
 {
     return m_normalPlayTime;
 }
 
-void DurationType::setNormalPlayTime(const Duration &normalPlayTime)
+void DurationType::setNormalPlayTime(Duration *normalPlayTime)
 {
     m_durationTypeRepresentation = DurationType::enumNormalPlayTime;
+    delete m_normalPlayTime;
     m_normalPlayTime = normalPlayTime;
 }
 
@@ -165,7 +166,7 @@ QString DurationType::toString() const
         case DurationType::enumEditUnitNumber:
             return QString::number(*m_editUnitNumberValue, 10);
         case DurationType::enumNormalPlayTime:
-            return TypeConverter::durationToString(&m_normalPlayTime);
+            return TypeConverter::durationToString(m_normalPlayTime);
         case DurationType::enumTime:
             return m_timeValue;
         case DurationType::enumTimecode:

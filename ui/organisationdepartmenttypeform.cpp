@@ -20,6 +20,7 @@ OrganisationDepartmentTypeForm::OrganisationDepartmentTypeForm(OrganisationDepar
     }
     m_editElementType = new ElementTypeEditBox;
     m_editElementType->setLabel(tr("Organisation department"));
+
     vl->addWidget(m_editElementType);
     {
         QHBoxLayout *hl = new QHBoxLayout;

@@ -5,6 +5,7 @@
 #include <QLayout>
 #include <QStackedWidget>
 #include "stackablewidget.h"
+#include "../model/ebucoremaintype.h"
 
 class StackableWidget;
 
@@ -16,12 +17,14 @@ public:
     explicit QEbuMainWindow(QWidget *parent = 0);
     ~QEbuMainWindow();
     void pushWidget(StackableWidget *widget);
+    EbuCoreMainType *ebuCoreMain();
     
 private slots:
     void childClosed();
 
 private:
     QLayout *m_mainCentralLayout;
+    EbuCoreMainType *m_ebuCoreMain;
     QStackedWidget *m_stackedWidget;
 };
 

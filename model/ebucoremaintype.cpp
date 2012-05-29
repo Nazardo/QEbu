@@ -73,3 +73,8 @@ QString EbuCoreMainType::toString() const
         return QObject::tr("Unnamed document");
     return m_documentId;
 }
+
+QMap<QString, FormatType *> &EbuCoreMainType::formatMap()
+{
+    return m_formatMap;
+}

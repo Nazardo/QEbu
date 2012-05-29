@@ -311,7 +311,7 @@ bool OrganisationDetailsTypeForm::checkCompliance()
     }
     if(!ok) {
         QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Rrequired fields"));
+        e->setWindowTitle(tr("Required fields"));
         e->showMessage(error_msg);
     }
     return ok;
