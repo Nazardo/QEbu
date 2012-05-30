@@ -19,10 +19,14 @@ FloatForm::FloatForm(Float *p_float, QEbuMainWindow *mainWindow, QWidget *parent
     QVBoxLayout *l = new QVBoxLayout;
 
     {
-        QFormLayout *fl = new QFormLayout;
+        QGridLayout *gl = new QGridLayout;
         m_spinValue = new QDoubleSpinBox;
-        fl->addRow(tr("Value"), m_spinValue);
-        l->addLayout(fl);
+        m_checkValue = new QCheckBox(tr("Value"));
+        QObject::connect(m_spinValue, SIGNAL(valueChanged(double)),
+                         this, SLOT(valueChanged()));
+        gl->addWidget(m_checkValue, 0, 0);
+        gl->addWidget(m_spinValue, 0, 1);
+        l->addLayout(gl);
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(p_float);
@@ -47,6 +51,7 @@ FloatForm::FloatForm(Float *p_float, QEbuMainWindow *mainWindow, QWidget *parent
     // Set data fields...
     if (m_float->value()) {
         m_spinValue->setValue(*(m_float->value()));
+        m_checkValue->setChecked(true);
     }
 }
 
@@ -69,10 +74,16 @@ void FloatForm::applyClicked()
     if (!checkCompliance())
         return;
 
-    m_float->setValue(m_spinValue->value());
+    if (m_checkValue->isChecked())
+        m_float->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_float);
 
     emit closed(m_op, QVarPtr<Float>::asQVariant(m_float));
+}
+
+void FloatForm::valueChanged()
+{
+    m_checkValue->setChecked(true);
 }
 
 

@@ -5,6 +5,7 @@
 #include "model/coremetadatatype.h"
 #include "formatgroupeditbox.h"
 #include <QDoubleSpinBox>
+#include <QCheckBox>
 
 class CoordinatesTypeForm : public StackableWidget
 {
@@ -15,11 +16,15 @@ public:
 private slots:
     void cancelClicked();
     void applyClicked();
+    void posxChanged();
+    void posyChanged();
 private:
     QVBoxLayout *m_mainVLayout;
     FormatGroupEditBox *m_editFormatGroup;
     QDoubleSpinBox *m_spinPosx;
     QDoubleSpinBox *m_spinPosy;
+    QCheckBox *m_checkPosx;
+    QCheckBox *m_checkPosy;
     CoordinatesType *m_coordinates;
     Operation m_op;
 };

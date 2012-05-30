@@ -4,6 +4,7 @@
 #include "stackablewidget.h"
 #include "typegroupeditbox.h"
 #include <QDoubleSpinBox>
+#include <QCheckBox>
 
 class FloatForm : public StackableWidget
 {
@@ -16,9 +17,11 @@ signals:
 private slots:
     void cancelClicked();
     void applyClicked();
+    void valueChanged();
 private:
     QHBoxLayout *m_mainHLayout;
     QDoubleSpinBox *m_spinValue;
+    QCheckBox *m_checkValue;
     TypeGroupEditBox *m_editTypeGroup;
     Float  *m_float;
     Operation m_op;
