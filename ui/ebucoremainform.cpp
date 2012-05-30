@@ -4,7 +4,7 @@
 #include <QtGui>
 
 // just for test
-#include "datetypeform.h"
+#include "alternativetitletypeform.h"
 
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -79,6 +79,6 @@ void EbuCoreMainForm::metadataProviderClosed(Operation op, QVariant value)
 void EbuCoreMainForm::testClicked()
 {
     // TEST PURPOSES!
-    DateTypeForm *test = new DateTypeForm(0, this->mainWindow());
+    AlternativeTitleTypeForm *test = new AlternativeTitleTypeForm(0, this->mainWindow());
     this->mainWindow()->pushWidget(test);
 }

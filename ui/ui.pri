@@ -46,7 +46,8 @@ HEADERS += \
     ui/int64form.h \
     ui/aspectratiotypeform.h \
     ui/videotracktypeform.h \
-    ui/captioningformattypeform.h
+    ui/captioningformattypeform.h \
+    ui/alternativetitletypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -95,4 +96,5 @@ SOURCES += \
     ui/int64form.cpp \
     ui/aspectratiotypeform.cpp \
     ui/videotracktypeform.cpp \
-    ui/captioningformattypeform.cpp
+    ui/captioningformattypeform.cpp \
+    ui/alternativetitletypeform.cpp
