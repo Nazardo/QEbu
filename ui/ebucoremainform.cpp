@@ -5,6 +5,15 @@
 
 // just for test
 #include "timetypeform.h"
+#include "publicationhistorytypeform.h"
+#include "relationtypeform.h"
+#include "stringform.h"
+#include "booleanform.h"
+#include "technicalattributerationaltypeform.h"
+#include "technicalattributeuritypeform.h"
+#include "floatform.h"
+#include "dategroupform.h"
+#include "../model/qebulimits.h"
 
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -79,6 +88,7 @@ void EbuCoreMainForm::metadataProviderClosed(Operation op, QVariant value)
 void EbuCoreMainForm::testClicked()
 {
     // TEST PURPOSES!
-    TimeTypeForm *test = new TimeTypeForm(0, this->mainWindow());
-    this->mainWindow()->pushWidget(test);
+    qEbuLimits::getMaxInt8();
+    DateGroupForm *ttf = new DateGroupForm(0, this->mainWindow());
+    this->mainWindow()->pushWidget(ttf);
 }

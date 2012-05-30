@@ -236,17 +236,17 @@ void ContactDetailsTypeForm::removeClicked()
     switch (m_currentEditMode) {
     case Details:
     {
-        m_contactDetails->details().removeAt(row);
+        delete(m_contactDetails->details().takeAt(row));
     }
         break;
     case StageName:
     {
-        m_contactDetails->stageNames().removeAt(row);
+        m_contactDetails->stageNames().takeAt(row);
     }
         break;
     case Related:
     {
-        m_contactDetails->relatedContacts().removeAt(row);
+        delete(m_contactDetails->relatedContacts().takeAt(row));
     }
         break;
     }

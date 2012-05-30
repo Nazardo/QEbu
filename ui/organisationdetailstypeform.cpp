@@ -191,12 +191,12 @@ void OrganisationDetailsTypeForm::removeClicked()
         break;
     case Details:
     {
-        m_organisationDetails->details().removeAt(row);
+        delete(m_organisationDetails->details().takeAt(row));
     }
         break;
     case Contacts:
     {
-        m_organisationDetails->contacts().removeAt(row);
+        delete(m_organisationDetails->contacts().takeAt(row));
     }
         break;
     }

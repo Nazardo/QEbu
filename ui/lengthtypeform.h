@@ -4,6 +4,7 @@
 #include "stackablewidget.h"
 #include "../model/ebucoremaintype.h"
 #include <QLineEdit>
+#include <QSpinBox>
 
 
 class LengthTypeForm : public StackableWidget
@@ -20,7 +21,7 @@ private slots:
     // -
 private:
     QLineEdit *m_editUnit;
-    QLineEdit *m_editValue;
+    QSpinBox *m_spinValue;
     LengthType *m_length;
     Operation m_op;
 };

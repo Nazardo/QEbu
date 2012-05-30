@@ -16,13 +16,10 @@ LengthTypeForm::LengthTypeForm(LengthType *length, QEbuMainWindow *mainWindow, Q
     QVBoxLayout *vl = new QVBoxLayout;
     {
         QFormLayout *fl = new QFormLayout;
-
         m_editUnit = new QLineEdit;
         fl->addRow(tr("Unit"), m_editUnit);
-
-        m_editValue = new QLineEdit;
-        fl->addRow(tr("Value"), m_editValue);
-
+        m_spinValue = new QSpinBox;
+        fl->addRow(tr("Value"), m_spinValue);
         vl->addLayout(fl);
     }
     {
@@ -38,6 +35,9 @@ LengthTypeForm::LengthTypeForm(LengthType *length, QEbuMainWindow *mainWindow, Q
         vl->addLayout(hl);
     }
     this->setLayout(vl);
+
+    if (m_length->value())
+        m_spinValue->setValue(*(m_length->value()));
     m_editUnit->setText(m_length->unit());
 }
 
@@ -61,7 +61,7 @@ void LengthTypeForm::applyClicked()
     if (!checkCompliance())
         return;
     m_length->setUnit(m_editUnit->text());
-    m_length->setValue(m_editValue->text().toInt());
+    m_length->setValue(m_spinValue->value());
     emit closed(m_op, QVarPtr<LengthType>::asQVariant(m_length));
 }
 

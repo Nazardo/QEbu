@@ -152,7 +152,7 @@ void CoverageTypeForm::removeClicked()
         break;
     case Location:
     {
-        m_coverage->location().removeAt(row);
+        delete(m_coverage->location().takeAt(row));
     }
         break;
     }

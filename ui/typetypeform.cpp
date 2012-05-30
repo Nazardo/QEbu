@@ -191,22 +191,22 @@ void TypeTypeForm::removeClicked()
     switch (m_currentEditMode) {
     case Type:
     {
-        m_type->type().removeAt(row);
+        delete(m_type->type().takeAt(row));
     }
         break;
     case Genre:
     {
-        m_type->genre().removeAt(row);
+        delete(m_type->genre().takeAt(row));
     }
         break;
     case ObjectType:
     {
-        m_type->objectType().removeAt(row);
+        delete(m_type->objectType().takeAt(row));
     }
         break;
     case TargetAudience:
     {
-        m_type->targetAudience().removeAt(row);
+        delete(m_type->targetAudience().takeAt(row));
     }
         break;
     }

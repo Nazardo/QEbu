@@ -66,9 +66,9 @@ SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, Q
     m_editTrackName->setText(m_signingFormat->trackName());
     m_editLanguage->setText(m_signingFormat->language());
     m_editSigningSourceUri->setText(m_signingFormat->signingSourceUri());
-    m_editSigningFormatId->setText(m_signingFormat->signingSourceUri());
-    m_editSigningFormatName->setText(m_signingFormat->signingSourceUri());
-    m_editSigningFormatDefinition->setText(m_signingFormat->signingSourceUri());
+    m_editSigningFormatId->setText(m_signingFormat->signingFormatId());
+    m_editSigningFormatName->setText(m_signingFormat->signingFormatName());
+    m_editSigningFormatDefinition->setText(m_signingFormat->signingFormatDefinition());
 }
 
 QString SigningFormatTypeForm::toString()

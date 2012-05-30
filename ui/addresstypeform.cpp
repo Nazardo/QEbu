@@ -133,7 +133,7 @@ void AddressTypeForm::removeClicked()
     if (row < 0)
         return;
     m_listView->removeAt(row);
-    m_address->lines().removeAt(row);
+    m_address->lines().takeAt(row);
 }
 
 void AddressTypeForm::addressLineChecked(bool checked)

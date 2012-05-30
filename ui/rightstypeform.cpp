@@ -299,7 +299,7 @@ void RightsTypeForm::removeClicked()
         switch (m_currentEditMode) {
         case FormatIDRefs:
         {
-//            m_rights->formats().removeAt(row);
+//            delete(m_rights->formats().takeAt(row));
         }
             break;
         case Rights:
@@ -328,17 +328,17 @@ void RightsTypeForm::removeClicked()
             break;
         case Disclaimer:
         {
-            m_rights->disclaimer().removeAt(row);
+            delete(m_rights->disclaimer().takeAt(row));
         }
             break;
         case RightsId:
         {
-//            m_rights->rightsID().removeAt(row);
+//            delete(m_rights->rightsID().takeAt(row));
         }
             break;
         case ContactDetails:
         {
-            m_rights->contactDetails().removeAt(row);
+            delete(m_rights->contactDetails().takeAt(row));
         }
             break;
         }

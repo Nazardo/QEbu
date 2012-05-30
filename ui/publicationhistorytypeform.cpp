@@ -125,7 +125,7 @@ void PublicationHistoryTypeForm::removeClicked()
     if (row < 0)
         return;
     m_listView->removeAt(row);
-    m_publicationHistory->repetitions().removeAt(row);
+    delete(m_publicationHistory->repetitions().takeAt(row));
 }
 
 void PublicationHistoryTypeForm::repeatChecked(bool checked)

@@ -170,7 +170,7 @@ void EntityTypeForm::removeClicked()
     switch (m_currentEditMode) {
     case ContactDetails:
     {
-        m_entity->contactDetails().removeAt(row);
+        delete(m_entity->contactDetails().takeAt(row));
     }
         break;
     case OrganisationDetails:
@@ -181,7 +181,7 @@ void EntityTypeForm::removeClicked()
         break;
     case Roles:
     {
-        m_entity->roles().removeAt(row);
+        delete(m_entity->roles().takeAt(row));
     }
         break;
     }
