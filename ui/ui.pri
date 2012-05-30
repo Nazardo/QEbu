@@ -40,6 +40,10 @@ HEADERS += \
     ui/dategroupform.h \
     ui/datetypeform.h \
     ui/alternativetypeform.h \
+    ui/stringform.h \
+    ui/booleanform.h \
+    ui/floatform.h \
+    ui/technicalattributeuritypeform.h \
     ui/int8form.h \
     ui/int32form.h \
     ui/int16form.h \
@@ -47,7 +51,8 @@ HEADERS += \
     ui/aspectratiotypeform.h \
     ui/videotracktypeform.h \
     ui/captioningformattypeform.h \
-    ui/alternativetitletypeform.h
+    ui/alternativetitletypeform.h \
+    ui/technicalattributerationaltypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -90,6 +95,10 @@ SOURCES += \
     ui/dategroupform.cpp \
     ui/datetypeform.cpp \
     ui/alternativetypeform.cpp \
+    ui/stringform.cpp \
+    ui/booleanform.cpp \
+    ui/floatform.cpp \
+    ui/technicalattributeuritypeform.cpp \
     ui/int8form.cpp \
     ui/int32form.cpp \
     ui/int16form.cpp \
@@ -97,4 +106,5 @@ SOURCES += \
     ui/aspectratiotypeform.cpp \
     ui/videotracktypeform.cpp \
     ui/captioningformattypeform.cpp \
-    ui/alternativetitletypeform.cpp
+    ui/alternativetitletypeform.cpp \
+    ui/technicalattributerationaltypeform.cpp

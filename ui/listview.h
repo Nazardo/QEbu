@@ -16,6 +16,7 @@ public:
     void setContent(const QList<QListWidgetItem *> &items);
     void addItem(const QString &label);
     void setItem(int row, const QString &label);
+    QString item(int row);
     void removeAt(int row);
     int selected();
     void clear();

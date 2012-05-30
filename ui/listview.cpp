@@ -46,6 +46,11 @@ void ListView::setItem(int row, const QString &label)
         wi->setText(label);
 }
 
+QString ListView::item(int row)
+{
+    return m_listWidget->item(row)->text();
+}
+
 void ListView::removeAt(int row)
 {
     delete m_listWidget->item(row);

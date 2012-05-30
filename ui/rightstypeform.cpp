@@ -149,7 +149,23 @@ void RightsTypeForm::addClicked()
     switch (m_currentEditMode) {
     case FormatIDRefs:
     {
-        //You haven't seen anything...
+        bool ok;
+        QStringList sl = QStringList(mainWindow()->ebuCoreMain()->formatMap().keys());
+        if (sl.size() <= 0) {
+            QErrorMessage *e = new QErrorMessage(this);
+            e->setWindowTitle(tr("Warning"));
+            e->showMessage(tr("No formatId available to choose from"));
+            return;
+        }
+        QString text = QInputDialog::getItem(this, tr("RightsType > Format IDRef"),
+                                              tr("Format ID"), sl, 0, false, &ok);
+        if (ok && !text.isEmpty()) {
+            QMap<QString, FormatType*>::const_iterator iter = mainWindow()->ebuCoreMain()->formatMap().find(text);
+            if ( iter != mainWindow()->ebuCoreMain()->formatMap().end()) {
+                m_listView->addItem(text);
+                m_rights->formats().append(iter.value());
+            }
+        }
     }
         break;
     case Rights:
@@ -197,11 +213,10 @@ void RightsTypeForm::addClicked()
         break;
     case RightsId:
     {
-        // Waiting for identifiertype
-//        IdentifierTypeForm *rightsIdForm = new IdentifierTypeForm(0, this->mainWindow());
-//        QObject::connect(rightsIdForm, SIGNAL(closed(Operation,QVariant)),
-//                         this, SLOT(rightsIdFormClosed(Operation,QVariant)));
-//        this->mainWindow()->pushWidget(rightsIdForm);
+        IdentifierTypeForm *rightsIdForm = new IdentifierTypeForm(0, this->mainWindow());
+        QObject::connect(rightsIdForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(rightsIdFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(rightsIdForm);
     }
         break;
     case ContactDetails:
@@ -223,7 +238,19 @@ void RightsTypeForm::editClicked()
     switch (m_currentEditMode) {
     case FormatIDRefs:
     {
-        // Same as before
+        bool ok;
+        QStringList sl = QStringList(mainWindow()->ebuCoreMain()->formatMap().keys());
+        QString selected = m_listView->item(index);
+        int active = sl.indexOf(selected);
+        QString text = QInputDialog::getItem(this, tr("RightsType > Format IDRef"),
+                                              tr("Format ID"), sl, active, false, &ok);
+        if (ok && !text.isEmpty()) {
+            QMap<QString, FormatType*>::const_iterator iter = mainWindow()->ebuCoreMain()->formatMap().find(text);
+            if ( iter != mainWindow()->ebuCoreMain()->formatMap().end()) {
+                m_listView->addItem(text);
+                m_rights->formats().append(iter.value());
+            }
+        }
     }
         break;
     case Rights:
@@ -276,11 +303,11 @@ void RightsTypeForm::editClicked()
         break;
     case RightsId:
     {
-//        IdentifierTypeForm *rightsIdForm = new IdentifierTypeForm(
-//                    m_rights->rightsID().at(index), this->mainWindow());
-//        QObject::connect(rightsIdForm, SIGNAL(closed(Operation,QVariant)),
-//                         this, SLOT(rightsIdFormClosed(Operation,QVariant)));
-//        this->mainWindow()->pushWidget(rightsIdForm);
+        IdentifierTypeForm *rightsIdForm = new IdentifierTypeForm(
+                    m_rights->rightsID().at(index), this->mainWindow());
+        QObject::connect(rightsIdForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(rightsIdFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(rightsIdForm);
     }
         break;
     case ContactDetails:
@@ -305,7 +332,7 @@ void RightsTypeForm::removeClicked()
         switch (m_currentEditMode) {
         case FormatIDRefs:
         {
-//            delete(m_rights->formats().takeAt(row));
+            delete(m_rights->formats().takeAt(row));
         }
             break;
         case Rights:
@@ -339,7 +366,7 @@ void RightsTypeForm::removeClicked()
             break;
         case RightsId:
         {
-//            delete(m_rights->rightsID().takeAt(row));
+            delete(m_rights->rightsID().takeAt(row));
         }
             break;
         case ContactDetails:
@@ -353,11 +380,17 @@ void RightsTypeForm::removeClicked()
 
 void RightsTypeForm::formatIDRefsChecked(bool checked)
 {
-//    if (!checked)
-//        return;
-//    m_currentEditMode = FormatIDRefs;
-//    updateListAndButtons();
-//    int s = m_rights->formats().size();
+    if (!checked)
+        return;
+    m_currentEditMode = FormatIDRefs;
+    updateListAndButtons();
+    int s = m_rights->formats().size();
+    for (int i=0; i < s; ++i) {
+        FormatType *f = m_rights->formats().at(i);
+        if (!f)
+            continue;
+        m_listView->addItem(f->toString());
+    }
 }
 
 void RightsTypeForm::rightsChecked(bool checked)
@@ -429,17 +462,17 @@ void RightsTypeForm::disclaimerChecked(bool checked)
 
 void RightsTypeForm::rightsIdChecked(bool checked)
 {
-//    if (!checked)
-//        return;
-//    m_currentEditMode = RightsId;
-//    updateListAndButtons();
-//    int s = m_rights->rightsID().size();
-//    for (int i=0; i < s; ++i) {
-//        IdentifierType *it = m_rights->rightsID().at(i);
-//        if (!it)
-//            continue;
-//        m_listView->addItem(it->toString());
-//    }
+    if (!checked)
+        return;
+    m_currentEditMode = RightsId;
+    updateListAndButtons();
+    int s = m_rights->rightsID().size();
+    for (int i=0; i < s; ++i) {
+        IdentifierType *it = m_rights->rightsID().at(i);
+        if (!it)
+            continue;
+        m_listView->addItem(it->toString());
+    }
 }
 
 void RightsTypeForm::contactDetailsChecked(bool checked)
@@ -459,16 +492,16 @@ void RightsTypeForm::contactDetailsChecked(bool checked)
 
 void RightsTypeForm::formatIDRefsFormClosed(StackableWidget::Operation op, QVariant value)
 {
-//    ContactDetailsType *contactDetails = QVarPtr<ContactDetailsType>::asPointer(value);
-//    if(!contactDetails)
-//        return;
-//    if(op == Add) {
-//        m_listView->addItem(contactDetails->toString());
-//        m_rights->contactDetails().append(contactDetails);
-//    } else if(op == Edit) {
-//        int row = m_rights->contactDetails().indexOf(contactDetails);
-//        m_listView->setItem(row, contactDetails->toString());
-//    }
+    FormatType *format = QVarPtr<FormatType>::asPointer(value);
+    if(!format)
+        return;
+    if(op == Add) {
+        m_listView->addItem(format->toString());
+        m_rights->formats().append(format);
+    } else if(op == Edit) {
+        int row = m_rights->formats().indexOf(format);
+        m_listView->setItem(row, format->toString());
+    }
 }
 
 void RightsTypeForm::rightsFormClosed(StackableWidget::Operation op, QVariant value)
@@ -547,16 +580,16 @@ void RightsTypeForm::disclaimerFormClosed(StackableWidget::Operation op, QVarian
 
 void RightsTypeForm::rightsIdFormClosed(StackableWidget::Operation op, QVariant value)
 {
-//    IdentifierType *rightsId = QVarPtr<IdentifierType>::asPointer(value);
-//    if(!rightsId)
-//        return;
-//    if(op == Add) {
-//        m_listView->addItem(rightsId->toString());
-//        m_rights->rightsID().append(rightsId);
-//    } else if(op == Edit) {
-//        int row = m_rights->rightsID().indexOf(rightsId);
-//        m_listView->setItem(row, rightsId->toString());
-//    }
+    IdentifierType *rightsId = QVarPtr<IdentifierType>::asPointer(value);
+    if(!rightsId)
+        return;
+    if(op == Add) {
+        m_listView->addItem(rightsId->toString());
+        m_rights->rightsID().append(rightsId);
+    } else if(op == Edit) {
+        int row = m_rights->rightsID().indexOf(rightsId);
+        m_listView->setItem(row, rightsId->toString());
+    }
 }
 
 
