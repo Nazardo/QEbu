@@ -39,7 +39,14 @@ HEADERS += \
     ui/dategroupeditbox.h \
     ui/dategroupform.h \
     ui/datetypeform.h \
-    ui/alternativetypeform.h
+    ui/alternativetypeform.h \
+    ui/int8form.h \
+    ui/int32form.h \
+    ui/int16form.h \
+    ui/int64form.h \
+    ui/aspectratiotypeform.h \
+    ui/videotracktypeform.h \
+    ui/captioningformattypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -81,4 +88,11 @@ SOURCES += \
     ui/dategroupeditbox.cpp \
     ui/dategroupform.cpp \
     ui/datetypeform.cpp \
-    ui/alternativetypeform.cpp
+    ui/alternativetypeform.cpp \
+    ui/int8form.cpp \
+    ui/int32form.cpp \
+    ui/int16form.cpp \
+    ui/int64form.cpp \
+    ui/aspectratiotypeform.cpp \
+    ui/videotracktypeform.cpp \
+    ui/captioningformattypeform.cpp

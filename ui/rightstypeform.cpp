@@ -3,7 +3,7 @@
 #include "elementtypeform.h"
 #include "entitytypeform.h"
 #include "coveragetypeform.h"
-//#include "identifiertypeform.h"
+#include "identifiertypeform.h"
 #include "contactdetailstypeform.h"
 #include <QtGui>
 
@@ -34,9 +34,9 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
         QVBoxLayout *l = new QVBoxLayout;
         {
             QFormLayout *fl = new QFormLayout;
-            m_buttonFormatIDRefs = new QPushButton(">>");
-            fl->addRow(tr("Format"), m_buttonFormatIDRefs);
-            QObject::connect(m_buttonFormatIDRefs, SIGNAL(toggled(bool)),
+            m_comboFormatIDRefs = new QPushButton(">>");
+            fl->addRow(tr("Format"), m_comboFormatIDRefs);
+            QObject::connect(m_comboFormatIDRefs, SIGNAL(toggled(bool)),
                              this, SLOT(formatIDRefsChecked(bool)));
             m_buttonRights = new QPushButton(">>");
             fl->addRow(tr("Rights"), m_buttonRights);
@@ -70,8 +70,8 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
             fl->addRow(tr("Rights clearance"), m_checkRightsClearanceFlag);
             l->addLayout(fl);
             QButtonGroup *group = new QButtonGroup(this);
-            m_buttonFormatIDRefs->setCheckable(true);
-            group->addButton(m_buttonFormatIDRefs);
+            m_comboFormatIDRefs->setCheckable(true);
+            group->addButton(m_comboFormatIDRefs);
             m_buttonRights->setCheckable(true);
             group->addButton(m_buttonRights);
             m_buttonRightsHolder->setCheckable(true);
@@ -118,7 +118,7 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
     m_editRightsLink->setText(m_rights->rightsLink());
     m_textNote->setText(m_rights->note());
     m_checkRightsClearanceFlag->setChecked(m_rights->rightsClearanceFlag());
-    m_buttonFormatIDRefs->setChecked(true);
+    m_comboFormatIDRefs->setChecked(true);
 }
 
 QString RightsTypeForm::toString()

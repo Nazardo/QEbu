@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QTextEdit>
+#include <QComboBox>
 #include "stackablewidget.h"
 #include "typegroupform.h"
 #include "listview.h"
@@ -53,7 +54,7 @@ private:
     QLineEdit *m_editRightsLink;
     QCheckBox *m_checkRightsClearanceFlag;
     QTextEdit *m_textNote;
-    QPushButton *m_buttonFormatIDRefs;
+    QPushButton *m_comboFormatIDRefs;
     QPushButton *m_buttonRights;
     QPushButton *m_buttonRightsHolder;
     QPushButton *m_buttonExploitationIssues;

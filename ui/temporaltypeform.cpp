@@ -52,7 +52,7 @@ TemporalTypeForm::TemporalTypeForm(TemporalType *temporal, QEbuMainWindow *mainW
 
 QString TemporalTypeForm::toString()
 {
-        return QString("Temporal Type");
+    return QString("Temporal Type");
 }
 
 void TemporalTypeForm::cancelClicked()
