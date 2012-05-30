@@ -9,6 +9,7 @@ class DateGroup
 public:
     DateGroup();
     ~DateGroup();
+    QString toString() const;
     qint32 *startYear() const;
     void setStartYear(const qint32 startYear);
     void removeStartYear();

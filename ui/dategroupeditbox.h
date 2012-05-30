@@ -17,7 +17,7 @@ public:
     explicit DateGroupEditBox(DateGroup *dateGroup, QWidget *parent = 0);
     DateGroup *dateGroup();
     void updateExistingDateGroup(DateGroup *dateGroup);
-    void setLabel(QString label);
+    void setLabel(const QString &label);
 private slots:
     void startYearChanged();
     void startDateChanged();

@@ -1,4 +1,5 @@
 #include "dategroup.h"
+#include <QStringList>
 
 DateGroup::DateGroup()
 {
@@ -10,6 +11,20 @@ DateGroup::~DateGroup()
 {
     delete m_startYear;
     delete m_endYear;
+}
+
+QString DateGroup::toString() const
+{
+    QStringList sl;
+    if (m_startDate.isValid())
+        sl.append(m_startDate.date().toString());
+    if (m_startTime.isValid())
+        sl.append(m_startTime.time().toString());
+    if (m_startYear)
+        sl.append(QString::number(*m_startYear));
+    if (sl.size() == 0)
+        return QString(QObject::tr("Unspecified starting date"));
+    return sl.join(" ");
 }
 
 qint32 *DateGroup::startYear() const

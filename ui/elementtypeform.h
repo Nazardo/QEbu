@@ -11,6 +11,7 @@ class ElementTypeForm : public StackableWidget
 public:
     explicit ElementTypeForm(ElementType *element, QEbuMainWindow *mainWindow, QWidget *parent = 0);
     QString toString();
+    void setTitle(const QString &title);
 public slots:
     void applyClicked();
     void cancelClicked();

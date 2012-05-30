@@ -29,6 +29,11 @@ QString DateGroupForm::toString()
     return QString(tr("DateGroup"));
 }
 
+void DateGroupForm::setTitle(const QString &title)
+{
+    m_editDateGroup->setLabel(title);
+}
+
 void DateGroupForm::cancelClicked()
 {
     emit closed(m_op, QVarPtr<DateGroup>::asQVariant(0));

@@ -109,6 +109,7 @@ void TypeTypeForm::addClicked()
     case Type:
     {
         ElementTypeForm *typeForm = new ElementTypeForm(0, this->mainWindow());
+        typeForm->setTitle(tr("Type"));
         QObject::connect(typeForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(typeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(typeForm);
@@ -150,6 +151,7 @@ void TypeTypeForm::editClicked()
     case Type:
     {
         ElementTypeForm *typeForm = new ElementTypeForm(m_type->type().at(index), this->mainWindow());
+        typeForm->setTitle(tr("Type"));
         QObject::connect(typeForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(typeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(typeForm);

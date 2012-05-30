@@ -4,7 +4,7 @@ ListView::ListView(QString name, QWidget *parent) :
     QWidget(parent)
 {
     QVBoxLayout *verticalLayout = new QVBoxLayout;
-    m_labelTitle = new QLabel;
+    m_labelTitle = new QLabel(name);
     verticalLayout->addWidget(m_labelTitle);
     m_listWidget = new QListWidget(this);
     verticalLayout->addWidget(m_listWidget);

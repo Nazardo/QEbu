@@ -184,7 +184,11 @@ private:
     ElementType *m_description;
 };
 
-class AlternativeType : public DateGroup, public TypeGroup { };
+class AlternativeType : public DateGroup, public TypeGroup
+{
+public:
+    QString toString() const;
+};
 
 class DateType
 {

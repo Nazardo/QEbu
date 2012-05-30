@@ -155,6 +155,7 @@ void RightsTypeForm::addClicked()
     case Rights:
     {
         ElementTypeForm *rightsForm = new ElementTypeForm(0, this->mainWindow());
+        rightsForm->setTitle(tr("Rights"));
         QObject::connect(rightsForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(rightsFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rightsForm);
@@ -171,6 +172,7 @@ void RightsTypeForm::addClicked()
     case ExploitationIssues:
     {
         ElementTypeForm *exploitationIssuesForm = new ElementTypeForm(0, this->mainWindow());
+        exploitationIssuesForm->setTitle(tr("Exploitation Issues"));
         QObject::connect(exploitationIssuesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(exploitationIssuesFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(exploitationIssuesForm);
@@ -187,6 +189,7 @@ void RightsTypeForm::addClicked()
     case Disclaimer:
     {
         ElementTypeForm *disclaimerForm = new ElementTypeForm(0, this->mainWindow());
+        disclaimerForm->setTitle(tr("Disclaimer"));
         QObject::connect(disclaimerForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(disclaimerFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(disclaimerForm);
@@ -227,6 +230,7 @@ void RightsTypeForm::editClicked()
     {
         ElementTypeForm *rightsForm = new ElementTypeForm(
                     m_rights->rights(), this->mainWindow());
+        rightsForm->setTitle(tr("Rights"));
         QObject::connect(rightsForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(rightsFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rightsForm);
@@ -245,6 +249,7 @@ void RightsTypeForm::editClicked()
     {
         ElementTypeForm *exploitationIssuesForm = new ElementTypeForm(
                     m_rights->exploitationIssues(), this->mainWindow());
+        exploitationIssuesForm->setTitle(tr("Exploitation Issues"));
         QObject::connect(exploitationIssuesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(exploitationIssuesFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(exploitationIssuesForm);
@@ -263,6 +268,7 @@ void RightsTypeForm::editClicked()
     {
         ElementTypeForm *disclaimerForm = new ElementTypeForm(
                     m_rights->disclaimer().at(index), this->mainWindow());
+        disclaimerForm->setTitle(tr("Disclaimer"));
         QObject::connect(disclaimerForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(disclaimerFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(disclaimerForm);

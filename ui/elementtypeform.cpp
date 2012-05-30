@@ -38,6 +38,11 @@ QString ElementTypeForm::toString()
     return QString("ElementType");
 }
 
+void ElementTypeForm::setTitle(const QString &title)
+{
+    m_editElementType->setLabel(title);
+}
+
 void ElementTypeForm::applyClicked()
 {
     m_element->setValue(m_editElementType->editValue()->text());

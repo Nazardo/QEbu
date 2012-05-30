@@ -135,7 +135,7 @@ void DateGroupEditBox::updateExistingDateGroup(DateGroup *dateGroup)
     dateGroup->setPeriod(m_editPeriod->text());
 }
 
-void DateGroupEditBox::setLabel(QString label)
+void DateGroupEditBox::setLabel(const QString &label)
 {
     m_groupBox->setTitle(label);
 }

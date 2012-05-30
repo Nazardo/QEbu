@@ -1440,3 +1440,8 @@ void CoreMetadataType::setPubblicationHistory(PublicationHistoryType *publicatio
         delete m_publicationHistory;
     m_publicationHistory = publicationHistory;
 }
+
+QString AlternativeType::toString() const
+{
+    return DateGroup::toString();
+}
