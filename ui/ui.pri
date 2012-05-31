@@ -56,7 +56,7 @@ HEADERS += \
     ui/uint8form.h \
     ui/uint16form.h \
     ui/uint32form.h \
-    ui/uintform64.h \
+    ui/uint64form.h \
     ui/audiotracktypeform.h \
     ui/ancillarydataformattypeform.h
 
@@ -117,6 +117,6 @@ SOURCES += \
     ui/uint8form.cpp \
     ui/uint16form.cpp \
     ui/uint32form.cpp \
-    ui/uintform64.cpp \
+    ui/uint64form.cpp \
     ui/audiotracktypeform.cpp \
     ui/ancillarydataformattypeform.cpp

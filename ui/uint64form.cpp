@@ -1,4 +1,4 @@
-#include "uintform64.h"
+#include "uint64form.h"
 
 #include "qvarptr.h"
 #include <QtGui>
