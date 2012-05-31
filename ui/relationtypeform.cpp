@@ -21,7 +21,7 @@ RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainW
     {
         QGridLayout *gl = new QGridLayout;
         m_spinRunningOrderNumber = new QSpinBox;
-        m_checkRunningOrderNumber = new QCheckBox(tr("Value"));
+        m_checkRunningOrderNumber = new QCheckBox(tr("Running Order Number"));
         QObject::connect(m_spinRunningOrderNumber, SIGNAL(valueChanged(int)),
                          this, SLOT(runningOrderNumberChanged()));
         gl->addWidget(m_checkRunningOrderNumber, 0, 0);
@@ -30,8 +30,6 @@ RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainW
     }
     {
         QFormLayout *fl = new QFormLayout;
-        m_spinRunningOrderNumber = new QSpinBox;
-        fl->addRow(tr("Order number"), m_spinRunningOrderNumber);
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);
         vl->addLayout(fl);
