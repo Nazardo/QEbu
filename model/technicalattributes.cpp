@@ -63,7 +63,7 @@ TechnicalAttributes::~TechnicalAttributes()
 
 QString TechnicalAttributes::toString()
 {
-    return tr("Techincal Attributes");
+    return "Technical Attributes";
 }
 
 QList<String *> &TechnicalAttributes::technicalAttributeString()
