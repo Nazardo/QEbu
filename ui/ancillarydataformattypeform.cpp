@@ -1,6 +1,7 @@
 #include "ancillarydataformattypeform.h"
 
 #include "qvarptr.h"
+#include "../model/qebulimits.h"
 #include <QtGui>
 
 AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatType *ancillaryDataFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -22,7 +23,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatTy
         m_editAncillarityDataFormatName = new QLineEdit;
         fl->addRow(tr("Ancillarity data format name"), m_editAncillarityDataFormatName);
 
-        vl->addLayout(fl);
+
         m_spinDID = new QSpinBox;
         fl->addRow(tr("DID"), m_spinDID);
         m_spinSDID = new QSpinBox;
@@ -34,6 +35,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatTy
         fl->addRow(tr("Line number"), m_buttonLineNumber);
         QObject::connect(m_buttonLineNumber, SIGNAL(toggled(bool)),
                          this, SLOT(numberLineChecked(bool)));
+        vl->addLayout(fl);
     }
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -81,12 +83,32 @@ QString AncillaryDataFormatTypeForm::toString()
 
 void AncillaryDataFormatTypeForm::addClicked()
 {
-
+    bool ok;
+    int input = QInputDialog::getInt(this, tr("Ancillary Data Format Type > Line Number"),
+                                     tr("Line Number"), 0, 0, qEbuLimits::getMaxInt(), 1, &ok);
+    if (ok) {
+        m_listView->addItem(QString::number(input));
+        m_ancillaryDataFormat->lineNumber().append(input);
+    }
 }
 
 void AncillaryDataFormatTypeForm::editClicked()
 {
+    int index = m_listView->selected();
+    if (index < 0)
+        return;
 
+    bool ok;
+
+    int input = QInputDialog::getInt(this, tr("Ancillary Data Format Type > Line Number"),
+                                     tr("Line Number"),
+                                     m_ancillaryDataFormat->lineNumber().at(index),
+                                     0, qEbuLimits::getMaxInt(), 1, &ok);
+    if (ok) {
+        m_listView->setItem(index, QString::number(input));
+        m_ancillaryDataFormat->lineNumber().removeAt(index);
+        m_ancillaryDataFormat->lineNumber().insert(index, input);
+    }
 }
 
 void AncillaryDataFormatTypeForm::removeClicked()
@@ -100,13 +122,7 @@ void AncillaryDataFormatTypeForm::removeClicked()
 
 void AncillaryDataFormatTypeForm::numberLineChecked(bool checked)
 {
-    if (!checked)
-        return;
-    int s = m_ancillaryDataFormat->lineNumber().size();
-    for (int i=0; i < s; ++i) {
-        int line = m_ancillaryDataFormat->lineNumber().at(i);
-        m_listView->addItem(QString::number(line,10));
-    }
+
 }
 
 void AncillaryDataFormatTypeForm::numberLineFormClosed(Operation op, QVariant value)

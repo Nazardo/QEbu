@@ -30,7 +30,7 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
     {
         QVBoxLayout *v = new QVBoxLayout;
         QGroupBox *group = new QGroupBox(tr("Country"));
-        m_editCountry = new TypeGroupEditBox(address->country());
+        m_editCountry = new TypeGroupEditBox(m_address->country());
         v->addWidget(m_editCountry);
         group->setLayout(v);
         l->addWidget(group);
@@ -123,7 +123,9 @@ void AddressTypeForm::editClicked()
                                           tr("Address Line"), QLineEdit::Normal,
                                          m_address->lines().at(index), &ok);
     if (ok && !text.isEmpty()) {
-        m_listView->addItem(text);
+       m_listView->setItem(index, text);
+       m_address->lines().removeAt(index);
+       m_address->lines().insert(index, text);
     }
 }
 
