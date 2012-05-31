@@ -24,6 +24,7 @@ class TechnicalAttributes
 public:
     TechnicalAttributes();
     ~TechnicalAttributes();
+    QString toString();
     //Elements
     QList<String *> &technicalAttributeString();
     QList<Int8 *> &technicalAttributeByte();
