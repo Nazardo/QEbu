@@ -21,21 +21,39 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatTy
         fl->addRow(tr("Ancillarity data format id"), m_editAncillarityDataFormatId);
 
         m_editAncillarityDataFormatName = new QLineEdit;
-        fl->addRow(tr("Ancillarity data format name"), m_editAncillarityDataFormatName);
-
-
-        m_spinDID = new QSpinBox;
-        fl->addRow(tr("DID"), m_spinDID);
-        m_spinSDID = new QSpinBox;
-        fl->addRow(tr("SDID"), m_spinSDID);
-        m_spinWrappingType = new QSpinBox;
-        fl->addRow(tr("DID"), m_spinWrappingType);
+        fl->addRow(tr("Ancillarity data format name"), m_editAncillarityDataFormatName);       
         m_buttonLineNumber = new QPushButton(">>");
         m_buttonLineNumber->setCheckable(true);
         fl->addRow(tr("Line number"), m_buttonLineNumber);
         QObject::connect(m_buttonLineNumber, SIGNAL(toggled(bool)),
                          this, SLOT(numberLineChecked(bool)));
         vl->addLayout(fl);
+    }
+    {
+        QGridLayout *gl = new QGridLayout;
+
+        m_spinDID = new QSpinBox;
+        m_checkDID = new QCheckBox(tr("DID"));
+        QObject::connect(m_spinDID, SIGNAL(valueChanged(int)),
+                         this, SLOT(DIDChanged()));
+        gl->addWidget(m_checkDID, 0, 0);
+        gl->addWidget(m_spinDID, 0, 1);
+
+        m_spinSDID = new QSpinBox;
+        m_checkSDID = new QCheckBox(tr("SDID"));
+        QObject::connect(m_spinSDID, SIGNAL(valueChanged(int)),
+                         this, SLOT(SDIDChanged()));
+        gl->addWidget(m_checkSDID, 1, 0);
+        gl->addWidget(m_spinSDID, 1, 1);
+
+        m_spinWrappingType = new QSpinBox;
+        m_checkWrappingType = new QCheckBox(tr("Wrapping type"));
+        QObject::connect(m_spinWrappingType, SIGNAL(valueChanged(int)),
+                         this, SLOT(wrappingTypeChanged()));
+        gl->addWidget(m_checkWrappingType, 2, 0);
+        gl->addWidget(m_spinWrappingType, 2, 1);
+
+        vl->addLayout(gl);
     }
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -66,12 +84,18 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatTy
     //Set Data fields
     m_editAncillarityDataFormatId->setText(m_ancillaryDataFormat->ancillaryDataFormatId());
     m_editAncillarityDataFormatName->setText(m_ancillaryDataFormat->ancillaryDataFormatName());
-    if (m_ancillaryDataFormat->DID())
+    if (m_ancillaryDataFormat->DID()) {
         m_spinDID->setValue(*(m_ancillaryDataFormat->DID()));
-    if (m_ancillaryDataFormat->SDID())
+        m_checkDID->setChecked(true);
+    }
+    if (m_ancillaryDataFormat->SDID()) {
         m_spinSDID->setValue(*(m_ancillaryDataFormat->SDID()));
-    if (m_ancillaryDataFormat->wrappingType())
+        m_checkSDID->setChecked(true);
+    }
+    if (m_ancillaryDataFormat->wrappingType()) {
         m_spinWrappingType->setValue(*(m_ancillaryDataFormat->wrappingType()));
+        m_checkWrappingType->setChecked(true);
+    }
 
     m_buttonLineNumber->setChecked(true);
 }
@@ -122,12 +146,9 @@ void AncillaryDataFormatTypeForm::removeClicked()
 
 void AncillaryDataFormatTypeForm::numberLineChecked(bool checked)
 {
-
-}
-
-void AncillaryDataFormatTypeForm::numberLineFormClosed(Operation op, QVariant value)
-{
-
+    if (!checked)
+        return;
+    updateListAndButtons();
 }
 
 void AncillaryDataFormatTypeForm::cancelClicked()
@@ -145,22 +166,46 @@ void AncillaryDataFormatTypeForm::applyClicked()
         return;
     m_ancillaryDataFormat->setAncillaryDataFormatId(m_editAncillarityDataFormatId->text());
     m_ancillaryDataFormat->setAncillaryDataFormatName(m_editAncillarityDataFormatName->text());
-    m_ancillaryDataFormat->setDID(m_spinDID->value());
-    m_ancillaryDataFormat->setSDID(m_spinSDID->value());
-    //TODO line number
-    m_ancillaryDataFormat->setWrappingType(m_spinWrappingType->value());
+    if (m_checkDID->isChecked())
+        m_ancillaryDataFormat->setDID(m_spinDID->value());
+    if (m_checkSDID->isChecked())
+        m_ancillaryDataFormat->setSDID(m_spinSDID->value());
+    if (m_checkWrappingType->isChecked())
+        m_ancillaryDataFormat->setWrappingType(m_spinWrappingType->value());
     emit closed(m_op, QVarPtr<AncillarityDataFormatType>::asQVariant(m_ancillaryDataFormat));
+}
+
+void AncillaryDataFormatTypeForm::DIDChanged()
+{
+    m_checkDID->setChecked(true);
+}
+
+void AncillaryDataFormatTypeForm::SDIDChanged()
+{
+    m_checkSDID->setChecked(true);
+}
+
+void AncillaryDataFormatTypeForm::wrappingTypeChanged()
+{
+    m_checkWrappingType->setChecked(true);
 }
 
 bool AncillaryDataFormatTypeForm::checkCompliance()
 {
     bool ok = true;
     QString error_msg = "";
-    //TODO
     if(!ok) {
         QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Rrequired fields"));
+        e->setWindowTitle(tr("Required fields"));
         e->showMessage(error_msg);
     }
     return ok;
+}
+
+void AncillaryDataFormatTypeForm::updateListAndButtons()
+{
+    QString title;
+    title = tr("Line number");
+    m_listView->setTitle(title);
+    m_listView->clear();
 }

@@ -3,7 +3,7 @@
 
 #include "stackablewidget.h"
 
-class QLineEdit;
+class QTextEdit;
 class AlternativeTitleType;
 class TypeGroupEditBox;
 class StatusGroupEditBox;
@@ -26,7 +26,7 @@ private:
     TypeGroupEditBox *m_editTypeGroup;
     StatusGroupEditBox *m_editStatusGroup;
     DateGroupEditBox *m_editDateGroup;
-    QLineEdit *m_editNote;
+    QTextEdit *m_textNote;
     ElementTypeEditBox *m_editTitle;
     Operation m_op;
 };

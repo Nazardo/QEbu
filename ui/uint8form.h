@@ -6,6 +6,7 @@
 #include "typegroupeditbox.h"
 #include "elementtypeeditbox.h"
 #include <QSpinBox>
+#include <QCheckBox>
 
 class Uint8Form : public StackableWidget
 {
@@ -18,11 +19,12 @@ signals:
 private slots:
     void cancelClicked();
     void applyClicked();
-    // -
+    void valueChanged();
 private:
     QHBoxLayout *m_mainHLayout;
     TypeGroupEditBox *m_editTypeGroup;
     QSpinBox *m_spinValue;
+    QCheckBox *m_checkValue;
     UInt8 *m_uint8;
     Operation m_op;
 };

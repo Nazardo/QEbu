@@ -42,16 +42,39 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
         m_radioEditUnitNumber = new QRadioButton(tr("Edit unit number"));
         m_radioEditUnitNumber->setCheckable(true);
         l->addWidget(m_radioEditUnitNumber);
-        QFormLayout *fl = new QFormLayout;
-        m_editRate = new QSpinBox;
-        m_editFactorNumerator = new QSpinBox;
-        m_editFactorDenomiantor = new QSpinBox;
-        m_editUnitNumberValue = new QSpinBox;
-        fl->addRow(tr("Edit rate"), m_editRate);
-        fl->addRow(tr("Factor numerator"), m_editFactorNumerator);
-        fl->addRow(tr("Factor denominator"), m_editFactorDenomiantor);
-        fl->addRow(tr("Edit unit value"), m_editUnitNumberValue);
-        l->addLayout(fl);
+        {
+            QGridLayout *gl = new QGridLayout;
+
+            m_spinRate = new QSpinBox;
+            m_checkRate = new QCheckBox(tr("Rate"));
+            QObject::connect(m_spinRate, SIGNAL(valueChanged(int)),
+                             this, SLOT(rateChanged()));
+            gl->addWidget(m_checkRate, 0, 0);
+            gl->addWidget(m_spinRate, 0, 1);
+
+            m_spinFactorNumerator = new QSpinBox;
+            m_checkFactorNumerator = new QCheckBox(tr("Factor numerator"));
+            QObject::connect(m_spinFactorNumerator, SIGNAL(valueChanged(int)),
+                             this, SLOT(factorNumeratorChanged()));
+            gl->addWidget(m_checkFactorNumerator, 1, 0);
+            gl->addWidget(m_spinFactorNumerator, 1, 1);
+
+            m_spinFactorDenominator = new QSpinBox;
+            m_checkFactorDenominator = new QCheckBox(tr("Factor denominator"));
+            QObject::connect(m_spinFactorDenominator, SIGNAL(valueChanged(int)),
+                             this, SLOT(factorDenominatorChanged()));
+            gl->addWidget(m_checkFactorDenominator, 2, 0);
+            gl->addWidget(m_spinFactorDenominator, 2, 1);
+
+            m_spinUnitNumberValue = new QSpinBox;
+            m_checkUnitNumberValue = new QCheckBox(tr("Unit value"));
+            QObject::connect(m_spinUnitNumberValue, SIGNAL(valueChanged(int)),
+                             this, SLOT(denominatorChanged()));
+            gl->addWidget(m_checkUnitNumberValue, 3, 0);
+            gl->addWidget(m_spinUnitNumberValue, 3, 1);
+
+            l->addLayout(gl);
+        }
     }
     {
         m_radioTime = new QRadioButton(tr("Time"));
@@ -94,12 +117,23 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
     // Set data fields...
     m_editTimecode->setText(m_duration->timecode());
     m_editNormalPlaytime->setText(TypeConverter::durationToString(m_duration->normalPlayTime()));
-    if (m_duration->editRate())
-        m_editRate->setValue(*(m_duration->editRate()));
-    m_editFactorNumerator->setValue(m_duration->factorNumerator());
-    m_editFactorDenomiantor->setValue(m_duration->factorDenominator());
-    if (m_duration->editUnitNumberValue())
-        m_editUnitNumberValue->setValue(*(m_duration->editUnitNumberValue()));
+
+    if (m_duration->editUnitNumberValue()) {
+        m_spinUnitNumberValue->setValue(*(m_duration->editUnitNumberValue()));
+        m_checkUnitNumberValue->setChecked(true);
+    }
+    if (m_duration->editRate()) {
+        m_spinRate->setValue(*(m_duration->editRate()));
+        m_checkRate->setChecked(true);
+    }
+    if (m_duration->factorNumerator()) {
+        m_spinFactorNumerator->setValue(m_duration->factorNumerator());
+        m_checkFactorNumerator->setChecked(true);
+    }
+    if (m_duration->factorDenominator()) {
+        m_spinFactorDenominator->setValue(m_duration->factorDenominator());
+        m_checkFactorDenominator->setChecked(true);
+    }
 
     if (duration) {
         switch (duration->durationTypeRepresentation()) {
@@ -158,10 +192,14 @@ void DurationTypeForm::applyClicked()
         m_duration->setTime(fg);
 
     } else if (m_radioEditUnitNumber->isChecked()) {
-        m_duration->setEditRate(m_editRate->value());
-        m_duration->setEditUnitNumberValue(m_editUnitNumberValue->value());
-        m_duration->setFactorDenominator(m_editFactorDenomiantor->value());
-        m_duration->setFactorNumerator(m_editFactorNumerator->value());
+        if (m_checkRate->isChecked())
+            m_duration->setEditRate(m_spinRate->value());
+        if (m_checkUnitNumberValue->isChecked())
+            m_duration->setEditUnitNumberValue(m_spinUnitNumberValue->value());
+        if (m_checkFactorNumerator->isChecked())
+            m_duration->setFactorNumerator(m_spinFactorNumerator->value());
+        if (m_checkFactorDenominator->isChecked())
+            m_duration->setFactorDenominator(m_spinFactorDenominator->value());
     }
 
     emit closed(m_op, QVarPtr<DurationType>::asQVariant(m_duration));
@@ -172,10 +210,10 @@ void DurationTypeForm::timeChecked(bool checked)
     if (!checked)
         return;
     m_editFormatGroup->setEnabled(true);
-    m_editUnitNumberValue->setEnabled(false);
-    m_editRate->setEnabled(false);
-    m_editFactorNumerator->setEnabled(false);
-    m_editFactorDenomiantor->setEnabled(false);
+    m_spinUnitNumberValue->setEnabled(false);
+    m_spinRate->setEnabled(false);
+    m_spinFactorNumerator->setEnabled(false);
+    m_spinFactorDenominator->setEnabled(false);
     m_editTimecode->setEnabled(false);
     m_editNormalPlaytime->setEnabled(false);
 }
@@ -185,10 +223,10 @@ void DurationTypeForm::timecodeChecked(bool checked)
     if (!checked)
         return;
     m_editFormatGroup->setEnabled(false);
-    m_editUnitNumberValue->setEnabled(false);
-    m_editRate->setEnabled(false);
-    m_editFactorNumerator->setEnabled(false);
-    m_editFactorDenomiantor->setEnabled(false);
+    m_spinUnitNumberValue->setEnabled(false);
+    m_spinRate->setEnabled(false);
+    m_spinFactorNumerator->setEnabled(false);
+    m_spinFactorDenominator->setEnabled(false);
     m_editTimecode->setEnabled(true);
     m_editNormalPlaytime->setEnabled(false);
 }
@@ -198,10 +236,10 @@ void DurationTypeForm::normalPlaytimeChecked(bool checked)
     if (!checked)
         return;
     m_editFormatGroup->setEnabled(false);
-    m_editUnitNumberValue->setEnabled(false);
-    m_editRate->setEnabled(false);
-    m_editFactorNumerator->setEnabled(false);
-    m_editFactorDenomiantor->setEnabled(false);
+    m_spinUnitNumberValue->setEnabled(false);
+    m_spinRate->setEnabled(false);
+    m_spinFactorNumerator->setEnabled(false);
+    m_spinFactorDenominator->setEnabled(false);
     m_editTimecode->setEnabled(false);
     m_editNormalPlaytime->setEnabled(true);
 }
@@ -211,12 +249,32 @@ void DurationTypeForm::editUnitNumberChecked(bool checked)
     if (!checked)
         return;
     m_editFormatGroup->setEnabled(false);
-    m_editUnitNumberValue->setEnabled(true);
-    m_editRate->setEnabled(true);
-    m_editFactorNumerator->setEnabled(true);
-    m_editFactorDenomiantor->setEnabled(true);
+    m_spinUnitNumberValue->setEnabled(true);
+    m_spinRate->setEnabled(true);
+    m_spinFactorNumerator->setEnabled(true);
+    m_spinFactorDenominator->setEnabled(true);
     m_editTimecode->setEnabled(false);
     m_editNormalPlaytime->setEnabled(false);
+}
+
+void DurationTypeForm::rateChanged()
+{
+    m_checkRate->setChecked(true);
+}
+
+void DurationTypeForm::factorNumeratorChanged()
+{
+    m_checkFactorNumerator->setChecked(true);
+}
+
+void DurationTypeForm::factorDenominatorChanged()
+{
+    m_checkFactorDenominator->setChecked(true);
+}
+
+void DurationTypeForm::unitNumberValueChanged()
+{
+    m_checkUnitNumberValue->setChecked(true);
 }
 
 bool DurationTypeForm::checkCompliance()

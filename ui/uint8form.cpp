@@ -14,13 +14,18 @@ Uint8Form::Uint8Form(UInt8 *uint8, QEbuMainWindow *mainWindow, QWidget *parent) 
     m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *vl = new QVBoxLayout;
     {
-        m_editTypeGroup = new TypeGroupEditBox(uint8);
-        vl->addWidget(m_editTypeGroup);
+        QGridLayout *gl = new QGridLayout;
+        m_spinValue = new QSpinBox;
+        m_checkValue = new QCheckBox(tr("Value"));
+        QObject::connect(m_spinValue, SIGNAL(valueChanged(unsigned int)),
+                         this, SLOT(valueChanged()));
+        gl->addWidget(m_checkValue, 0, 0);
+        gl->addWidget(m_spinValue, 0, 1);
+        vl->addLayout(gl);
     }
     {
-        QFormLayout *fl = new QFormLayout;
-        m_spinValue = new QSpinBox;
-        fl->addRow(tr("Uint8"), m_spinValue);
+        m_editTypeGroup = new TypeGroupEditBox(uint8);
+        vl->addWidget(m_editTypeGroup);
     }
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -36,7 +41,11 @@ Uint8Form::Uint8Form(UInt8 *uint8, QEbuMainWindow *mainWindow, QWidget *parent) 
     }
     m_mainHLayout->addLayout(vl);
     this->setLayout(m_mainHLayout);
-    m_spinValue->setValue((int) m_uint8->value() );
+
+    if (m_uint8->value()) {
+        m_spinValue->setValue(*(m_uint8->value()));
+        m_checkValue->setChecked(true);
+    }
 }
 
 QString Uint8Form::toString()
@@ -57,9 +66,15 @@ void Uint8Form::applyClicked()
 {
     if (!checkCompliance())
         return;
+    if (m_checkValue->isChecked())
+        m_uint8->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_uint8);
-    m_uint8->setValue(m_spinValue->value());
     emit closed(m_op, QVarPtr<UInt8>::asQVariant(m_uint8));
+}
+
+void Uint8Form::valueChanged()
+{
+    m_checkValue->setChecked(true);
 }
 
 bool Uint8Form::checkCompliance()

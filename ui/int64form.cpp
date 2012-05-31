@@ -16,10 +16,14 @@ Int64Form::Int64Form(Int64 *int64, QEbuMainWindow *mainWindow, QWidget *parent) 
     QVBoxLayout *l = new QVBoxLayout;
 
     {
-        QFormLayout *fl = new QFormLayout;
+        QGridLayout *gl = new QGridLayout;
         m_spinValue = new QSpinBox;
-        fl->addRow(tr("Value"), m_spinValue);
-        l->addLayout(fl);
+        m_checkValue = new QCheckBox(tr("Value"));
+        QObject::connect(m_spinValue, SIGNAL(valueChanged(int)),
+                         this, SLOT(valueChanged()));
+        gl->addWidget(m_checkValue, 0, 0);
+        gl->addWidget(m_spinValue, 0, 1);
+        l->addLayout(gl);
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(int64);
@@ -44,6 +48,7 @@ Int64Form::Int64Form(Int64 *int64, QEbuMainWindow *mainWindow, QWidget *parent) 
     // Set data fields...
     if (m_int64->value()) {
         m_spinValue->setValue(*(m_int64->value()));
+        m_checkValue->setChecked(true);
     }
 }
 
@@ -66,12 +71,17 @@ void Int64Form::applyClicked()
     if (!checkCompliance())
         return;
 
-    m_int64->setValue(m_spinValue->value());
+    if (m_checkValue->isChecked())
+        m_int64->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_int64);
 
     emit closed(m_op, QVarPtr<Int64>::asQVariant(m_int64));
 }
 
+void Int64Form::valueChanged()
+{
+    m_checkValue->setChecked(true);
+}
 
 bool Int64Form::checkCompliance()
 {

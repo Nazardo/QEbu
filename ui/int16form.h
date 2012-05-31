@@ -4,6 +4,7 @@
 #include "stackablewidget.h"
 #include "typegroupeditbox.h"
 #include <QSpinBox>
+#include <QCheckBox>
 
 class Int16Form : public StackableWidget
 {
@@ -16,9 +17,11 @@ signals:
 private slots:
     void cancelClicked();
     void applyClicked();
+    void valueChanged();
 private:
     QHBoxLayout *m_mainHLayout;
     QSpinBox *m_spinValue;
+    QCheckBox *m_checkValue;
     TypeGroupEditBox *m_editTypeGroup;
     Int16 *m_int16;
     Operation m_op;

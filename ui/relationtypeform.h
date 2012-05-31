@@ -6,6 +6,7 @@
 #include <QLineEdit>
 #include <QTextEdit>
 #include <QSpinBox>
+#include <QCheckBox>
 #include "stackablewidget.h"
 #include "typegroupeditbox.h"
 #include "elementtypeeditbox.h"
@@ -26,11 +27,14 @@ private slots:
     void relationIdentifierRemoveClicked();
     void relationIdentifierClicked();
     void relationIdentifierClosed(Operation op, QVariant value);
+    // -
+    void runningOrderNumberChanged();
 private:
 
     QHBoxLayout *m_mainHLayout;
     TypeGroupEditBox *m_editTypeGroup;
-    QSpinBox *m_editRunningOrderNumber;
+    QSpinBox *m_spinRunningOrderNumber;
+    QCheckBox *m_checkRunningOrderNumber;
     QTextEdit *m_textNote;
     QLineEdit *m_editRelationLink;
     ElementTypeEditBox *m_editElementRelation;
