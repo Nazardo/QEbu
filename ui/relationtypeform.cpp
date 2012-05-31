@@ -2,6 +2,7 @@
 #include "qvarptr.h"
 #include "typegroupform.h"
 #include "identifiertypeform.h"
+#include "../model/qebulimits.h"
 #include <QtGui>
 
 RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -21,6 +22,7 @@ RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainW
     {
         QGridLayout *gl = new QGridLayout;
         m_spinRunningOrderNumber = new QSpinBox;
+        m_spinRunningOrderNumber->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
         m_checkRunningOrderNumber = new QCheckBox(tr("Value"));
         QObject::connect(m_spinRunningOrderNumber, SIGNAL(valueChanged(int)),
                          this, SLOT(runningOrderNumberChanged()));
@@ -30,8 +32,6 @@ RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainW
     }
     {
         QFormLayout *fl = new QFormLayout;
-        m_spinRunningOrderNumber = new QSpinBox;
-        fl->addRow(tr("Order number"), m_spinRunningOrderNumber);
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);
         vl->addLayout(fl);

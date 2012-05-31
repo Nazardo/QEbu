@@ -1,5 +1,6 @@
 #include "technicalattributerationaltypeform.h"
 #include "qvarptr.h"
+#include "../model/qebulimits.h"
 #include <QtGui>
 #include <limits>
 
@@ -21,6 +22,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         QGridLayout *gl = new QGridLayout;
 
         m_spinValue = new QDoubleSpinBox;
+        m_spinValue->setRange(qEbuLimits::getMinDouble(), qEbuLimits::getMaxDouble());
         m_checkValue = new QCheckBox(tr("Value"));
         QObject::connect(m_spinValue, SIGNAL(valueChanged(double)),
                          this, SLOT(valueChanged()));
@@ -28,6 +30,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         gl->addWidget(m_spinValue, 0, 1);
 
         m_spinFactorNumerator = new QSpinBox;
+        m_spinFactorNumerator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
         m_checkNumerator = new QCheckBox(tr("Factor numerator"));
         QObject::connect(m_spinFactorNumerator, SIGNAL(valueChanged(int)),
                          this, SLOT(numeratorChanged()));
@@ -35,6 +38,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         gl->addWidget(m_spinFactorNumerator, 1, 1);
 
         m_spinFactorDenominator = new QSpinBox;
+        m_spinFactorDenominator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
         m_checkDenominator = new QCheckBox(tr("Factor denominator"));
         QObject::connect(m_spinFactorDenominator, SIGNAL(valueChanged(int)),
                          this, SLOT(denominatorChanged()));

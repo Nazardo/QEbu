@@ -6,6 +6,7 @@
 #include "entitytypeform.h"
 #include "typegroupform.h"
 #include "../model/typeconverter.h"
+#include "../model/qebulimits.h"
 #include <QtGui>
 
 DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -46,6 +47,7 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
             QGridLayout *gl = new QGridLayout;
 
             m_spinRate = new QSpinBox;
+            m_spinRate->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkRate = new QCheckBox(tr("Rate"));
             QObject::connect(m_spinRate, SIGNAL(valueChanged(int)),
                              this, SLOT(rateChanged()));
@@ -53,6 +55,7 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
             gl->addWidget(m_spinRate, 0, 1);
 
             m_spinFactorNumerator = new QSpinBox;
+            m_spinFactorNumerator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkFactorNumerator = new QCheckBox(tr("Factor numerator"));
             QObject::connect(m_spinFactorNumerator, SIGNAL(valueChanged(int)),
                              this, SLOT(factorNumeratorChanged()));
@@ -60,6 +63,7 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
             gl->addWidget(m_spinFactorNumerator, 1, 1);
 
             m_spinFactorDenominator = new QSpinBox;
+            m_spinFactorDenominator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkFactorDenominator = new QCheckBox(tr("Factor denominator"));
             QObject::connect(m_spinFactorDenominator, SIGNAL(valueChanged(int)),
                              this, SLOT(factorDenominatorChanged()));
@@ -67,6 +71,7 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
             gl->addWidget(m_spinFactorDenominator, 2, 1);
 
             m_spinUnitNumberValue = new QSpinBox;
+            m_spinUnitNumberValue->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkUnitNumberValue = new QCheckBox(tr("Unit value"));
             QObject::connect(m_spinUnitNumberValue, SIGNAL(valueChanged(int)),
                              this, SLOT(denominatorChanged()));

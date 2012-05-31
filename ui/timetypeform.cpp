@@ -1,11 +1,11 @@
 #include "timetypeform.h"
-
 #include "qvarptr.h"
 #include "organisationdetailstypeform.h"
 #include "detailstypeform.h"
 #include "entitytypeform.h"
 #include "typegroupform.h"
 #include "../model/typeconverter.h"
+#include "../model/qebulimits.h"
 #include <QtGui>
 
 TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -46,6 +46,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
             QGridLayout *gl = new QGridLayout;
 
             m_spinRate = new QSpinBox;
+            m_spinRate->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkRate = new QCheckBox(tr("Rate"));
             QObject::connect(m_spinRate, SIGNAL(valueChanged(int)),
                              this, SLOT(rateChanged()));
@@ -53,6 +54,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
             gl->addWidget(m_spinRate, 0, 1);
 
             m_spinFactorNumerator = new QSpinBox;
+            m_spinFactorNumerator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkFactorNumerator = new QCheckBox(tr("Factor numerator"));
             QObject::connect(m_spinFactorNumerator, SIGNAL(valueChanged(int)),
                              this, SLOT(factorNumeratorChanged()));
@@ -60,6 +62,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
             gl->addWidget(m_spinFactorNumerator, 1, 1);
 
             m_spinFactorDenominator = new QSpinBox;
+            m_spinFactorDenominator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkFactorDenominator = new QCheckBox(tr("Factor denominator"));
             QObject::connect(m_spinFactorDenominator, SIGNAL(valueChanged(int)),
                              this, SLOT(factorDenominatorChanged()));
@@ -67,6 +70,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
             gl->addWidget(m_spinFactorDenominator, 2, 1);
 
             m_spinUnitNumberValue = new QSpinBox;
+            m_spinUnitNumberValue->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkUnitNumberValue = new QCheckBox(tr("Unit value"));
             QObject::connect(m_spinUnitNumberValue, SIGNAL(valueChanged(int)),
                              this, SLOT(denominatorChanged()));
@@ -75,17 +79,6 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
 
             l->addLayout(gl);
         }
-
-        QFormLayout *fl = new QFormLayout;
-        m_spinRate = new QSpinBox;
-        m_spinFactorNumerator = new QSpinBox;
-        m_spinFactorDenominator = new QSpinBox;
-        m_spinUnitNumberValue = new QSpinBox;
-        fl->addRow(tr("Edit rate"), m_spinRate);
-        fl->addRow(tr("Factor numerator"), m_spinFactorNumerator);
-        fl->addRow(tr("Factor denominator"), m_spinFactorDenominator);
-        fl->addRow(tr("Edit unit value"), m_spinUnitNumberValue);
-        l->addLayout(fl);
     }
     {
         m_radioTime = new QRadioButton(tr("Time"));

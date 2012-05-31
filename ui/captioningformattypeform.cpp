@@ -11,32 +11,32 @@ CaptioningFormatTypeForm::CaptioningFormatTypeForm(CaptioningFormatType *caption
     else
         m_captioningFormat = captioningFormat;
 
-    QVBoxLayout *vl = new QVBoxLayout;
+    m_mainVLayout = new QVBoxLayout;
     {
         QFormLayout *fl = new QFormLayout;
         m_editTrackId = new QLineEdit;
-        fl->addRow(tr("Captioning Source URI"), m_editTrackId);
+        fl->addRow(tr("Track ID"), m_editTrackId);
         m_editTrackName = new QLineEdit;
-        fl->addRow(tr("Captioning Source URI"), m_editTrackName);
+        fl->addRow(tr("Track name"), m_editTrackName);
         m_editLanguage = new QLineEdit;
-        fl->addRow(tr("Captioning Source URI"), m_editLanguage);
-        vl->addLayout(fl);
+        fl->addRow(tr("Language"), m_editLanguage);
+        m_mainVLayout->addLayout(fl);
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(captioningFormat);
-        vl->addWidget(m_editTypeGroup);
+        m_mainVLayout->addWidget(m_editTypeGroup);
         m_editFormatGroup = new FormatGroupEditBox(captioningFormat);
-        vl->addWidget(m_editFormatGroup);
+        m_mainVLayout->addWidget(m_editFormatGroup);
     }
     {
         QFormLayout *fl = new QFormLayout;
         m_editCaptioningSourceUri = new QLineEdit;
         fl->addRow(tr("Captioning Source URI"), m_editCaptioningSourceUri);
         m_editCaptioningFormatId = new QLineEdit;
-        fl->addRow(tr("Captioning Source URI"), m_editCaptioningFormatId);
+        fl->addRow(tr("Captioning Format ID"), m_editCaptioningFormatId);
         m_editCaptioningFormatName = new QLineEdit;
-        fl->addRow(tr("Captioning Source URI"), m_editCaptioningFormatName);
-        vl->addLayout(fl);
+        fl->addRow(tr("Captioning Format Name"), m_editCaptioningFormatName);
+        m_mainVLayout->addLayout(fl);
     }
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -48,9 +48,9 @@ CaptioningFormatTypeForm::CaptioningFormatTypeForm(CaptioningFormatType *caption
                          this, SLOT(cancelClicked()));
         hl->addWidget(buttonClose);
         hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
+        m_mainVLayout->addLayout(hl);
     }
-    this->setLayout(vl);
+    this->setLayout(m_mainVLayout);
     // Set text fields...
     m_editTrackId->setText(m_captioningFormat->trackId());
     m_editTrackName->setText(m_captioningFormat->trackName());

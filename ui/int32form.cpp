@@ -1,5 +1,6 @@
 #include "int32form.h"
 #include "qvarptr.h"
+#include "../model/qebulimits.h"
 #include <QtGui>
 
 Int32Form::Int32Form(Int32 *int32, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -18,6 +19,7 @@ Int32Form::Int32Form(Int32 *int32, QEbuMainWindow *mainWindow, QWidget *parent) 
     {
         QGridLayout *gl = new QGridLayout;
         m_spinValue = new QSpinBox;
+        m_spinValue->setRange(qEbuLimits::getMinInt32(), qEbuLimits::getMaxInt32());
         m_checkValue = new QCheckBox(tr("Value"));
         QObject::connect(m_spinValue, SIGNAL(valueChanged(int)),
                          this, SLOT(valueChanged()));

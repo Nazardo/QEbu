@@ -33,6 +33,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatTy
         QGridLayout *gl = new QGridLayout;
 
         m_spinDID = new QSpinBox;
+        m_spinDID->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
         m_checkDID = new QCheckBox(tr("DID"));
         QObject::connect(m_spinDID, SIGNAL(valueChanged(int)),
                          this, SLOT(DIDChanged()));
@@ -40,6 +41,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatTy
         gl->addWidget(m_spinDID, 0, 1);
 
         m_spinSDID = new QSpinBox;
+        m_spinSDID->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
         m_checkSDID = new QCheckBox(tr("SDID"));
         QObject::connect(m_spinSDID, SIGNAL(valueChanged(int)),
                          this, SLOT(SDIDChanged()));
@@ -47,6 +49,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatTy
         gl->addWidget(m_spinSDID, 1, 1);
 
         m_spinWrappingType = new QSpinBox;
+        m_spinWrappingType->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
         m_checkWrappingType = new QCheckBox(tr("Wrapping type"));
         QObject::connect(m_spinWrappingType, SIGNAL(valueChanged(int)),
                          this, SLOT(wrappingTypeChanged()));

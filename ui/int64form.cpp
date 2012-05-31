@@ -1,5 +1,6 @@
 #include "int64form.h"
 #include "qvarptr.h"
+#include "../model/qebulimits.h"
 #include <QtGui>
 
 Int64Form::Int64Form(Int64 *int64, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -18,6 +19,7 @@ Int64Form::Int64Form(Int64 *int64, QEbuMainWindow *mainWindow, QWidget *parent) 
     {
         QGridLayout *gl = new QGridLayout;
         m_spinValue = new QSpinBox;
+        m_spinValue->setRange(qEbuLimits::getMinInt64(), qEbuLimits::getMaxInt64());
         m_checkValue = new QCheckBox(tr("Value"));
         QObject::connect(m_spinValue, SIGNAL(valueChanged(int)),
                          this, SLOT(valueChanged()));
