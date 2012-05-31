@@ -61,6 +61,11 @@ TechnicalAttributes::~TechnicalAttributes()
     }
 }
 
+QString TechnicalAttributes::toString()
+{
+    return tr("Techincal Attributes");
+}
+
 QList<String *> &TechnicalAttributes::technicalAttributeString()
 {
     return m_technicalAttributeString;
