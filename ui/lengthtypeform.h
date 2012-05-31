@@ -5,6 +5,7 @@
 #include "../model/ebucoremaintype.h"
 #include <QLineEdit>
 #include <QSpinBox>
+#include <QCheckBox>
 
 
 class LengthTypeForm : public StackableWidget
@@ -19,9 +20,11 @@ private slots:
     void cancelClicked();
     void applyClicked();
     // -
+    void valueChanged();
 private:
     QLineEdit *m_editUnit;
     QSpinBox *m_spinValue;
+    QCheckBox *m_checkValue;
     LengthType *m_length;
     Operation m_op;
 };

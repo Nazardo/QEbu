@@ -5,6 +5,7 @@
 #include "../model/ebucoremaintype.h"
 #include <QLineEdit>
 #include <QSpinBox>
+#include <QCheckBox>
 #include <QPushButton>
 #include "listview.h"
 
@@ -24,10 +25,11 @@ private slots:
     void addClicked();
     void editClicked();
     void removeClicked();
-    // -
     void numberLineChecked(bool checked);
     // -
-    void numberLineFormClosed(Operation op, QVariant value);
+    void DIDChanged();
+    void SDIDChanged();
+    void wrappingTypeChanged();
 private:
     void updateListAndButtons();
     QHBoxLayout *m_mainHLayout;
@@ -38,6 +40,9 @@ private:
     QSpinBox *m_spinDID;
     QSpinBox *m_spinSDID;
     QSpinBox *m_spinWrappingType;
+    QCheckBox *m_checkDID;
+    QCheckBox *m_checkSDID;
+    QCheckBox *m_checkWrappingType;
     AncillarityDataFormatType *m_ancillaryDataFormat;
     Operation m_op;
 };

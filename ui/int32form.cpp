@@ -16,10 +16,14 @@ Int32Form::Int32Form(Int32 *int32, QEbuMainWindow *mainWindow, QWidget *parent) 
     QVBoxLayout *l = new QVBoxLayout;
 
     {
-        QFormLayout *fl = new QFormLayout;
+        QGridLayout *gl = new QGridLayout;
         m_spinValue = new QSpinBox;
-        fl->addRow(tr("Value"), m_spinValue);
-        l->addLayout(fl);
+        m_checkValue = new QCheckBox(tr("Value"));
+        QObject::connect(m_spinValue, SIGNAL(valueChanged(int)),
+                         this, SLOT(valueChanged()));
+        gl->addWidget(m_checkValue, 0, 0);
+        gl->addWidget(m_spinValue, 0, 1);
+        l->addLayout(gl);
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(int32);
@@ -44,6 +48,7 @@ Int32Form::Int32Form(Int32 *int32, QEbuMainWindow *mainWindow, QWidget *parent) 
     // Set data fields...
     if (m_int32->value()) {
         m_spinValue->setValue(*(m_int32->value()));
+        m_checkValue->setChecked(true);
     }
 }
 
@@ -66,12 +71,17 @@ void Int32Form::applyClicked()
     if (!checkCompliance())
         return;
 
-    m_int32->setValue(m_spinValue->value());
+    if (m_checkValue->isChecked())
+        m_int32->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_int32);
 
     emit closed(m_op, QVarPtr<Int32>::asQVariant(m_int32));
 }
 
+void Int32Form::valueChanged()
+{
+    m_checkValue->setChecked(true);
+}
 
 bool Int32Form::checkCompliance()
 {

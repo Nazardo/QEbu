@@ -14,13 +14,18 @@ Uint32Form::Uint32Form(UInt32 *uint32, QEbuMainWindow *mainWindow, QWidget *pare
     m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *vl = new QVBoxLayout;
     {
-        m_editTypeGroup = new TypeGroupEditBox(uint32);
-        vl->addWidget(m_editTypeGroup);
+        QGridLayout *gl = new QGridLayout;
+        m_spinValue = new QSpinBox;
+        m_checkValue = new QCheckBox(tr("Value"));
+        QObject::connect(m_spinValue, SIGNAL(valueChanged(unsigned int)),
+                         this, SLOT(valueChanged()));
+        gl->addWidget(m_checkValue, 0, 0);
+        gl->addWidget(m_spinValue, 0, 1);
+        vl->addLayout(gl);
     }
     {
-        QFormLayout *fl = new QFormLayout;
-        m_spinValue = new QSpinBox;
-        fl->addRow(tr("Uint32"), m_spinValue);
+        m_editTypeGroup = new TypeGroupEditBox(uint32);
+        vl->addWidget(m_editTypeGroup);
     }
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -36,7 +41,11 @@ Uint32Form::Uint32Form(UInt32 *uint32, QEbuMainWindow *mainWindow, QWidget *pare
     }
     m_mainHLayout->addLayout(vl);
     this->setLayout(m_mainHLayout);
-    m_spinValue->setValue((int) m_uint32->value() );
+
+    if (m_uint32->value()) {
+        m_spinValue->setValue(*(m_uint32->value()));
+        m_checkValue->setChecked(true);
+    }
 }
 
 QString Uint32Form::toString()
@@ -57,9 +66,15 @@ void Uint32Form::applyClicked()
 {
     if (!checkCompliance())
         return;
+    if (m_checkValue->isChecked())
+        m_uint32->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_uint32);
-    m_uint32->setValue(m_spinValue->value());
     emit closed(m_op, QVarPtr<UInt32>::asQVariant(m_uint32));
+}
+
+void Uint32Form::valueChanged()
+{
+    m_checkValue->setChecked(true);
 }
 
 bool Uint32Form::checkCompliance()

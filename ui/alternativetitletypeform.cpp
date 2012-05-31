@@ -9,7 +9,7 @@
 #include <QHBoxLayout>
 #include <QFormLayout>
 #include <QPushButton>
-#include <QLineEdit>
+#include <QTextEdit>
 
 AlternativeTitleTypeForm::AlternativeTitleTypeForm(
         AlternativeTitleType *alternativeTitle,
@@ -47,8 +47,8 @@ AlternativeTitleTypeForm::AlternativeTitleTypeForm(
     QVBoxLayout *rightVLayout = new QVBoxLayout;
     {
         QFormLayout *form = new QFormLayout;
-        m_editNote = new QLineEdit;
-        form->addRow(tr("Note"), m_editNote);
+        m_textNote = new QTextEdit;
+        form->addRow(tr("Note"), m_textNote);
         rightVLayout->addLayout(form);
     }
     m_editDateGroup = new DateGroupEditBox(m_alternativeTitle);
@@ -60,7 +60,7 @@ AlternativeTitleTypeForm::AlternativeTitleTypeForm(
     // Set text fields
     if (m_op == Add)
         return;
-    m_editNote->setText(m_alternativeTitle->note());
+    m_textNote->setText(m_alternativeTitle->note());
     if (m_alternativeTitle->title()) {
         m_editTitle->editValue()->setText(m_alternativeTitle->title()->value());
         m_editTitle->editLang()->setText(m_alternativeTitle->title()->lang());
@@ -74,7 +74,7 @@ QString AlternativeTitleTypeForm::toString()
 
 void AlternativeTitleTypeForm::applyClicked()
 {
-    m_alternativeTitle->setNote(m_editNote->text());
+    m_alternativeTitle->setNote(m_textNote->toPlainText());
     m_editTypeGroup->updateExistingTypeGroup(m_alternativeTitle);
     m_editStatusGroup->updateExistingStatusGroup(m_alternativeTitle);
     m_editDateGroup->updateExistingDateGroup(m_alternativeTitle);

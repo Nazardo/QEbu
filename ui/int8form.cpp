@@ -2,7 +2,6 @@
 #include "qvarptr.h"
 #include <QtGui>
 
-
 Int8Form::Int8Form(Int8 *int8, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
@@ -15,12 +14,15 @@ Int8Form::Int8Form(Int8 *int8, QEbuMainWindow *mainWindow, QWidget *parent) :
     // Layout
     m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
-
     {
-        QFormLayout *fl = new QFormLayout;
+        QGridLayout *gl = new QGridLayout;
         m_spinValue = new QSpinBox;
-        fl->addRow(tr("Value"), m_spinValue);
-        l->addLayout(fl);
+        m_checkValue = new QCheckBox(tr("Value"));
+        QObject::connect(m_spinValue, SIGNAL(valueChanged(int)),
+                         this, SLOT(valueChanged()));
+        gl->addWidget(m_checkValue, 0, 0);
+        gl->addWidget(m_spinValue, 0, 1);
+        l->addLayout(gl);
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(int8);
@@ -45,6 +47,7 @@ Int8Form::Int8Form(Int8 *int8, QEbuMainWindow *mainWindow, QWidget *parent) :
     // Set data fields...
     if (m_int8->value()) {
         m_spinValue->setValue(*(m_int8->value()));
+        m_checkValue->setChecked(true);
     }
 }
 
@@ -67,12 +70,17 @@ void Int8Form::applyClicked()
     if (!checkCompliance())
         return;
 
-    m_int8->setValue(m_spinValue->value());
+    if (m_checkValue->isChecked())
+        m_int8->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_int8);
 
     emit closed(m_op, QVarPtr<Int8>::asQVariant(m_int8));
 }
 
+void Int8Form::valueChanged()
+{
+    m_checkValue->setChecked(true);
+}
 
 bool Int8Form::checkCompliance()
 {

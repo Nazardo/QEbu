@@ -6,6 +6,7 @@
 #include <QRadioButton>
 #include <QLineEdit>
 #include <QSpinBox>
+#include <QCheckBox>
 #include "stackablewidget.h"
 #include "listview.h"
 #include "../model/ebucoremaintype.h"
@@ -27,16 +28,25 @@ private slots:
     void normalPlaytimeChecked(bool checked);
     void editUnitNumberChecked(bool checked);
     void timeChecked(bool checked);
+    // -
+    void rateChanged();
+    void factorNumeratorChanged();
+    void factorDenominatorChanged();
+    void unitNumberValueChanged();
 private:
     void updateListAndButtons();
 
     QHBoxLayout *m_mainHLayout;
     QLineEdit *m_editTimecode;
     QLineEdit *m_editNormalPlaytime;
-    QSpinBox *m_editRate;
-    QSpinBox *m_editFactorNumerator;
-    QSpinBox *m_editFactorDenomiantor;
-    QSpinBox *m_editUnitNumberValue;
+    QSpinBox *m_spinRate;
+    QSpinBox *m_spinFactorNumerator;
+    QSpinBox *m_spinFactorDenominator;
+    QSpinBox *m_spinUnitNumberValue;
+    QCheckBox *m_checkRate;
+    QCheckBox *m_checkFactorNumerator;
+    QCheckBox *m_checkFactorDenominator;
+    QCheckBox *m_checkUnitNumberValue;
     FormatGroupEditBox *m_editFormatGroup;
     QRadioButton *m_radioTimecode;
     QRadioButton *m_radioNormalPlaytime;

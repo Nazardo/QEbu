@@ -19,9 +19,19 @@ RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainW
         vl->addWidget(m_editTypeGroup);
     }
     {
+        QGridLayout *gl = new QGridLayout;
+        m_spinRunningOrderNumber = new QSpinBox;
+        m_checkRunningOrderNumber = new QCheckBox(tr("Value"));
+        QObject::connect(m_spinRunningOrderNumber, SIGNAL(valueChanged(int)),
+                         this, SLOT(runningOrderNumberChanged()));
+        gl->addWidget(m_checkRunningOrderNumber, 0, 0);
+        gl->addWidget(m_spinRunningOrderNumber, 0, 1);
+        vl->addLayout(gl);
+    }
+    {
         QFormLayout *fl = new QFormLayout;
-        m_editRunningOrderNumber = new QSpinBox;
-        fl->addRow(tr("Order number"), m_editRunningOrderNumber);
+        m_spinRunningOrderNumber = new QSpinBox;
+        fl->addRow(tr("Order number"), m_spinRunningOrderNumber);
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);
         vl->addLayout(fl);
@@ -67,8 +77,10 @@ RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainW
     }
     this->setLayout(vl);
     // Set text fields...
-    if (m_relation->runningOrderNumber())
-        m_editRunningOrderNumber->setValue(*(m_relation->runningOrderNumber()));
+    if (m_relation->runningOrderNumber()) {
+        m_spinRunningOrderNumber->setValue(*(m_relation->runningOrderNumber()));
+        m_checkRunningOrderNumber->setChecked(true);
+    }
     m_textNote->setText(m_relation->note());
     if (m_relation->relation()) {
         m_editElementRelation->editLang()->setText(m_relation->relation()->lang());
@@ -128,13 +140,18 @@ void RelationTypeForm::applyClicked()
     m_relation->setNote(m_textNote->toPlainText());
 
     m_editTypeGroup->updateExistingTypeGroup(m_relation);
-
-    m_relation->setRunningOrderNumber(m_editRunningOrderNumber->value());
+    if (m_checkRunningOrderNumber->isChecked())
+        m_relation->setRunningOrderNumber(m_spinRunningOrderNumber->value());
     m_relation->setRelation(new ElementType(
                                 m_editElementRelation->editValue()->text(),
                                 m_editElementRelation->editLang()->text()));
     m_relation->setRelationLink(m_editRelationLink->text());
     emit closed(m_op, QVarPtr<RelationType>::asQVariant(m_relation));
+}
+
+void RelationTypeForm::runningOrderNumberChanged()
+{
+    m_checkRunningOrderNumber->setChecked(true);
 }
 
 bool RelationTypeForm::checkCompliance()
