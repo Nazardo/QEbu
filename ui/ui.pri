@@ -52,7 +52,13 @@ HEADERS += \
     ui/videotracktypeform.h \
     ui/captioningformattypeform.h \
     ui/alternativetitletypeform.h \
-    ui/technicalattributerationaltypeform.h
+    ui/technicalattributerationaltypeform.h \
+    ui/uint8form.h \
+    ui/uint16form.h \
+    ui/uint32form.h \
+    ui/uintform64.h \
+    ui/audiotracktypeform.h \
+    ui/ancillarydataformattypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -107,4 +113,10 @@ SOURCES += \
     ui/videotracktypeform.cpp \
     ui/captioningformattypeform.cpp \
     ui/alternativetitletypeform.cpp \
-    ui/technicalattributerationaltypeform.cpp
+    ui/technicalattributerationaltypeform.cpp \
+    ui/uint8form.cpp \
+    ui/uint16form.cpp \
+    ui/uint32form.cpp \
+    ui/uintform64.cpp \
+    ui/audiotracktypeform.cpp \
+    ui/ancillarydataformattypeform.cpp
