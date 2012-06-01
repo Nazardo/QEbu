@@ -65,7 +65,8 @@ HEADERS += \
     ui/videoformattypeform.h \
     ui/lengthtypeeditbox.h \
     ui/imageformattypeform.h \
-    ui/hastrackparttypeform.h
+    ui/hastrackparttypeform.h \
+    ui/timezoneeditbox.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -133,4 +134,5 @@ SOURCES += \
     ui/videoformattypeform.cpp \
     ui/lengthtypeeditbox.cpp \
     ui/imageformattypeform.cpp \
-    ui/hastrackparttypeform.cpp
+    ui/hastrackparttypeform.cpp \
+    ui/timezoneeditbox.cpp
