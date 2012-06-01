@@ -1,5 +1,5 @@
 #include "uint8form.h"
-
+#include "../model/qebulimits.h"
 #include "qvarptr.h"
 #include <QtGui>
 
@@ -16,6 +16,7 @@ Uint8Form::Uint8Form(UInt8 *uint8, QEbuMainWindow *mainWindow, QWidget *parent) 
     {
         QGridLayout *gl = new QGridLayout;
         m_spinValue = new QSpinBox;
+        m_spinValue->setRange(qEbuLimits::getMinUInt8(), qEbuLimits::getMaxUInt8());
         m_checkValue = new QCheckBox(tr("Value"));
         QObject::connect(m_spinValue, SIGNAL(valueChanged(unsigned int)),
                          this, SLOT(valueChanged()));

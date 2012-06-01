@@ -67,3 +67,4 @@ bool AspectRatioTypeForm::checkCompliance()
     bool ok = true;
     return ok;
 }
+

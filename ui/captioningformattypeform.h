@@ -21,7 +21,7 @@ private slots:
     void applyClicked();
 private:
 
-    QHBoxLayout *m_mainHLayout;
+    QVBoxLayout *m_mainVLayout;
     QLineEdit *m_editTrackId;
     QLineEdit *m_editTrackName;
     QLineEdit *m_editLanguage;

@@ -1,7 +1,7 @@
 #include "lengthtypeform.h"
-
 #include "entitytypeform.h"
 #include "qvarptr.h"
+#include "../model/qebulimits.h"
 #include <QtGui>
 
 LengthTypeForm::LengthTypeForm(LengthType *length, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -23,6 +23,7 @@ LengthTypeForm::LengthTypeForm(LengthType *length, QEbuMainWindow *mainWindow, Q
     {
         QGridLayout *gl = new QGridLayout;
         m_spinValue = new QSpinBox;
+        m_spinValue->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
         m_checkValue = new QCheckBox(tr("Value"));
         QObject::connect(m_spinValue, SIGNAL(valueChanged(int)),
                          this, SLOT(valueChanged()));

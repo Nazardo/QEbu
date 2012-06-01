@@ -60,12 +60,12 @@ HEADERS += \
     ui/uint64form.h \
     ui/audiotracktypeform.h \
     ui/ancillarydataformattypeform.h \
-    ui/technicalattributesform.h \
-    ui/audioformattypeform.h \
-    ui/hastrackparttypeform.h
     ui/audioformattypeform.h \
     ui/dataformattypeform.h \
-    ui/videoformattypeform.h
+    ui/videoformattypeform.h \
+    ui/lengthtypeeditbox.h \
+    ui/imageformattypeform.h \
+    ui/hastrackparttypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -128,9 +128,9 @@ SOURCES += \
     ui/uint64form.cpp \
     ui/audiotracktypeform.cpp \
     ui/ancillarydataformattypeform.cpp \
-    ui/technicalattributesform.cpp \
-    ui/audioformattypeform.cpp \
-    ui/hastrackparttypeform.cpp \
     ui/audioformattypeform.cpp \
     ui/dataformattypeform.cpp \
-    ui/videoformattypeform.cpp
+    ui/videoformattypeform.cpp \
+    ui/lengthtypeeditbox.cpp \
+    ui/imageformattypeform.cpp \
+    ui/hastrackparttypeform.cpp

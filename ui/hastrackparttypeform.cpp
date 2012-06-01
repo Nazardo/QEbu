@@ -322,11 +322,10 @@ void HasTrackPartTypeForm::relationClicked()
 
 void HasTrackPartTypeForm::relationClosed(StackableWidget::Operation op, QVariant value)
 {
+    (void)op; // avoid Warning(unused-parameter)
     RelationType *relation = QVarPtr<RelationType>::asPointer(value);
     if (!relation)
         return;
-    //if (op == Add)
-    //    m_hasTrackPart->setSourceEnd(relation);
     m_editRelation->setText(relation->toString());
 }
 

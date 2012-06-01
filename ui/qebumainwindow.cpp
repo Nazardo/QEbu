@@ -21,6 +21,7 @@ QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
 
 QEbuMainWindow::~QEbuMainWindow()
 {
+    delete m_ebuCoreMain;
 }
 
 void QEbuMainWindow::pushWidget(StackableWidget *widget)
