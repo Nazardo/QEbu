@@ -205,11 +205,11 @@ private:
     QString m_captioningFormatName;
 };
 
-class AncillarityDataFormatType
+class AncillaryDataFormatType
 {
 public:
-    AncillarityDataFormatType();
-    ~AncillarityDataFormatType();
+    AncillaryDataFormatType();
+    ~AncillaryDataFormatType();
     // Attributes
     QString ancillaryDataFormatId() const;
     void setAncillaryDataFormatId(const QString &ancillaryDataFormatId);
@@ -250,7 +250,7 @@ public:
     void setDataFormatDefinition(const QString &dataFormatDefinition);
     // Elements
     QList<CaptioningFormatType*> &captioningFormat();
-    QList<AncillarityDataFormatType*> &ancillarityDataFormat();
+    QList<AncillaryDataFormatType*> &ancillaryDataFormat();
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
     QString toString() const;
@@ -261,7 +261,7 @@ private:
     QString m_dataFormatDefinition;
     // Elements (all optional)
     QList<CaptioningFormatType*> m_captioningFormat;
-    QList<AncillarityDataFormatType*> m_ancillarityDataFormat;
+    QList<AncillaryDataFormatType*> m_ancillaryDataFormat;
     TechnicalAttributes *m_technicalAttributes;
 };
 

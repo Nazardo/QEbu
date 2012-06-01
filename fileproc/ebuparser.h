@@ -30,7 +30,7 @@ private:
     VideoTrackType *parseVideoTrackType(const QDomElement &element);
     AspectRatioType *parseAspectRatioType(const QDomElement &element);
     CaptioningFormatType *parseCaptioningFormatType(const QDomElement &element);
-    AncillarityDataFormatType *parseAncillarityDataFormatType(const QDomElement &element);
+    AncillaryDataFormatType *parseAncillaryDataFormatType(const QDomElement &element);
     DetailsType *parseDetailsType(const QDomElement &element);
     AddressType *parseAddressType(const QDomElement &element);
     OrganisationDetailsType *parseOrganisationDetailsType(const QDomElement &element);

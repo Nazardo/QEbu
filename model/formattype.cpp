@@ -519,80 +519,80 @@ QString CaptioningFormatType::toString() const
     return m_captioningFormatId;
 }
 
-/* ------------------------------ AncillarityDataFormatType -------------------------- */
-AncillarityDataFormatType::AncillarityDataFormatType()
+/* ------------------------------ AncillaryDataFormatType -------------------------- */
+AncillaryDataFormatType::AncillaryDataFormatType()
 {
     m_DID = 0;
     m_SDID = 0;
     m_wrappingType = 0;
 }
 
-AncillarityDataFormatType::~AncillarityDataFormatType()
+AncillaryDataFormatType::~AncillaryDataFormatType()
 {
     delete m_DID;
     delete m_SDID;
     delete m_wrappingType;
 }
 
-QString AncillarityDataFormatType::ancillaryDataFormatId() const
+QString AncillaryDataFormatType::ancillaryDataFormatId() const
 {
     return m_ancillaryDataFormatId;
 }
 
-void AncillarityDataFormatType::setAncillaryDataFormatId(const QString &ancillaryDataFormatId)
+void AncillaryDataFormatType::setAncillaryDataFormatId(const QString &ancillaryDataFormatId)
 {
     m_ancillaryDataFormatId = ancillaryDataFormatId;
 }
 
-QString AncillarityDataFormatType::ancillaryDataFormatName() const
+QString AncillaryDataFormatType::ancillaryDataFormatName() const
 {
     return m_ancillaryDataFormatName;
 }
 
-void AncillarityDataFormatType::setAncillaryDataFormatName(const QString &ancillaryDataFormatName)
+void AncillaryDataFormatType::setAncillaryDataFormatName(const QString &ancillaryDataFormatName)
 {
     m_ancillaryDataFormatName = ancillaryDataFormatName;
 }
 
-int *AncillarityDataFormatType::DID() const
+int *AncillaryDataFormatType::DID() const
 {
     return m_DID;
 }
 
-void AncillarityDataFormatType::setDID(int DID)
+void AncillaryDataFormatType::setDID(int DID)
 {
     delete m_DID;
     m_DID = new int(DID);
 }
 
-int *AncillarityDataFormatType::SDID() const
+int *AncillaryDataFormatType::SDID() const
 {
     return m_SDID;
 }
 
-void AncillarityDataFormatType::setSDID(int SDID)
+void AncillaryDataFormatType::setSDID(int SDID)
 {
     delete m_SDID;
     m_SDID = new int(SDID);
 }
 
-QList<int> &AncillarityDataFormatType::lineNumber()
+QList<int> &AncillaryDataFormatType::lineNumber()
 {
     return m_lineNumber;
 }
 
-int *AncillarityDataFormatType::wrappingType() const
+int *AncillaryDataFormatType::wrappingType() const
 {
     return m_wrappingType;
 }
 
-void AncillarityDataFormatType::setWrappingType(int wrappingType)
+void AncillaryDataFormatType::setWrappingType(int wrappingType)
 {
     delete m_wrappingType;
     m_wrappingType = new int(wrappingType);
 }
 
-QString AncillarityDataFormatType::toString() const
+QString AncillaryDataFormatType::toString() const
 {
     if (m_ancillaryDataFormatId.isEmpty())
         return QObject::tr("Unnamed ancillary data format");
@@ -611,9 +611,9 @@ DataFormatType::~DataFormatType()
     for (int i=0; i < s; ++i) {
         delete (m_captioningFormat.takeAt(0));
     }
-    s = m_ancillarityDataFormat.size();
+    s = m_ancillaryDataFormat.size();
     for (int i=0; i < s; ++i) {
-        delete (m_ancillarityDataFormat.takeAt(0));
+        delete (m_ancillaryDataFormat.takeAt(0));
     }
     delete m_technicalAttributes;
 }
@@ -653,9 +653,9 @@ QList<CaptioningFormatType *> &DataFormatType::captioningFormat()
     return m_captioningFormat;
 }
 
-QList<AncillarityDataFormatType *> &DataFormatType::ancillarityDataFormat()
+QList<AncillaryDataFormatType *> &DataFormatType::ancillaryDataFormat()
 {
-    return m_ancillarityDataFormat;
+    return m_ancillaryDataFormat;
 }
 
 TechnicalAttributes *DataFormatType::technicalAttributes() const

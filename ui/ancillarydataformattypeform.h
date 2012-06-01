@@ -14,7 +14,7 @@ class AncillaryDataFormatTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit AncillaryDataFormatTypeForm(AncillarityDataFormatType *ancillaryDataFormat, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit AncillaryDataFormatTypeForm(AncillaryDataFormatType *ancillaryDataFormat, QEbuMainWindow *mainWindow, QWidget *parent = 0);
     QString toString();
     bool checkCompliance();
 signals:
@@ -35,15 +35,15 @@ private:
     QHBoxLayout *m_mainHLayout;
     ListView *m_listView;
     QPushButton *m_buttonLineNumber;
-    QLineEdit *m_editAncillarityDataFormatId;
-    QLineEdit *m_editAncillarityDataFormatName;
+    QLineEdit *m_editAncillaryDataFormatId;
+    QLineEdit *m_editAncillaryDataFormatName;
     QSpinBox *m_spinDID;
     QSpinBox *m_spinSDID;
     QSpinBox *m_spinWrappingType;
     QCheckBox *m_checkDID;
     QCheckBox *m_checkSDID;
     QCheckBox *m_checkWrappingType;
-    AncillarityDataFormatType *m_ancillaryDataFormat;
+    AncillaryDataFormatType *m_ancillaryDataFormat;
     Operation m_op;
 };
 

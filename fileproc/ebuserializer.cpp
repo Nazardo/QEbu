@@ -714,7 +714,7 @@ QDomElement EbuSerializer::serializeCaptioningFormat(CaptioningFormatType *capti
     return c;
 }
 
-QDomElement EbuSerializer::serializeAncillarityDataFormat(AncillarityDataFormatType *ancillary)
+QDomElement EbuSerializer::serializeAncillaryDataFormat(AncillaryDataFormatType *ancillary)
 {
     QDomElement a = m_doc.createElement(" ");
 
@@ -1519,10 +1519,10 @@ QDomElement EbuSerializer::serializeDataFormat(DataFormatType *format)
         e.setTagName("ebucore:captioningFormat");
         f.appendChild(e);
     }
-    QList<AncillarityDataFormatType *> ancillary = format->ancillarityDataFormat();
+    QList<AncillaryDataFormatType *> ancillary = format->ancillaryDataFormat();
     for(int i=0; i<ancillary.size(); ++i) {
-        QDomElement e = serializeAncillarityDataFormat(ancillary.at(i));
-        e.setTagName("ebucore:ancillarityDataFormat");
+        QDomElement e = serializeAncillaryDataFormat(ancillary.at(i));
+        e.setTagName("ebucore:ancillaryDataFormat");
         f.appendChild(e);
     }
     serializeTechnicalAttributes(format->technicalAttributes(), &f);

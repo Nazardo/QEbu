@@ -151,7 +151,7 @@ void DataFormatTypeForm::editClicked()
     case AncillaryDataFormat:
     {
         AncillaryDataFormatTypeForm *ancillaryDataFormatForm = new AncillaryDataFormatTypeForm(
-                    m_dataFormat->ancillarityDataFormat().at(index), this->mainWindow());
+                    m_dataFormat->ancillaryDataFormat().at(index), this->mainWindow());
         QObject::connect(ancillaryDataFormatForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(ancillaryDataFormatFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(ancillaryDataFormatForm);
@@ -183,7 +183,7 @@ void DataFormatTypeForm::removeClicked()
         break;
     case AncillaryDataFormat:
     {
-        delete(m_dataFormat->ancillarityDataFormat().takeAt(row));
+        delete(m_dataFormat->ancillaryDataFormat().takeAt(row));
     }
         break;
     case TechnicalAttributesMode:
@@ -216,9 +216,9 @@ void DataFormatTypeForm::ancillaryDataFormatChecked(bool checked)
         return;
     m_currentEditMode = AncillaryDataFormat;
     updateListAndButtons();
-    int s = m_dataFormat->ancillarityDataFormat().size();
+    int s = m_dataFormat->ancillaryDataFormat().size();
     for (int i=0; i < s; ++i) {
-        AncillarityDataFormatType *adft = m_dataFormat->ancillarityDataFormat().at(i);
+        AncillaryDataFormatType *adft = m_dataFormat->ancillaryDataFormat().at(i);
         if (!adft)
             continue;
         m_listView->addItem(adft->toString());
@@ -254,14 +254,14 @@ void DataFormatTypeForm::captioningFormatFormClosed(StackableWidget::Operation o
 
 void DataFormatTypeForm::ancillaryDataFormatFormClosed(Operation op, QVariant value)
 {
-    AncillarityDataFormatType *ancillaryDataFormat = QVarPtr<AncillarityDataFormatType>::asPointer(value);
+    AncillaryDataFormatType *ancillaryDataFormat = QVarPtr<AncillaryDataFormatType>::asPointer(value);
     if (!ancillaryDataFormat)
         return;
     if (op == Add) {
         m_listView->addItem(ancillaryDataFormat->toString());
-        m_dataFormat->ancillarityDataFormat().append(ancillaryDataFormat);
+        m_dataFormat->ancillaryDataFormat().append(ancillaryDataFormat);
     } else if (op == Edit) {
-        int row = m_dataFormat->ancillarityDataFormat().indexOf(ancillaryDataFormat);
+        int row = m_dataFormat->ancillaryDataFormat().indexOf(ancillaryDataFormat);
         m_listView->setItem(row, ancillaryDataFormat->toString());
     }
 }

@@ -4,12 +4,12 @@
 #include "../model/qebulimits.h"
 #include <QtGui>
 
-AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatType *ancillaryDataFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
+AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillaryDataFormatType *ancillaryDataFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (ancillaryDataFormat) ? Edit : Add;
     if(!ancillaryDataFormat)
-        m_ancillaryDataFormat = new AncillarityDataFormatType();
+        m_ancillaryDataFormat = new AncillaryDataFormatType();
     else
         m_ancillaryDataFormat = ancillaryDataFormat;
     m_mainHLayout = new QHBoxLayout;
@@ -17,11 +17,11 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatTy
     {
         QFormLayout *fl = new QFormLayout;
 
-        m_editAncillarityDataFormatId = new QLineEdit;
-        fl->addRow(tr("Ancillarity data format id"), m_editAncillarityDataFormatId);
+        m_editAncillaryDataFormatId = new QLineEdit;
+        fl->addRow(tr("Ancillary data format id"), m_editAncillaryDataFormatId);
 
-        m_editAncillarityDataFormatName = new QLineEdit;
-        fl->addRow(tr("Ancillarity data format name"), m_editAncillarityDataFormatName);       
+        m_editAncillaryDataFormatName = new QLineEdit;
+        fl->addRow(tr("Ancillary data format name"), m_editAncillaryDataFormatName);
         m_buttonLineNumber = new QPushButton(">>");
         m_buttonLineNumber->setCheckable(true);
         fl->addRow(tr("Line number"), m_buttonLineNumber);
@@ -85,8 +85,8 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillarityDataFormatTy
     this->setLayout(m_mainHLayout);
 
     //Set Data fields
-    m_editAncillarityDataFormatId->setText(m_ancillaryDataFormat->ancillaryDataFormatId());
-    m_editAncillarityDataFormatName->setText(m_ancillaryDataFormat->ancillaryDataFormatName());
+    m_editAncillaryDataFormatId->setText(m_ancillaryDataFormat->ancillaryDataFormatId());
+    m_editAncillaryDataFormatName->setText(m_ancillaryDataFormat->ancillaryDataFormatName());
     if (m_ancillaryDataFormat->DID()) {
         m_spinDID->setValue(*(m_ancillaryDataFormat->DID()));
         m_checkDID->setChecked(true);
@@ -160,22 +160,22 @@ void AncillaryDataFormatTypeForm::cancelClicked()
         delete m_ancillaryDataFormat;
         m_ancillaryDataFormat = 0;
     }
-    emit closed(m_op, QVarPtr<AncillarityDataFormatType>::asQVariant(m_ancillaryDataFormat));
+    emit closed(m_op, QVarPtr<AncillaryDataFormatType>::asQVariant(m_ancillaryDataFormat));
 }
 
 void AncillaryDataFormatTypeForm::applyClicked()
 {
     if (!checkCompliance())
         return;
-    m_ancillaryDataFormat->setAncillaryDataFormatId(m_editAncillarityDataFormatId->text());
-    m_ancillaryDataFormat->setAncillaryDataFormatName(m_editAncillarityDataFormatName->text());
+    m_ancillaryDataFormat->setAncillaryDataFormatId(m_editAncillaryDataFormatId->text());
+    m_ancillaryDataFormat->setAncillaryDataFormatName(m_editAncillaryDataFormatName->text());
     if (m_checkDID->isChecked())
         m_ancillaryDataFormat->setDID(m_spinDID->value());
     if (m_checkSDID->isChecked())
         m_ancillaryDataFormat->setSDID(m_spinSDID->value());
     if (m_checkWrappingType->isChecked())
         m_ancillaryDataFormat->setWrappingType(m_spinWrappingType->value());
-    emit closed(m_op, QVarPtr<AncillarityDataFormatType>::asQVariant(m_ancillaryDataFormat));
+    emit closed(m_op, QVarPtr<AncillaryDataFormatType>::asQVariant(m_ancillaryDataFormat));
 }
 
 void AncillaryDataFormatTypeForm::DIDChanged()

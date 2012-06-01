@@ -1806,12 +1806,12 @@ DataFormatType *EbuParser::parseDataFormatType(const QDomElement &element)
 
     el_list = element.elementsByTagName("ancillaryDataFormat");
     for (int i=0; i < el_list.size(); ++i) {
-        AncillarityDataFormatType *typeEl = parseAncillarityDataFormatType(el_list.at(i).toElement());
+        AncillaryDataFormatType *typeEl = parseAncillaryDataFormatType(el_list.at(i).toElement());
         if (!typeEl) {
             delete dataFormat;
             return 0;
         }
-        dataFormat->ancillarityDataFormat().append(typeEl);
+        dataFormat->ancillaryDataFormat().append(typeEl);
     }
 
     TechnicalAttributes *technicalAttributes = parseTechnicalAttributes(element);
@@ -2681,14 +2681,14 @@ CaptioningFormatType *EbuParser::parseCaptioningFormatType(const QDomElement &el
     return captionFormat;
 }
 
-AncillarityDataFormatType *EbuParser::parseAncillarityDataFormatType(const QDomElement &element)
+AncillaryDataFormatType *EbuParser::parseAncillaryDataFormatType(const QDomElement &element)
 {
     if(element.isNull())
     {
-        m_errorMsg = "AncillarityDataFormatType is null";
+        m_errorMsg = "AncillaryDataFormatType is null";
         return 0;
     }
-    AncillarityDataFormatType *ancillaryDataFormat = new AncillarityDataFormatType();
+    AncillaryDataFormatType *ancillaryDataFormat = new AncillaryDataFormatType();
 
     // Get attributes.
     QString ancillaryDataFormatId = element.attribute("ancillaryDataFormatId");

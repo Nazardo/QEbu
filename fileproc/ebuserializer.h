@@ -27,7 +27,7 @@ private:
     QDomElement serializeVideoTrack(VideoTrackType *);
     QDomElement serializeAspectRatio(AspectRatioType *);
     QDomElement serializeCaptioningFormat(CaptioningFormatType *);
-    QDomElement serializeAncillarityDataFormat(AncillarityDataFormatType *);
+    QDomElement serializeAncillaryDataFormat(AncillaryDataFormatType *);
     QDomElement serializeDetails(DetailsType *);
     QDomElement serializeAddress(AddressType *);
     QDomElement serializeOrganisationDetails(OrganisationDetailsType *);
