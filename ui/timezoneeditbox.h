@@ -9,6 +9,7 @@ class TimezoneEditBox : public QComboBox
 public:
     explicit TimezoneEditBox(QWidget *parent = 0);
     int getUTCOffset();
+    void setUTCOffset(int minutes);
 
 public slots:
     void timezoneSelected(int index);
