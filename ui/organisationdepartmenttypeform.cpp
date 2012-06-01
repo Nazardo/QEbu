@@ -1,9 +1,14 @@
 #include "organisationdepartmenttypeform.h"
+#include "../model/organisationdetailstype.h"
+#include "elementtypeeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QFormLayout>
+#include <QLineEdit>
 
-OrganisationDepartmentTypeForm::OrganisationDepartmentTypeForm(OrganisationDepartmentType *organisationDepartment,
-                                                               QEbuMainWindow *mainWindow, QWidget *parent) :
+
+OrganisationDepartmentTypeForm::OrganisationDepartmentTypeForm(
+        OrganisationDepartmentType *organisationDepartment,
+        QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (organisationDepartment) ? Edit : Add;
@@ -22,18 +27,6 @@ OrganisationDepartmentTypeForm::OrganisationDepartmentTypeForm(OrganisationDepar
     m_editElementType->setLabel(tr("Organisation department"));
 
     vl->addWidget(m_editElementType);
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        m_buttonApply = new QPushButton(tr("Apply changes"));
-        m_buttonCancel = new QPushButton(tr("Cancel"));
-        hl->addWidget(m_buttonApply);
-        hl->addWidget(m_buttonCancel);
-        QObject::connect(m_buttonApply, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(m_buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        vl->addLayout(hl);
-    }
     this->setLayout(vl);
     // Set values in text fields
     m_editDepartmentId->setText(m_organisationDepartment->departmentId());

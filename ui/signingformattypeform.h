@@ -3,16 +3,19 @@
 
 
 #include "stackablewidget.h"
-#include "../model/ebucoremaintype.h"
-#include "typegroupeditbox.h"
-#include "formatgroupeditbox.h"
-#include <QLineEdit>
+
+class SigningFormatType;
+class QLineEdit;
+class TypeGroupEditBox;
+class FormatGroupEditBox;
 
 class SigningFormatTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit SigningFormatTypeForm(SigningFormatType *signingFormat, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit SigningFormatTypeForm(SigningFormatType *signingFormat,
+                                   QEbuMainWindow *mainWindow,
+                                   QWidget *parent = 0);
     QString toString();
     bool checkCompliance();
 signals:
@@ -31,7 +34,6 @@ private:
     QLineEdit *m_editSigningFormatName;
     QLineEdit *m_editSigningFormatDefinition;
     SigningFormatType *m_signingFormat;
-    Operation m_op;
 };
 
 #endif // SIGNINGFORMATTYPEFORM_H

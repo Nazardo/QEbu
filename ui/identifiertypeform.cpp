@@ -1,7 +1,15 @@
 #include "identifiertypeform.h"
+#include "../model/coremetadatatype.h"
+#include "typegroupeditbox.h"
+#include "formatgroupeditbox.h"
+#include "elementtypeeditbox.h"
 #include "qvarptr.h"
 #include "entitytypeform.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QLabel>
+#include <QFormLayout>
 
 IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -44,18 +52,6 @@ IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindo
         QObject::connect(buttonAttributorRemove, SIGNAL(clicked()),
                          this, SLOT(attributorRemoveClicked()));
         hl->addWidget(buttonAttributorRemove);
-        vl->addLayout(hl);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
         vl->addLayout(hl);
     }
     this->setLayout(vl);
@@ -113,8 +109,6 @@ void IdentifierTypeForm::cancelClicked()
 
 void IdentifierTypeForm::applyClicked()
 {
-    if(!checkCompliance())
-        return;
     m_identifier->setNote(m_textNote->toPlainText());
     m_editTypeGroup->updateExistingTypeGroup(m_identifier);
     m_editFormatGroup->updateExistingFormatGroup(m_identifier);
@@ -122,10 +116,4 @@ void IdentifierTypeForm::applyClicked()
                                 m_editElementIdentifier->editValue()->text(),
                                 m_editElementIdentifier->editLang()->text()));
     emit closed(m_op, QVarPtr<IdentifierType>::asQVariant(m_identifier));
-}
-
-bool IdentifierTypeForm::checkCompliance()
-{
-    bool ok = true;
-    return ok;
 }

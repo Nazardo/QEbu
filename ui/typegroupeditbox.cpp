@@ -1,8 +1,11 @@
 #include "typegroupeditbox.h"
-#include <QFormLayout>
+#include "../model/typegroup.h"
+#include <QLineEdit>
 #include <QGroupBox>
+#include <QFormLayout>
 
-TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup, QWidget *parent) :
+TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
+                                   QWidget *parent) :
     QWidget(parent)
 {
     m_editTypeLabel = new QLineEdit(this);

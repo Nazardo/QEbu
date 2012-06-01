@@ -1,9 +1,18 @@
 #include "addresstypeform.h"
+#include "../model/detailstype.h"
+#include "listview.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include "organisationdetailstypeform.h"
 #include "contactdetailstypeform.h"
 #include "typegroupform.h"
-#include <QtGui>
+#include <QVBoxLayout>
+#include <QFormLayout>
+#include <QGroupBox>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QButtonGroup>
+#include <QInputDialog>
 
 AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -15,7 +24,7 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
         m_address = address;
 
     // Layout
-    m_mainHLayout = new QHBoxLayout;
+    QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
         QFormLayout *fl = new QFormLayout;
@@ -46,19 +55,7 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
         m_buttonAddressLine->setCheckable(true);
         group->addButton(m_buttonAddressLine);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(l);
+    mainHLayout->addLayout(l);
     // Add list view on the right
     m_listView = new ListView();
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
@@ -67,8 +64,8 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
                      this, SLOT(editClicked()));
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
-    m_mainHLayout->addWidget(m_listView);
-    this->setLayout(m_mainHLayout);
+    mainHLayout->addWidget(m_listView);
+    this->setLayout(mainHLayout);
 
     // Set data fields...
     m_editAddressTownCity->setText(m_address->townCity());

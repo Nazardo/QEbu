@@ -1,8 +1,14 @@
 #include "aspectratiotypeform.h"
+#include "../model/formattype.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include "formatgroupeditbox.h"
+#include <QPushButton>
+#include <QTextEdit>
+#include <QFormLayout>
 
-AspectRatioTypeForm::AspectRatioTypeForm(AspectRatioType *aspectRatio, QEbuMainWindow *mainWindow, QWidget *parent) :
+AspectRatioTypeForm::AspectRatioTypeForm(AspectRatioType *aspectRatio,
+                                         QEbuMainWindow *mainWindow,
+                                         QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (aspectRatio) ? Edit : Add;
@@ -21,18 +27,6 @@ AspectRatioTypeForm::AspectRatioTypeForm(AspectRatioType *aspectRatio, QEbuMainW
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);
         vl->addLayout(fl);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
     }
     this->setLayout(vl);
     // Set text fields...
@@ -55,16 +49,7 @@ void AspectRatioTypeForm::cancelClicked()
 
 void AspectRatioTypeForm::applyClicked()
 {
-    if(!checkCompliance())
-        return;
     m_aspectRatio->setNote(m_textNote->toPlainText());
     m_editFormatGroup->updateExistingFormatGroup(m_aspectRatio);
     emit closed(m_op, QVarPtr<AspectRatioType>::asQVariant(m_aspectRatio));
 }
-
-bool AspectRatioTypeForm::checkCompliance()
-{
-    bool ok = true;
-    return ok;
-}
-

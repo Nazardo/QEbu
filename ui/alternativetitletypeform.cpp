@@ -5,11 +5,10 @@
 #include "typegroupeditbox.h"
 #include "elementtypeeditbox.h"
 #include "qvarptr.h"
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QFormLayout>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QLineEdit>
+#include <QFormLayout>
 
 AlternativeTitleTypeForm::AlternativeTitleTypeForm(
         AlternativeTitleType *alternativeTitle,
@@ -31,18 +30,7 @@ AlternativeTitleTypeForm::AlternativeTitleTypeForm(
     m_editTitle = new ElementTypeEditBox;
     m_editTitle->setLabel(tr("Title"));
     leftVLayout->addWidget(m_editTitle);
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        leftVLayout->addLayout(hl);
-    }
+
     hLayout->addLayout(leftVLayout);
     QVBoxLayout *rightVLayout = new QVBoxLayout;
     {

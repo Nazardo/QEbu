@@ -1,6 +1,11 @@
 #include "booleanform.h"
+#include "../model/technicalattributes.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QCheckBox>
+#include <QErrorMessage>
+#include <QVBoxLayout>
+#include <QFormLayout>
 
 BooleanForm::BooleanForm(Boolean *boolean, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -12,7 +17,6 @@ BooleanForm::BooleanForm(Boolean *boolean, QEbuMainWindow *mainWindow, QWidget *
         m_boolean = boolean;
 
     // Layout
-    m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
 
     {
@@ -26,21 +30,7 @@ BooleanForm::BooleanForm(Boolean *boolean, QEbuMainWindow *mainWindow, QWidget *
         m_editTypeGroup = new TypeGroupEditBox(boolean);
         l->addWidget(m_editTypeGroup);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-
-    m_mainHLayout->addLayout(l);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(l);
 
     // Set data fields...
     if (m_boolean->value())

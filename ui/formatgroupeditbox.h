@@ -2,14 +2,16 @@
 #define FORMATGROUPEDITBOX_H
 
 #include <QWidget>
-#include <QLineEdit>
-#include "../model/formatgroup.h"
+
+class FormatGroup;
+class QLineEdit;
 
 class FormatGroupEditBox : public QWidget
 {
     Q_OBJECT
 public:
-    explicit FormatGroupEditBox(FormatGroup *formatGroup = 0, QWidget *parent = 0);
+    explicit FormatGroupEditBox(FormatGroup *formatGroup = 0,
+                                QWidget *parent = 0);
     FormatGroup *formatGroup();
     void updateExistingFormatGroup(FormatGroup *formatGroup);
 private:

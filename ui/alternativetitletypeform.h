@@ -28,7 +28,6 @@ private:
     DateGroupEditBox *m_editDateGroup;
     QTextEdit *m_textNote;
     ElementTypeEditBox *m_editTitle;
-    Operation m_op;
 };
 
 #endif // ALTERNATIVETITLETYPEFORM_H

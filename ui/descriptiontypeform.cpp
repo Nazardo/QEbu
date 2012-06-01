@@ -1,11 +1,19 @@
 #include "descriptiontypeform.h"
-
+#include "../model/ebucoremaintype.h"
+#include "typegroupeditbox.h"
+#include "elementtypeeditbox.h"
 #include "entitytypeform.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QErrorMessage>
+#include <QVBoxLayout>
+#include <QFormLayout>
 
 
-DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description, QEbuMainWindow *mainWindow, QWidget *parent) :
+DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description,
+                                         QEbuMainWindow *mainWindow,
+                                         QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (description) ? Edit : Add;
@@ -29,18 +37,6 @@ DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description, QEbuMainW
         m_editElementDescription = new ElementTypeEditBox;
         m_editElementDescription->setLabel(tr("Description"));
         vl->addWidget(m_editElementDescription);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
     }
     this->setLayout(vl);
     // Set text fields...

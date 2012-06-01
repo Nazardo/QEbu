@@ -1,11 +1,22 @@
 #include "relationtypeform.h"
+#include "../model/coremetadatatype.h"
+#include "typegroupeditbox.h"
+#include "elementtypeeditbox.h"
 #include "qvarptr.h"
 #include "typegroupform.h"
 #include "identifiertypeform.h"
 #include "../model/qebulimits.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QLabel>
+#include <QLineEdit>
+#include <QTextEdit>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QFormLayout>
 
-RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainWindow, QWidget *parent) :
+RelationTypeForm::RelationTypeForm(RelationType *relation,
+                                   QEbuMainWindow *mainWindow,
+                                   QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (relation) ? Edit : Add;
@@ -61,18 +72,6 @@ RelationTypeForm::RelationTypeForm(RelationType *relation, QEbuMainWindow *mainW
         QObject::connect(buttonRelationIdentifierRemove, SIGNAL(clicked()),
                          this, SLOT(relationIdentifierRemoveClicked()));
         hl->addWidget(buttonRelationIdentifierRemove);
-        vl->addLayout(hl);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
         vl->addLayout(hl);
     }
     this->setLayout(vl);
@@ -135,8 +134,6 @@ void RelationTypeForm::cancelClicked()
 
 void RelationTypeForm::applyClicked()
 {
-    if(!checkCompliance())
-        return;
     m_relation->setNote(m_textNote->toPlainText());
 
     m_editTypeGroup->updateExistingTypeGroup(m_relation);
@@ -152,10 +149,4 @@ void RelationTypeForm::applyClicked()
 void RelationTypeForm::runningOrderNumberChanged()
 {
     m_checkRunningOrderNumber->setChecked(true);
-}
-
-bool RelationTypeForm::checkCompliance()
-{
-    bool ok = true;
-    return ok;
 }

@@ -1,4 +1,6 @@
 #include "elementtypeeditbox.h"
+#include <QLabel>
+#include <QLineEdit>
 #include <QHBoxLayout>
 
 ElementTypeEditBox::ElementTypeEditBox(QWidget *parent) :

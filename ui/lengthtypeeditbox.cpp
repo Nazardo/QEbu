@@ -27,7 +27,6 @@ LengthTypeEditBox::LengthTypeEditBox(LengthType *length, QWidget *parent) :
     if (length->value())
         m_editValue->setValue(*(length->value()));
     m_editUnit->setText(length->unit());
-
 }
 
 LengthType *LengthTypeEditBox::lengthType()

@@ -1,18 +1,19 @@
 #ifndef TECHNICALATTRIBUTESFORM_H
 #define TECHNICALATTRIBUTESFORM_H
 
-#include <QPushButton>
-#include <QLineEdit>
 #include "stackablewidget.h"
-#include "listview.h"
-#include "../model/technicalattributes.h"
+
+class TechnicalAttributes;
+class QPushButton;
+class ListView;
 
 class TechnicalAttributesForm : public StackableWidget
 {
     Q_OBJECT
 public:
     explicit TechnicalAttributesForm(TechnicalAttributes *technicalAttributes,
-                                     QEbuMainWindow *mainWindow, QWidget *parent = 0);
+                                     QEbuMainWindow *mainWindow,
+                                     QWidget *parent = 0);
     QString toString();
 signals:
 private slots:
@@ -54,7 +55,6 @@ private:
     enum EditMode { StringMode, Byte, Short, Integer, Long, UnsignedByte, UnsignedShort, UnsignedInteger, UnsignedLong, BooleanMode, FloatMode, Rational, Uri };
     void updateListAndButtons();
 
-    QHBoxLayout *m_mainHLayout;
     ListView *m_listView;
     QPushButton *m_buttonString;
     QPushButton *m_buttonByte;
@@ -70,7 +70,6 @@ private:
     QPushButton *m_buttonRational;
     QPushButton *m_buttonUri;
     TechnicalAttributes *m_technicalAttributes;
-    Operation m_op;
     EditMode m_currentEditMode;
 };
 

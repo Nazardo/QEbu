@@ -1,13 +1,20 @@
 #include "audioformattypeform.h"
-
+#include "../model/formattype.h"
+#include "listview.h"
 #include "qvarptr.h"
 #include "typegroupform.h"
 #include "audiotracktypeform.h"
 #include "technicalattributesform.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
+#include <QFormLayout>
+#include <QButtonGroup>
 
 AudioFormatTypeForm::AudioFormatTypeForm(AudioFormatType *audioFormat,
-                                         QEbuMainWindow *mainWindow, QWidget *parent) :
+                                         QEbuMainWindow *mainWindow,
+                                         QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (audioFormat) ? Edit : Add;
@@ -16,7 +23,7 @@ AudioFormatTypeForm::AudioFormatTypeForm(AudioFormatType *audioFormat,
     else
         m_audioFormat = audioFormat;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
+    QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
         QFormLayout *gl = new QFormLayout;
@@ -57,19 +64,7 @@ AudioFormatTypeForm::AudioFormatTypeForm(AudioFormatType *audioFormat,
         m_buttonTechnicalAttributes->setCheckable(true);
         group->addButton(m_buttonTechnicalAttributes);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(l);
+    mainHLayout->addLayout(l);
     // Add list view on the right
     m_listView = new ListView();
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
@@ -78,8 +73,8 @@ AudioFormatTypeForm::AudioFormatTypeForm(AudioFormatType *audioFormat,
                      this, SLOT(editClicked()));
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
-    m_mainHLayout->addWidget(m_listView);
-    this->setLayout(m_mainHLayout);
+    mainHLayout->addWidget(m_listView);
+    this->setLayout(mainHLayout);
 
     // Set data fields...
     m_editAudioFormatId->setText(m_audioFormat->audioFormatId());

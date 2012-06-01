@@ -1,6 +1,11 @@
 #include "signingformattypeform.h"
+#include "../model/ebucoremaintype.h"
+#include "typegroupeditbox.h"
+#include "formatgroupeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QLineEdit>
+#include <QFormLayout>
+#include <QErrorMessage>
 
 SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -47,18 +52,6 @@ SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, Q
         m_editSigningFormatDefinition = new QLineEdit;
         fl->addRow(tr("Format definition"),m_editSigningFormatDefinition);
         vl->addLayout(fl);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
     }
     this->setLayout(vl);
     // Set text fields...

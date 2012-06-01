@@ -1,8 +1,15 @@
 #include "titletypeform.h"
+#include "../model/coremetadatatype.h"
+#include "elementtypeeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QTextEdit>
+#include <QDateEdit>
+#include <QLineEdit>
+#include <QFormLayout>
 
-TitleTypeForm::TitleTypeForm(TitleType *title, QEbuMainWindow *mainWindow, QWidget *parent) :
+TitleTypeForm::TitleTypeForm(TitleType *title,
+                             QEbuMainWindow *mainWindow,
+                             QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (title) ? Edit : Add;
@@ -11,7 +18,6 @@ TitleTypeForm::TitleTypeForm(TitleType *title, QEbuMainWindow *mainWindow, QWidg
     else
         m_title = title;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     m_editAttributionDate = new QDateEdit;
     m_editAttributionDate->setCalendarPopup(true);
@@ -23,20 +29,7 @@ TitleTypeForm::TitleTypeForm(TitleType *title, QEbuMainWindow *mainWindow, QWidg
     m_editTitle = new ElementTypeEditBox;
     m_editTitle->setLabel(tr("Title"));
     l->addWidget(m_editTitle);
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(l);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(l);
 
     // Set data fields
     if(m_title->title()) {

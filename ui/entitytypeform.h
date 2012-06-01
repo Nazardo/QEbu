@@ -1,18 +1,20 @@
 #ifndef ENTITYTYPEFORM_H
 #define ENTITYTYPEFORM_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QLineEdit>
 #include "stackablewidget.h"
-#include "listview.h"
-#include "../model/entitytype.h"
+
+class EntityType;
+class ListView;
+class QPushButton;
+class QLineEdit;
 
 class EntityTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit EntityTypeForm(EntityType *entity,
+                            QEbuMainWindow *mainWindow,
+                            QWidget *parent = 0);
     QString toString();
 signals:
 private slots:
@@ -31,17 +33,19 @@ private slots:
     void organisationDetailsFormClosed(Operation op, QVariant value);
     void roleFormClosed(Operation op, QVariant value);
 private:
-    enum EditMode { ContactDetails, OrganisationDetails, Roles };
+    enum EditMode {
+        ContactDetails,
+        OrganisationDetails,
+        Roles
+    };
     void updateListAndButtons();
 
-    QHBoxLayout *m_mainHLayout;
     ListView *m_listView;
     QLineEdit *m_editEntityId;
     QPushButton *m_buttonContactDetails;
     QPushButton *m_buttonOrganisationDetails;
     QPushButton *m_buttonRole;
     EntityType *m_entity;
-    Operation m_op;
     EditMode m_currentEditMode;
 };
 

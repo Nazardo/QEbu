@@ -1,9 +1,16 @@
 #include "int32form.h"
+#include "../model/technicalattributes.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
-#include "../model/qebulimits.h"
-#include <QtGui>
+#include "model/qebulimits.h"
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QErrorMessage>
+#include <QLayout>
 
-Int32Form::Int32Form(Int32 *int32, QEbuMainWindow *mainWindow, QWidget *parent) :
+Int32Form::Int32Form(Int32 *int32,
+                     QEbuMainWindow *mainWindow,
+                     QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (int32) ? Edit : Add;
@@ -13,7 +20,6 @@ Int32Form::Int32Form(Int32 *int32, QEbuMainWindow *mainWindow, QWidget *parent) 
         m_int32 = int32;
 
     // Layout
-    m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
 
     {
@@ -31,21 +37,7 @@ Int32Form::Int32Form(Int32 *int32, QEbuMainWindow *mainWindow, QWidget *parent) 
         m_editTypeGroup = new TypeGroupEditBox(int32);
         l->addWidget(m_editTypeGroup);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-
-    m_mainHLayout->addLayout(l);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(l);
 
     // Set data fields...
     if (m_int32->value()) {

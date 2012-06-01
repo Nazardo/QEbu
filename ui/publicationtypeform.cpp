@@ -1,12 +1,19 @@
 #include "publicationtypeform.h"
+#include "../model/ebucoremaintype.h"
+#include "listview.h"
 #include "qvarptr.h"
 #include "organisationdetailstypeform.h"
 #include "contactdetailstypeform.h"
 #include "../model/typeconverter.h"
 #include "typegroupform.h"
-#include <QtGui>
+#include <QTimeEdit>
+#include <QDateEdit>
+#include <QComboBox>
+#include <QFormLayout>
 
-PublicationTypeForm::PublicationTypeForm(PublicationType *publication, QEbuMainWindow *mainWindow, QWidget *parent) :
+PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
+                                         QEbuMainWindow *mainWindow,
+                                         QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (publication) ? Edit : Add;
@@ -15,36 +22,17 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication, QEbuMainW
     else
         m_publication = publication;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
-    QVBoxLayout *l = new QVBoxLayout;
-    {
-        QFormLayout *fl = new QFormLayout;
-        m_editPublicationDate = new QDateEdit;
-        m_editPublicationDate->setCalendarPopup(true);
-        fl->addRow(tr("Publication date"), m_editPublicationDate);
-        m_editPublicationTime = new QTimeEdit;
-        fl->addRow(tr("Publication time"), m_editPublicationTime);
-        m_editPublicationChannel = new QComboBox;
-        QStringList sl(mainWindow->ebuCoreMain()->formatMap().keys());
-        m_editPublicationChannel->addItems(sl);
-        fl->addRow(tr("Publication channel"), m_editPublicationChannel);
-        l->addLayout(fl);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(l);
-
-    this->setLayout(m_mainHLayout);
+    QFormLayout *fl = new QFormLayout;
+    m_editPublicationDate = new QDateEdit;
+    m_editPublicationDate->setCalendarPopup(true);
+    fl->addRow(tr("Publication date"), m_editPublicationDate);
+    m_editPublicationTime = new QTimeEdit;
+    fl->addRow(tr("Publication time"), m_editPublicationTime);
+    m_editPublicationChannel = new QComboBox;
+    QStringList sl(mainWindow->ebuCoreMain()->formatMap().keys());
+    m_editPublicationChannel->addItems(sl);
+    fl->addRow(tr("Publication channel"), m_editPublicationChannel);
+    this->setLayout(fl);
 
     // Set data fields...
     if (m_publication) {

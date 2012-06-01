@@ -1,11 +1,19 @@
 #include "floatform.h"
+#include "../model/technicalattributes.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QDoubleSpinBox>
+#include <QCheckBox>
+#include <QErrorMessage>
+#include <QVBoxLayout>
+#include <QGridLayout>
 
-FloatForm::FloatForm(Float *p_float, QEbuMainWindow *mainWindow, QWidget *parent) :
+FloatForm::FloatForm(Float *p_float,
+                     QEbuMainWindow *mainWindow,
+                     QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
-    // In this case only the variable passed to the constructor is called p_varName, because
+    // In this case only, the variable passed to the constructor is called p_varName, because
     // either float and Float are reserved names.
 
     m_op = (p_float) ? Edit : Add;
@@ -15,9 +23,7 @@ FloatForm::FloatForm(Float *p_float, QEbuMainWindow *mainWindow, QWidget *parent
         m_float = p_float;
 
     // Layout
-    m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
-
     {
         QGridLayout *gl = new QGridLayout;
         m_spinValue = new QDoubleSpinBox;
@@ -32,21 +38,7 @@ FloatForm::FloatForm(Float *p_float, QEbuMainWindow *mainWindow, QWidget *parent
         m_editTypeGroup = new TypeGroupEditBox(p_float);
         l->addWidget(m_editTypeGroup);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-
-    m_mainHLayout->addLayout(l);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(l);
 
     // Set data fields...
     if (m_float->value()) {

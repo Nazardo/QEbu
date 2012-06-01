@@ -37,7 +37,6 @@ private slots:
     void technicalAttributesFormClosed(Operation op, QVariant value);
 private:
     ImageFormatType *m_imageFormat;
-    Operation m_op;
     // Edit fields:
     QLineEdit *m_editImageFormatId;
     QLineEdit *m_editImageFormatName;

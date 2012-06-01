@@ -1,10 +1,22 @@
 #include "documentformattypeform.h"
+#include "../model/formattype.h"
+#include "typegroupeditbox.h"
+#include "lengthtypeeditbox.h"
+#include "formatgroupeditbox.h"
 #include "technicalattributesform.h"
 #include "qvarptr.h"
 #include "../model/qebulimits.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QLabel>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QFormLayout>
+#include <QErrorMessage>
 
-DocumentFormatTypeForm::DocumentFormatTypeForm(DocumentFormatType *documentFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
+DocumentFormatTypeForm::DocumentFormatTypeForm(
+        DocumentFormatType *documentFormat,
+        QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (documentFormat) ? Edit : Add;
@@ -13,7 +25,6 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(DocumentFormatType *documentForma
     else
         m_documentFormat = documentFormat;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *vl = new QVBoxLayout;
     {
         m_editTypeGroup = new TypeGroupEditBox(documentFormat);
@@ -39,7 +50,7 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(DocumentFormatType *documentForma
         vl->addLayout(fl);
     }
     {
-       QGridLayout *gl = new QGridLayout;
+        QGridLayout *gl = new QGridLayout;
 
         m_spinWordCount = new QSpinBox;
         m_checkWordCount = new QCheckBox(tr("Word Count"));
@@ -68,9 +79,11 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(DocumentFormatType *documentForma
                          this, SLOT(regionDelimYChanged()));
 
         m_editWidth = new LengthTypeEditBox(m_documentFormat->width());
+        m_editWidth->setLabel(tr("Width"));
         gl->addWidget(m_editWidth, 3, 0, 1, 2);
 
         m_editHeight = new LengthTypeEditBox(m_documentFormat->height());
+        m_editHeight->setLabel(tr("Height"));
         gl->addWidget(m_editHeight, 4, 0, 1, 2);
 
         vl->addLayout(gl);
@@ -79,7 +92,7 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(DocumentFormatType *documentForma
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Technical attributes")));
         m_editTechnicalAttributes = new QLineEdit;
-        m_editTechnicalAttributes->setEnabled(false);
+        m_editTechnicalAttributes->setReadOnly(true);
         hl->addWidget(m_editTechnicalAttributes);
         QPushButton *buttonTechnicalAttributes = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonTechnicalAttributes, SIGNAL(clicked()),
@@ -91,20 +104,7 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(DocumentFormatType *documentForma
         hl->addWidget(buttonTechnicalAttributesRemove);
         vl->addLayout(hl);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(vl);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(vl);
 }
 
 QString DocumentFormatTypeForm::toString()
@@ -166,8 +166,6 @@ void DocumentFormatTypeForm::regionDelimYChanged()
 {
     m_checkRegionDelimY->setChecked(true);
 }
-
-
 
 void DocumentFormatTypeForm::technicalAttributesRemoveClicked()
 {

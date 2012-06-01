@@ -1,14 +1,23 @@
 #include "organisationdetailstypeform.h"
+#include "../model/organisationdetailstype.h"
+#include "listview.h"
+#include "elementtypeeditbox.h"
 #include "elementtypeform.h"
 #include "organisationdepartmenttypeform.h"
 #include "detailstypeform.h"
 #include "entitytypeform.h"
 #include "elementtypeeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QButtonGroup>
+#include <QLineEdit>
+#include <QLabel>
+#include <QFormLayout>
+#include <QErrorMessage>
 
-OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(OrganisationDetailsType *organisationDetails,
-                                                         QEbuMainWindow *mainWindow, QWidget *parent) :
+OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(
+        OrganisationDetailsType *organisationDetails,
+        QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (organisationDetails) ? Edit : Add;
@@ -17,7 +26,7 @@ OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(OrganisationDetailsType
     else
         m_organisationDetails = organisationDetails;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
+    QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -52,19 +61,7 @@ OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(OrganisationDetailsType
         m_buttonContacts->setCheckable(true);
         group->addButton(m_buttonContacts);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(l);
+    mainHLayout->addLayout(l);
     // Add list view on the right
     m_listView = new ListView();
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
@@ -73,8 +70,8 @@ OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(OrganisationDetailsType
                      this, SLOT(editClicked()));
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
-    m_mainHLayout->addWidget(m_listView);
-    this->setLayout(m_mainHLayout);
+    mainHLayout->addWidget(m_listView);
+    this->setLayout(mainHLayout);
 
     // Set data fields...
     if(m_organisationDetails->organisationName()) {

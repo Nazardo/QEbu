@@ -1,6 +1,11 @@
 #include "coordinatestypeform.h"
+#include "model/coremetadatatype.h"
+#include "formatgroupeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QDoubleSpinBox>
+#include <QCheckBox>
+#include <QGridLayout>
+#include <QVBoxLayout>
 
 CoordinatesTypeForm::CoordinatesTypeForm(CoordinatesType *coordinates, QEbuMainWindow *mainWindow, QWidget *parent)  :
     StackableWidget(mainWindow, parent)
@@ -11,9 +16,9 @@ CoordinatesTypeForm::CoordinatesTypeForm(CoordinatesType *coordinates, QEbuMainW
     else
         m_coordinates = coordinates;
     // Layout
-    m_mainVLayout = new QVBoxLayout;
+    QVBoxLayout *mainVLayout = new QVBoxLayout;
     m_editFormatGroup = new FormatGroupEditBox(coordinates);
-    m_mainVLayout->addWidget(m_editFormatGroup);
+    mainVLayout->addWidget(m_editFormatGroup);
     {
         QGridLayout *gl = new QGridLayout;
 
@@ -31,21 +36,9 @@ CoordinatesTypeForm::CoordinatesTypeForm(CoordinatesType *coordinates, QEbuMainW
         QObject::connect(m_spinPosy, SIGNAL(valueChanged(double)),
                          this, SLOT(posyChanged()));
 
-        m_mainVLayout->addLayout(gl);
+        mainVLayout->addLayout(gl);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        m_mainVLayout->addLayout(hl);
-    }
-    this->setLayout(m_mainVLayout);
+    this->setLayout(mainVLayout);
 
     // Set text fields
     if (m_coordinates->posx()) {

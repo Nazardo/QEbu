@@ -1,13 +1,20 @@
 #include "ebucoremainform.h"
+#include "../model/ebucoremaintype.h"
 #include "entitytypeform.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QLabel>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 
 // just for test
-#include "alternativetitletypeform.h"
+#include "documentformattypeform.h"
 
-EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *mainWindow, QWidget *parent) :
-    StackableWidget(mainWindow, parent)
+EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
+                                 QEbuMainWindow *mainWindow,
+                                 QWidget *parent) :
+    StackableWidget(mainWindow, parent, None)
 {
     m_ebuCoreMain = ebuCoreMain;
     QVBoxLayout *vl = new QVBoxLayout;
@@ -15,7 +22,7 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *m
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Metadata Provider")));
         m_editMetadataProvider = new QLineEdit;
-        m_editMetadataProvider->setEnabled(false);
+        m_editMetadataProvider->setReadOnly(true);
         hl->addWidget(m_editMetadataProvider);
         QPushButton *buttonMetadataProvider = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonMetadataProvider, SIGNAL(clicked()),
@@ -79,6 +86,6 @@ void EbuCoreMainForm::metadataProviderClosed(Operation op, QVariant value)
 void EbuCoreMainForm::testClicked()
 {
     // TEST PURPOSES!
-    AlternativeTitleTypeForm *test = new AlternativeTitleTypeForm(0, this->mainWindow());
-    this->mainWindow()->pushWidget(test);
+    DocumentFormatTypeForm *test = new DocumentFormatTypeForm(0, mainWindow());
+    mainWindow()->pushWidget(test);
 }

@@ -1,25 +1,18 @@
 #include "typegroupform.h"
+#include "../model/typegroup.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
+#include <QLayout>
 
-TypeGroupForm::TypeGroupForm(TypeGroup *typeGroup, QEbuMainWindow *mainWindow, QWidget *parent) :
+TypeGroupForm::TypeGroupForm(TypeGroup *typeGroup,
+                             QEbuMainWindow *mainWindow,
+                             QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (typeGroup) ? Edit : Add;
     QVBoxLayout *vl = new QVBoxLayout;
     m_editTypeGroup = new TypeGroupEditBox(typeGroup);
     vl->addWidget(m_editTypeGroup);
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        m_buttonApply = new QPushButton(tr("Apply changes"));
-        m_buttonCancel = new QPushButton(tr("Cancel"));
-        hl->addWidget(m_buttonApply);
-        hl->addWidget(m_buttonCancel);
-        QObject::connect(m_buttonApply, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(m_buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        vl->addLayout(hl);
-    }
     this->setLayout(vl);
 }
 

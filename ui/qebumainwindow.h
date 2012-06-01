@@ -2,11 +2,10 @@
 #define QEBUMAINWINDOW_H
 
 #include <QMainWindow>
-#include <QLayout>
-#include <QStackedWidget>
-#include "stackablewidget.h"
-#include "../model/ebucoremaintype.h"
 
+class QLayout;
+class EbuCoreMainType;
+class QStackedWidget;
 class StackableWidget;
 
 class QEbuMainWindow : public QMainWindow

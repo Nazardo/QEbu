@@ -1,11 +1,20 @@
 #include "ratingtypeform.h"
-
+#include "../model/ebucoremaintype.h"
+#include "typegroupeditbox.h"
+#include "elementtypeeditbox.h"
+#include "formatgroupeditbox.h"
 #include "entitytypeform.h"
 #include "qvarptr.h"
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QLabel>
+#include <QPushButton>
+#include <QFormLayout>
+#include <QErrorMessage>
 
-#include <QtGui>
-
-RatingTypeForm::RatingTypeForm(RatingType *rating, QEbuMainWindow *mainWindow, QWidget *parent) :
+RatingTypeForm::RatingTypeForm(RatingType *rating,
+                               QEbuMainWindow *mainWindow,
+                               QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (rating) ? Edit : Add;
@@ -50,18 +59,6 @@ RatingTypeForm::RatingTypeForm(RatingType *rating, QEbuMainWindow *mainWindow, Q
         QObject::connect(buttonRatingProviderRemove, SIGNAL(clicked()),
                          this, SLOT(ratingProviderRemoveClicked()));
         hl->addWidget(buttonRatingProviderRemove);
-        vl->addLayout(hl);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
         vl->addLayout(hl);
     }
     this->setLayout(vl);

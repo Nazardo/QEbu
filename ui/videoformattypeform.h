@@ -1,19 +1,22 @@
 #ifndef VIDEOFORMATTYPEFORM_H
 #define VIDEOFORMATTYPEFORM_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QSpinBox>
-#include <QCheckBox>
-#include "listview.h"
 #include "stackablewidget.h"
+
+class VideoFormatType;
+class QLineEdit;
+class QPushButton;
+class QCheckBox;
+class QSpinBox;
+class ListView;
 
 class VideoFormatTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit VideoFormatTypeForm(VideoFormatType *dataFormat, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit VideoFormatTypeForm(VideoFormatType *dataFormat,
+                                 QEbuMainWindow *mainWindow,
+                                 QWidget *parent = 0);
     QString toString();
 signals:
 private slots:
@@ -45,7 +48,6 @@ private:
                     VideoEncoding, VideoTrack, TechnicalAttributesMode };
     void updateListAndButtons();
 
-    QHBoxLayout *m_mainHLayout;
     QLineEdit *m_editVideoFormatId;
     QLineEdit *m_editVideoFormatName;
     QLineEdit *m_editVideoFormatDefinition;
@@ -60,7 +62,6 @@ private:
     QPushButton *m_buttonVideoTrack;
     QPushButton *m_buttonTechnicalAttributes;
     ListView *m_listView;
-    Operation m_op;
     VideoFormatType *m_videoFormat;
     EditMode m_currentEditMode;
 };

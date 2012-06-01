@@ -1,4 +1,7 @@
 #include "timetypeform.h"
+#include "../model/ebucoremaintype.h"
+#include "listview.h"
+#include "formatgroupeditbox.h"
 #include "qvarptr.h"
 #include "organisationdetailstypeform.h"
 #include "detailstypeform.h"
@@ -6,9 +9,17 @@
 #include "typegroupform.h"
 #include "../model/typeconverter.h"
 #include "../model/qebulimits.h"
-#include <QtGui>
+#include <QRadioButton>
+#include <QButtonGroup>
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QFormLayout>
+#include <QErrorMessage>
 
-TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *parent) :
+TimeTypeForm::TimeTypeForm(TimeType *time,
+                           QEbuMainWindow *mainWindow,
+                           QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (time) ? Edit : Add;
@@ -17,7 +28,6 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
     else
         m_time = time;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
         m_radioTimecode = new QRadioButton(tr("Timecode"));
@@ -87,18 +97,6 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
         m_editFormatGroup = new FormatGroupEditBox(m_time->time());
         l->addWidget(m_editFormatGroup);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
 
     QButtonGroup *radio = new QButtonGroup;
     radio->addButton(m_radioTimecode);
@@ -115,8 +113,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time, QEbuMainWindow *mainWindow, QWidget *
     QObject::connect(m_radioEditUnitNumber, SIGNAL(toggled(bool)),
                      this, SLOT(editUnitNumberChecked(bool)));
 
-    m_mainHLayout->addLayout(l);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(l);
 
     // Set data fields...
     m_editTimecode->setText(m_time->timecode());

@@ -2,19 +2,21 @@
 #define ANCILLARYDATAFORMATTYPEFORM_H
 
 #include "stackablewidget.h"
-#include "../model/ebucoremaintype.h"
-#include <QLineEdit>
-#include <QSpinBox>
-#include <QCheckBox>
-#include <QPushButton>
-#include "listview.h"
 
+class AncillaryDataFormatType;
+class QLineEdit;
+class QCheckBox;
+class QSpinBox;
+class QPushButton;
+class ListView;
 
 class AncillaryDataFormatTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit AncillaryDataFormatTypeForm(AncillaryDataFormatType *ancillaryDataFormat, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit AncillaryDataFormatTypeForm(
+            AncillaryDataFormatType *ancillaryDataFormat,
+            QEbuMainWindow *mainWindow, QWidget *parent = 0);
     QString toString();
     bool checkCompliance();
 signals:
@@ -32,7 +34,7 @@ private slots:
     void wrappingTypeChanged();
 private:
     void updateListAndButtons();
-    QHBoxLayout *m_mainHLayout;
+
     ListView *m_listView;
     QPushButton *m_buttonLineNumber;
     QLineEdit *m_editAncillaryDataFormatId;
@@ -44,7 +46,6 @@ private:
     QCheckBox *m_checkSDID;
     QCheckBox *m_checkWrappingType;
     AncillaryDataFormatType *m_ancillaryDataFormat;
-    Operation m_op;
 };
 
 

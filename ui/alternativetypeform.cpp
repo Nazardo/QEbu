@@ -1,8 +1,13 @@
 #include "alternativetypeform.h"
+#include "../model/coremetadatatype.h"
+#include "dategroupeditbox.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QVBoxLayout>
 
-AlternativeTypeForm::AlternativeTypeForm(AlternativeType *alternative, QEbuMainWindow *mainWindow, QWidget *parent) :
+AlternativeTypeForm::AlternativeTypeForm(AlternativeType *alternative,
+                                         QEbuMainWindow *mainWindow,
+                                         QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (alternative) ? Edit : Add;
@@ -15,18 +20,6 @@ AlternativeTypeForm::AlternativeTypeForm(AlternativeType *alternative, QEbuMainW
     vl->addWidget(m_editTypeGroup);
     m_editDateGroup = new DateGroupEditBox(m_alternative);
     vl->addWidget(m_editDateGroup);
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonApply = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        hl->addWidget(buttonApply);
-        hl->addWidget(buttonCancel);
-        QObject::connect(buttonApply, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        vl->addLayout(hl);
-    }
     this->setLayout(vl);
 }
 

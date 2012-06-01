@@ -1,8 +1,11 @@
 #include "formatgroupeditbox.h"
+#include "../model/formatgroup.h"
+#include <QLineEdit>
 #include <QFormLayout>
 #include <QGroupBox>
 
-FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup, QWidget *parent) :
+FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup,
+                                       QWidget *parent) :
     QWidget(parent)
 {
     m_editFormatLabel = new QLineEdit(this);

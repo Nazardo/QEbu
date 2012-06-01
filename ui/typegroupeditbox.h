@@ -2,14 +2,16 @@
 #define TYPEGROUPEDITBOX_H
 
 #include <QWidget>
-#include <QLineEdit>
-#include "../model/typegroup.h"
+
+class TypeGroup;
+class QLineEdit;
 
 class TypeGroupEditBox : public QWidget
 {
     Q_OBJECT
 public:
-    explicit TypeGroupEditBox(TypeGroup *typeGroup = 0, QWidget *parent = 0);
+    explicit TypeGroupEditBox(TypeGroup *typeGroup = 0,
+                              QWidget *parent = 0);
     TypeGroup *typeGroup();
     void updateExistingTypeGroup(TypeGroup *typeGroup);
 private:

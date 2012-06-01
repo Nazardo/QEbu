@@ -1,19 +1,21 @@
 #ifndef ORGANISATIONDETAILSTYPEFORM_H
 #define ORGANISATIONDETAILSTYPEFORM_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QLineEdit>
 #include "stackablewidget.h"
-#include "listview.h"
-#include "elementtypeeditbox.h"
-#include "../model/organisationdetailstype.h"
+
+class OrganisationDetailsType;
+class ListView;
+class QLineEdit;
+class ElementTypeEditBox;
+class QPushButton;
 
 class OrganisationDetailsTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit OrganisationDetailsTypeForm(OrganisationDetailsType *organisationDetails, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit OrganisationDetailsTypeForm(
+            OrganisationDetailsType *organisationDetails,
+            QEbuMainWindow *mainWindow, QWidget *parent = 0);
     QString toString();
     bool checkCompliance();
 signals:
@@ -33,10 +35,13 @@ private slots:
     void detailsFormClosed(Operation op, QVariant value);
     void contactsFormClosed(Operation op, QVariant value);
 private:
-    enum EditMode { OrganisationDepartment, Details, Contacts };
+    enum EditMode {
+        OrganisationDepartment,
+        Details,
+        Contacts
+    };
     void updateListAndButtons();
 
-    QHBoxLayout *m_mainHLayout;
     ListView *m_listView;
     QLineEdit *m_editOrganisationId;
     ElementTypeEditBox *m_editOrganisationName;
@@ -44,7 +49,6 @@ private:
     QPushButton *m_buttonDetails;
     QPushButton *m_buttonContacts;
     OrganisationDetailsType *m_organisationDetails;
-    Operation m_op;
     EditMode m_currentEditMode;
 };
 

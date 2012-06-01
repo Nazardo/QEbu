@@ -1,10 +1,16 @@
 #include "lengthtypeform.h"
-#include "entitytypeform.h"
-#include "qvarptr.h"
+#include "../model/ebucoremaintype.h"
 #include "../model/qebulimits.h"
-#include <QtGui>
+#include "qvarptr.h"
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QFormLayout>
+#include <QErrorMessage>
 
-LengthTypeForm::LengthTypeForm(LengthType *length, QEbuMainWindow *mainWindow, QWidget *parent) :
+LengthTypeForm::LengthTypeForm(LengthType *length,
+                               QEbuMainWindow *mainWindow,
+                               QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (length) ? Edit : Add;
@@ -31,18 +37,6 @@ LengthTypeForm::LengthTypeForm(LengthType *length, QEbuMainWindow *mainWindow, Q
         gl->addWidget(m_spinValue, 0, 1);
         vl->addLayout(gl);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
-    }
     this->setLayout(vl);
 
     if (m_length->value()) {
@@ -56,7 +50,6 @@ QString LengthTypeForm::toString()
 {
     return QString(tr("Length Type"));
 }
-
 
 void LengthTypeForm::cancelClicked()
 {

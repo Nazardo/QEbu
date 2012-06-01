@@ -2,16 +2,19 @@
 #define COORDINATESTYPEFORM_H
 
 #include "stackablewidget.h"
-#include "model/coremetadatatype.h"
-#include "formatgroupeditbox.h"
-#include <QDoubleSpinBox>
-#include <QCheckBox>
+
+class CoordinatesType;
+class FormatGroupEditBox;
+class QCheckBox;
+class QDoubleSpinBox;
 
 class CoordinatesTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit CoordinatesTypeForm(CoordinatesType *coordinates, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit CoordinatesTypeForm(CoordinatesType *coordinates,
+                                 QEbuMainWindow *mainWindow,
+                                 QWidget *parent = 0);
     QString toString();
 private slots:
     void cancelClicked();
@@ -26,7 +29,6 @@ private:
     QCheckBox *m_checkPosx;
     QCheckBox *m_checkPosy;
     CoordinatesType *m_coordinates;
-    Operation m_op;
 };
 
 #endif // COORDINATESTYPEFORM_H

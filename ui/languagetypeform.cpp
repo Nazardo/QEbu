@@ -1,10 +1,16 @@
 #include "languagetypeform.h"
+#include "../model/coremetadatatype.h"
+#include "typegroupeditbox.h"
+#include "elementtypeeditbox.h"
 #include "entitytypeform.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QFormLayout>
 
-
-LanguageTypeForm::LanguageTypeForm(LanguageType *language, QEbuMainWindow *mainWindow, QWidget *parent) :
+LanguageTypeForm::LanguageTypeForm(LanguageType *language,
+                                   QEbuMainWindow *mainWindow,
+                                   QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (language) ? Edit : Add;
@@ -28,18 +34,6 @@ LanguageTypeForm::LanguageTypeForm(LanguageType *language, QEbuMainWindow *mainW
         m_editElementLanguage = new ElementTypeEditBox;
         m_editElementLanguage->setLabel(tr("Language"));
         vl->addWidget(m_editElementLanguage);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
     }
     this->setLayout(vl);
     // Set text fields...
@@ -66,19 +60,10 @@ void LanguageTypeForm::cancelClicked()
 
 void LanguageTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
     m_editTypeGroup->updateExistingTypeGroup(m_language);
     m_language->setNote(m_textNote->toPlainText());
     m_language->setLanguage(new ElementType(
                               m_editElementLanguage->editValue()->text(),
                               m_editElementLanguage->editLang()->text()));
     emit closed(m_op, QVarPtr<LanguageType>::asQVariant(m_language));
-}
-
-bool LanguageTypeForm::checkCompliance()
-{
-    bool ok = true;
-
-    return ok;
 }

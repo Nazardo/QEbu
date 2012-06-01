@@ -1,9 +1,14 @@
 #include "videotracktypeform.h"
+#include "../model/formattype.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
+#include <QTextEdit>
+#include <QLineEdit>
 #include <QFormLayout>
-#include <QPushButton>
 
-VideoTrackTypeForm::VideoTrackTypeForm(VideoTrackType *videoTrack, QEbuMainWindow *mainWindow, QWidget *parent)  :
+VideoTrackTypeForm::VideoTrackTypeForm(VideoTrackType *videoTrack,
+                                       QEbuMainWindow *mainWindow,
+                                       QWidget *parent)  :
     StackableWidget(mainWindow, parent)
 {
     m_op = (videoTrack) ? Edit : Add;
@@ -12,30 +17,18 @@ VideoTrackTypeForm::VideoTrackTypeForm(VideoTrackType *videoTrack, QEbuMainWindo
     else
         m_videoTrack = videoTrack;
     // Layout
-    m_mainVLayout = new QVBoxLayout;
+    QVBoxLayout *l = new QVBoxLayout;
     {
         QFormLayout *fl = new QFormLayout;
         m_editTrackId = new QLineEdit;
         fl->addRow(tr("Track ID"), m_editTrackId);
         m_editTrackName = new QLineEdit;
         fl->addRow(tr("Track Name"), m_editTrackName);
-        m_mainVLayout->addLayout(fl);
+        l->addLayout(fl);
         m_editTypeGroup = new TypeGroupEditBox(videoTrack);
-        m_mainVLayout->addWidget(m_editTypeGroup);
+        l->addWidget(m_editTypeGroup);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        m_mainVLayout->addLayout(hl);
-    }
-    this->setLayout(m_mainVLayout);
+    this->setLayout(l);
 
     // Set data fields
     m_editTrackId->setText(m_videoTrack->trackId());
@@ -58,16 +51,8 @@ void VideoTrackTypeForm::cancelClicked()
 
 void VideoTrackTypeForm::applyClicked()
 {
-    if(!checkCompliance())
-        return;
     m_videoTrack->setTrackId(m_editTrackId->text());
     m_videoTrack->setTrackName(m_editTrackName->text());
     m_editTypeGroup->updateExistingTypeGroup(m_videoTrack);
     emit closed(m_op, QVarPtr<VideoTrackType>::asQVariant(m_videoTrack));
-}
-
-bool VideoTrackTypeForm::checkCompliance()
-{
-    bool ok = true;
-    return ok;
 }

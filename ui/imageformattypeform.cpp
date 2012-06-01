@@ -6,8 +6,6 @@
 #include "typegroupform.h"
 #include "../model/formattype.h"
 #include "../model/qebulimits.h"
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QGridLayout>
 #include <QFormLayout>
 #include <QGroupBox>

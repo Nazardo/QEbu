@@ -1,11 +1,23 @@
 #include "rightstypeform.h"
+#include "typegroupeditbox.h"
+#include "listview.h"
+#include "../model/coremetadatatype.h"
+#include "../model/ebucoremaintype.h"
 #include "qvarptr.h"
 #include "elementtypeform.h"
 #include "entitytypeform.h"
 #include "coveragetypeform.h"
 #include "identifiertypeform.h"
 #include "contactdetailstypeform.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QButtonGroup>
+#include <QLineEdit>
+#include <QCheckBox>
+#include <QTextEdit>
+#include <QComboBox>
+#include <QFormLayout>
+#include <QErrorMessage>
+#include <QInputDialog>
 
 RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -16,7 +28,6 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
     else
         m_rights = rights;
     // Layout
-    m_mainVLayout = new QVBoxLayout;
     QHBoxLayout *hl = new QHBoxLayout;
     {
         QVBoxLayout *l = new QVBoxLayout;
@@ -98,21 +109,7 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
     hl->addWidget(m_listView);
-    m_mainVLayout->addLayout(hl);
-    //Add apply and cancel buttons
-    {
-        QHBoxLayout *l = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        l->addWidget(buttonClose);
-        l->addWidget(buttonCancel);
-        m_mainVLayout->addLayout(l);
-    }
-    this->setLayout(m_mainVLayout);
+    this->setLayout(hl);
 
     // Set data fields
     m_editRightsLink->setText(m_rights->rightsLink());

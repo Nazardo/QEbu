@@ -1,19 +1,21 @@
 #ifndef DETAILSTYPEFORM_H
 #define DETAILSTYPEFORM_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QLineEdit>
 #include "stackablewidget.h"
-#include "listview.h"
-#include "typegroupeditbox.h"
-#include "../model/detailstype.h"
+
+class DetailsType;
+class ListView;
+class QPushButton;
+class QLineEdit;
+class TypeGroupEditBox;
 
 class DetailsTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit DetailsTypeForm(DetailsType *details, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit DetailsTypeForm(DetailsType *details,
+                             QEbuMainWindow *mainWindow,
+                             QWidget *parent = 0);
     QString toString();
 signals:
 private slots:
@@ -30,7 +32,6 @@ private slots:
 private:
     void updateListAndButtons();
 
-    QHBoxLayout *m_mainHLayout;
     ListView *m_listView;
     TypeGroupEditBox *m_editTypeGroup;
     QLineEdit *m_editEmailAddress;
@@ -39,7 +40,6 @@ private:
     QLineEdit *m_editMobileTelephoneNumber;
     QPushButton *m_buttonAddress;
     DetailsType *m_details;
-    Operation m_op;
 };
 
 #endif // DETAILSTYPEFORM_H

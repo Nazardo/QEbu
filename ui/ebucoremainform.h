@@ -2,14 +2,17 @@
 #define EBUCOREMAINFORM_H
 
 #include "stackablewidget.h"
-#include "../model/ebucoremaintype.h"
-#include <QLineEdit>
+
+class EbuCoreMainType;
+class QLineEdit;
 
 class EbuCoreMainForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit EbuCoreMainForm(EbuCoreMainType *ebuCoreMain, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
+                             QEbuMainWindow *mainWindow,
+                             QWidget *parent = 0);
     QString toString();
 signals:
 private slots:

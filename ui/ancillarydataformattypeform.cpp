@@ -1,10 +1,20 @@
 #include "ancillarydataformattypeform.h"
-
-#include "qvarptr.h"
+#include "../model/ebucoremaintype.h"
 #include "../model/qebulimits.h"
-#include <QtGui>
+#include "listview.h"
+#include "qvarptr.h"
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QPushButton>
+#include <QVBoxLayout>
+#include <QFormLayout>
+#include <QInputDialog>
+#include <QErrorMessage>
 
-AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillaryDataFormatType *ancillaryDataFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
+AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(
+        AncillaryDataFormatType *ancillaryDataFormat,
+        QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (ancillaryDataFormat) ? Edit : Add;
@@ -12,7 +22,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillaryDataFormatType
         m_ancillaryDataFormat = new AncillaryDataFormatType();
     else
         m_ancillaryDataFormat = ancillaryDataFormat;
-    m_mainHLayout = new QHBoxLayout;
+    QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *vl = new QVBoxLayout;
     {
         QFormLayout *fl = new QFormLayout;
@@ -58,19 +68,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillaryDataFormatType
 
         vl->addLayout(gl);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(vl);
+    mainHLayout->addLayout(vl);
 
     // Add list view on the right
     m_listView = new ListView();
@@ -80,9 +78,9 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(AncillaryDataFormatType
                      this, SLOT(editClicked()));
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
-    m_mainHLayout->addWidget(m_listView);
+    mainHLayout->addWidget(m_listView);
 
-    this->setLayout(m_mainHLayout);
+    this->setLayout(mainHLayout);
 
     //Set Data fields
     m_editAncillaryDataFormatId->setText(m_ancillaryDataFormat->ancillaryDataFormatId());

@@ -2,8 +2,9 @@
 #define ELEMENTTYPEEDITBOX_H
 
 #include <QWidget>
-#include <QLineEdit>
-#include <QLabel>
+
+class QLabel;
+class QLineEdit;
 
 class ElementTypeEditBox : public QWidget
 {

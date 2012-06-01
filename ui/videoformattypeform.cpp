@@ -1,4 +1,6 @@
 #include "videoformattypeform.h"
+#include "../model/formattype.h"
+#include "listview.h"
 #include "qvarptr.h"
 #include "listview.h"
 #include "typegroupform.h"
@@ -7,9 +9,16 @@
 #include "aspectratiotypeform.h"
 #include "lengthtypeform.h"
 #include "../model/qebulimits.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QButtonGroup>
+#include <QLineEdit>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QFormLayout>
 
-VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
+VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
+                                         QEbuMainWindow *mainWindow,
+                                         QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (videoFormat) ? Edit : Add;
@@ -18,7 +27,7 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat, QEbuMainW
     else
         m_videoFormat = videoFormat;
     //Layout
-    m_mainHLayout = new QHBoxLayout;
+    QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *vl = new QVBoxLayout;
     {
         QFormLayout *fl = new QFormLayout;
@@ -92,19 +101,7 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat, QEbuMainW
         m_buttonTechnicalAttributes->setCheckable(true);
         group->addButton(m_buttonTechnicalAttributes);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(vl);
+    mainHLayout->addLayout(vl);
     // Add list view on the right
     m_listView = new ListView();
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
@@ -113,8 +110,8 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat, QEbuMainW
                      this, SLOT(editClicked()));
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
-    m_mainHLayout->addWidget(m_listView);
-    this->setLayout(m_mainHLayout);
+    mainHLayout->addWidget(m_listView);
+    this->setLayout(mainHLayout);
 
     //Set data fields...
     m_editVideoFormatId->setText(m_videoFormat->videoFormatId());

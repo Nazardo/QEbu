@@ -1,10 +1,20 @@
 #include "coveragetypeform.h"
+#include "../model/coremetadatatype.h"
+#include "listview.h"
+#include "elementtypeeditbox.h"
 #include "qvarptr.h"
 #include "temporaltypeform.h"
 #include "locationtypeform.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QButtonGroup>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QFormLayout>
 
-CoverageTypeForm::CoverageTypeForm(CoverageType *coverage, QEbuMainWindow *mainWindow, QWidget *parent) :
+CoverageTypeForm::CoverageTypeForm(CoverageType *coverage,
+                                   QEbuMainWindow *mainWindow,
+                                   QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (coverage) ? Edit : Add;
@@ -13,7 +23,7 @@ CoverageTypeForm::CoverageTypeForm(CoverageType *coverage, QEbuMainWindow *mainW
     else
         m_coverage = coverage;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
+    QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *vl = new QVBoxLayout;
     m_editCoverage = new ElementTypeEditBox;
     m_editCoverage->setLabel(tr("Coverage"));
@@ -35,19 +45,7 @@ CoverageTypeForm::CoverageTypeForm(CoverageType *coverage, QEbuMainWindow *mainW
         m_buttonLocation->setCheckable(true);
         group->addButton(m_buttonLocation);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(vl);
+    mainHLayout->addLayout(vl);
     // Add list view on the right
     m_listView = new ListView();
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
@@ -56,8 +54,8 @@ CoverageTypeForm::CoverageTypeForm(CoverageType *coverage, QEbuMainWindow *mainW
                      this, SLOT(editClicked()));
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
-    m_mainHLayout->addWidget(m_listView);
-    this->setLayout(m_mainHLayout);
+    mainHLayout->addWidget(m_listView);
+    this->setLayout(mainHLayout);
 
     // Set data fields
     if(m_coverage->coverage()) {

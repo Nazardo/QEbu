@@ -2,14 +2,16 @@
 #define STATUSGROUPEDITBOX_H
 
 #include <QWidget>
-#include <QLineEdit>
-#include "../model/statusgroup.h"
+
+class StatusGroup;
+class QLineEdit;
 
 class StatusGroupEditBox : public QWidget
 {
     Q_OBJECT
 public:
-    explicit StatusGroupEditBox(StatusGroup *statusGroup = 0, QWidget *parent = 0);
+    explicit StatusGroupEditBox(StatusGroup *statusGroup = 0,
+                                QWidget *parent = 0);
     StatusGroup *statusGroup();
     void updateExistingStatusGroup(StatusGroup *statusGroup);
 private:

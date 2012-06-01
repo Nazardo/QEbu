@@ -1,10 +1,13 @@
 #include "elementtypeform.h"
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QPushButton>
+#include "../model/elementtype.h"
+#include "elementtypeeditbox.h"
 #include "qvarptr.h"
+#include <QLineEdit>
+#include <QVBoxLayout>
 
-ElementTypeForm::ElementTypeForm(ElementType *element, QEbuMainWindow *mainWindow, QWidget *parent) :
+ElementTypeForm::ElementTypeForm(ElementType *element,
+                                 QEbuMainWindow *mainWindow,
+                                 QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (element) ? Edit : Add;
@@ -15,18 +18,6 @@ ElementTypeForm::ElementTypeForm(ElementType *element, QEbuMainWindow *mainWindo
     QVBoxLayout *vl = new QVBoxLayout;
     m_editElementType = new ElementTypeEditBox;
     vl->addWidget(m_editElementType);
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonApply = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        hl->addWidget(buttonApply);
-        hl->addWidget(buttonCancel);
-        QObject::connect(buttonApply, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        vl->addLayout(hl);
-    }
     this->setLayout(vl);
     // Set values in text fields
     m_editElementType->editValue()->setText(m_element->value());

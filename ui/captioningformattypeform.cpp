@@ -1,8 +1,16 @@
 #include "captioningformattypeform.h"
+#include "../model/formattype.h"
+#include "typegroupeditbox.h"
+#include "formatgroupeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QVBoxLayout>
+#include <QFormLayout>
 
-CaptioningFormatTypeForm::CaptioningFormatTypeForm(CaptioningFormatType *captioningFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
+CaptioningFormatTypeForm::CaptioningFormatTypeForm(
+        CaptioningFormatType *captioningFormat,
+        QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (captioningFormat) ? Edit : Add;
@@ -11,7 +19,7 @@ CaptioningFormatTypeForm::CaptioningFormatTypeForm(CaptioningFormatType *caption
     else
         m_captioningFormat = captioningFormat;
 
-    m_mainVLayout = new QVBoxLayout;
+    QVBoxLayout *mainVLayout = new QVBoxLayout;
     {
         QFormLayout *fl = new QFormLayout;
         m_editTrackId = new QLineEdit;
@@ -20,13 +28,13 @@ CaptioningFormatTypeForm::CaptioningFormatTypeForm(CaptioningFormatType *caption
         fl->addRow(tr("Track name"), m_editTrackName);
         m_editLanguage = new QLineEdit;
         fl->addRow(tr("Language"), m_editLanguage);
-        m_mainVLayout->addLayout(fl);
+        mainVLayout->addLayout(fl);
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(captioningFormat);
-        m_mainVLayout->addWidget(m_editTypeGroup);
+        mainVLayout->addWidget(m_editTypeGroup);
         m_editFormatGroup = new FormatGroupEditBox(captioningFormat);
-        m_mainVLayout->addWidget(m_editFormatGroup);
+        mainVLayout->addWidget(m_editFormatGroup);
     }
     {
         QFormLayout *fl = new QFormLayout;
@@ -36,21 +44,9 @@ CaptioningFormatTypeForm::CaptioningFormatTypeForm(CaptioningFormatType *caption
         fl->addRow(tr("Captioning Format ID"), m_editCaptioningFormatId);
         m_editCaptioningFormatName = new QLineEdit;
         fl->addRow(tr("Captioning Format Name"), m_editCaptioningFormatName);
-        m_mainVLayout->addLayout(fl);
+        mainVLayout->addLayout(fl);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        m_mainVLayout->addLayout(hl);
-    }
-    this->setLayout(m_mainVLayout);
+    this->setLayout(mainVLayout);
     // Set text fields...
     m_editTrackId->setText(m_captioningFormat->trackId());
     m_editTrackName->setText(m_captioningFormat->trackName());
@@ -76,8 +72,6 @@ void CaptioningFormatTypeForm::cancelClicked()
 
 void CaptioningFormatTypeForm::applyClicked()
 {
-    if(!checkCompliance())
-        return;
     m_captioningFormat->setTrackId(m_editTrackId->text());
     m_captioningFormat->setTrackName(m_editTrackName->text());
     m_captioningFormat->setTrackLanguage(m_editLanguage->text());
@@ -87,10 +81,4 @@ void CaptioningFormatTypeForm::applyClicked()
     m_editTypeGroup->updateExistingTypeGroup(m_captioningFormat);
     m_editFormatGroup->updateExistingFormatGroup(m_captioningFormat);
     emit closed(m_op, QVarPtr<CaptioningFormatType>::asQVariant(m_captioningFormat));
-}
-
-bool CaptioningFormatTypeForm::checkCompliance()
-{
-    bool ok = true;
-    return ok;
 }

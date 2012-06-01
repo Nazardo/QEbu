@@ -1,8 +1,15 @@
 #include "stringform.h"
+#include "../model/technicalattributes.h"
+#include "formatgroupeditbox.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QLineEdit>
+#include <QFormLayout>
+#include <QErrorMessage>
 
-StringForm::StringForm(String *string, QEbuMainWindow *mainWindow, QWidget *parent) :
+StringForm::StringForm(String *string,
+                       QEbuMainWindow *mainWindow,
+                       QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (string) ? Edit : Add;
@@ -12,7 +19,6 @@ StringForm::StringForm(String *string, QEbuMainWindow *mainWindow, QWidget *pare
         m_string = string;
 
     // Layout
-    m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
 
     {
@@ -27,21 +33,7 @@ StringForm::StringForm(String *string, QEbuMainWindow *mainWindow, QWidget *pare
         l->addWidget(m_editTypeGroup);
         l->addWidget(m_editFormatGroup);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-
-    m_mainHLayout->addLayout(l);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(l);
 
     // Set data fields...
     m_editValue->setText(m_string->value());

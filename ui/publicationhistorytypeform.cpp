@@ -1,14 +1,22 @@
 #include "publicationhistorytypeform.h"
-
+#include "../model/ebucoremaintype.h"
+#include "listview.h"
 #include "qvarptr.h"
 #include "organisationdetailstypeform.h"
 #include "contactdetailstypeform.h"
 #include "publicationtypeform.h"
 #include "../model/typeconverter.h"
 #include "typegroupform.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QLineEdit>
+#include <QTimeEdit>
+#include <QDateEdit>
+#include <QComboBox>
+#include <QFormLayout>
 
-PublicationHistoryTypeForm::PublicationHistoryTypeForm(PublicationHistoryType *publicationHistory, QEbuMainWindow *mainWindow, QWidget *parent) :
+PublicationHistoryTypeForm::PublicationHistoryTypeForm(
+        PublicationHistoryType *publicationHistory,
+        QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (publicationHistory) ? Edit : Add;
@@ -17,7 +25,7 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(PublicationHistoryType *p
     else
         m_publicationHistory = publicationHistory;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
+    QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
         QFormLayout *fl = new QFormLayout;
@@ -37,19 +45,7 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(PublicationHistoryType *p
                          this, SLOT(repeatChecked(bool)));
         l->addLayout(fl);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(l);
+    mainHLayout->addLayout(l);
     // Add list view on the right
     m_listView = new ListView();
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
@@ -58,8 +54,8 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(PublicationHistoryType *p
                      this, SLOT(editClicked()));
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
-    m_mainHLayout->addWidget(m_listView);
-    this->setLayout(m_mainHLayout);
+    mainHLayout->addWidget(m_listView);
+    this->setLayout(mainHLayout);
 
     // Set data fields...
     if (m_publicationHistory->firstPublication()) {

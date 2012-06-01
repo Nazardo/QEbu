@@ -3,9 +3,11 @@
 
 #include <QWidget>
 #include <QList>
-#include <QPushButton>
-#include <QListWidget>
-#include <QLabel>
+
+class QLabel;
+class QListWidget;
+class QPushButton;
+class QListWidgetItem;
 
 class ListView : public QWidget
 {
@@ -28,7 +30,6 @@ public:
 private:
     QLabel *m_labelTitle;
     QListWidget *m_listWidget;
-    QPushButton *m_buttonClose;
     QPushButton *m_buttonAdd;
     QPushButton *m_buttonEdit;
     QPushButton *m_buttonRemove;

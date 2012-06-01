@@ -1,8 +1,15 @@
 #include "subjecttypeform.h"
-
+#include "../model/ebucoremaintype.h"
+#include "typegroupeditbox.h"
+#include "elementtypeeditbox.h"
 #include "entitytypeform.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QTextEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QLineEdit>
+#include <QFormLayout>
+#include <QErrorMessage>
 
 SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -50,18 +57,6 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
         QObject::connect(buttonAttributorRemove, SIGNAL(clicked()),
                          this, SLOT(attributorRemoveClicked()));
         hl->addWidget(buttonAttributorRemove);
-        vl->addLayout(hl);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
         vl->addLayout(hl);
     }
     this->setLayout(vl);
@@ -142,7 +137,7 @@ bool SubjectTypeForm::checkCompliance()
     }
     if(!ok) {
         QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Rrequired fields"));
+        e->setWindowTitle(tr("Required fields"));
         e->showMessage(error_msg);
     }
     return ok;

@@ -1,9 +1,16 @@
 #include "uint8form.h"
-#include "../model/qebulimits.h"
+#include "../model/technicalattributes.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include "model/qebulimits.h"
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QErrorMessage>
+#include <QLayout>
 
-Uint8Form::Uint8Form(UInt8 *uint8, QEbuMainWindow *mainWindow, QWidget *parent) :
+Uint8Form::Uint8Form(UInt8 *uint8,
+                     QEbuMainWindow *mainWindow,
+                     QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (uint8) ? Edit : Add;
@@ -11,7 +18,7 @@ Uint8Form::Uint8Form(UInt8 *uint8, QEbuMainWindow *mainWindow, QWidget *parent) 
         m_uint8 = new UInt8();
     else
         m_uint8 = uint8;
-    m_mainHLayout = new QHBoxLayout;
+
     QVBoxLayout *vl = new QVBoxLayout;
     {
         QGridLayout *gl = new QGridLayout;
@@ -28,20 +35,7 @@ Uint8Form::Uint8Form(UInt8 *uint8, QEbuMainWindow *mainWindow, QWidget *parent) 
         m_editTypeGroup = new TypeGroupEditBox(uint8);
         vl->addWidget(m_editTypeGroup);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(vl);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(vl);
 
     if (m_uint8->value()) {
         m_spinValue->setValue(*(m_uint8->value()));

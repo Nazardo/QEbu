@@ -1,18 +1,18 @@
 #ifndef HASTRACKPARTTYPEFORM_H
 #define HASTRACKPARTTYPEFORM_H
 
-#include <QWidget>
-#include <QTextEdit>
-#include <QDateEdit>
 #include "stackablewidget.h"
-#include "../model/coremetadatatype.h"
+
+class HasTrackPartType;
+class QLineEdit;
 
 class HasTrackPartTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
     explicit HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
-                                  QEbuMainWindow *mainWindow, QWidget *parent = 0);
+                                  QEbuMainWindow *mainWindow,
+                                  QWidget *parent = 0);
     QString toString();
     bool checkCompliance();
 private slots:
@@ -39,7 +39,6 @@ private slots:
     void relationClosed(Operation op, QVariant value);
 
 private:
-    QHBoxLayout *m_mainHLayout;
     QLineEdit *m_editRelation;
     QLineEdit *m_editTrackPartTitle;
     QLineEdit *m_editDestinationStart;
@@ -47,7 +46,6 @@ private:
     QLineEdit *m_editSourceStart;
     QLineEdit *m_editSourceEnd;
     HasTrackPartType *m_hasTrackPart;
-    Operation m_op;
 };
 
 #endif // HASTRACKPARTTYPEFORM_H

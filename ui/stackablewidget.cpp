@@ -1,1 +1,55 @@
 #include "stackablewidget.h"
+#include <QVariant>
+#include <QVBoxLayout>
+#include <QLayout>
+#include <QDialogButtonBox>
+#include <QPushButton>
+
+StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
+                                 QWidget *parent,
+                                 WidgetItems items)
+    : QWidget(parent)
+{
+    m_mainWindow = mainWindow;
+    m_vLayout = new QVBoxLayout;
+    QWidget::setLayout(m_vLayout);
+
+    // Add lastRow layout
+    if (items.testFlag(None))
+        return;
+    QHBoxLayout *lastRow = new QHBoxLayout;
+    m_vLayout->addLayout(lastRow);
+    if (items.testFlag(ApplyCancel)) {
+        QDialogButtonBox *dialogButtonBox = new QDialogButtonBox(
+                    QDialogButtonBox::Apply | QDialogButtonBox::Cancel,
+                    Qt::Horizontal);
+        lastRow->addWidget(dialogButtonBox, 0, Qt::AlignLeft);
+        QObject::connect(dialogButtonBox->button(QDialogButtonBox::Apply),
+                         SIGNAL(clicked()), this, SLOT(applyClicked()));
+        QObject::connect(dialogButtonBox, SIGNAL(rejected()),
+                         this, SLOT(cancelClicked()));
+    }
+    // ... maybe some day there will be other things to add.
+}
+
+QEbuMainWindow *StackableWidget::mainWindow()
+{
+    return m_mainWindow;
+}
+
+void StackableWidget::setLayout(QLayout *layout)
+{
+    m_vLayout->insertLayout(0, layout);
+}
+
+void StackableWidget::applyClicked()
+{
+    // Dummy implementation
+    emit closed(m_op, 0);
+}
+
+void StackableWidget::cancelClicked()
+{
+    // Dummy implementation
+    emit closed(m_op, 0);
+}

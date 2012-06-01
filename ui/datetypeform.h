@@ -2,16 +2,17 @@
 #define DATETYPEFORM_H
 
 #include "stackablewidget.h"
-#include "../model/coremetadatatype.h"
-#include "elementtypeeditbox.h"
-#include "dategroupform.h"
-#include "listview.h"
+
+class DateType;
+class ListView;
 
 class DateTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit DateTypeForm(DateType *date, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit DateTypeForm(DateType *date,
+                          QEbuMainWindow *mainWindow,
+                          QWidget *parent = 0);
     QString toString();
 private slots:
     void applyClicked();
@@ -31,12 +32,18 @@ private slots:
     void dateGroupFormClosed(Operation op, QVariant value);
     void alternativeTypeFormClosed(Operation op, QVariant value);
 private:
-    enum EditMode { Date, Created, Issued, Modified, Digitised, Alternative };
+    enum EditMode {
+        Date,
+        Created,
+        Issued,
+        Modified,
+        Digitised,
+        Alternative
+    };
     void updateListTitle();
 
     EditMode m_currentEditMode;
     DateType *m_date;
-    Operation m_op;
     ListView *m_listView;
 };
 

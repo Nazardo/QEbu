@@ -1,7 +1,13 @@
 #include "locationtypeform.h"
+#include "../model/coremetadatatype.h"
+#include "typegroupeditbox.h"
 #include "coordinatestypeform.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QLabel>
+#include <QPushButton>
+#include <QFormLayout>
 
 LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainWindow, QWidget *parent)  :
     StackableWidget(mainWindow, parent)
@@ -12,9 +18,9 @@ LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainW
     else
         m_location = location;
     // Layout
-    m_mainVLayout = new QVBoxLayout;
+    QVBoxLayout *mainVLayout = new QVBoxLayout;
     m_editTypeGroup = new TypeGroupEditBox(location);
-    m_mainVLayout->addWidget(m_editTypeGroup);
+    mainVLayout->addWidget(m_editTypeGroup);
     QFormLayout *fl = new QFormLayout;
     m_editLocationId = new QLineEdit;
     fl->addRow(tr("Location ID"), m_editLocationId);
@@ -24,7 +30,7 @@ LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainW
     fl->addRow(tr("Name"), m_editName);
     m_editCode = new QLineEdit;
     fl->addRow(tr("Code"), m_editCode);
-    m_mainVLayout->addLayout(fl);
+    mainVLayout->addLayout(fl);
     {
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Coordinates")));
@@ -39,21 +45,9 @@ LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainW
         QObject::connect(buttonCoordinatesRemove, SIGNAL(clicked()),
                          this, SLOT(coordinatesRemoveClicked()));
         hl->addWidget(buttonCoordinatesRemove);
-        m_mainVLayout->addLayout(hl);
+        mainVLayout->addLayout(hl);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        m_mainVLayout->addLayout(hl);
-    }
-    this->setLayout(m_mainVLayout);
+    this->setLayout(mainVLayout);
 
     // Set data fields
     m_editLocationId->setText(m_location->locationId());

@@ -1,5 +1,10 @@
 #include "listview.h"
-#include <QtGui>
+#include <QList>
+#include <QPushButton>
+#include <QListWidget>
+#include <QLabel>
+#include <QLayout>
+
 ListView::ListView(QString name, QWidget *parent) :
     QWidget(parent)
 {

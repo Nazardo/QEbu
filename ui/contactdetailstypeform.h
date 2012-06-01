@@ -1,19 +1,21 @@
 #ifndef CONTACTDETAILSTYPEFORM_H
 #define CONTACTDETAILSTYPEFORM_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QRadioButton>
-#include <QLineEdit>
 #include "stackablewidget.h"
-#include "listview.h"
-#include "../model/contactdetailstype.h"
+
+class QPushButton;
+class QLineEdit;
+class QRadioButton;
+class ListView;
+class ContactDetailsType;
 
 class ContactDetailsTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit ContactDetailsTypeForm(ContactDetailsType *contactDetails, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit ContactDetailsTypeForm(ContactDetailsType *contactDetails,
+                                    QEbuMainWindow *mainWindow,
+                                    QWidget *parent = 0);
     QString toString();
     bool checkCompliance();
 signals:
@@ -37,7 +39,6 @@ private:
     enum EditMode { Details, StageName, Related };
     void updateListAndButtons();
 
-    QHBoxLayout *m_mainHLayout;
     ListView *m_listView;
     QLineEdit *m_editContactId;
     QLineEdit *m_editName;
@@ -51,7 +52,6 @@ private:
     QPushButton *m_buttonStageName;
     QPushButton *m_buttonRelatedContacts;
     ContactDetailsType *m_contactDetails;
-    Operation m_op;
     EditMode m_currentEditMode;
 };
 

@@ -1,14 +1,18 @@
 #include "hastrackparttypeform.h"
+#include "../model/coremetadatatype.h"
 #include "timetypeform.h"
 #include "alternativetitletypeform.h"
 #include "relationtypeform.h"
 #include "qvarptr.h"
-#include <QtGui>
-
-
+#include <QLineEdit>
+#include <QPushButton>
+#include <QLabel>
+#include <QErrorMessage>
+#include <QLayout>
 
 HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
-                                           QEbuMainWindow *mainWindow, QWidget *parent) :
+                                           QEbuMainWindow *mainWindow,
+                                           QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (hasTrackPart) ? Edit : Add;
@@ -17,7 +21,6 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
     else
         m_hasTrackPart = new HasTrackPartType;
 
-    m_mainHLayout = new QHBoxLayout;
     QGridLayout *gl = new QGridLayout;
     {
 
@@ -109,17 +112,6 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
                          this, SLOT(relationRemovedClicked()));
         gl->addWidget(buttonRelationRemove, 5, 3);
     }
-    {
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        gl->addWidget(buttonClose, 6, 1);
-        gl->addWidget(buttonCancel, 6, 2);
-
-    }
     if (m_hasTrackPart->trackPartTitle())
         m_editTrackPartTitle->setText(m_hasTrackPart->trackPartTitle()->toString());
     if (m_hasTrackPart->destinationStart())
@@ -131,8 +123,7 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
     if (m_hasTrackPart->destinationStart())
         m_editSourceStart->setText(m_hasTrackPart->sourceEnd()->toString());
 
-    m_mainHLayout->addLayout(gl);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(gl);
 }
 
 

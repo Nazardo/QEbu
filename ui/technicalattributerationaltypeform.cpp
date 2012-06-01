@@ -1,11 +1,16 @@
 #include "technicalattributerationaltypeform.h"
+#include "../model/technicalattributes.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include "../model/qebulimits.h"
-#include <QtGui>
-#include <limits>
+#include <QSpinBox>
+#include <QCheckBox>
+#include <QLayout>
+#include <QErrorMessage>
 
 TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
-        TechnicalAttributeRationalType *rational, QEbuMainWindow *mainWindow, QWidget *parent) :
+        TechnicalAttributeRationalType *rational,
+        QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (rational) ? Edit : Add;
@@ -15,9 +20,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         m_rational = rational;
 
     // Layout
-    m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
-
     {
         QGridLayout *gl = new QGridLayout;
 
@@ -51,21 +54,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         m_editTypeGroup = new TypeGroupEditBox(rational);
         l->addWidget(m_editTypeGroup);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-
-    m_mainHLayout->addLayout(l);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(l);
 
     // Set data fields...
     if (m_rational->value()) {

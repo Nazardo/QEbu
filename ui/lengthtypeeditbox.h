@@ -12,7 +12,8 @@ class LengthTypeEditBox : public QWidget
 {
     Q_OBJECT
 public:
-    explicit LengthTypeEditBox(LengthType *length, QWidget *parent = 0);
+    explicit LengthTypeEditBox(LengthType *length,
+                               QWidget *parent = 0);
     LengthType *lengthType();
     void setLabel(const QString &label);
 private:

@@ -1,6 +1,13 @@
 #include "dategroupeditbox.h"
-#include <QFormLayout>
+#include "../model/dategroup.h"
+#include <QDateEdit>
+#include <QLineEdit>
+#include <QTimeEdit>
+#include <QSpinBox>
 #include <QLabel>
+#include <QGroupBox>
+#include <QCheckBox>
+#include <QFormLayout>
 
 DateGroupEditBox::DateGroupEditBox(DateGroup *dateGroup, QWidget *parent) :
     QWidget(parent)

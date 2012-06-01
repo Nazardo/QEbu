@@ -1,17 +1,20 @@
 #ifndef DATAFORMATTYPEFORM_H
 #define DATAFORMATTYPEFORM_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QLineEdit>
-#include "listview.h"
 #include "stackablewidget.h"
+
+class DataFormatType;
+class QLineEdit;
+class QPushButton;
+class ListView;
 
 class DataFormatTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit DataFormatTypeForm(DataFormatType *dataFormat, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit DataFormatTypeForm(DataFormatType *dataFormat,
+                                QEbuMainWindow *mainWindow,
+                                QWidget *parent = 0);
     QString toString();
 signals:
 private slots:
@@ -30,10 +33,13 @@ private slots:
     void ancillaryDataFormatFormClosed(Operation op, QVariant value);
     void technicalAttributesFormClosed(Operation op, QVariant value);
 private:
-    enum EditMode { CaptioningFormat, AncillaryDataFormat, TechnicalAttributesMode };
+    enum EditMode {
+        CaptioningFormat,
+        AncillaryDataFormat,
+        TechnicalAttributesMode
+    };
     void updateListAndButtons();
 
-    QHBoxLayout *m_mainHLayout;
     QLineEdit *m_editDataFormatId;
     QLineEdit *m_editDataFormatName;
     QLineEdit *m_editDataFormatDefinition;
@@ -41,7 +47,6 @@ private:
     QPushButton *m_buttonAncillaryDataFormat;
     QPushButton *m_buttonTechnicalAttributes;
     ListView *m_listView;
-    Operation m_op;
     DataFormatType *m_dataFormat;
     EditMode m_currentEditMode;
 };

@@ -1,7 +1,11 @@
 #include "audiotracktypeform.h"
-
+#include "../model/ebucoremaintype.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QLineEdit>
+#include <QErrorMessage>
+#include <QVBoxLayout>
+#include <QFormLayout>
 
 AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -11,7 +15,6 @@ AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindo
         m_audioTrack = new AudioTrackType;
     else
         m_audioTrack = audioTrack;
-    m_mainHLayout = new QHBoxLayout;
     QVBoxLayout *vl = new QVBoxLayout;
     {
         QFormLayout *fl = new QFormLayout;
@@ -30,20 +33,7 @@ AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindo
         m_editTypeGroup = new TypeGroupEditBox(m_audioTrack);
         vl->addWidget(m_editTypeGroup);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        vl->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(vl);
-    this->setLayout(m_mainHLayout);
+    this->setLayout(vl);
     // Set text fields...
     m_editTrackId->setText(m_audioTrack->trackId());
     m_editTrackName->setText(m_audioTrack->trackName());
@@ -83,7 +73,7 @@ bool AudioTrackTypeForm::checkCompliance()
     QString error_msg = "";
     if(!ok) {
         QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Rrequired fields"));
+        e->setWindowTitle(tr("Required fields"));
         e->showMessage(error_msg);
     }
     return ok;

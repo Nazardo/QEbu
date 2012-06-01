@@ -1,18 +1,20 @@
 #ifndef AUDIOFORMATTYPEFORM_H
 #define AUDIOFORMATTYPEFORM_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QLineEdit>
 #include "stackablewidget.h"
-#include "listview.h"
-#include "../model/formattype.h"
+
+class AudioFormatType;
+class ListView;
+class QLineEdit;
+class QPushButton;
 
 class AudioFormatTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit AudioFormatTypeForm(AudioFormatType *audioFormat, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit AudioFormatTypeForm(AudioFormatType *audioFormat,
+                                 QEbuMainWindow *mainWindow,
+                                 QWidget *parent = 0);
     QString toString();
 signals:
 private slots:
@@ -36,7 +38,6 @@ private:
     enum EditMode { AudioEncoding, AudioTrackConfiguration, AudioTrack, TechnicalAttributesMode };
     void updateListAndButtons();
 
-    QHBoxLayout *m_mainHLayout;
     ListView *m_listView;
     QLineEdit *m_editAudioFormatId;
     QLineEdit *m_editAudioFormatDefinition;
@@ -46,7 +47,6 @@ private:
     QPushButton *m_buttonAudioTrack;
     QPushButton *m_buttonTechnicalAttributes;
     AudioFormatType *m_audioFormat;
-    Operation m_op;
     EditMode m_currentEditMode;
 };
 

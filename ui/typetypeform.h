@@ -1,18 +1,20 @@
 #ifndef TYPETYPEFORM_H
 #define TYPETYPEFORM_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QTextEdit>
 #include "stackablewidget.h"
-#include "listview.h"
-#include "../model/ebucoremaintype.h"
+
+class TypeType;
+class ListView;
+class QTextEdit;
+class QPushButton;
 
 class TypeTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit TypeTypeForm(TypeType *type, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit TypeTypeForm(TypeType *type,
+                          QEbuMainWindow *mainWindow,
+                          QWidget *parent = 0);
     QString toString();
 signals:
 private slots:
@@ -36,7 +38,6 @@ private:
     enum EditMode { Type, Genre, ObjectType, TargetAudience };
     void updateListAndButtons();
 
-    QHBoxLayout *m_mainHLayout;
     ListView *m_listView;
     QTextEdit *m_textNote;
     QPushButton *m_buttonType;
@@ -44,7 +45,6 @@ private:
     QPushButton *m_buttonObjectType;
     QPushButton *m_buttonTargetAudience;
     TypeType *m_type;
-    Operation m_op;
     EditMode m_currentEditMode;
 };
 

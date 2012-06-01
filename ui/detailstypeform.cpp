@@ -1,9 +1,19 @@
 #include "detailstypeform.h"
+#include "../model/detailstype.h"
+#include "listview.h"
+#include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include "addresstypeform.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QButtonGroup>
+#include <QLineEdit>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QFormLayout>
 
-DetailsTypeForm::DetailsTypeForm(DetailsType *details, QEbuMainWindow *mainWindow, QWidget *parent) :
+DetailsTypeForm::DetailsTypeForm(DetailsType *details,
+                                 QEbuMainWindow *mainWindow,
+                                 QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (details) ? Edit : Add;
@@ -12,7 +22,7 @@ DetailsTypeForm::DetailsTypeForm(DetailsType *details, QEbuMainWindow *mainWindo
     else
         m_details = details;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
+    QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
         m_editTypeGroup = new TypeGroupEditBox(details);
@@ -38,19 +48,7 @@ DetailsTypeForm::DetailsTypeForm(DetailsType *details, QEbuMainWindow *mainWindo
         group->addButton(m_buttonAddress);
 
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(l);
+    mainHLayout->addLayout(l);
     // Add list view on the right
     m_listView = new ListView();
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
@@ -59,8 +57,8 @@ DetailsTypeForm::DetailsTypeForm(DetailsType *details, QEbuMainWindow *mainWindo
                      this, SLOT(editClicked()));
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
-    m_mainHLayout->addWidget(m_listView);
-    this->setLayout(m_mainHLayout);
+    mainHLayout->addWidget(m_listView);
+    this->setLayout(mainHLayout);
 
     // Set data fields...
     m_editEmailAddress->setText(m_details->emailAddress());

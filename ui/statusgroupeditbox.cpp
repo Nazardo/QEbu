@@ -1,4 +1,6 @@
 #include "statusgroupeditbox.h"
+#include "../model/statusgroup.h"
+#include <QLineEdit>
 #include <QFormLayout>
 #include <QGroupBox>
 

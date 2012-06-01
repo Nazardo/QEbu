@@ -1,9 +1,16 @@
 #include "temporaltypeform.h"
+#include "model/coremetadatatype.h"
+#include "typegroupeditbox.h"
+#include "dategroupeditbox.h"
 #include "qvarptr.h"
+#include <QTextEdit>
+#include <QLineEdit>
 #include <QFormLayout>
 #include <QPushButton>
 
-TemporalTypeForm::TemporalTypeForm(TemporalType *temporal, QEbuMainWindow *mainWindow, QWidget *parent)  :
+TemporalTypeForm::TemporalTypeForm(TemporalType *temporal,
+                                   QEbuMainWindow *mainWindow,
+                                   QWidget *parent)  :
     StackableWidget(mainWindow, parent)
 {
     m_op = (temporal) ? Edit : Add;
@@ -12,7 +19,6 @@ TemporalTypeForm::TemporalTypeForm(TemporalType *temporal, QEbuMainWindow *mainW
     else
         m_temporal = temporal;
     // Layout
-    m_mainVLayout = new QVBoxLayout;
     QHBoxLayout *mainHLayout = new QHBoxLayout;
     {
         QVBoxLayout *vl = new QVBoxLayout;
@@ -29,21 +35,7 @@ TemporalTypeForm::TemporalTypeForm(TemporalType *temporal, QEbuMainWindow *mainW
     m_editPeriodOfTime = new DateGroupEditBox(m_temporal->periodOfTime());
     m_editPeriodOfTime->setLabel(tr("Period of time"));
     mainHLayout->addWidget(m_editPeriodOfTime);
-    m_mainVLayout->addLayout(mainHLayout);
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        m_mainVLayout->addLayout(hl);
-    }
-
-    this->setLayout(m_mainVLayout);
+    this->setLayout(mainHLayout);
 
     // Set data fields
     m_editPeriodId->setText(m_temporal->periodId());

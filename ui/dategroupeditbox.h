@@ -2,19 +2,21 @@
 #define DATEGROUPEDITBOX_H
 
 #include <QWidget>
-#include <QDateEdit>
-#include <QTimeEdit>
-#include <QSpinBox>
-#include <QLineEdit>
-#include <QGroupBox>
-#include <QCheckBox>
-#include "../model/dategroup.h"
+
+class DateGroup;
+class QSpinBox;
+class QDateEdit;
+class QTimeEdit;
+class QGroupBox;
+class QCheckBox;
+class QLineEdit;
 
 class DateGroupEditBox : public QWidget
 {
     Q_OBJECT
 public:
-    explicit DateGroupEditBox(DateGroup *dateGroup, QWidget *parent = 0);
+    explicit DateGroupEditBox(DateGroup *dateGroup,
+                              QWidget *parent = 0);
     DateGroup *dateGroup();
     void updateExistingDateGroup(DateGroup *dateGroup);
     void setLabel(const QString &label);

@@ -1,22 +1,23 @@
 #ifndef RIGHTSTYPEFORM_H
 #define RIGHTSTYPEFORM_H
 
-#include <QWidget>
-#include <QPushButton>
-#include <QLineEdit>
-#include <QCheckBox>
-#include <QTextEdit>
-#include <QComboBox>
 #include "stackablewidget.h"
-#include "typegroupform.h"
-#include "listview.h"
-#include "../model/coremetadatatype.h"
+
+class RightsType;
+class ListView;
+class TypeGroupEditBox;
+class QLineEdit;
+class QTextEdit;
+class QCheckBox;
+class QPushButton;
 
 class RightsTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit RightsTypeForm(RightsType *rights,
+                            QEbuMainWindow *mainWindow,
+                            QWidget *parent = 0);
     QString toString();
 private slots:
     void cancelClicked();
@@ -44,11 +45,18 @@ private slots:
     void rightsIdFormClosed(Operation op, QVariant value);
     void contactDetailsFormClosed(Operation op, QVariant value);
 private:
-    enum EditMode { FormatIDRefs, Rights, RightsHolder, ExploitationIssues,
-                  Coverage, Disclaimer, RightsId, ContactDetails };
+    enum EditMode {
+        FormatIDRefs,
+        Rights,
+        RightsHolder,
+        ExploitationIssues,
+        Coverage,
+        Disclaimer,
+        RightsId,
+        ContactDetails
+    };
     void updateListAndButtons();
 
-    QVBoxLayout *m_mainVLayout;
     ListView *m_listView;
     TypeGroupEditBox *m_editTypeGroup;
     QLineEdit *m_editRightsLink;
@@ -63,7 +71,6 @@ private:
     QPushButton *m_buttonRightsId;
     QPushButton *m_buttonContactDetails;
     RightsType *m_rights;
-    Operation m_op;
     EditMode m_currentEditMode;
 };
 

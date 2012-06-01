@@ -1,13 +1,20 @@
 #include "typetypeform.h"
-
+#include "../model/ebucoremaintype.h"
+#include "listview.h"
 #include "qvarptr.h"
 #include "organisationdetailstypeform.h"
 #include "contactdetailstypeform.h"
 #include "typegroupform.h"
 #include "elementtypeform.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QLabel>
+#include <QButtonGroup>
+#include <QTextEdit>
+#include <QFormLayout>
 
-TypeTypeForm::TypeTypeForm(TypeType *type, QEbuMainWindow *mainWindow, QWidget *parent) :
+TypeTypeForm::TypeTypeForm(TypeType *type,
+                           QEbuMainWindow *mainWindow,
+                           QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (type) ? Edit : Add;
@@ -16,7 +23,7 @@ TypeTypeForm::TypeTypeForm(TypeType *type, QEbuMainWindow *mainWindow, QWidget *
     else
         m_type = type;
     // Layout
-    m_mainHLayout = new QHBoxLayout;
+    QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -54,19 +61,7 @@ TypeTypeForm::TypeTypeForm(TypeType *type, QEbuMainWindow *mainWindow, QWidget *
         m_buttonTargetAudience->setCheckable(true);
         group->addButton(m_buttonTargetAudience);
     }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        QPushButton *buttonClose = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonClose, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        hl->addWidget(buttonClose);
-        hl->addWidget(buttonCancel);
-        l->addLayout(hl);
-    }
-    m_mainHLayout->addLayout(l);
+    mainHLayout->addLayout(l);
     // Add list view on the right
     m_listView = new ListView();
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
@@ -75,8 +70,8 @@ TypeTypeForm::TypeTypeForm(TypeType *type, QEbuMainWindow *mainWindow, QWidget *
                      this, SLOT(editClicked()));
     QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                      this, SLOT(removeClicked()));
-    m_mainHLayout->addWidget(m_listView);
-    this->setLayout(m_mainHLayout);
+    mainHLayout->addWidget(m_listView);
+    this->setLayout(mainHLayout);
 
     // Set data fields...
     m_textNote->setText(m_type->note());

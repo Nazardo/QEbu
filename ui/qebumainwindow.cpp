@@ -1,7 +1,9 @@
 #include "qebumainwindow.h"
-#include "ebucoremainform.h"
 #include "../model/ebucoremaintype.h"
-#include <QtGui>
+#include "ebucoremainform.h"
+#include <QLabel>
+#include <QLayout>
+#include <QStackedWidget>
 
 
 QEbuMainWindow::QEbuMainWindow(QWidget *parent) :

@@ -1,10 +1,19 @@
 #include "datetypeform.h"
+#include "../model/coremetadatatype.h"
+#include "listview.h"
+#include "dategroupform.h"
 #include "alternativetypeform.h"
 #include "elementtypeform.h"
 #include "qvarptr.h"
-#include <QtGui>
+#include <QPushButton>
+#include <QButtonGroup>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QFormLayout>
 
-DateTypeForm::DateTypeForm(DateType *date, QEbuMainWindow *mainWindow, QWidget *parent) :
+DateTypeForm::DateTypeForm(DateType *date,
+                           QEbuMainWindow *mainWindow,
+                           QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (date) ? Edit : Add;
@@ -57,18 +66,6 @@ DateTypeForm::DateTypeForm(DateType *date, QEbuMainWindow *mainWindow, QWidget *
     buttonAlternative->setCheckable(true);
     group->addButton(buttonAlternative);
 
-    {
-        QHBoxLayout *lastRow = new QHBoxLayout;
-        QPushButton *buttonApply = new QPushButton(tr("Apply changes"));
-        QPushButton *buttonCancel = new QPushButton(tr("Cancel"));
-        QObject::connect(buttonApply, SIGNAL(clicked()),
-                         this, SLOT(applyClicked()));
-        QObject::connect(buttonCancel, SIGNAL(clicked()),
-                         this, SLOT(cancelClicked()));
-        lastRow->addWidget(buttonApply);
-        lastRow->addWidget(buttonCancel);
-        leftVLayout->addLayout(lastRow);
-    }
     mainHLayout->addLayout(leftVLayout);
     {
         m_listView = new ListView;

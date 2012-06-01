@@ -2,17 +2,19 @@
 #define LENGTHTYPEFORM_H
 
 #include "stackablewidget.h"
-#include "../model/ebucoremaintype.h"
-#include <QLineEdit>
-#include <QSpinBox>
-#include <QCheckBox>
 
+class QLineEdit;
+class QSpinBox;
+class QCheckBox;
+class LengthType;
 
 class LengthTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit LengthTypeForm(LengthType *description, QEbuMainWindow *mainWindow, QWidget *parent = 0);
+    explicit LengthTypeForm(LengthType *description,
+                            QEbuMainWindow *mainWindow,
+                            QWidget *parent = 0);
     QString toString();
     bool checkCompliance();
 signals:
@@ -26,7 +28,6 @@ private:
     QSpinBox *m_spinValue;
     QCheckBox *m_checkValue;
     LengthType *m_length;
-    Operation m_op;
 };
 
 #endif // LENGTHTYPEFORM_H
