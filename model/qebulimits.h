@@ -27,6 +27,8 @@ public:
     static int getMinInt32();
     static long long getMaxInt64();
     static long long getMinInt64();
+    static unsigned int getMaxUInt();
+    static unsigned int getMinUInt();
     static int getMaxUInt8();
     static int getMinUInt8();
     static int getMaxUInt16();

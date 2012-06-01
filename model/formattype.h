@@ -38,7 +38,7 @@ public:
     void setWidth(LengthType *length);
     LengthType *height() const;
     void setHeight(LengthType *height);
-    enum Orientation orientation() const;
+    Orientation *orientation() const;
     void setOrientation(const enum Orientation &orientation);
     QList<TypeGroup*> &imageEncoding();
     TechnicalAttributes *technicalAttributes() const;
@@ -54,7 +54,7 @@ private:
     unsigned int *m_regionDelimY;    //nonNegativeInteger
     LengthType *m_width;
     LengthType *m_height;
-    enum Orientation m_orientation;
+    Orientation *m_orientation;
     QList<TypeGroup*> m_imageEncoding;
     TechnicalAttributes *m_technicalAttributes;
 };

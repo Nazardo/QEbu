@@ -101,14 +101,15 @@ void ImageFormatType::setHeight(LengthType *height)
     m_height = height;
 }
 
-ImageFormatType::Orientation ImageFormatType::orientation() const
+ImageFormatType::Orientation *ImageFormatType::orientation() const
 {
     return m_orientation;
 }
 
 void ImageFormatType::setOrientation(const ImageFormatType::Orientation &orientation)
 {
-    m_orientation = orientation;
+    delete m_orientation;
+    m_orientation = new Orientation(orientation);
 }
 
 QList<TypeGroup *> &ImageFormatType::imageEncoding()

@@ -87,6 +87,16 @@ long long int qEbuLimits::getMinInt64()
     return std::numeric_limits<qint64>::min();
 }
 
+unsigned int qEbuLimits::getMaxUInt()
+{
+    return std::numeric_limits<unsigned int>::max();
+}
+
+unsigned int qEbuLimits::getMinUInt()
+{
+    return std::numeric_limits<unsigned int>::min();
+}
+
 int qEbuLimits::getMaxUInt8()
 {
     return std::numeric_limits<quint8>::max();

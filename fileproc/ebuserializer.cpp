@@ -1566,7 +1566,7 @@ QDomElement EbuSerializer::serializeImageFormat(ImageFormatType *format)
     }
     if(format->orientation()) {
         QDomElement e = m_doc.createElement(" ");
-        QString value = (format->orientation() == ImageFormatType::Landscape) ? "landscape" : "portrait";
+        QString value = (*(format->orientation()) == ImageFormatType::Landscape) ? "landscape" : "portrait";
         QDomText textNode = m_doc.createTextNode(value);
         e.appendChild(textNode);
         e.setTagName("ebucore:orientation");
