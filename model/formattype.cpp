@@ -5,6 +5,7 @@
 /* ------------------------------ ImageFormatType -------------------------- */
 ImageFormatType::ImageFormatType()
 {
+    m_orientation = 0;
     m_width = 0;
     m_height = 0;
     m_technicalAttributes = 0;
@@ -23,6 +24,7 @@ ImageFormatType::~ImageFormatType()
     delete m_regionDelimX;
     delete m_regionDelimY;
     delete m_technicalAttributes;
+    delete m_orientation;
 }
 
 QString ImageFormatType::imageFormatId() const
