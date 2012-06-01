@@ -68,6 +68,12 @@ void ImageFormatType::setRegionDelimX(unsigned int regionDelimX)
     m_regionDelimX = new unsigned int(regionDelimX);
 }
 
+void ImageFormatType::clearRegionDelimX()
+{
+    delete m_regionDelimX;
+    m_regionDelimX = 0;
+}
+
 unsigned int *ImageFormatType::regionDelimY() const
 {
     return m_regionDelimY;
@@ -77,6 +83,12 @@ void ImageFormatType::setRegionDelimY(unsigned int regionDelimY)
 {
     delete m_regionDelimY;
     m_regionDelimY = new unsigned int(regionDelimY);
+}
+
+void ImageFormatType::clearRegionDelimY()
+{
+    delete m_regionDelimY;
+    m_regionDelimY = 0;
 }
 
 LengthType *ImageFormatType::width() const
@@ -112,6 +124,12 @@ void ImageFormatType::setOrientation(const ImageFormatType::Orientation &orienta
 {
     delete m_orientation;
     m_orientation = new Orientation(orientation);
+}
+
+void ImageFormatType::clearOrientation()
+{
+    delete m_orientation;
+    m_orientation = 0;
 }
 
 QList<TypeGroup *> &ImageFormatType::imageEncoding()

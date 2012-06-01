@@ -32,14 +32,17 @@ public:
     // Elements
     unsigned int *regionDelimX() const;
     void setRegionDelimX(unsigned int regionDelimX);
+    void clearRegionDelimX();
     unsigned int *regionDelimY() const;
-    void setRegionDelimY(unsigned int width);
+    void setRegionDelimY(unsigned int regionDelimY);
+    void clearRegionDelimY();
     LengthType *width() const;
     void setWidth(LengthType *length);
     LengthType *height() const;
     void setHeight(LengthType *height);
     Orientation *orientation() const;
     void setOrientation(const enum Orientation &orientation);
+    void clearOrientation();
     QList<TypeGroup*> &imageEncoding();
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
