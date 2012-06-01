@@ -381,6 +381,8 @@ void DateTypeForm::updateListTitle()
 
 void DateTypeForm::dateChecked(bool checked)
 {
+    if (!checked)
+        return;
     m_currentEditMode = Date;
     updateListTitle();
     int s = m_date->date().size();
@@ -391,6 +393,8 @@ void DateTypeForm::dateChecked(bool checked)
 
 void DateTypeForm::createdChecked(bool checked)
 {
+    if (!checked)
+        return;
     m_currentEditMode = Created;
     updateListTitle();
     if (m_date->created()) {
@@ -401,6 +405,8 @@ void DateTypeForm::createdChecked(bool checked)
 
 void DateTypeForm::issuedChecked(bool checked)
 {
+    if (!checked)
+        return;
     m_currentEditMode = Issued;
     updateListTitle();
     if (m_date->issued()) {
@@ -411,6 +417,8 @@ void DateTypeForm::issuedChecked(bool checked)
 
 void DateTypeForm::modifiedChecked(bool checked)
 {
+    if (!checked)
+        return;
     m_currentEditMode = Modified;
     updateListTitle();
     if (m_date->modified()) {
@@ -421,6 +429,8 @@ void DateTypeForm::modifiedChecked(bool checked)
 
 void DateTypeForm::digitisedChecked(bool checked)
 {
+    if (!checked)
+        return;
     m_currentEditMode = Digitised;
     updateListTitle();
     if (m_date->digitised()) {
@@ -431,6 +441,8 @@ void DateTypeForm::digitisedChecked(bool checked)
 
 void DateTypeForm::alternativeChecked(bool checked)
 {
+    if (!checked)
+        return;
     m_currentEditMode = Alternative;
     updateListTitle();
     int s = m_date->alternative().size();
