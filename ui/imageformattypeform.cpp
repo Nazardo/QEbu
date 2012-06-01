@@ -85,7 +85,7 @@ ImageFormatTypeForm::ImageFormatTypeForm(ImageFormatType *imageFormat,
         QObject::connect(dialogButtonBox->button(QDialogButtonBox::Apply),
                          SIGNAL(clicked()), this, SLOT(applyClicked()));
         QObject::connect(dialogButtonBox, SIGNAL(rejected()),
-                         this, SLOT(applyClicked()));
+                         this, SLOT(cancelClicked()));
     }
     mainHLayout->addLayout(leftVLayout);
     {
