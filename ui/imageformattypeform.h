@@ -20,7 +20,6 @@ public:
                                  QEbuMainWindow *mainWindow,
                                  QWidget *parent = 0);
     QString toString();
-
 signals:
 private slots:
     void applyClicked();
@@ -33,6 +32,7 @@ private slots:
     void regionDelimYChanged();
     void orientationChanged();
     void technicalAttributesClicked();
+    void technicalAttributesRemoveClicked();
     void typeGroupFormClosed(Operation op, QVariant value);
     void technicalAttributesFormClosed(Operation op, QVariant value);
 private:
@@ -50,6 +50,7 @@ private:
     QCheckBox *m_checkOrientation;
     QComboBox *m_comboOrientation;
     ListView *m_listView;
+    QLineEdit *m_editTechnicalAttributes;
     QPushButton *m_buttonTechnicalAttributes;
 };
 

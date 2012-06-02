@@ -8,6 +8,7 @@
 #include "../model/qebulimits.h"
 #include <QGridLayout>
 #include <QFormLayout>
+#include <QLabel>
 #include <QGroupBox>
 #include <QLineEdit>
 #include <QCheckBox>
@@ -76,18 +77,23 @@ ImageFormatTypeForm::ImageFormatTypeForm(ImageFormatType *imageFormat,
         leftVLayout->addLayout(gridLayout);
     }
     {
-        QDialogButtonBox *dialogButtonBox = new QDialogButtonBox(
-                    QDialogButtonBox::Apply | QDialogButtonBox::Cancel,
-                    Qt::Horizontal);
-        leftVLayout->addWidget(dialogButtonBox, 0, Qt::AlignLeft);
-        QObject::connect(dialogButtonBox->button(QDialogButtonBox::Apply),
-                         SIGNAL(clicked()), this, SLOT(applyClicked()));
-        QObject::connect(dialogButtonBox, SIGNAL(rejected()),
-                         this, SLOT(cancelClicked()));
+        QHBoxLayout *hl = new QHBoxLayout;
+        hl->addWidget(new QLabel(tr("Technical attributes")));
+        m_editTechnicalAttributes = new QLineEdit;
+        m_editTechnicalAttributes->setReadOnly(true);
+        hl->addWidget(m_editTechnicalAttributes);
+        QPushButton *buttonTechnicalAttributes = new QPushButton(tr("Add/Edit"));
+        QObject::connect(buttonTechnicalAttributes, SIGNAL(clicked()),
+                         this, SLOT(technicalAttributesClicked()));
+        hl->addWidget(buttonTechnicalAttributes);
+        QPushButton *buttonTechnicalAttributesRemove = new QPushButton(tr("Remove"));
+        QObject::connect(buttonTechnicalAttributesRemove, SIGNAL(clicked()),
+                         this, SLOT(technicalAttributesRemoveClicked()));
+        hl->addWidget(buttonTechnicalAttributesRemove);
+        leftVLayout->addLayout(hl);
     }
     mainHLayout->addLayout(leftVLayout);
     {
-        QVBoxLayout *rightVLayout = new QVBoxLayout;
         m_listView = new ListView(tr("Image Encoding"));
         QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
                          this, SLOT(addClicked()));
@@ -95,13 +101,7 @@ ImageFormatTypeForm::ImageFormatTypeForm(ImageFormatType *imageFormat,
                          this, SLOT(editClicked()));
         QObject::connect(m_listView->buttonRemove(), SIGNAL(clicked()),
                          this, SLOT(removeClicked()));
-        rightVLayout->addWidget(m_listView);
-
-        m_buttonTechnicalAttributes = new QPushButton(tr("Technical Attributes"));
-        QObject::connect(m_buttonTechnicalAttributes, SIGNAL(clicked()),
-                         this, SLOT(technicalAttributesClicked()));
-        rightVLayout->addWidget(m_buttonTechnicalAttributes);
-        mainHLayout->addLayout(rightVLayout);
+        mainHLayout->addWidget(m_listView);
     }
     this->setLayout(mainHLayout);
     // Set fields...
@@ -223,15 +223,6 @@ void ImageFormatTypeForm::orientationChanged()
     m_checkOrientation->setChecked(true);
 }
 
-void ImageFormatTypeForm::technicalAttributesClicked()
-{
-    TechnicalAttributesForm *form = new TechnicalAttributesForm(
-                m_imageFormat->technicalAttributes(), mainWindow());
-    QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
-                     this, SLOT(technicalAttributesFormClosed(Operation,QVariant)));
-    mainWindow()->pushWidget(form);
-}
-
 void ImageFormatTypeForm::typeGroupFormClosed(Operation op, QVariant value)
 {
     TypeGroup *typeGroup = QVarPtr<TypeGroup>::asPointer(value);
@@ -246,13 +237,29 @@ void ImageFormatTypeForm::typeGroupFormClosed(Operation op, QVariant value)
     }
 }
 
+void ImageFormatTypeForm::technicalAttributesRemoveClicked()
+{
+    if (!m_imageFormat->technicalAttributes())
+        return;
+    m_imageFormat->setTechnicalAttributes(0);
+    m_editTechnicalAttributes->setText(tr("(none)"));
+}
+
+void ImageFormatTypeForm::technicalAttributesClicked()
+{
+    TechnicalAttributesForm *technicalAttributesForm = new TechnicalAttributesForm(
+                m_imageFormat->technicalAttributes(),this->mainWindow());
+    QObject::connect(technicalAttributesForm, SIGNAL(closed(Operation,QVariant)),
+                     this, SLOT(technicalAttributesFormClosed(Operation,QVariant)));
+    this->mainWindow()->pushWidget(technicalAttributesForm);
+}
+
 void ImageFormatTypeForm::technicalAttributesFormClosed(StackableWidget::Operation op, QVariant value)
 {
     TechnicalAttributes *technicalAttributes = QVarPtr<TechnicalAttributes>::asPointer(value);
     if (!technicalAttributes)
         return;
-    if (op == Add) {
+    if (op == Add)
         m_imageFormat->setTechnicalAttributes(technicalAttributes);
-    }
-    // Nothing to do for m_op == Edit
+    m_editTechnicalAttributes->setText(technicalAttributes->toString());
 }
