@@ -42,7 +42,7 @@ IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindo
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Attributor")));
         m_editAttributor = new QLineEdit;
-        m_editAttributor->setEnabled(false);
+        m_editAttributor->setReadOnly(true);
         hl->addWidget(m_editAttributor);
         QPushButton *buttomAttributorAdd = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttomAttributorAdd, SIGNAL(clicked()),

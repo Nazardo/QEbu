@@ -35,7 +35,7 @@ LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainW
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Coordinates")));
         m_editCoordinates = new QLineEdit;
-        m_editCoordinates->setEnabled(false);
+        m_editCoordinates->setReadOnly(true);
         hl->addWidget(m_editCoordinates);
         QPushButton *buttonCoordinates = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonCoordinates, SIGNAL(clicked()),

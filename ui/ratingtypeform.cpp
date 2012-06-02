@@ -48,7 +48,7 @@ RatingTypeForm::RatingTypeForm(RatingType *rating,
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Rating Provider")));
         m_editRatingProvider = new QLineEdit;
-        m_editRatingProvider->setEnabled(false);
+        m_editRatingProvider->setReadOnly(true);
         hl->addWidget(m_editRatingProvider);
 
         QPushButton *buttonRatingProvider = new QPushButton(tr("Add/Edit"));

@@ -62,7 +62,7 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Relation Identifier")));
         m_editRelationIdentifier = new QLineEdit;
-        m_editRelationIdentifier->setEnabled(false);
+        m_editRelationIdentifier->setReadOnly(true);
         hl->addWidget(m_editRelationIdentifier);
         QPushButton *buttonRelationIdentifierAdd = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonRelationIdentifierAdd, SIGNAL(clicked()),

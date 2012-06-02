@@ -26,7 +26,7 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
 
         gl->addWidget(new QLabel(tr("TrackPart title")), 0, 0);
         m_editTrackPartTitle = new QLineEdit;
-        m_editTrackPartTitle->setEnabled(false);
+        m_editTrackPartTitle->setReadOnly(true);
         gl->addWidget(m_editTrackPartTitle, 0, 1);
         QPushButton *buttonTrackPartTitle = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonTrackPartTitle, SIGNAL(clicked()),
@@ -41,7 +41,7 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
 
         gl->addWidget(new QLabel(tr("Destination Start")), 1, 0);
         m_editDestinationStart = new QLineEdit;
-        m_editDestinationStart->setEnabled(false);
+        m_editDestinationStart->setReadOnly(true);
         gl->addWidget(m_editDestinationStart, 1, 1);
         QPushButton *buttonDestinationStart = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonDestinationStart, SIGNAL(clicked()),
@@ -56,7 +56,7 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
 
         gl->addWidget(new QLabel(tr("Destination End")), 2, 0);
         m_editDestinationEnd = new QLineEdit;
-        m_editDestinationEnd->setEnabled(false);
+        m_editDestinationEnd->setReadOnly(true);
         gl->addWidget(m_editDestinationEnd, 2, 1);
         QPushButton *buttonDestinationEnd = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonDestinationEnd, SIGNAL(clicked()),
@@ -71,7 +71,7 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
 
         gl->addWidget(new QLabel(tr("Source Start")), 3, 0);
         m_editSourceStart = new QLineEdit;
-        m_editSourceStart->setEnabled(false);
+        m_editSourceStart->setReadOnly(true);
         gl->addWidget(m_editSourceStart, 3, 1);
         QPushButton *buttonSourceStart = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonSourceStart, SIGNAL(clicked()),
@@ -86,7 +86,7 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
 
         gl->addWidget(new QLabel(tr("Source End")), 4, 0);
         m_editSourceEnd = new QLineEdit;
-        m_editSourceEnd->setEnabled(false);
+        m_editSourceEnd->setReadOnly(true);
         gl->addWidget(m_editSourceEnd, 4, 1);
         QPushButton *buttonSourceEnd = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonSourceEnd, SIGNAL(clicked()),
@@ -101,7 +101,7 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
 
         gl->addWidget(new QLabel(tr("Relation details")), 5, 0);
         m_editRelation = new QLineEdit;
-        m_editRelation->setEnabled(false);
+        m_editRelation->setReadOnly(true);
         gl->addWidget(m_editRelation, 5, 1);
         QPushButton *buttonRelation = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonRelation, SIGNAL(clicked()),

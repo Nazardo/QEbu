@@ -47,7 +47,7 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
 
         hl->addWidget(new QLabel(tr("Attributor")));
         m_editAttributor = new QLineEdit;
-        m_editAttributor->setEnabled(false);
+        m_editAttributor->setReadOnly(true);
         hl->addWidget(m_editAttributor);
         QPushButton *buttonAttributor = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonAttributor, SIGNAL(clicked()),
