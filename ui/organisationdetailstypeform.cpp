@@ -13,7 +13,7 @@
 #include <QLineEdit>
 #include <QLabel>
 #include <QFormLayout>
-#include <QErrorMessage>
+#include <QMessageBox>
 
 OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(
         OrganisationDetailsType *organisationDetails,
@@ -301,15 +301,16 @@ void OrganisationDetailsTypeForm::updateListAndButtons()
 bool OrganisationDetailsTypeForm::checkCompliance()
 {
     bool ok = true;
-    QString error_msg = "";
+    QStringList fields;
     if(m_editOrganisationName->editValue()->text().isEmpty()) {
         ok = false;
-        error_msg += "organisationName\n";
+        fields += tr("Organisation name");
     }
     if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
+        QMessageBox::warning(this, this->toString(),
+                             tr("<b>Required fields:</b><br>")
+                             +fields.join(",<br>"),
+                             QMessageBox::Ok, QMessageBox::Ok);
     }
     return ok;
 }

@@ -6,7 +6,6 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QLayout>
-#include <QErrorMessage>
 
 TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         TechnicalAttributeRationalType *rational,
@@ -87,9 +86,6 @@ void TechnicalAttributeRationalTypeForm::cancelClicked()
 
 void TechnicalAttributeRationalTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
-
     if (m_checkValue->isChecked())
         m_rational->setValue(m_spinValue->value());
     if (m_checkDenominator->isChecked())
@@ -113,18 +109,4 @@ void TechnicalAttributeRationalTypeForm::numeratorChanged()
 void TechnicalAttributeRationalTypeForm::denominatorChanged()
 {
     m_checkDenominator->setChecked(true);
-}
-
-
-bool TechnicalAttributeRationalTypeForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }

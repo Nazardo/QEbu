@@ -3,7 +3,6 @@
 #include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include <QLineEdit>
-#include <QErrorMessage>
 #include <QVBoxLayout>
 #include <QFormLayout>
 
@@ -57,24 +56,9 @@ void AudioTrackTypeForm::cancelClicked()
 
 void AudioTrackTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
-
     m_editTrackId->setText(m_editTrackId->text());
     m_editTrackName->setText(m_editTrackName->text());
     m_editTrackLanguage->setText(m_editTrackLanguage->text());
     m_editTypeGroup->updateExistingTypeGroup(m_audioTrack);
     emit closed(m_op, QVarPtr<AudioTrackType>::asQVariant(m_audioTrack));
-}
-
-bool AudioTrackTypeForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }

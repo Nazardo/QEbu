@@ -16,7 +16,7 @@
 #include <QTextEdit>
 #include <QComboBox>
 #include <QFormLayout>
-#include <QErrorMessage>
+#include <QMessageBox>
 #include <QInputDialog>
 
 RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -149,9 +149,9 @@ void RightsTypeForm::addClicked()
         bool ok;
         QStringList sl = QStringList(mainWindow()->ebuCoreMain()->formatMap().keys());
         if (sl.size() <= 0) {
-            QErrorMessage *e = new QErrorMessage(this);
-            e->setWindowTitle(tr("Warning"));
-            e->showMessage(tr("No formatId available to choose from"));
+            QMessageBox::warning(this, this->toString(),
+                                 tr("No format IDs available to choose from"),
+                                 QMessageBox::Ok, QMessageBox::Ok);
             return;
         }
         QString text = QInputDialog::getItem(this, tr("RightsType > Format IDRef"),

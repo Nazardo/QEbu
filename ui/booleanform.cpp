@@ -3,7 +3,6 @@
 #include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include <QCheckBox>
-#include <QErrorMessage>
 #include <QVBoxLayout>
 #include <QFormLayout>
 
@@ -53,25 +52,8 @@ void BooleanForm::cancelClicked()
 
 void BooleanForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
-
     m_boolean->setValue(m_checkValue->isChecked());
     m_editTypeGroup->updateExistingTypeGroup(m_boolean);
 
     emit closed(m_op, QVarPtr<Boolean>::asQVariant(m_boolean));
-}
-
-
-bool BooleanForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }

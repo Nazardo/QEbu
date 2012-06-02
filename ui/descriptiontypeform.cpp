@@ -6,7 +6,7 @@
 #include "qvarptr.h"
 #include <QTextEdit>
 #include <QLineEdit>
-#include <QErrorMessage>
+#include <QMessageBox>
 #include <QVBoxLayout>
 #include <QFormLayout>
 
@@ -77,15 +77,16 @@ void DescriptionTypeForm::applyClicked()
 bool DescriptionTypeForm::checkCompliance()
 {
     bool ok = true;
-    QString error_msg = "";
+    QStringList fields;
     if (m_editElementDescription->editValue()->text().isEmpty()) {
         ok = false;
-        error_msg += "Description \n";
+        fields += tr("Description");
     }
     if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Rrequired fields"));
-        e->showMessage(error_msg);
+        QMessageBox::warning(this, this->toString(),
+                             tr("<b>Required fields:</b><br>")
+                             +fields.join(",<br>"),
+                             QMessageBox::Ok, QMessageBox::Ok);
     }
     return ok;
 }

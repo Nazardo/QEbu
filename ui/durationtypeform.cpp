@@ -14,7 +14,6 @@
 #include <QLineEdit>
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QErrorMessage>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFormLayout>
@@ -180,8 +179,6 @@ void DurationTypeForm::cancelClicked()
 
 void DurationTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
     if (m_radioTimecode->isChecked()) {
         m_duration->setTimecode(m_editTimecode->text());
 
@@ -276,18 +273,5 @@ void DurationTypeForm::factorDenominatorChanged()
 void DurationTypeForm::unitNumberValueChanged()
 {
     m_checkUnitNumberValue->setChecked(true);
-}
-
-bool DurationTypeForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }
 

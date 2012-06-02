@@ -5,7 +5,6 @@
 #include "model/qebulimits.h"
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QErrorMessage>
 #include <QLayout>
 
 Int64Form::Int64Form(Int64 *int64,
@@ -62,9 +61,6 @@ void Int64Form::cancelClicked()
 
 void Int64Form::applyClicked()
 {
-    if (!checkCompliance())
-        return;
-
     if (m_checkValue->isChecked())
         m_int64->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_int64);
@@ -75,17 +71,4 @@ void Int64Form::applyClicked()
 void Int64Form::valueChanged()
 {
     m_checkValue->setChecked(true);
-}
-
-bool Int64Form::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }

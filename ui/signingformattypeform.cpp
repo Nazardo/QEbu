@@ -5,7 +5,6 @@
 #include "qvarptr.h"
 #include <QLineEdit>
 #include <QFormLayout>
-#include <QErrorMessage>
 
 SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -80,9 +79,6 @@ void SigningFormatTypeForm::cancelClicked()
 
 void SigningFormatTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
-
     m_signingFormat->setTrackId(m_editTrackId->text());
     m_signingFormat->setTrackName(m_editTrackName->text());
     m_signingFormat->setLanguage(m_editLanguage->text());
@@ -96,16 +92,4 @@ void SigningFormatTypeForm::applyClicked()
     m_signingFormat->setSigningFormatDefinition(m_editSigningFormatDefinition->text());
 
     emit closed(m_op, QVarPtr<SigningFormatType>::asQVariant(m_signingFormat));
-}
-
-bool SigningFormatTypeForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Rrequired fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }

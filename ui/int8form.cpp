@@ -5,7 +5,6 @@
 #include "model/qebulimits.h"
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QErrorMessage>
 #include <QLayout>
 
 Int8Form::Int8Form(Int8 *int8,
@@ -61,9 +60,6 @@ void Int8Form::cancelClicked()
 
 void Int8Form::applyClicked()
 {
-    if (!checkCompliance())
-        return;
-
     if (m_checkValue->isChecked())
         m_int8->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_int8);
@@ -74,17 +70,4 @@ void Int8Form::applyClicked()
 void Int8Form::valueChanged()
 {
     m_checkValue->setChecked(true);
-}
-
-bool Int8Form::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }

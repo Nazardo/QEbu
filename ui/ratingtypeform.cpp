@@ -10,7 +10,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QFormLayout>
-#include <QErrorMessage>
+#include <QMessageBox>
 
 RatingTypeForm::RatingTypeForm(RatingType *rating,
                                QEbuMainWindow *mainWindow,
@@ -38,10 +38,10 @@ RatingTypeForm::RatingTypeForm(RatingType *rating,
         fl->addRow(tr("Rating value"),m_editRatingValue);
 
         m_editRatingScaleMaxValue = new QLineEdit;
-        fl->addRow(tr("Rating value"),m_editRatingScaleMaxValue);
+        fl->addRow(tr("Rating max value"),m_editRatingScaleMaxValue);
 
         m_editRatingScaleMinValue = new QLineEdit;
-        fl->addRow(tr("Rating value"),m_editRatingScaleMinValue);
+        fl->addRow(tr("Rating min value"),m_editRatingScaleMinValue);
         vl->addLayout(fl);
     }
     {
@@ -128,27 +128,28 @@ void RatingTypeForm::applyClicked()
 bool RatingTypeForm::checkCompliance()
 {
     bool ok = true;
-    QString error_msg = "";
+    QStringList fields;
     if (m_editRatingValue->text().isEmpty()) {
         ok = false;
-        error_msg += "Rating value \n";
+        fields += tr("Rating value");
     }
     if (m_editRatingScaleMaxValue->text().isEmpty()) {
         ok = false;
-        error_msg += "Rating max value \n";
+        fields += tr("Rating max value");
     }
     if (m_editRatingScaleMinValue->text().isEmpty()) {
         ok = false;
-        error_msg += "Rating min value \n";
+        fields += tr("Rating min value");
     }
     if (!m_rating->ratingProvider()) {
         ok = false;
-        error_msg += "Rating provider \n";
+        fields += tr("Rating Provider");
     }
     if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Rrequired fields"));
-        e->showMessage(error_msg);
+        QMessageBox::warning(this, this->toString(),
+                             tr("<b>Required fields:</b><br>")
+                             +fields.join(",<br>"),
+                             QMessageBox::Ok, QMessageBox::Ok);
     }
     return ok;
 }

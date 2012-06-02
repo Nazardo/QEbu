@@ -7,7 +7,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QLabel>
-#include <QErrorMessage>
+#include <QMessageBox>
 #include <QLayout>
 
 HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
@@ -323,17 +323,16 @@ void HasTrackPartTypeForm::relationClosed(StackableWidget::Operation op, QVarian
 bool HasTrackPartTypeForm::checkCompliance()
 {
     bool ok = true;
-    QString error_msg = "";
-
+    QStringList fields;
     if (!m_hasTrackPart->trackPartTitle()) {
         ok = false;
-        error_msg = "TrackPart Title";
+        fields += tr("TrackPart title");
     }
-
     if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
+        QMessageBox::warning(this, this->toString(),
+                             tr("<b>Required fields:</b><br>")
+                             +fields.join(",<br>"),
+                             QMessageBox::Ok, QMessageBox::Ok);
     }
     return ok;
 }

@@ -4,7 +4,6 @@
 #include "qvarptr.h"
 #include <QLineEdit>
 #include <QFormLayout>
-#include <QErrorMessage>
 
 TechicalAttributeUriTypeForm::TechicalAttributeUriTypeForm(TechnicalAttributeUriType *uri, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -50,25 +49,8 @@ void TechicalAttributeUriTypeForm::cancelClicked()
 
 void TechicalAttributeUriTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
-
     m_uri->setValue(m_editValue->text());
     m_editTypeGroup->updateExistingTypeGroup(m_uri);
 
     emit closed(m_op, QVarPtr<TechnicalAttributeUriType>::asQVariant(m_uri));
-}
-
-
-bool TechicalAttributeUriTypeForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }

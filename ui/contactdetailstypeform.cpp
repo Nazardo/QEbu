@@ -12,7 +12,7 @@
 #include <QLineEdit>
 #include <QButtonGroup>
 #include <QInputDialog>
-#include <QErrorMessage>
+#include <QMessageBox>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFormLayout>
@@ -358,22 +358,26 @@ void ContactDetailsTypeForm::complexNameChecked(bool checked)
 bool ContactDetailsTypeForm::checkCompliance()
 {
     bool ok = true;
-    QString error_msg = "";
+    QStringList fields;
     if (m_radioName->isChecked()) {
         if (m_editName->text().isEmpty()) {
             ok = false;
-            error_msg += "Name\n";
+            fields += tr("Name");
         }
     }
     else if(m_radioCName->isChecked()) {
         if (m_editFamilyName->text().isEmpty() || m_editGivenName->text().isEmpty())
-        ok = false;
-        error_msg += "Family Name,\nGiven Name";
+            ok = false;
+        if (m_editGivenName->text().isEmpty())
+            fields += tr("Given name");
+        if (m_editFamilyName->text().isEmpty())
+            fields += tr("Family name");
     }
     if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
+        QMessageBox::warning(this, this->toString(),
+                             tr("<b>Required fields:</b><br>")
+                             +fields.join(",<br>"),
+                             QMessageBox::Ok, QMessageBox::Ok);
     }
     return ok;
 }

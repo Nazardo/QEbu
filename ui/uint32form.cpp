@@ -5,7 +5,6 @@
 #include "model/qebulimits.h"
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QErrorMessage>
 #include <QLayout>
 
 Uint32Form::Uint32Form(UInt32 *uint32,
@@ -59,8 +58,6 @@ void Uint32Form::cancelClicked()
 
 void Uint32Form::applyClicked()
 {
-    if (!checkCompliance())
-        return;
     if (m_checkValue->isChecked())
         m_uint32->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_uint32);
@@ -70,17 +67,4 @@ void Uint32Form::applyClicked()
 void Uint32Form::valueChanged()
 {
     m_checkValue->setChecked(true);
-}
-
-bool Uint32Form::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-    //TODO
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Rrequired fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }

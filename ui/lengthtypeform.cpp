@@ -6,7 +6,6 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QFormLayout>
-#include <QErrorMessage>
 
 LengthTypeForm::LengthTypeForm(LengthType *length,
                                QEbuMainWindow *mainWindow,
@@ -62,8 +61,6 @@ void LengthTypeForm::cancelClicked()
 
 void LengthTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
     m_length->setUnit(m_editUnit->text());
     if (m_checkValue->isChecked())
         m_length->setValue(m_spinValue->value());
@@ -73,19 +70,6 @@ void LengthTypeForm::applyClicked()
 void LengthTypeForm::valueChanged()
 {
     m_checkValue->setChecked(true);
-}
-
-bool LengthTypeForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-    //TODO
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Rrequired fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }
 
 

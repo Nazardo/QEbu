@@ -5,7 +5,6 @@
 #include "qvarptr.h"
 #include <QLineEdit>
 #include <QFormLayout>
-#include <QErrorMessage>
 
 StringForm::StringForm(String *string,
                        QEbuMainWindow *mainWindow,
@@ -55,27 +54,9 @@ void StringForm::cancelClicked()
 
 void StringForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
-
     m_string->setValue(m_editValue->text());
     m_editFormatGroup->updateExistingFormatGroup(m_string);
 
     emit closed(m_op, QVarPtr<String>::asQVariant(m_string));
 }
-
-
-bool StringForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
-}
-
 

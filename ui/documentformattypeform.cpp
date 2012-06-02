@@ -12,7 +12,6 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QFormLayout>
-#include <QErrorMessage>
 
 DocumentFormatTypeForm::DocumentFormatTypeForm(
         DocumentFormatType *documentFormat,
@@ -112,19 +111,6 @@ QString DocumentFormatTypeForm::toString()
     return QString("Documento Format Type");
 }
 
-bool DocumentFormatTypeForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
-}
-
 void DocumentFormatTypeForm::cancelClicked()
 {
     if (m_op == Add) {
@@ -136,8 +122,6 @@ void DocumentFormatTypeForm::cancelClicked()
 
 void DocumentFormatTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
     if (m_checkWordCount->isChecked())
         m_documentFormat->setWordCount(m_spinWordCount->value());
     if (m_checkRegionDelimX->isChecked())

@@ -10,7 +10,6 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QInputDialog>
-#include <QErrorMessage>
 
 AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(
         AncillaryDataFormatType *ancillaryDataFormat,
@@ -163,8 +162,6 @@ void AncillaryDataFormatTypeForm::cancelClicked()
 
 void AncillaryDataFormatTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
     m_ancillaryDataFormat->setAncillaryDataFormatId(m_editAncillaryDataFormatId->text());
     m_ancillaryDataFormat->setAncillaryDataFormatName(m_editAncillaryDataFormatName->text());
     if (m_checkDID->isChecked())
@@ -189,18 +186,6 @@ void AncillaryDataFormatTypeForm::SDIDChanged()
 void AncillaryDataFormatTypeForm::wrappingTypeChanged()
 {
     m_checkWrappingType->setChecked(true);
-}
-
-bool AncillaryDataFormatTypeForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }
 
 void AncillaryDataFormatTypeForm::updateListAndButtons()

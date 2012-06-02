@@ -15,7 +15,6 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QFormLayout>
-#include <QErrorMessage>
 
 TimeTypeForm::TimeTypeForm(TimeType *time,
                            QEbuMainWindow *mainWindow,
@@ -180,8 +179,6 @@ void TimeTypeForm::cancelClicked()
 
 void TimeTypeForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
     if (m_radioTimecode->isChecked()) {
         m_time->setTimecode(m_editTimecode->text());
 
@@ -277,17 +274,3 @@ void TimeTypeForm::unitNumberValueChanged()
 {
     m_checkUnitNumberValue->setChecked(true);
 }
-
-bool TimeTypeForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
-}
-

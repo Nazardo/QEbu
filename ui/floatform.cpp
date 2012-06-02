@@ -4,7 +4,6 @@
 #include "qvarptr.h"
 #include <QDoubleSpinBox>
 #include <QCheckBox>
-#include <QErrorMessage>
 #include <QVBoxLayout>
 #include <QGridLayout>
 
@@ -63,9 +62,6 @@ void FloatForm::cancelClicked()
 
 void FloatForm::applyClicked()
 {
-    if (!checkCompliance())
-        return;
-
     if (m_checkValue->isChecked())
         m_float->setValue(m_spinValue->value());
     m_editTypeGroup->updateExistingTypeGroup(m_float);
@@ -76,18 +72,4 @@ void FloatForm::applyClicked()
 void FloatForm::valueChanged()
 {
     m_checkValue->setChecked(true);
-}
-
-
-bool FloatForm::checkCompliance()
-{
-    bool ok = true;
-    QString error_msg = "";
-
-    if(!ok) {
-        QErrorMessage *e = new QErrorMessage(this);
-        e->setWindowTitle(tr("Required fields"));
-        e->showMessage(error_msg);
-    }
-    return ok;
 }
