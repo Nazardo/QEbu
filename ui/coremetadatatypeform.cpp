@@ -18,8 +18,7 @@
 #include "ui/hastrackparttypeform.h"
 #include "ui/publicationhistorytypeform.h"
 #include "ui/ratingtypeform.h"
-/// @todo: comment
-// #include "ui/parttypeform.h"
+#include "ui/parttypeform.h"
 #include "listview.h"
 #include "qvarptr.h"
 #include <QPushButton>
@@ -606,11 +605,10 @@ void CoreMetadataTypeForm::addClicked()
         break;
     case Part:
     {
-        /// @todo: comment
-//        PartTypeForm *partForm = new PartTypeForm(0, this->mainWindow());
-//        QObject::connect(partForm, SIGNAL(closed(Operation,QVariant)),
-//                         this, SLOT(partFormClosed(Operation,QVariant)));
-//        this->mainWindow()->pushWidget(partForm);
+        PartTypeForm *partForm = new PartTypeForm(0, this->mainWindow());
+        QObject::connect(partForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(partFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(partForm);
     }
         break;
     }
@@ -899,11 +897,10 @@ void CoreMetadataTypeForm::editClicked()
         break;
     case Part:
     {
-        /// @todo: comment
-//        PartTypeForm *partForm = new PartTypeForm(m_coreMetadata->part().at(index), this->mainWindow());
-//        QObject::connect(partForm, SIGNAL(closed(Operation,QVariant)),
-//                         this, SLOT(partFormClosed(Operation,QVariant)));
-//        this->mainWindow()->pushWidget(partForm);
+        PartTypeForm *partForm = new PartTypeForm(m_coreMetadata->part().at(index), this->mainWindow());
+        QObject::connect(partForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(partFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(partForm);
     }
         break;
     }

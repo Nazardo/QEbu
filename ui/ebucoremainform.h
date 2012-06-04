@@ -5,6 +5,8 @@
 
 class EbuCoreMainType;
 class QLineEdit;
+class QCheckBox;
+class QDateEdit;
 
 class EbuCoreMainForm : public StackableWidget
 {
@@ -19,11 +21,26 @@ private slots:
     void metadataProviderRemoveClicked();
     void metadataProviderClicked();
     void metadataProviderClosed(Operation op, QVariant value);
+    void coreMetadataRemoveClicked();
+    void coreMetadataClicked();
+    void coreMetadataClosed(Operation op, QVariant value);
+    // -
+    void dateLastModifiedChanged();
     // TEST!!!
     void testClicked();
 private:
-    EbuCoreMainType *m_ebuCoreMain;
+
+    QLineEdit *m_editSchema;
+    QLineEdit *m_editVersion;
+    QCheckBox *m_checkDateLastModified;
+    QDateEdit  *m_editDateLastModified;
+    QLineEdit *m_editDocumentId;
+    QLineEdit *m_editLang;
+    QLineEdit *m_editCoreMetadata;
     QLineEdit *m_editMetadataProvider;
+
+    EbuCoreMainType *m_ebuCoreMain;
+
 };
 
 #endif // EBUCOREMAINFORM_H
