@@ -9,7 +9,7 @@
 #include <QVBoxLayout>
 
 // just for test
-#include "documentformattypeform.h"
+#include "coremetadatatypeform.h"
 
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
                                  QEbuMainWindow *mainWindow,
@@ -86,6 +86,6 @@ void EbuCoreMainForm::metadataProviderClosed(Operation op, QVariant value)
 void EbuCoreMainForm::testClicked()
 {
     // TEST PURPOSES!
-    DocumentFormatTypeForm *test = new DocumentFormatTypeForm(0, mainWindow());
+    CoreMetadataTypeForm *test = new CoreMetadataTypeForm(0, mainWindow());
     mainWindow()->pushWidget(test);
 }

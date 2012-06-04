@@ -172,7 +172,7 @@ void EntityTypeForm::removeClicked()
     case OrganisationDetails:
     {
         m_entity->setOrganisationDetails(0);
-        m_listView->buttonAdd()->setEnabled(true);
+        m_listView->enableAdd(true);
     }
         break;
     case Roles:
@@ -226,7 +226,7 @@ void EntityTypeForm::roleChecked(bool checked)
     }
 }
 
-void EntityTypeForm::contactDetailsFormClosed(StackableWidget::Operation op, QVariant value)
+void EntityTypeForm::contactDetailsFormClosed(Operation op, QVariant value)
 {
     ContactDetailsType *contactDetails = QVarPtr<ContactDetailsType>::asPointer(value);
     if(!contactDetails)
