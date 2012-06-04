@@ -9,7 +9,7 @@ TypeConverter::TypeConverter()
 
 QDateTime TypeConverter::stringToDate(const QString &date)
 {
-    if(date.isNull()){
+    if(date.isEmpty()){
         m_errorMsg = "stringToDate received an empty string";
         return QDateTime();
     }
@@ -96,8 +96,8 @@ QDateTime TypeConverter::stringToDate(const QString &date)
 
 QString TypeConverter::dateToString(const QDateTime &date)
 {
-    if(date.isNull()){
-        m_errorMsg = "dateToString received an empty object";
+    if(!date.isValid()){
+        m_errorMsg = "dateToString received an invalid object";
         return QString();
     }
     m_errorMsg = "-no errors-";
@@ -133,7 +133,7 @@ QString TypeConverter::dateToString(const QDateTime &date)
 Duration *TypeConverter::stringToDuration(const QString &duration)
 {
 
-    if (duration.isNull()) {
+    if (duration.isEmpty()) {
         m_errorMsg = "stringToDuration received an empty string";
         return new Duration();
     }
@@ -239,8 +239,12 @@ Duration *TypeConverter::stringToDuration(const QString &duration)
 
 QString TypeConverter::durationToString(const Duration *duration)
 {
-    if (duration->isNull()) {
-        m_errorMsg = "durationToString received an empty object";
+    if (!duration) {
+        m_errorMsg = "durationToString received a null object";
+        return QString();
+    }
+    if (!duration->isValid()) {
+        m_errorMsg = "durationToString received an invalid object";
         return QString();
     }
     m_errorMsg = "-no errors-";
@@ -250,7 +254,7 @@ QString TypeConverter::durationToString(const Duration *duration)
 
 QDateTime TypeConverter::stringToTime(const QString &time)
 {
-    if (time.isNull()) {
+    if (time.isEmpty()) {
         m_errorMsg = "stringToTime received an empty string";
         return QDateTime();
     }
@@ -330,8 +334,8 @@ QDateTime TypeConverter::stringToTime(const QString &time)
 
 QString TypeConverter::timeToString(const QDateTime &time)
 {
-    if (time.isNull()) {
-        m_errorMsg = "timeToString received an empty object";
+    if (!time.isValid()) {
+        m_errorMsg = "timeToString received an invalid object";
         return QString();
     }
     m_errorMsg = "-no errors-";

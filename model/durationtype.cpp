@@ -9,6 +9,7 @@ DurationType::DurationType()
     m_factorDenominator = 1; // default
     m_editRate = 0;
     m_editUnitNumberValue = 0;
+    m_normalPlayTime = 0;
 }
 
 DurationType::DurationType(const QString &timecode)
@@ -20,6 +21,7 @@ DurationType::DurationType(const QString &timecode)
     m_factorDenominator = 1; // default
     m_editRate = 0;
     m_editUnitNumberValue = 0;
+    m_normalPlayTime = 0;
 }
 
 DurationType::DurationType(Duration *normalPlayTime)
@@ -41,6 +43,7 @@ DurationType::DurationType(const unsigned int &editRate, const unsigned long &ed
     m_factorDenominator = factorDenominator;
     m_editUnitNumberValue = new unsigned long(editUnitNumberValue);
     m_time = 0;
+    m_normalPlayTime = 0;
 }
 
 DurationType::DurationType(const QString &timeString, FormatGroup *time)
@@ -52,6 +55,7 @@ DurationType::DurationType(const QString &timeString, FormatGroup *time)
     m_factorDenominator = 1; // default
     m_editRate = 0;
     m_editUnitNumberValue = 0;
+    m_normalPlayTime = 0;
 }
 
 
