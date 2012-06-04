@@ -6,6 +6,7 @@
 class TitleType;
 class QTextEdit;
 class QDateEdit;
+class QCheckBox;
 class ElementTypeEditBox;
 
 class TitleTypeForm : public StackableWidget
@@ -19,9 +20,11 @@ public:
 private slots:
     void cancelClicked();
     void applyClicked();
+    void attributionDateChanged();
 private:
     QDateEdit *m_editAttributionDate;
     QTextEdit *m_textNote;
+    QCheckBox *m_checkAttributionDate;
     ElementTypeEditBox *m_editTitle;
     TitleType *m_title;
 };

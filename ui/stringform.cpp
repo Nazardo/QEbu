@@ -56,7 +56,7 @@ void StringForm::applyClicked()
 {
     m_string->setValue(m_editValue->text());
     m_editFormatGroup->updateExistingFormatGroup(m_string);
-
+    m_editTypeGroup->updateExistingTypeGroup(m_string);
     emit closed(m_op, QVarPtr<String>::asQVariant(m_string));
 }
 

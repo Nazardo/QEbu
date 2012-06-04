@@ -26,29 +26,34 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
     }
     {
         QFormLayout *fl = new QFormLayout;
+
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);
+
+        vl->addLayout(fl);
+    }
+    m_editElementSubject = new ElementTypeEditBox;
+    m_editElementSubject->setLabel(tr("Subject"));
+    vl->addWidget(m_editElementSubject);
+    {
+        QFormLayout *fl = new QFormLayout;
+
+        m_editSubjectCode = new QLineEdit;
+        fl->addRow(tr("Subject code"), m_editSubjectCode);
+
+        m_editSubjectDefinition = new QLineEdit;
+        fl->addRow(tr("Subject definition"), m_editSubjectDefinition);
+
         vl->addLayout(fl);
     }
     {
-        m_editElementSubject = new ElementTypeEditBox;
-        m_editElementSubject->setLabel(tr("Subject"));
-        vl->addWidget(m_editElementSubject);
-    }
-    {
         QHBoxLayout *hl = new QHBoxLayout;
-        hl->addWidget(new QLabel(tr("Subject code")));
-        m_editSubjectCode = new QLineEdit;
-        hl->addWidget(m_editSubjectCode);
-
-        hl->addWidget(new QLabel(tr("Subject definition")));
-        m_editSubjectDefinition = new QLineEdit;
-        hl->addWidget(m_editSubjectDefinition);
 
         hl->addWidget(new QLabel(tr("Attributor")));
         m_editAttributor = new QLineEdit;
         m_editAttributor->setReadOnly(true);
         hl->addWidget(m_editAttributor);
+
         QPushButton *buttonAttributor = new QPushButton(tr("Add/Edit"));
         QObject::connect(buttonAttributor, SIGNAL(clicked()),
                          this, SLOT(attributorClicked()));

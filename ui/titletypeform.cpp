@@ -5,6 +5,7 @@
 #include <QTextEdit>
 #include <QDateEdit>
 #include <QLineEdit>
+#include <QCheckBox>
 #include <QFormLayout>
 
 TitleTypeForm::TitleTypeForm(TitleType *title,
@@ -21,9 +22,18 @@ TitleTypeForm::TitleTypeForm(TitleType *title,
     QVBoxLayout *l = new QVBoxLayout;
     m_editAttributionDate = new QDateEdit;
     m_editAttributionDate->setCalendarPopup(true);
+    m_checkAttributionDate = new QCheckBox(tr("Attribution date"));
+    m_checkAttributionDate->setCheckable(true);
+    QObject::connect(m_editAttributionDate, SIGNAL(dateChanged(QDate)),
+                     this, SLOT(attributionDateChanged()));
+
+    QHBoxLayout *hl = new QHBoxLayout;
+    hl->addWidget(m_checkAttributionDate);
+    hl->addWidget(m_editAttributionDate);
+    l->addLayout(hl);
+
     m_textNote = new QTextEdit;
     QFormLayout *formL = new QFormLayout;
-    formL->addRow(tr("Attribution date"), m_editAttributionDate);
     formL->addRow(tr("Note"), m_textNote);
     l->addLayout(formL);
     m_editTitle = new ElementTypeEditBox;
@@ -32,11 +42,14 @@ TitleTypeForm::TitleTypeForm(TitleType *title,
     this->setLayout(l);
 
     // Set data fields
-    if(m_title->title()) {
+    if (m_title->title()) {
         m_editTitle->editLang()->setText(m_title->title()->lang());
         m_editTitle->editValue()->setText(m_title->title()->value());
     }
-    m_editAttributionDate->setDate(m_title->attributionDate().date());
+    if (m_title->attributionDate().isValid()) {
+        m_editAttributionDate->setDate(m_title->attributionDate().date());
+        m_checkAttributionDate->setChecked(true);
+    }
     m_textNote->setText(m_title->note());
 }
 
@@ -56,11 +69,18 @@ void TitleTypeForm::cancelClicked()
 
 void TitleTypeForm::applyClicked()
 {
-    QDateTime *qdt = new QDateTime;
-    qdt->setDate(m_editAttributionDate->date());
-    m_title->setAttributionDate(*qdt);
+    if (m_checkAttributionDate->isChecked()) {
+        QDateTime *qdt = new QDateTime;
+        qdt->setDate(m_editAttributionDate->date());
+        m_title->setAttributionDate(*qdt);
+    }
     m_title->setNote(m_textNote->toPlainText());
     m_title->setTitle(new ElementType(m_editTitle->editValue()->text(),
                                       m_editTitle->editLang()->text()));
     emit closed(m_op, QVarPtr<TitleType>::asQVariant(m_title));
+}
+
+void TitleTypeForm::attributionDateChanged()
+{
+    m_checkAttributionDate->setChecked(true);
 }

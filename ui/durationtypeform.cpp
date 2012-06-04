@@ -82,7 +82,7 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
             m_spinUnitNumberValue->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkUnitNumberValue = new QCheckBox(tr("Unit value"));
             QObject::connect(m_spinUnitNumberValue, SIGNAL(valueChanged(int)),
-                             this, SLOT(denominatorChanged()));
+                             this, SLOT(unitNumberValueChanged()));
             gl->addWidget(m_checkUnitNumberValue, 3, 0);
             gl->addWidget(m_spinUnitNumberValue, 3, 1);
 
@@ -116,7 +116,8 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
 
     // Set data fields...
     m_editTimecode->setText(m_duration->timecode());
-    m_editNormalPlaytime->setText(TypeConverter::durationToString(m_duration->normalPlayTime()));
+    if (m_duration->normalPlayTime())
+        m_editNormalPlaytime->setText(TypeConverter::durationToString(m_duration->normalPlayTime()));
 
     if (m_duration->editUnitNumberValue()) {
         m_spinUnitNumberValue->setValue(*(m_duration->editUnitNumberValue()));
