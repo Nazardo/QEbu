@@ -7,7 +7,7 @@
 #include "videotracktypeform.h"
 #include "technicalattributesform.h"
 #include "aspectratiotypeform.h"
-#include "lengthtypeform.h"
+#include "lengthtypeeditbox.h"
 #include "../model/qebulimits.h"
 #include <QPushButton>
 #include <QButtonGroup>
@@ -58,18 +58,17 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
         QObject::connect(m_spinRegionDelimY, SIGNAL(valueChanged(int)),
                          this, SLOT(regionDelimYChanged()));
 
+        m_editWidth = new LengthTypeEditBox(m_videoFormat->width());
+        gl->addWidget(m_editWidth, 2, 0, 1, 2);
+
+        m_editHeight = new LengthTypeEditBox(m_videoFormat->height());
+        gl->addWidget(m_editHeight, 3, 0, 1, 2);
+
         vl->addLayout(gl);
     }
     {
         QFormLayout *fl = new QFormLayout;
-        m_buttonWidth = new QPushButton(">>");
-        fl->addRow(tr("Width"), m_buttonWidth);
-        QObject::connect(m_buttonWidth, SIGNAL(toggled(bool)),
-                         this, SLOT(widthChecked(bool)));
-        m_buttonHeight = new QPushButton(">>");
-        fl->addRow(tr("Heigth"), m_buttonHeight);
-        QObject::connect(m_buttonHeight, SIGNAL(toggled(bool)),
-                         this, SLOT(heightChecked(bool)));
+
         m_buttonAspectRatio = new QPushButton(">>");
         fl->addRow(tr("Aspect ratio"), m_buttonAspectRatio);
         QObject::connect(m_buttonAspectRatio, SIGNAL(toggled(bool)),
@@ -90,10 +89,6 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
         QButtonGroup *group = new QButtonGroup(this);
         m_buttonAspectRatio->setCheckable(true);
         group->addButton(m_buttonAspectRatio);
-        m_buttonWidth->setCheckable(true);
-        group->addButton(m_buttonWidth);
-        m_buttonHeight->setCheckable(true);
-        group->addButton(m_buttonHeight);
         m_buttonVideoEncoding->setCheckable(true);
         group->addButton(m_buttonVideoEncoding);
         m_buttonVideoTrack->setCheckable(true);
@@ -125,7 +120,7 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
         m_spinRegionDelimY->setValue(*(m_videoFormat->regionDelimY()));
         m_checkRegionDelimY->setChecked(true);
     }
-    m_buttonWidth->setChecked(true);
+    m_buttonAspectRatio->setChecked(true);
 }
 
 QString VideoFormatTypeForm::toString()
@@ -151,6 +146,8 @@ void VideoFormatTypeForm::applyClicked()
         m_videoFormat->setRegionDelimX(m_spinRegionDelimX->value());
     if (m_checkRegionDelimY->isChecked())
         m_videoFormat->setRegionDelimY(m_spinRegionDelimY->value());
+    m_videoFormat->setWidth(m_editWidth->lengthType());
+    m_videoFormat->setHeight(m_editHeight->lengthType());
     emit closed(m_op, QVarPtr<VideoFormatType>::asQVariant(m_videoFormat));
 }
 
@@ -173,22 +170,6 @@ void VideoFormatTypeForm::addClicked()
         QObject::connect(aspectRatioForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(aspectRatioFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(aspectRatioForm);
-    }
-        break;
-    case Width:
-    {
-        LengthTypeForm *widthForm = new LengthTypeForm(0, this->mainWindow());
-        QObject::connect(widthForm, SIGNAL(closed(Operation,QVariant)),
-                         this, SLOT(widthFormClosed(Operation,QVariant)));
-        this->mainWindow()->pushWidget(widthForm);
-    }
-        break;
-    case Height:
-    {
-        LengthTypeForm *heightForm = new LengthTypeForm(0, this->mainWindow());
-        QObject::connect(heightForm, SIGNAL(closed(Operation,QVariant)),
-                         this, SLOT(heightFormClosed(Operation,QVariant)));
-        this->mainWindow()->pushWidget(heightForm);
     }
         break;
     case VideoEncoding:
@@ -233,24 +214,6 @@ void VideoFormatTypeForm::editClicked()
         this->mainWindow()->pushWidget(aspectRatioForm);
     }
         break;
-    case Width:
-    {
-        LengthTypeForm *widthForm = new LengthTypeForm(
-                    m_videoFormat->width(), this->mainWindow());
-        QObject::connect(widthForm, SIGNAL(closed(Operation,QVariant)),
-                         this, SLOT(widthFormClosed(Operation,QVariant)));
-        this->mainWindow()->pushWidget(widthForm);
-    }
-        break;
-    case Height:
-    {
-        LengthTypeForm *heightForm = new LengthTypeForm(
-                    m_videoFormat->height(), this->mainWindow());
-        QObject::connect(heightForm, SIGNAL(closed(Operation,QVariant)),
-                         this, SLOT(heightFormClosed(Operation,QVariant)));
-        this->mainWindow()->pushWidget(heightForm);
-    }
-        break;
     case VideoEncoding:
     {
         TypeGroupForm *videoEncodingForm = new TypeGroupForm(
@@ -293,16 +256,6 @@ void VideoFormatTypeForm::removeClicked()
         m_videoFormat->setAspectRatio(0);
         m_listView->buttonAdd()->setEnabled(true);
     }
-    case Width:
-    {
-        m_videoFormat->setWidth(0);
-        m_listView->buttonAdd()->setEnabled(true);
-    }
-    case Height:
-    {
-        m_videoFormat->setHeight(0);
-        m_listView->buttonAdd()->setEnabled(true);
-    }
     case VideoEncoding:
     {
         delete(m_videoFormat->videoEncoding().takeAt(row));
@@ -331,32 +284,6 @@ void VideoFormatTypeForm::aspectRatioChecked(bool checked)
     AspectRatioType *art = m_videoFormat->aspectRatio();
     if (art) {
         m_listView->addItem(art->toString());
-        m_listView->enableAdd(false);
-    }
-}
-
-void VideoFormatTypeForm::widthChecked(bool checked)
-{
-    if (!checked)
-        return;
-    m_currentEditMode = Width;
-    updateListAndButtons();
-    LengthType *lt = m_videoFormat->width();
-    if (lt) {
-        m_listView->addItem(lt->toString());
-        m_listView->enableAdd(false);
-    }
-}
-
-void VideoFormatTypeForm::heightChecked(bool checked)
-{
-    if (!checked)
-        return;
-    m_currentEditMode = Height;
-    updateListAndButtons();
-    LengthType *lt = m_videoFormat->height();
-    if (lt) {
-        m_listView->addItem(lt->toString());
         m_listView->enableAdd(false);
     }
 }
@@ -419,36 +346,6 @@ void VideoFormatTypeForm::aspectRatioFormClosed(StackableWidget::Operation op, Q
     }
 }
 
-void VideoFormatTypeForm::widthFormClosed(StackableWidget::Operation op, QVariant value)
-{
-    LengthType *width = QVarPtr<LengthType>::asPointer(value);
-    if(!width)
-        return;
-    if(op == Add) {
-        m_listView->addItem(width->toString());
-        m_videoFormat->setWidth(width);
-        m_listView->enableAdd(false);
-    } else if(op == Edit) {
-        int row = 0;
-        m_listView->setItem(row, width->toString());
-    }
-}
-
-void VideoFormatTypeForm::heightFormClosed(StackableWidget::Operation op, QVariant value)
-{
-    LengthType *height = QVarPtr<LengthType>::asPointer(value);
-    if(!height)
-        return;
-    if(op == Add) {
-        m_listView->addItem(height->toString());
-        m_videoFormat->setHeight(height);
-        m_listView->enableAdd(false);
-    } else if(op == Edit) {
-        int row = 0;
-        m_listView->setItem(row, height->toString());
-    }
-}
-
 void VideoFormatTypeForm::videoEncodingFormClosed(StackableWidget::Operation op, QVariant value)
 {
     TypeGroup *videoEncoding = QVarPtr<TypeGroup>::asPointer(value);
@@ -497,10 +394,6 @@ void VideoFormatTypeForm::updateListAndButtons()
     QString title;
     if (m_currentEditMode == AspectRatio)
         title = tr("Aspect ratio");
-    else if (m_currentEditMode == Width)
-        title = tr("Width");
-    else if (m_currentEditMode == Height)
-        title = tr("Height");
     else if (m_currentEditMode == VideoEncoding)
         title = tr("Video encoding");
     else if (m_currentEditMode == VideoTrack)

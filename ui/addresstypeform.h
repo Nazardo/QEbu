@@ -14,7 +14,7 @@ class AddressTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit AddressTypeForm(AddressType *entity,
+    explicit AddressTypeForm(AddressType *address,
                              QEbuMainWindow *mainWindow,
                              QWidget *parent = 0);
     QString toString();

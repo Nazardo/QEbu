@@ -9,6 +9,7 @@ class QPushButton;
 class QCheckBox;
 class QSpinBox;
 class ListView;
+class LengthTypeEditBox;
 
 class VideoFormatTypeForm : public StackableWidget
 {
@@ -31,21 +32,16 @@ private slots:
     void removeClicked();
     // -
     void aspectRatioChecked(bool checked);
-    void widthChecked(bool checked);
-    void heightChecked(bool checked);
     void videoEncodingChecked(bool checked);
     void videoTrackTypeChecked(bool checked);
     void technicalAttributesChecked(bool checked);
     // -
     void aspectRatioFormClosed(Operation op, QVariant value);
-    void widthFormClosed(Operation op, QVariant value);
-    void heightFormClosed(Operation op, QVariant value);
     void videoEncodingFormClosed(Operation op, QVariant value);
     void videoTrackFormClosed(Operation op, QVariant value);
     void technicalAttributesFormClosed(Operation op, QVariant value);
 private:
-    enum EditMode { AspectRatio, Width, Height,
-                    VideoEncoding, VideoTrack, TechnicalAttributesMode };
+    enum EditMode { AspectRatio, VideoEncoding, VideoTrack, TechnicalAttributesMode };
     void updateListAndButtons();
 
     QLineEdit *m_editVideoFormatId;
@@ -55,8 +51,8 @@ private:
     QSpinBox *m_spinRegionDelimY;
     QCheckBox *m_checkRegionDelimX;
     QCheckBox *m_checkRegionDelimY;
-    QPushButton *m_buttonWidth;
-    QPushButton *m_buttonHeight;
+    LengthTypeEditBox *m_editWidth;
+    LengthTypeEditBox *m_editHeight;
     QPushButton *m_buttonAspectRatio;
     QPushButton *m_buttonVideoEncoding;
     QPushButton *m_buttonVideoTrack;
