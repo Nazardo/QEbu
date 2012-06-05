@@ -1,5 +1,8 @@
 #include "ebucoremaintype.h"
 
+const QString EbuCoreMainType::SCHEMA = "EBU_CORE_20110531.xsd";
+const QString EbuCoreMainType::VERSION = "1.3";
+
 EbuCoreMainType::EbuCoreMainType()
 {
     m_lang = "en";
@@ -11,6 +14,16 @@ EbuCoreMainType::~EbuCoreMainType()
 {
     delete m_coreMetadata;
     delete m_metadataProvider;
+}
+
+QString EbuCoreMainType::schema() const
+{
+    return SCHEMA;
+}
+
+QString EbuCoreMainType::version() const
+{
+    return VERSION;
 }
 
 QDateTime EbuCoreMainType::dateLastModified() const

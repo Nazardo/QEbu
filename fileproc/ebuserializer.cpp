@@ -23,6 +23,10 @@ bool EbuSerializer::serializeToFile(QFile &file)
                           "http://www.w3.org/2001/XMLSchema-instance");
     rootNode.setAttribute("xmlns:ebucore",
                           "urn:ebu:metadata-schema:ebuCore_2011");
+    if(!m_root->schema().isEmpty())
+        rootNode.setAttribute("schema", m_root->schema());
+    if(!m_root->version().isEmpty())
+        rootNode.setAttribute("version", m_root->version());
     if(m_root->dateLastModified().isValid())
         rootNode.setAttribute("dateLastModified", TypeConverter::dateToString(m_root->dateLastModified()));
     if(!m_root->lang().isEmpty())

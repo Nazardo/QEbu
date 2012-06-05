@@ -13,6 +13,8 @@ public:
     EbuCoreMainType();
     ~EbuCoreMainType();
     // Attributes
+    QString schema() const;
+    QString version() const;
     QDateTime dateLastModified() const;
     void setDateLastModified(const QDateTime &dateLastModified);
     QString documentId() const;
@@ -27,6 +29,8 @@ public:
     QString toString() const;
     QMap<QString, FormatType*> &formatMap();
 private:
+    static const QString SCHEMA;
+    static const QString VERSION;
     // Attributes
     QDateTime m_dateLastModified;
     QString m_documentId;
