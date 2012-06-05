@@ -39,14 +39,18 @@ TimezoneEditBox::TimezoneEditBox(QWidget *parent) :
     timezones <<tr("(UTC +11:00) Magadan, Isole Solomon, Nuova Caledonia");
     timezones <<tr("(UTC +12:00) Auckland, Fiji, Kamchatka, Isole Marshall");
     timezones <<tr("(UTC +13:00) Nuku'alofa");
+    timezones <<tr("(local)");
     addItems(timezones);
-    setCurrentIndex(15);
+
+
+    setLocal(); //default: local time
+    //setCurrentIndex(15);  //default: UTC+1
 
     QObject::connect(this, SIGNAL(currentIndexChanged(int)),
                      this, SLOT(timezoneSelected(int)));
 }
 
-int TimezoneEditBox::getUTCOffset()
+int TimezoneEditBox::getUTCOffset() const
 {
     switch(currentIndex()){
     case 0: return -12 * 60;
@@ -83,6 +87,7 @@ int TimezoneEditBox::getUTCOffset()
     case 31: return 11 * 60;
     case 32: return 12 * 60;
     case 33: return 13 * 60;
+    case 34: return 0;
     default: qDebug() <<"Error in TimezoneEditBox: unexpected code: "+currentIndex();
     }
     return 0;
@@ -164,9 +169,22 @@ void TimezoneEditBox::setUTCOffset(int minutes)
     }
 }
 
+bool TimezoneEditBox::isLocal() const
+{
+    return currentIndex()==34;
+}
+
+void TimezoneEditBox::setLocal()
+{
+    setCurrentIndex(34);
+}
+
 void TimezoneEditBox::timezoneSelected(int index)
 {
     Q_UNUSED(index)
-    qDebug() <<"Timezone selected: UTC" <<(int)getUTCOffset()/60 <<":" <<getUTCOffset()%60;
+    if (isLocal())
+        qDebug() <<"Timezone selected: local";
+    else
+        qDebug() <<"Timezone selected: UTC" <<(int)getUTCOffset()/60 <<":" <<getUTCOffset()%60;
 }
 
