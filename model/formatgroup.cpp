@@ -1,4 +1,5 @@
 #include "formatgroup.h"
+#include <QObject>
 
 FormatGroup::FormatGroup()
 {
@@ -39,4 +40,15 @@ QString FormatGroup::formatLink() const
 void FormatGroup::setFormatLink(const QString &formatLink)
 {
     m_formatLink = formatLink;
+}
+
+QString FormatGroup::toString() const
+{
+    if (!m_formatLabel.isEmpty())
+        return m_formatLabel;
+    if (!m_formatDefinition.isEmpty())
+        return m_formatDefinition;
+    if (!m_formatLink.isEmpty())
+        return m_formatLink;
+    return QObject::tr("Undefined format");
 }

@@ -1,5 +1,5 @@
-#ifndef TYPEGROUPFORM_H
-#define TYPEGROUPFORM_H
+#ifndef FORMATGROUPFORM_H
+#define FORMATGROUPFORM_H
 
 #include "stackablewidget.h"
 
@@ -21,4 +21,4 @@ private:
     FormatGroupEditBox *m_editFormatGroup;
 };
 
-#endif // TYPEGROUPFORM_H
+#endif // FORMATGROUPFORM_H

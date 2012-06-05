@@ -47,6 +47,7 @@ public:
     TechnicalAttributes *technicalAttributes() const;
     void setTechnicalAttributes(TechnicalAttributes *technicalAttributes);
 
+    QString toString();
 private:
     // Attributes
     QString m_imageFormatId;

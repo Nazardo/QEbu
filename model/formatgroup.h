@@ -14,7 +14,7 @@ public:
     void setFormatDefinition(const QString &formatDefinition);
     QString formatLink() const;
     void setFormatLink(const QString &formatLink);
-
+    QString toString() const;
 private:
     QString m_formatLabel;
     QString m_formatDefinition;

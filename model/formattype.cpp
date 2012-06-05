@@ -149,6 +149,14 @@ void ImageFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttri
     m_technicalAttributes = technicalAttributes;
 }
 
+QString ImageFormatType::toString()
+{
+    if (!imageFormatId().isEmpty())
+        return imageFormatId();
+    else
+        return "Undefined Image Format";
+}
+
 /* ------------------------------ AspectRatioType -------------------------- */
 AspectRatioType::AspectRatioType()
 {
