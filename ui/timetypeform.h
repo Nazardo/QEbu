@@ -2,6 +2,7 @@
 #define TIMETYPEFORM_H
 
 #include "stackablewidget.h"
+#include <QTimeEdit>
 
 class TimeType;
 class QLineEdit;
@@ -35,8 +36,10 @@ private slots:
 private:
     void updateListAndButtons();
 
+    QWidget *m_labelTimecode;
     QLineEdit *m_editTimecode;
-    QLineEdit *m_editNormalPlaytime;
+    QWidget *m_labelNormalPlaytime;
+    QTimeEdit *m_editNormalPlaytime;
     QSpinBox *m_spinRate;
     QSpinBox *m_spinFactorNumerator;
     QSpinBox *m_spinFactorDenominator;
@@ -45,6 +48,7 @@ private:
     QCheckBox *m_checkFactorNumerator;
     QCheckBox *m_checkFactorDenominator;
     QCheckBox *m_checkUnitNumberValue;
+    QWidget *m_labelTime;
     FormatGroupEditBox *m_editFormatGroup;
     QRadioButton *m_radioTimecode;
     QRadioButton *m_radioNormalPlaytime;

@@ -407,6 +407,13 @@ QString TypeConverter::timeToString(const QDateTime &time)
     return timeString;
 }
 
+QDateTime TypeConverter::timeToDateTime(const QTime &time)
+{
+    QDateTime dt = QDateTime(QDate(-1,1,1), time);  //This QDate means "no UTC offset"
+    dt.setTimeSpec(Qt::LocalTime);
+    return dt;
+}
+
 bool TypeConverter::validateUri(const QString &uri)
 {
     return QUrl(uri, QUrl::StrictMode).isValid();

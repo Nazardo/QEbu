@@ -16,6 +16,7 @@ public:
 
     static QDateTime stringToTime(const QString &time);
     static QString timeToString(const QDateTime &time);
+    static QDateTime timeToDateTime(const QTime &time);
 
     static bool validateUri(const QString &uri);
 
