@@ -71,7 +71,8 @@ HEADERS += \
     ui/documentformattypeform.h \
     ui/coremetadatatypeform.h \
     ui/parttypeform.h \
-    ui/verticalscrollarea.h
+    ui/verticalscrollarea.h \
+    ui/formattypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -145,4 +146,5 @@ SOURCES += \
     ui/documentformattypeform.cpp \
     ui/coremetadatatypeform.cpp \
     ui/parttypeform.cpp \
-    ui/verticalscrollarea.cpp
+    ui/verticalscrollarea.cpp \
+    ui/formattypeform.cpp

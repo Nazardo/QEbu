@@ -355,7 +355,9 @@ public:
     void setFormat(ElementType *format);
     unsigned int *regionDelimX() const;
     void setRegionDelimX(const unsigned int &regionDelimX);
+    void clearRegionDelimX();
     unsigned int *regionDelimY() const;
+    void clearRegionDelimY();
     void setRegionDelimY(const unsigned int &regionDelimY);
     LengthType *width() const;
     void setWidth(LengthType *width);
@@ -377,6 +379,7 @@ public:
     void setDuration(DurationType *duration);
     long *fileSize() const;
     void setFileSize(const long &fileSize);
+    void clearFileSize();
     QString fileName() const;
     void setFileName(const QString &fileName);
     TypeGroup *locator() const;

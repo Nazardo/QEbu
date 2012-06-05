@@ -906,6 +906,9 @@ FormatType::FormatType()
     m_technicalAttributes = 0;
     m_dateCreated = 0;
     m_dateModified = 0;
+    m_regionDelimX = 0;
+    m_regionDelimY = 0;
+    m_fileSize = 0;
 }
 
 FormatType::~FormatType()
@@ -953,6 +956,9 @@ FormatType::~FormatType()
     delete m_technicalAttributes;
     delete m_dateCreated;
     delete m_dateModified;
+    delete m_regionDelimX;
+    delete m_regionDelimY;
+    delete m_fileSize;
 }
 
 QString FormatType::formatId() const
@@ -1008,9 +1014,21 @@ void FormatType::setRegionDelimX(const unsigned int &regionDelimX)
     m_regionDelimX = new unsigned int(regionDelimX);
 }
 
+void FormatType::clearRegionDelimX()
+{
+    delete m_regionDelimX;
+    m_regionDelimY = 0;
+}
+
 unsigned int *FormatType::regionDelimY() const
 {
     return m_regionDelimY;
+}
+
+void FormatType::clearRegionDelimY()
+{
+    delete m_regionDelimY;
+    m_regionDelimY = 0;
 }
 
 void FormatType::setRegionDelimY(const unsigned int &regionDelimY)
@@ -1124,6 +1142,12 @@ void FormatType::setFileSize(const long &fileSize)
 {
     delete m_fileSize;
     m_fileSize = new long(fileSize);
+}
+
+void FormatType::clearFileSize()
+{
+    delete m_fileSize;
+    m_fileSize = 0;
 }
 
 QString FormatType::fileName() const
