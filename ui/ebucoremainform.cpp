@@ -1,5 +1,6 @@
 #include "ebucoremainform.h"
 #include "../model/ebucoremaintype.h"
+#include "coremetadatatypeform.h"
 #include "entitytypeform.h"
 #include "qvarptr.h"
 #include <QPushButton>
@@ -9,11 +10,6 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
-
-// just for test
-#include "coremetadatatypeform.h"
-#include "formattypeform.h"
-#include "alternativetitletypeform.h"
 
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
                                  QEbuMainWindow *mainWindow,
@@ -84,11 +80,6 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
         QObject::connect(buttonMetadataProviderRemove, SIGNAL(clicked()),
                          this, SLOT(metadataProviderRemoveClicked()));
         gl->addWidget(buttonMetadataProviderRemove, 1, 3);
-
-    // JUST FOR TEST!!!
-        QPushButton *buttonTest = new QPushButton("TEST");
-        QObject::connect(buttonTest, SIGNAL(clicked()), this, SLOT(testClicked()));
-        gl->addWidget(buttonTest, 2, 0, 1, 4);
         vl->addLayout(gl);
     }
 
@@ -175,9 +166,3 @@ void EbuCoreMainForm::metadataProviderClosed(Operation op, QVariant value)
     m_editMetadataProvider->setText(entityType->toString());
 }
 
-void EbuCoreMainForm::testClicked()
-{
-    // TEST PURPOSES!
-    AlternativeTitleTypeForm *test = new AlternativeTitleTypeForm(0, mainWindow());
-    mainWindow()->pushWidget(test);
-}

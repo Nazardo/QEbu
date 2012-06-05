@@ -18,11 +18,15 @@ public:
     ~QEbuMainWindow();
     void pushWidget(StackableWidget *widget);
     EbuCoreMainType *ebuCoreMain();
-    
 private slots:
     void childClosed();
 
+    void actionOpen();
+    void actionSave();
+
 private:
+    void resetView();
+    bool removeWidgetFromTop();
     void updateLabel();
 
     QLayout *m_mainCentralLayout;

@@ -26,8 +26,6 @@ private slots:
     void coreMetadataClosed(Operation op, QVariant value);
     // -
     void dateLastModifiedChanged();
-    // TEST!!!
-    void testClicked();
 private:
 
     QLineEdit *m_editSchema;

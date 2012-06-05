@@ -19,7 +19,7 @@ bool Validator::isValid(const QString &file)
     QStringList args;
     args <<"--noout"; // Don't print the xml tree
     args <<"--schema" <<QString(path+"\\validator\\EBU_CORE_20110915.xsd");
-    args <<QString(path+"\\"+file);
+    args <<file;
 
     QProcess p;
     p.start("validator\\xmllint.exe", args);

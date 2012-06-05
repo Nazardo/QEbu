@@ -1,27 +1,47 @@
 #include "qebumainwindow.h"
 #include "../model/ebucoremaintype.h"
+#include "../fileproc/ebuparser.h"
+#include "../fileproc/ebuserializer.h"
 #include "ebucoremainform.h"
 #include <QLabel>
 #include <QLayout>
 #include <QStackedWidget>
+#include <QMenu>
+#include <QMenuBar>
+#include <QFileDialog>
+#include <QMessageBox>
 
 
 QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
+    m_ebuCoreMain = 0;
+
+    // Central Widget
     QWidget *cw = new QWidget;
     m_mainCentralLayout = new QVBoxLayout;
     m_labelNavigation = new QLabel;
-    m_listLabel.append("<b>EbuCoreMain Type</b>");
-    m_mainCentralLayout->addWidget(m_labelNavigation);
     m_stackedWidget = new QStackedWidget;
-    m_ebuCoreMain = new EbuCoreMainType;
-    StackableWidget *main = new EbuCoreMainForm(m_ebuCoreMain, this);
-    m_stackedWidget->addWidget(main);
+    m_mainCentralLayout->addWidget(m_labelNavigation);
     m_mainCentralLayout->addWidget(m_stackedWidget);
     cw->setLayout(m_mainCentralLayout);
-    updateLabel();
     this->setCentralWidget(cw);
+
+    // Create top menu bar
+    QMenuBar *topMenuBar = new QMenuBar(this);
+    QMenu *fileMenu = new QMenu(tr("&File"));
+    QAction *openAction = new QAction(tr("&Open..."), this);
+    openAction->setShortcuts(QKeySequence::Open);
+    QObject::connect(openAction, SIGNAL(triggered()),
+                     this, SLOT(actionOpen()));
+    fileMenu->addAction(openAction);
+    QAction *saveAction = new QAction(tr("&Save as..."), this);
+    saveAction->setShortcut(QKeySequence::SaveAs);
+    QObject::connect(saveAction, SIGNAL(triggered()),
+                     this, SLOT(actionSave()));
+    fileMenu->addAction(saveAction);
+    topMenuBar->addMenu(fileMenu);
+    this->setMenuBar(topMenuBar);
 }
 
 QEbuMainWindow::~QEbuMainWindow()
@@ -46,11 +66,25 @@ EbuCoreMainType *QEbuMainWindow::ebuCoreMain()
 
 void QEbuMainWindow::childClosed()
 {
+    removeWidgetFromTop();
+}
+
+void QEbuMainWindow::resetView()
+{
+    // Empty current view and prepare another
+    while (removeWidgetFromTop());
+    this->pushWidget(new EbuCoreMainForm(m_ebuCoreMain, this));
+}
+
+bool QEbuMainWindow::removeWidgetFromTop()
+{
     QWidget *currentWidget = m_stackedWidget->currentWidget();
+    if (!currentWidget)
+        return false;
     m_stackedWidget->removeWidget(currentWidget);
     m_listLabel.takeLast();
     updateLabel();
-
+    return true;
 }
 
 void QEbuMainWindow::updateLabel()
@@ -71,4 +105,81 @@ void QEbuMainWindow::updateLabel()
         }
     }
     m_labelNavigation->setText(title);
+}
+
+void QEbuMainWindow::actionOpen()
+{
+    QString filename = QFileDialog::getOpenFileName(this, tr("Open Metadata File"),
+                                            QDir::homePath(),
+                                            tr("XML Files (*.xml)"), 0);
+    if (filename.isEmpty()) {
+        // User pressed "Cancel"
+        return;
+    }
+
+    QFile inputFile(filename);
+    if (!inputFile.open(QFile::ReadOnly)) {
+        QMessageBox openWarning(QMessageBox::Warning, tr("QEbu Parser"),
+                                tr("Input file cannot be opened"),
+                                QMessageBox::Ok, this);
+        openWarning.setDetailedText(inputFile.errorString());
+        openWarning.exec();
+        return;
+    }
+
+    EbuParser parser;
+    if (!parser.parseFromFile(inputFile)) {
+        QMessageBox parserWarning(this);
+        parserWarning.setIcon(QMessageBox::Warning);
+        parserWarning.setWindowTitle(tr("QEbu Parser"));
+        parserWarning.setText(tr("Invalid input file"));
+        parserWarning.setDetailedText(parser.errorMsg());
+        parserWarning.setStandardButtons(QMessageBox::Ok);
+        parserWarning.setDefaultButton(QMessageBox::Ok);
+        parserWarning.exec();
+        return;
+    }
+
+    // All has gone well (we hope).
+    QMessageBox::information(this, tr("QEbu Parser"),
+                             tr("Metadata imported successfully."));
+    m_ebuCoreMain = parser.root();
+    resetView();
+}
+
+
+void QEbuMainWindow::actionSave()
+{
+    QString filename = QFileDialog::getSaveFileName(this, tr("Open Metadata File"),
+                                            QDir::homePath(),
+                                            tr("XML Files (*.xml)"), 0);
+    if (filename.isEmpty()) {
+        // User pressed "Cancel"
+        return;
+    }
+
+    QFile outputFile(filename);
+    if (!outputFile.open(QFile::WriteOnly)) {
+        QMessageBox openWarning(QMessageBox::Warning, tr("QEbu Serializer"),
+                                tr("Output file cannot be opened"),
+                                QMessageBox::Ok, this);
+        openWarning.setDetailedText(outputFile.errorString());
+        openWarning.exec();
+        return;
+    }
+
+    EbuSerializer serializer(m_ebuCoreMain);
+    if (!serializer.serializeToFile(outputFile)) {
+        // In the current version the serializer always returns true, so
+        // this is dead code never to be reached.
+        QMessageBox serializerWarning(QMessageBox::Warning, tr("QEbu Serializer"),
+                                  tr("Error while serializing to file"),
+                                  QMessageBox::Ok, this);
+        serializerWarning.exec();
+        return;
+    }
+
+    // All has gone well (we hope).
+    QMessageBox::information(this, tr("QEbu Serializer"),
+                             tr("Metadata saved successfully."));
 }
