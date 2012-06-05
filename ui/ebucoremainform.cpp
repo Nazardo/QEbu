@@ -27,11 +27,13 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
         QLabel *schema = new QLabel(tr("Schema"));
         gl->addWidget(schema, 0, 0, 1, 1);
         gl->addWidget(m_editSchema, 0, 1, 1, 3);
+        m_editSchema->setReadOnly(true);
 
         m_editVersion = new QLineEdit;
         QLabel *version = new QLabel(tr("Version"));
         gl->addWidget(version, 1, 0, 1, 1);
         gl->addWidget(m_editVersion, 1, 1, 1, 3);
+        m_editSchema->setReadOnly(true);
 
         m_editDateLastModified = new QDateEdit;
         m_editDateLastModified->setCalendarPopup(true);
@@ -90,6 +92,8 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
 
     this->setLayout(vl);
     // Set text fields...
+    m_editSchema->setText(m_ebuCoreMain->schema());
+    m_editVersion->setText(m_ebuCoreMain->version());
     m_editDocumentId->setText(m_ebuCoreMain->documentId());
     if (m_ebuCoreMain->dateLastModified().isValid()) {
         m_editDateLastModified->setDate(m_ebuCoreMain->dateLastModified().date());

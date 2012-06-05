@@ -7,6 +7,7 @@ class QLayout;
 class EbuCoreMainType;
 class QStackedWidget;
 class StackableWidget;
+class QLabel;
 
 class QEbuMainWindow : public QMainWindow
 {
@@ -22,9 +23,13 @@ private slots:
     void childClosed();
 
 private:
+    void updateLabel();
+
     QLayout *m_mainCentralLayout;
     EbuCoreMainType *m_ebuCoreMain;
     QStackedWidget *m_stackedWidget;
+    QLabel *m_labelNavigation;
+    QList<QString> m_listLabel;
 };
 
 #endif // QEBUMAINWINDOW_H
