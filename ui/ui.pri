@@ -70,7 +70,8 @@ HEADERS += \
     ui/completereditbox.h \
     ui/documentformattypeform.h \
     ui/coremetadatatypeform.h \
-    ui/parttypeform.h
+    ui/parttypeform.h \
+    ui/verticalscrollarea.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -143,4 +144,5 @@ SOURCES += \
     ui/completereditbox.cpp \
     ui/documentformattypeform.cpp \
     ui/coremetadatatypeform.cpp \
-    ui/parttypeform.cpp
+    ui/parttypeform.cpp \
+    ui/verticalscrollarea.cpp

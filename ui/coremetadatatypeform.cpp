@@ -20,6 +20,7 @@
 #include "ui/ratingtypeform.h"
 #include "ui/parttypeform.h"
 #include "listview.h"
+#include "verticalscrollarea.h"
 #include "qvarptr.h"
 #include <QPushButton>
 #include <QButtonGroup>
@@ -29,9 +30,10 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QTableWidget>
-#include <QWidget>
 
-CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata, QEbuMainWindow *mainWindow, QWidget *parent) :
+CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata,
+                                           QEbuMainWindow *mainWindow,
+                                           QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (coreMetadata) ? Edit : Add;
@@ -45,174 +47,209 @@ CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata, QEbuM
     QTabWidget *tabWidget = new QTabWidget;
 
     // First tab
-    QWidget *firstTab = new QWidget;
+    VerticalScrollArea *firstTab = new VerticalScrollArea;
     {
-        QFormLayout *fl = new QFormLayout;
+        QGridLayout *gl = new QGridLayout;
         {
-            m_buttonTitle = new QPushButton(">>");;
-            fl->addRow(tr("Title"), m_buttonTitle);
+            m_buttonTitle = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Title")), 0, 0);
+            gl->addWidget(m_buttonTitle, 0, 1);
             QObject::connect(m_buttonTitle, SIGNAL(toggled(bool)),
                              this, SLOT(titleChecked(bool)));
-            m_buttonAlternativeTitle = new QPushButton(">>");;
-            fl->addRow(tr("Alternative Title"), m_buttonAlternativeTitle);
+            m_buttonAlternativeTitle = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Alternative Title")), 1, 0);
+            gl->addWidget(m_buttonAlternativeTitle, 1, 1);
             QObject::connect(m_buttonAlternativeTitle, SIGNAL(toggled(bool)),
                              this, SLOT(alternativeTitleChecked(bool)));
-            m_buttonCreator = new QPushButton(">>");;
-            fl->addRow(tr("Creator"), m_buttonCreator);
+            m_buttonCreator = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Creator")), 2, 0);
+            gl->addWidget(m_buttonCreator, 2, 1);
             QObject::connect(m_buttonCreator, SIGNAL(toggled(bool)),
                              this, SLOT(creatorChecked(bool)));
-            m_buttonSubject = new QPushButton(">>");;
-            fl->addRow(tr("Subject"), m_buttonSubject);
+            m_buttonSubject = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Subject")), 3, 0);
+            gl->addWidget(m_buttonSubject, 3, 1);
             QObject::connect(m_buttonSubject, SIGNAL(toggled(bool)),
                              this, SLOT(subjectChecked(bool)));
-            m_buttonDescription = new QPushButton(">>");;
-            fl->addRow(tr("Description"), m_buttonDescription);
+            m_buttonDescription = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Description")), 4, 0);
+            gl->addWidget(m_buttonDescription, 4, 1);
             QObject::connect(m_buttonDescription, SIGNAL(toggled(bool)),
                              this, SLOT(descriptionChecked(bool)));
-            m_buttonPublisher = new QPushButton(">>");;
-            fl->addRow(tr("Publisher"), m_buttonPublisher);
+            m_buttonPublisher = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Publisher")), 5, 0);
+            gl->addWidget(m_buttonPublisher, 5, 1);
             QObject::connect(m_buttonPublisher, SIGNAL(toggled(bool)),
                              this, SLOT(publisherChecked(bool)));
-            m_buttonContributor = new QPushButton(">>");;
-            fl->addRow(tr("Contributor"), m_buttonContributor);
+            m_buttonContributor = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Contributor")), 6, 0);
+            gl->addWidget(m_buttonContributor, 6, 1);
             QObject::connect(m_buttonContributor, SIGNAL(toggled(bool)),
                              this, SLOT(contributorChecked(bool)));
-            m_buttonDate = new QPushButton(">>");;
-            fl->addRow(tr("Date"), m_buttonDate);
+            m_buttonDate = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Date")), 7, 0);
+            gl->addWidget(m_buttonDate, 7, 1);
             QObject::connect(m_buttonDate, SIGNAL(toggled(bool)),
                              this, SLOT(dateChecked(bool)));
-            m_buttonType = new QPushButton(">>");;
-            fl->addRow(tr("Type"), m_buttonType);
+            m_buttonType = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Type")), 8, 0);
+            gl->addWidget(m_buttonType, 8, 1);
             QObject::connect(m_buttonType, SIGNAL(toggled(bool)),
                              this, SLOT(typeChecked(bool)));
-            m_buttonFormat = new QPushButton(">>");;
-            fl->addRow(tr("Format"), m_buttonFormat);
+            m_buttonFormat = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Format")), 9, 0);
+            gl->addWidget(m_buttonFormat, 9, 1);
             QObject::connect(m_buttonFormat, SIGNAL(toggled(bool)),
                              this, SLOT(formatChecked(bool)));
-            m_buttonIdentifier = new QPushButton(">>");;
-            fl->addRow(tr("Identifier"), m_buttonIdentifier);
+            m_buttonIdentifier = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Identifier")), 10, 0);
+            gl->addWidget(m_buttonIdentifier, 10, 1);
             QObject::connect(m_buttonIdentifier, SIGNAL(toggled(bool)),
                              this, SLOT(identifierChecked(bool)));
-            m_buttonSource = new QPushButton(">>");;
-            fl->addRow(tr("Source"), m_buttonSource);
+            m_buttonSource = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Source")), 11, 0);
+            gl->addWidget(m_buttonSource, 11, 1);
             QObject::connect(m_buttonSource, SIGNAL(toggled(bool)),
                              this, SLOT(sourceChecked(bool)));
-            m_buttonLanguage = new QPushButton(">>");;
-            fl->addRow(tr("Language"), m_buttonLanguage);
+            m_buttonLanguage = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Language")), 12, 0);
+            gl->addWidget(m_buttonLanguage, 12, 1);
             QObject::connect(m_buttonLanguage, SIGNAL(toggled(bool)),
                              this, SLOT(languageChecked(bool)));
 
         }
-        firstTab->setLayout(fl);
+        firstTab->setLayout(gl);
     }
     tabWidget->addTab(firstTab, "Credits");
 
     // Second tab
-    QWidget *secondTab = new QWidget;
+    VerticalScrollArea *secondTab = new VerticalScrollArea;
     {
-        QFormLayout *fl = new QFormLayout;
+        QGridLayout *gl = new QGridLayout;
         {
-            m_buttonRelation = new QPushButton(">>");;
-            fl->addRow(tr("Relation"), m_buttonRelation);
+            m_buttonRelation = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Relation")), 0, 0);
+            gl->addWidget(m_buttonRelation, 0, 1);
             QObject::connect(m_buttonRelation, SIGNAL(toggled(bool)),
                              this, SLOT(relationChecked(bool)));
-            m_buttonIsVersionOf = new QPushButton(">>");;
-            fl->addRow(tr("Is Version Of"), m_buttonIsVersionOf);
+            m_buttonIsVersionOf = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Is Version Of")), 1, 0);
+            gl->addWidget(m_buttonIsVersionOf, 1, 1);
             QObject::connect(m_buttonIsVersionOf, SIGNAL(toggled(bool)),
                              this, SLOT(isVersionOfChecked(bool)));
-            m_buttonHasVersion = new QPushButton(">>");;
-            fl->addRow(tr("Has Version"), m_buttonHasVersion);
+            m_buttonHasVersion = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Has Version")), 2, 0);
+            gl->addWidget(m_buttonHasVersion, 2, 1);
             QObject::connect(m_buttonHasVersion, SIGNAL(toggled(bool)),
                              this, SLOT(hasVersionChecked(bool)));
-            m_buttonIsReplacedBy = new QPushButton(">>");;
-            fl->addRow(tr("Is Replaced By"), m_buttonIsReplacedBy);
+            m_buttonIsReplacedBy = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Is Replaced By")), 3, 0);
+            gl->addWidget(m_buttonIsReplacedBy, 3, 1);
             QObject::connect(m_buttonIsReplacedBy, SIGNAL(toggled(bool)),
                              this, SLOT(isReplacedByChecked(bool)));
-            m_buttonReplaces = new QPushButton(">>");;
-            fl->addRow(tr("Replaces"), m_buttonReplaces);
+            m_buttonReplaces = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Replaces")), 4, 0);
+            gl->addWidget(m_buttonReplaces, 4, 1);
             QObject::connect(m_buttonReplaces, SIGNAL(toggled(bool)),
                              this, SLOT(replacesChecked(bool)));
-            m_buttonIsRequiredBy = new QPushButton(">>");;
-            fl->addRow(tr("Is Required By"), m_buttonIsRequiredBy);
+            m_buttonIsRequiredBy = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Is Required By")), 5, 0);
+            gl->addWidget(m_buttonIsRequiredBy, 5, 1);
             QObject::connect(m_buttonIsRequiredBy, SIGNAL(toggled(bool)),
                              this, SLOT(isRequiredByChecked(bool)));
-            m_buttonRequires = new QPushButton(">>");;
-            fl->addRow(tr("Requires"), m_buttonRequires);
+            m_buttonRequires = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Requires")), 6, 0);
+            gl->addWidget(m_buttonRequires, 6, 1);
             QObject::connect(m_buttonRequires, SIGNAL(toggled(bool)),
                              this, SLOT(requiresChecked(bool)));
-            m_buttonIsPartOf = new QPushButton(">>");;
-            fl->addRow(tr("Is Part Of"), m_buttonIsPartOf);
+            m_buttonIsPartOf = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Is Part Of")), 7, 0);
+            gl->addWidget(m_buttonIsPartOf, 7, 1);
             QObject::connect(m_buttonIsPartOf, SIGNAL(toggled(bool)),
                              this, SLOT(isPartOfChecked(bool)));
-            m_buttonHasPart = new QPushButton(">>");;
-            fl->addRow(tr("Has Part"), m_buttonHasPart);
+            m_buttonHasPart = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Has Part")), 8, 0);
+            gl->addWidget(m_buttonHasPart, 8, 1);
             QObject::connect(m_buttonHasPart, SIGNAL(toggled(bool)),
                              this, SLOT(hasPartChecked(bool)));
-            m_buttonHasTrackPart = new QPushButton(">>");;
-            fl->addRow(tr("Has Track Part"), m_buttonHasTrackPart);
+            m_buttonHasTrackPart = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Has Track Part")), 9, 0);
+            gl->addWidget(m_buttonHasTrackPart, 9, 1);
             QObject::connect(m_buttonHasTrackPart, SIGNAL(toggled(bool)),
                              this, SLOT(hasTrackPartChecked(bool)));
-            m_buttonIsReferencedBy = new QPushButton(">>");;
-            fl->addRow(tr("Is Referenced By"), m_buttonIsReferencedBy);
+            m_buttonIsReferencedBy = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Is Referenced By")), 10, 0);
+            gl->addWidget(m_buttonIsReferencedBy, 10, 1);
             QObject::connect(m_buttonIsReferencedBy, SIGNAL(toggled(bool)),
                              this, SLOT(isReferencedByChecked(bool)));
-            m_buttonReferences = new QPushButton(">>");;
-            fl->addRow(tr("References"), m_buttonReferences);
+            m_buttonReferences = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("References")), 11, 0);
+            gl->addWidget(m_buttonReferences, 11, 1);
             QObject::connect(m_buttonReferences, SIGNAL(toggled(bool)),
                              this, SLOT(referencesChecked(bool)));
-            m_buttonIsFormatOf = new QPushButton(">>");;
-            fl->addRow(tr("Is Format Of"), m_buttonIsFormatOf);
+            m_buttonIsFormatOf = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Is Format Of")), 12, 0);
+            gl->addWidget(m_buttonIsFormatOf, 12, 1);
             QObject::connect(m_buttonIsFormatOf, SIGNAL(toggled(bool)),
                              this, SLOT(isFormatOfChecked(bool)));
-            m_buttonHasFormat = new QPushButton(">>");;
-            fl->addRow(tr("Has Format"), m_buttonHasFormat);
+            m_buttonHasFormat = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Has Format")), 13, 0);
+            gl->addWidget(m_buttonHasFormat, 13, 1);
             QObject::connect(m_buttonHasFormat, SIGNAL(toggled(bool)),
                              this, SLOT(hasFormatChecked(bool)));
-            m_buttonIsEpisodeOf = new QPushButton(">>");;
-            fl->addRow(tr("Is Episod eOf"), m_buttonIsEpisodeOf);
+            m_buttonIsEpisodeOf = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Is Episode Of")), 14, 0);
+            gl->addWidget(m_buttonIsEpisodeOf, 14, 1);
             QObject::connect(m_buttonIsEpisodeOf, SIGNAL(toggled(bool)),
                              this, SLOT(isEpisodeOfChecked(bool)));
-            m_buttonIsMemberOf = new QPushButton(">>");;
-            fl->addRow(tr("Is Member Of"), m_buttonIsMemberOf);
+            m_buttonIsMemberOf = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Is Member Of")), 15, 0);
+            gl->addWidget(m_buttonIsMemberOf, 15, 1);
             QObject::connect(m_buttonIsMemberOf, SIGNAL(toggled(bool)),
                              this, SLOT(isMemberOfChecked(bool)));
         }
-        secondTab->setLayout(fl);
+        secondTab->setLayout(gl);
     }
     tabWidget->addTab(secondTab, "Relations");
 
     // Third tab
-    QWidget *thirdTab = new QWidget;
+    VerticalScrollArea *thirdTab = new VerticalScrollArea;
     {
-        QFormLayout *fl = new QFormLayout;
+        QGridLayout *gl = new QGridLayout;
         {
-            m_buttonCoverage = new QPushButton(">>");;
-            fl->addRow(tr("Coverage"), m_buttonCoverage);
+            m_buttonCoverage = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Coverage")), 0, 0);
+            gl->addWidget(m_buttonCoverage, 0, 1);
             QObject::connect(m_buttonCoverage, SIGNAL(toggled(bool)),
                              this, SLOT(coverageChecked(bool)));
-            m_buttonRights = new QPushButton(">>");;
-            fl->addRow(tr("Rights"), m_buttonRights);
+            m_buttonRights = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Rights")), 1, 0);
+            gl->addWidget(m_buttonRights, 1, 1);
             QObject::connect(m_buttonRights, SIGNAL(toggled(bool)),
                              this, SLOT(rightsChecked(bool)));
-            m_buttonVersion = new QPushButton(">>");;
-            fl->addRow(tr("Version"), m_buttonVersion);
+            m_buttonVersion = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Version")), 2, 0);
+            gl->addWidget(m_buttonVersion, 2, 1);
             QObject::connect(m_buttonVersion, SIGNAL(toggled(bool)),
                              this, SLOT(versionChecked(bool)));
-            m_buttonPublicationHistory = new QPushButton(">>");;
-            fl->addRow(tr("Publication History"), m_buttonPublicationHistory);
+            m_buttonPublicationHistory = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Publication History")), 3, 0);
+            gl->addWidget(m_buttonPublicationHistory, 3, 1);
             QObject::connect(m_buttonPublicationHistory, SIGNAL(toggled(bool)),
                              this, SLOT(publicationHistoryChecked(bool)));
-            m_buttonRating = new QPushButton(">>");;
-            fl->addRow(tr("Rating"), m_buttonRating);
+            m_buttonRating = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Rating")), 4, 0);
+            gl->addWidget(m_buttonRating, 4, 1);
             QObject::connect(m_buttonRating, SIGNAL(toggled(bool)),
                              this, SLOT(ratingChecked(bool)));
-            m_buttonPart = new QPushButton(">>");;
-            fl->addRow(tr("Part"), m_buttonPart);
+            m_buttonPart = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Part")), 5, 0);
+            gl->addWidget(m_buttonPart, 5, 1);
             QObject::connect(m_buttonPart, SIGNAL(toggled(bool)),
                              this, SLOT(partChecked(bool)));
 
         }
-        thirdTab->setLayout(fl);
+        thirdTab->setLayout(gl);
     }
     tabWidget->addTab(thirdTab, "Technicals");
     QObject::connect(tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)));
@@ -220,77 +257,79 @@ CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata, QEbuM
     mainHLayout->addWidget(tabWidget);
 
     // Set button group
-    QButtonGroup *group = new QButtonGroup(this);
+    m_groupTabs[0] = new QButtonGroup(this);
     m_buttonTitle->setCheckable(true);
-    group->addButton(m_buttonTitle);
+    m_groupTabs[0]->addButton(m_buttonTitle);
     m_buttonAlternativeTitle->setCheckable(true);
-    group->addButton(m_buttonAlternativeTitle);
+    m_groupTabs[0]->addButton(m_buttonAlternativeTitle);
     m_buttonCreator->setCheckable(true);
-    group->addButton(m_buttonCreator);
+    m_groupTabs[0]->addButton(m_buttonCreator);
     m_buttonSubject->setCheckable(true);
-    group->addButton(m_buttonSubject);
+    m_groupTabs[0]->addButton(m_buttonSubject);
     m_buttonDescription->setCheckable(true);
-    group->addButton(m_buttonDescription);
+    m_groupTabs[0]->addButton(m_buttonDescription);
     m_buttonPublisher->setCheckable(true);
-    group->addButton(m_buttonPublisher);
+    m_groupTabs[0]->addButton(m_buttonPublisher);
     m_buttonContributor->setCheckable(true);
-    group->addButton(m_buttonContributor);
+    m_groupTabs[0]->addButton(m_buttonContributor);
     m_buttonDate->setCheckable(true);
-    group->addButton(m_buttonDate);
+    m_groupTabs[0]->addButton(m_buttonDate);
     m_buttonType->setCheckable(true);
-    group->addButton(m_buttonType);
+    m_groupTabs[0]->addButton(m_buttonType);
     m_buttonFormat->setCheckable(true);
-    group->addButton(m_buttonFormat);
+    m_groupTabs[0]->addButton(m_buttonFormat);
     m_buttonIdentifier->setCheckable(true);
-    group->addButton(m_buttonIdentifier);
+    m_groupTabs[0]->addButton(m_buttonIdentifier);
     m_buttonSource->setCheckable(true);
-    group->addButton(m_buttonSource);
+    m_groupTabs[0]->addButton(m_buttonSource);
     m_buttonLanguage->setCheckable(true);
-    group->addButton(m_buttonLanguage);
+    m_groupTabs[0]->addButton(m_buttonLanguage);
     m_buttonRelation->setCheckable(true);
-    group->addButton(m_buttonRelation);
+    m_groupTabs[1] = new QButtonGroup(this);
+    m_groupTabs[1]->addButton(m_buttonRelation);
     m_buttonIsVersionOf->setCheckable(true);
-    group->addButton(m_buttonIsVersionOf);
+    m_groupTabs[1]->addButton(m_buttonIsVersionOf);
     m_buttonHasVersion->setCheckable(true);
-    group->addButton(m_buttonHasVersion);
+    m_groupTabs[1]->addButton(m_buttonHasVersion);
     m_buttonIsReplacedBy->setCheckable(true);
-    group->addButton(m_buttonIsReplacedBy);
+    m_groupTabs[1]->addButton(m_buttonIsReplacedBy);
     m_buttonReplaces->setCheckable(true);
-    group->addButton(m_buttonReplaces);
+    m_groupTabs[1]->addButton(m_buttonReplaces);
     m_buttonIsRequiredBy->setCheckable(true);
-    group->addButton(m_buttonIsRequiredBy);
+    m_groupTabs[1]->addButton(m_buttonIsRequiredBy);
     m_buttonRequires->setCheckable(true);
-    group->addButton(m_buttonRequires);
+    m_groupTabs[1]->addButton(m_buttonRequires);
     m_buttonIsPartOf->setCheckable(true);
-    group->addButton(m_buttonIsPartOf);
+    m_groupTabs[1]->addButton(m_buttonIsPartOf);
     m_buttonHasPart->setCheckable(true);
-    group->addButton(m_buttonHasPart);
+    m_groupTabs[1]->addButton(m_buttonHasPart);
     m_buttonHasTrackPart->setCheckable(true);
-    group->addButton(m_buttonHasTrackPart);
+    m_groupTabs[1]->addButton(m_buttonHasTrackPart);
     m_buttonIsReferencedBy->setCheckable(true);
-    group->addButton(m_buttonIsReferencedBy);
+    m_groupTabs[1]->addButton(m_buttonIsReferencedBy);
     m_buttonReferences->setCheckable(true);
-    group->addButton(m_buttonReferences);
+    m_groupTabs[1]->addButton(m_buttonReferences);
     m_buttonIsFormatOf->setCheckable(true);
-    group->addButton(m_buttonIsFormatOf);
+    m_groupTabs[1]->addButton(m_buttonIsFormatOf);
     m_buttonHasFormat->setCheckable(true);
-    group->addButton(m_buttonHasFormat);
+    m_groupTabs[1]->addButton(m_buttonHasFormat);
     m_buttonIsEpisodeOf->setCheckable(true);
-    group->addButton(m_buttonIsEpisodeOf);
+    m_groupTabs[1]->addButton(m_buttonIsEpisodeOf);
     m_buttonIsMemberOf->setCheckable(true);
-    group->addButton(m_buttonIsMemberOf);
+    m_groupTabs[1]->addButton(m_buttonIsMemberOf);
     m_buttonCoverage->setCheckable(true);
-    group->addButton(m_buttonCoverage);
+    m_groupTabs[2] = new QButtonGroup(this);
+    m_groupTabs[2]->addButton(m_buttonCoverage);
     m_buttonRights->setCheckable(true);
-    group->addButton(m_buttonRights);
+    m_groupTabs[2]->addButton(m_buttonRights);
     m_buttonVersion->setCheckable(true);
-    group->addButton(m_buttonVersion);
+    m_groupTabs[2]->addButton(m_buttonVersion);
     m_buttonPublicationHistory->setCheckable(true);
-    group->addButton(m_buttonPublicationHistory);
+    m_groupTabs[2]->addButton(m_buttonPublicationHistory);
     m_buttonRating->setCheckable(true);
-    group->addButton(m_buttonRating);
+    m_groupTabs[2]->addButton(m_buttonRating);
     m_buttonPart->setCheckable(true);
-    group->addButton(m_buttonPart);
+    m_groupTabs[2]->addButton(m_buttonPart);
 
     // Add list view on the right
     m_listView = new ListView();
@@ -2108,20 +2147,21 @@ void CoreMetadataTypeForm::partFormClosed(Operation op, QVariant value)
 
 void CoreMetadataTypeForm::tabChanged(int tabIndex)
 {
-    switch(tabIndex) {
-    case 0:
-        m_buttonTitle->setChecked(true);
-        break;
-    case 1:
-        m_buttonRelation->setChecked(true);
-        break;
-    case 2:
-        m_buttonCoverage->setChecked(true);
-        break;
-    default:
-        // If you're here, something dreadful happened.
-        break;
+    if (tabIndex > 2)
+        return; // If you're here, something dreadful happened.
+
+    QAbstractButton *currentCheckedButton = m_groupTabs[tabIndex]->checkedButton();
+    if (!currentCheckedButton) {
+        m_groupTabs[tabIndex]->buttons().first()->setChecked(true);
+        return;
     }
+
+    // Retrigger all associated slots, in particular the one which
+    // updates the list view.
+    m_groupTabs[tabIndex]->setExclusive(false);
+    currentCheckedButton->setChecked(false);
+    m_groupTabs[tabIndex]->setExclusive(true);
+    currentCheckedButton->setChecked(true);
 }
 
 void CoreMetadataTypeForm::updateListAndButtons()
@@ -2129,181 +2169,110 @@ void CoreMetadataTypeForm::updateListAndButtons()
     QString title;
     switch(m_currentEditMode) {
     case Title:
-    {
         title = tr("Title");
-    }
         break;
     case AlternativeTitle:
-    {
         title = tr("Alternative Title");
-    }
         break;
     case Creator:
-    {
         title = tr("Creator");
-    }
         break;
     case Subject:
-    {
         title = tr("Subject");
-    }
         break;
     case Description:
-    {
         title = tr("Description");
-    }
         break;
     case Publisher:
-    {
         title = tr("Publisher");
-    }
         break;
     case Contributor:
-    {
         title = tr("Contributor");
-    }
         break;
     case Date:
-    {
         title = tr("Date");
-    }
         break;
     case Type:
-    {
         title = tr("Type");
-    }
         break;
     case Format:
-    {
         title = tr("Format");
-    }
         break;
     case Identifier:
-    {
         title = tr("Identifier");
-    }
         break;
     case Source:
-    {
         title = tr("Source");
-    }
         break;
     case Language:
-    {
         title = tr("Language");
-    }
         break;
     case Relation:
-    {
         title = tr("Relation");
-    }
         break;
     case IsVersionOf:
-    {
         title = tr("Is Version Of");
-    }
         break;
     case HasVersion:
-    {
         title = tr("Has Version");
-    }
         break;
     case IsReplacedBy:
-    {
         title = tr("Is Replaced By");
-    }
         break;
     case Replaces:
-    {
         title = tr("Replaces");
-    }
         break;
     case IsRequiredBy:
-    {
         title = tr("Is Required By");
-    }
         break;
     case Requires:
-    {
         title = tr("Requires");
-    }
         break;
     case IsPartOf:
-    {
         title = tr("Is Part Of");
-    }
         break;
     case HasPart:
-    {
         title = tr("Has Part");
-    }
         break;
     case HasTrackPart:
-    {
         title = tr("Has Track Part");
-    }
         break;
     case IsReferencedBy:
-    {
         title = tr("Is Referenced By");
-    }
         break;
     case References:
-    {
         title = tr("References");
-    }
         break;
     case IsFormatOf:
-    {
         title = tr("Is Format Of");
-    }
         break;
     case HasFormat:
-    {
         title = tr("Has Format");
-    }
         break;
     case IsEpisodeOf:
-    {
         title = tr("Is Episode Of");
-    }
         break;
     case IsMemberOf:
-    {
         title = tr("Is Member Of");
-    }
         break;
     case Coverage:
-    {
         title = tr("Coverage");
-    }
         break;
     case Rights:
-    {
         title = tr("Rights");
-    }
         break;
     case Version:
-    {
         title = tr("Version");
-    }
         break;
     case PublicationHistory:
-    {
         title = tr("Publication History");
-    }
         break;
     case Rating:
-    {
         title = tr("Rating");
-    }
         break;
     case Part:
-    {
         title = tr("Part");
-    }
         break;
-
     }
     m_listView->setTitle(title);
     m_listView->clear();

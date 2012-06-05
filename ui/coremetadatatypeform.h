@@ -5,6 +5,7 @@
 
 class CoreMetadataType;
 class ListView;
+class QButtonGroup;
 class QPushButton;
 class QLineEdit;
 
@@ -111,6 +112,7 @@ private:
 
     ListView *m_listView;
 
+    QButtonGroup* m_groupTabs[3];
     QPushButton *m_buttonTitle;
     QPushButton *m_buttonAlternativeTitle;
     QPushButton *m_buttonCreator;
