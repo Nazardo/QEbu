@@ -231,89 +231,67 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
         QWidget *m_multimediaFormat = new QWidget();
         QHBoxLayout *m_hTab = new QHBoxLayout;
         QVBoxLayout *l = new QVBoxLayout;
-        {
-            QHBoxLayout *hL = new QHBoxLayout;
-            hL->addWidget(new QLabel("Medium", this));
-            m_buttonMedium = new QPushButton(">>");
-            hL->addWidget(m_buttonMedium);
-            l->addLayout(hL);
-            m_buttonMedium->setCheckable(true);
-            QObject::connect(m_buttonMedium, SIGNAL(toggled(bool)), this, SLOT(mediumFormChecked(bool)));
-        }
-        {
-            QHBoxLayout *hL = new QHBoxLayout;
-            hL->addWidget(new QLabel("Mime Type", this));
-            m_buttonMimeType = new QPushButton(">>");
-            hL->addWidget(m_buttonMimeType);
-            l->addLayout(hL);
-            m_buttonMimeType->setCheckable(true);
-            QObject::connect(m_buttonMimeType, SIGNAL(toggled(bool)), this, SLOT(mimeTypeFormChecked(bool)));
-        }
-        {
-            QHBoxLayout *hL = new QHBoxLayout;
-            hL->addWidget(new QLabel("Containter Format", this));
-            m_buttonContainerFormat = new QPushButton(">>");
-            hL->addWidget(m_buttonContainerFormat);
-            l->addLayout(hL);
-            m_buttonContainerFormat->setCheckable(true);
-            QObject::connect(m_buttonContainerFormat, SIGNAL(toggled(bool)), this, SLOT(containerFormatFormChecked(bool)));
-        }
-        {
-            QHBoxLayout *hL = new QHBoxLayout;
-            hL->addWidget(new QLabel("Signing Format", this));
-            m_buttonSigningFormat = new QPushButton(">>");
-            hL->addWidget(m_buttonSigningFormat);
-            l->addLayout(hL);
-            m_buttonSigningFormat->setCheckable(true);
-            QObject::connect(m_buttonSigningFormat, SIGNAL(toggled(bool)), this, SLOT(signingFormatFormChecked(bool)));
-        }
-        {
-            QHBoxLayout *hL = new QHBoxLayout;
-            hL->addWidget(new QLabel("Image Format", this));
-            m_buttonImageFormat = new QPushButton(">>");
-            hL->addWidget(m_buttonImageFormat);
-            l->addLayout(hL);
-            m_buttonImageFormat->setCheckable(true);
-            QObject::connect(m_buttonImageFormat, SIGNAL(toggled(bool)), this, SLOT(imageFormatFormChecked(bool)));
-        }
-        {
-            QHBoxLayout *hL = new QHBoxLayout;
-            hL->addWidget(new QLabel("Video Format", this));
-            m_buttonVideoFormat = new QPushButton(">>");
-            hL->addWidget(m_buttonVideoFormat);
-            l->addLayout(hL);
-            m_buttonVideoFormat->setCheckable(true);
-            QObject::connect(m_buttonVideoFormat, SIGNAL(toggled(bool)), this, SLOT(videoFormatFormChecked(bool)));
-        }
-        {
-            QHBoxLayout *hL = new QHBoxLayout;
-            hL->addWidget(new QLabel("Audio Format", this));
-            m_buttonAudioFormat = new QPushButton(">>");
-            hL->addWidget(m_buttonAudioFormat);
-            l->addLayout(hL);
-            m_buttonAudioFormat->setCheckable(true);
-            QObject::connect(m_buttonAudioFormat, SIGNAL(toggled(bool)), this, SLOT(audioFormatFormChecked(bool)));
-        }
-        {
-            QHBoxLayout *hL = new QHBoxLayout;
-            hL->addWidget(new QLabel("Data Format", this));
-            m_buttonDataFormat = new QPushButton(">>");
-            hL->addWidget(m_buttonDataFormat);
-            l->addLayout(hL);
-            m_buttonDataFormat->setCheckable(true);
-            QObject::connect(m_buttonDataFormat, SIGNAL(toggled(bool)), this, SLOT(dataFormatFormChecked(bool)));
-        }
-        {
-            QButtonGroup *group = new QButtonGroup(this);
-            group->addButton(m_buttonMimeType);
-            group->addButton(m_buttonMedium);
-            group->addButton(m_buttonContainerFormat);
-            group->addButton(m_buttonSigningFormat);
-            group->addButton(m_buttonImageFormat);
-            group->addButton(m_buttonVideoFormat);
-            group->addButton(m_buttonAudioFormat);
-            group->addButton(m_buttonDataFormat);
-        }
+        QGridLayout *gl = new QGridLayout;
+
+        gl->addWidget(new QLabel("Medium", this),0,0);
+        m_buttonMedium = new QPushButton(">>");
+        gl->addWidget(m_buttonMedium,0,1);
+        m_buttonMedium->setCheckable(true);
+        QObject::connect(m_buttonMedium, SIGNAL(toggled(bool)), this, SLOT(mediumFormChecked(bool)));
+
+        gl->addWidget(new QLabel("Mime Type", this),1,0);
+        m_buttonMimeType = new QPushButton(">>");
+        gl->addWidget(m_buttonMimeType,1,1);
+        m_buttonMimeType->setCheckable(true);
+        QObject::connect(m_buttonMimeType, SIGNAL(toggled(bool)), this, SLOT(mimeTypeFormChecked(bool)));
+
+        gl->addWidget(new QLabel("Containter Format", this),2,0);
+        m_buttonContainerFormat = new QPushButton(">>");
+        gl->addWidget(m_buttonContainerFormat,2,1);
+        m_buttonContainerFormat->setCheckable(true);
+        QObject::connect(m_buttonContainerFormat, SIGNAL(toggled(bool)), this, SLOT(containerFormatFormChecked(bool)));
+
+        gl->addWidget(new QLabel("Signing Format", this),3,0);
+        m_buttonSigningFormat = new QPushButton(">>");
+        gl->addWidget(m_buttonSigningFormat,3,1);
+        m_buttonSigningFormat->setCheckable(true);
+        QObject::connect(m_buttonSigningFormat, SIGNAL(toggled(bool)), this, SLOT(signingFormatFormChecked(bool)));
+
+        gl->addWidget(new QLabel("Image Format", this),4,0);
+        m_buttonImageFormat = new QPushButton(">>");
+        gl->addWidget(m_buttonImageFormat,4,1);
+        m_buttonImageFormat->setCheckable(true);
+        QObject::connect(m_buttonImageFormat, SIGNAL(toggled(bool)), this, SLOT(imageFormatFormChecked(bool)));
+
+        gl->addWidget(new QLabel("Video Format", this),5,0);
+        m_buttonVideoFormat = new QPushButton(">>");
+        gl->addWidget(m_buttonVideoFormat,5,1);
+        m_buttonVideoFormat->setCheckable(true);
+        QObject::connect(m_buttonVideoFormat, SIGNAL(toggled(bool)), this, SLOT(videoFormatFormChecked(bool)));
+
+        gl->addWidget(new QLabel("Audio Format", this),6,0);
+        m_buttonAudioFormat = new QPushButton(">>");
+        gl->addWidget(m_buttonAudioFormat,6,1);
+        m_buttonAudioFormat->setCheckable(true);
+        QObject::connect(m_buttonAudioFormat, SIGNAL(toggled(bool)), this, SLOT(audioFormatFormChecked(bool)));
+
+        gl->addWidget(new QLabel("Data Format", this),7,0);
+        m_buttonDataFormat = new QPushButton(">>");
+        gl->addWidget(m_buttonDataFormat,7,1);
+        m_buttonDataFormat->setCheckable(true);
+        QObject::connect(m_buttonDataFormat, SIGNAL(toggled(bool)), this, SLOT(dataFormatFormChecked(bool)));
+
+        QButtonGroup *group = new QButtonGroup(this);
+        group->addButton(m_buttonMimeType);
+        group->addButton(m_buttonMedium);
+        group->addButton(m_buttonContainerFormat);
+        group->addButton(m_buttonSigningFormat);
+        group->addButton(m_buttonImageFormat);
+        group->addButton(m_buttonVideoFormat);
+        group->addButton(m_buttonAudioFormat);
+        group->addButton(m_buttonDataFormat);
+
+        l->addLayout(gl);
         m_hTab->addLayout(l);
         m_listView = new ListView();
         QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
