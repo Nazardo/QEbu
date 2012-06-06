@@ -92,7 +92,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
             m_spinUnitNumberValue->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
             m_checkUnitNumberValue = new QCheckBox(tr("Unit value"));
             QObject::connect(m_spinUnitNumberValue, SIGNAL(valueChanged(int)),
-                             this, SLOT(denominatorChanged()));
+                             this, SLOT(unitNumberValueChanged()));
             gl->addWidget(m_checkUnitNumberValue, 3, 0);
             gl->addWidget(m_spinUnitNumberValue, 3, 1);
 
