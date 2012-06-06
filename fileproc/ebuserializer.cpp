@@ -35,13 +35,16 @@ bool EbuSerializer::serializeToFile(QFile &file)
         rootNode.setAttribute("documentId", m_root->documentId());
     doc.appendChild(rootNode);
 
-    QDomElement core = serializeCoreMetadata(m_root->coreMetadata());
-    core.setTagName("ebucore:coreMetadata");
-    QDomElement provider = serializeEntity(m_root->metadataProvider());
-    provider.setTagName("ebucore:metadataProvider");
-
-    rootNode.appendChild(core);
-    rootNode.appendChild(provider);
+    if (m_root->coreMetadata()) {
+        QDomElement core = serializeCoreMetadata(m_root->coreMetadata());
+        core.setTagName("ebucore:coreMetadata");
+        rootNode.appendChild(core);
+    }
+    if (m_root->metadataProvider()) {
+        QDomElement provider = serializeEntity(m_root->metadataProvider());
+        provider.setTagName("ebucore:metadataProvider");
+        rootNode.appendChild(provider);
+    }
 
     QTextStream out(&file);
     QDomNode xmlNode = doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\"");
