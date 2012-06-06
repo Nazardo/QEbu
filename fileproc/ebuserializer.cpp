@@ -51,6 +51,12 @@ bool EbuSerializer::serializeToFile(QFile &file)
     return true;
 }
 
+QString EbuSerializer::errorMsg()
+{
+    // The Serializer never fails (at least in this implementation).
+    return QString();
+}
+
 QDomElement EbuSerializer::serializeCoreMetadata(CoreMetadataType *coreMetadata)
 {
     QDomElement core = m_doc.createElement(" ");
