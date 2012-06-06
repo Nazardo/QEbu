@@ -31,7 +31,7 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
         QLabel *version = new QLabel(tr("Version"));
         gl->addWidget(version, 1, 0, 1, 1);
         gl->addWidget(m_editVersion, 1, 1, 1, 3);
-        m_editSchema->setReadOnly(true);
+        m_editVersion->setReadOnly(true);
 
         m_editDateLastModified = new QDateEdit;
         m_editDateLastModified->setCalendarPopup(true);
