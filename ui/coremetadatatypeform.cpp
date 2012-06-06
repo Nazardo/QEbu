@@ -7,8 +7,7 @@
 #include "ui/descriptiontypeform.h"
 #include "ui/datetypeform.h"
 #include "ui/typetypeform.h"
-/// @todo: comment
-// #include "ui/formattypeform.h"
+#include "ui/formattypeform.h"
 #include "ui/identifiertypeform.h"
 #include "ui/elementtypeform.h"
 #include "ui/languagetypeform.h"
@@ -441,11 +440,10 @@ void CoreMetadataTypeForm::addClicked()
         break;
     case Format:
     {
-        /// @todo: comment
-//        FormatTypeForm *formatForm = new FormatTypeForm(0, this->mainWindow());
-//        QObject::connect(formatForm, SIGNAL(closed(Operation,QVariant)),
-//                         this, SLOT(formatFormClosed(Operation,QVariant)));
-//        this->mainWindow()->pushWidget(formatForm);
+        FormatTypeForm *formatForm = new FormatTypeForm(0, this->mainWindow());
+        QObject::connect(formatForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(formatFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(formatForm);
     }
         break;
     case Identifier:
