@@ -17,7 +17,8 @@ DateGroupEditBox::DateGroupEditBox(DateGroup *dateGroup, QWidget *parent) :
     QGridLayout *innerLayout = new QGridLayout;
 
     m_editStartYear = new QSpinBox;
-    m_editStartYear->setRange(0, 9999);
+    m_editStartYear->setRange(1, 9999);
+    m_editStartYear->setValue(2000);
     m_checkStartYear = new QCheckBox(tr("Start year"));
     innerLayout->addWidget(m_checkStartYear, 0, 0);
     innerLayout->addWidget(m_editStartYear, 0, 1);
@@ -40,7 +41,8 @@ DateGroupEditBox::DateGroupEditBox(DateGroup *dateGroup, QWidget *parent) :
                      this, SLOT(startTimeChanged()));
 
     m_editEndYear = new QSpinBox;
-    m_editEndYear->setRange(0, 9999);
+    m_editEndYear->setRange(1, 9999);
+    m_editEndYear->setValue(2000);
     m_checkEndYear = new QCheckBox(tr("End year"));
     innerLayout->addWidget(m_checkEndYear, 3, 0);
     innerLayout->addWidget(m_editEndYear, 3, 1);
