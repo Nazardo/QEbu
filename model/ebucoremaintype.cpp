@@ -66,6 +66,9 @@ void EbuCoreMainType::setCoreMetadata(CoreMetadataType *coreMetadata)
     if (coreMetadata != m_coreMetadata)
         delete m_coreMetadata;
     m_coreMetadata = coreMetadata;
+    // CoreMetadata is mandatory, should never be null
+    if (!m_coreMetadata)
+        m_coreMetadata = new CoreMetadataType;
 }
 
 EntityType *EbuCoreMainType::metadataProvider() const

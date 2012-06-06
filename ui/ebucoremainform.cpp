@@ -65,14 +65,10 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
         m_editCoreMetadata = new QLineEdit;
         m_editCoreMetadata->setReadOnly(true);
         gl->addWidget(m_editCoreMetadata, 0, 1);
-        QPushButton *buttonCoreMetadata = new QPushButton(tr("Add/Edit"));
+        QPushButton *buttonCoreMetadata = new QPushButton(tr("Edit"));
         QObject::connect(buttonCoreMetadata, SIGNAL(clicked()),
                          this, SLOT(coreMetadataClicked()));
         gl->addWidget(buttonCoreMetadata, 0, 2);
-        QPushButton *buttonCoreMetadataRemove = new QPushButton(tr("Remove"));
-        QObject::connect(buttonCoreMetadataRemove, SIGNAL(clicked()),
-                         this, SLOT(coreMetadataRemoveClicked()));
-        gl->addWidget(buttonCoreMetadataRemove, 0, 3);
 
         gl->addWidget(new QLabel(tr("Metadata Provider")), 1, 0);
         m_editMetadataProvider = new QLineEdit;
