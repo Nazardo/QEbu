@@ -38,6 +38,8 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
         m_checkDateLastModified = new QCheckBox(tr("Date Last Modified"));
         QObject::connect(m_editDateLastModified, SIGNAL(dateChanged(QDate)),
                          this, SLOT(dateLastModifiedChanged()));
+        QObject::connect(m_checkDateLastModified, SIGNAL(toggled(bool)),
+                         this, SLOT(dateLastModifiedToggled(bool)));
         gl->addWidget(m_checkDateLastModified, 2, 0, 1, 1);
         gl->addWidget(m_editDateLastModified, 2, 1, 1, 3);
 
@@ -45,11 +47,15 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
         QLabel *id = new QLabel(tr("Document ID"));
         gl->addWidget(id, 3, 0, 1, 1);
         gl->addWidget(m_editDocumentId, 3, 1, 1, 3);
+        QObject::connect(m_editDocumentId, SIGNAL(textEdited(QString)),
+                         this, SLOT(documentIdChanged(QString)));
 
         m_editLang = new QLineEdit;
         QLabel *lang = new QLabel(tr("Language"));
         gl->addWidget(lang, 4, 0, 1, 1);
         gl->addWidget(m_editLang, 4, 1, 1, 3);
+        QObject::connect(m_editLang, SIGNAL(textEdited(QString)),
+                         this, SLOT(langChanged(QString)));
 
         vl->addLayout(gl);
     }
@@ -136,7 +142,28 @@ void EbuCoreMainForm::coreMetadataClosed(Operation op, QVariant value)
 
 void EbuCoreMainForm::dateLastModifiedChanged()
 {
-    m_checkDateLastModified->setChecked(true);
+    if (m_checkDateLastModified->isChecked())
+        m_ebuCoreMain->setDateLastModified(m_editDateLastModified->dateTime());
+    else
+        m_checkDateLastModified->setChecked(true);
+}
+
+void EbuCoreMainForm::dateLastModifiedToggled(bool checked)
+{
+    if (checked)
+        m_ebuCoreMain->setDateLastModified(m_editDateLastModified->dateTime());
+    else
+        m_ebuCoreMain->setDateLastModified(QDateTime());
+}
+
+void EbuCoreMainForm::documentIdChanged(QString documentId)
+{
+    m_ebuCoreMain->setDocumentId(documentId);
+}
+
+void EbuCoreMainForm::langChanged(QString lang)
+{
+    m_ebuCoreMain->setLang(lang);
 }
 
 void EbuCoreMainForm::metadataProviderRemoveClicked()

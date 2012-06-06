@@ -26,6 +26,9 @@ private slots:
     void coreMetadataClosed(Operation op, QVariant value);
     // -
     void dateLastModifiedChanged();
+    void dateLastModifiedToggled(bool checked);
+    void documentIdChanged(QString documentId);
+    void langChanged(QString lang);
 private:
 
     QLineEdit *m_editSchema;
