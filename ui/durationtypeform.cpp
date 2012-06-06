@@ -1,24 +1,27 @@
 #include "durationtypeform.h"
 #include "../model/ebucoremaintype.h"
-#include "../model/typeconverter.h"
-#include "../model/qebulimits.h"
+#include "listview.h"
 #include "formatgroupeditbox.h"
+#include "qvarptr.h"
 #include "organisationdetailstypeform.h"
 #include "detailstypeform.h"
 #include "entitytypeform.h"
 #include "typegroupform.h"
-#include "qvarptr.h"
-#include <QPushButton>
+#include "timezoneeditbox.h"
+#include "../model/typeconverter.h"
+#include "../model/qebulimits.h"
 #include <QRadioButton>
 #include <QButtonGroup>
 #include <QLineEdit>
+#include <QRegExpValidator>
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QFormLayout>
+#include <QLabel>
 
-DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainWindow, QWidget *parent) :
+DurationTypeForm::DurationTypeForm( DurationType *duration,
+                                    QEbuMainWindow *mainWindow,
+                                    QWidget *parent) :
     StackableWidget(mainWindow, parent)
 {
     m_op = (duration) ? Edit : Add;
@@ -33,8 +36,13 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
         m_radioTimecode->setCheckable(true);
         l->addWidget(m_radioTimecode);
         QFormLayout *fl = new QFormLayout;
-        m_editTimecode = new QLineEdit;
-        fl->addRow(tr("Timecode"), m_editTimecode);
+
+        m_labelTimecode = new QLabel(tr("Start time"));
+        m_editTimecode = new QLineEdit();
+        QRegExp SMPTE_ST_2021_1_2009("[0-9][0-9]:[0-5][0-9]:[0-5][0-9]:[0-9][0-9]");
+        m_editTimecode->setValidator(new QRegExpValidator(SMPTE_ST_2021_1_2009));
+        m_editTimecode->setPlaceholderText("hh:mm:ss:ff");
+        fl->addRow(m_labelTimecode, m_editTimecode);
         l->addLayout(fl);
 
     }
@@ -42,10 +50,33 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
         m_radioNormalPlaytime = new QRadioButton(tr("Normal playtime"));
         m_radioNormalPlaytime->setCheckable(true);
         l->addWidget(m_radioNormalPlaytime);
-        QFormLayout *fl = new QFormLayout;
-        m_editNormalPlaytime = new QLineEdit;
-        fl->addRow(tr("Normal playtime"), m_editNormalPlaytime);
-        l->addLayout(fl);
+
+        {
+            QGridLayout *gl = new QGridLayout;
+
+            m_labelNormalPlaytimeHour = new QLabel(tr("Hours"));
+            m_labelNormalPlaytimeMinute = new QLabel(tr("Minutes"));
+            m_labelNormalPlaytimeSecond = new QLabel(tr("Seconds"));
+            m_labelNormalPlaytimeMSecond = new QLabel(tr("MSeconds"));
+            m_spinNormalPlaytimeHour = new QSpinBox;
+            m_spinNormalPlaytimeMinute = new QSpinBox;
+            m_spinNormalPlaytimeSecond = new QSpinBox;
+            m_spinNormalPlaytimeMSecond = new QSpinBox;
+            m_spinNormalPlaytimeHour->setMinimum(0);
+            m_spinNormalPlaytimeMinute->setMinimum(0);
+            m_spinNormalPlaytimeSecond->setMinimum(0);
+            m_spinNormalPlaytimeMSecond->setMinimum(0);
+
+            gl->addWidget(m_labelNormalPlaytimeHour, 0, 0);
+            gl->addWidget(m_spinNormalPlaytimeHour, 0, 1);
+            gl->addWidget(m_labelNormalPlaytimeMinute, 1, 0);
+            gl->addWidget(m_spinNormalPlaytimeMinute, 1, 1);
+            gl->addWidget(m_labelNormalPlaytimeSecond, 2, 0);
+            gl->addWidget(m_spinNormalPlaytimeSecond, 2, 1);
+            gl->addWidget(m_labelNormalPlaytimeMSecond, 3, 0);
+            gl->addWidget(m_spinNormalPlaytimeMSecond, 3, 1);
+            l->addLayout(gl);
+        }
     }
     {
         m_radioEditUnitNumber = new QRadioButton(tr("Edit unit number"));
@@ -90,7 +121,8 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
         }
     }
     {
-        m_radioTime = new QRadioButton(tr("Time"));
+        m_labelTime = new QLabel(tr("Time"));
+        m_radioTime = new QRadioButton(m_labelTime);
         m_radioTime->setCheckable(true);
         l->addWidget(m_radioTime);
         m_editFormatGroup = new FormatGroupEditBox(m_duration->time());
@@ -116,8 +148,12 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
 
     // Set data fields...
     m_editTimecode->setText(m_duration->timecode());
-    if (m_duration->normalPlayTime())
-        m_editNormalPlaytime->setText(TypeConverter::durationToString(m_duration->normalPlayTime()));
+    if (m_duration->normalPlayTime()) {
+        m_spinNormalPlaytimeHour->setValue(m_duration->normalPlayTime()->hours());
+        m_spinNormalPlaytimeMinute->setValue(m_duration->normalPlayTime()->minutes());
+        m_spinNormalPlaytimeSecond->setValue(m_duration->normalPlayTime()->seconds());
+        m_spinNormalPlaytimeMSecond->setValue(m_duration->normalPlayTime()->mseconds());
+    }
 
     if (m_duration->editUnitNumberValue()) {
         m_spinUnitNumberValue->setValue(*(m_duration->editUnitNumberValue()));
@@ -162,11 +198,12 @@ DurationTypeForm::DurationTypeForm(DurationType *duration, QEbuMainWindow *mainW
     }
     else
         m_radioTimecode->setChecked(true);
+
 }
 
 QString DurationTypeForm::toString()
 {
-    return QString("Time Type");
+    return QString("Duration Type");
 }
 
 void DurationTypeForm::cancelClicked()
@@ -184,7 +221,11 @@ void DurationTypeForm::applyClicked()
         m_duration->setTimecode(m_editTimecode->text());
 
     } else if (m_radioNormalPlaytime->isChecked()) {
-        m_duration->setNormalPlayTime(TypeConverter::stringToDuration(m_editNormalPlaytime->text()));
+        m_duration->setNormalPlayTime(new Duration(true,0,0,0,
+                                                   m_spinNormalPlaytimeHour->value(),
+                                                   m_spinNormalPlaytimeMinute->value(),
+                                                   m_spinNormalPlaytimeSecond->value(),
+                                                   m_spinNormalPlaytimeMSecond->value()));
 
     } else if (m_radioTime->isChecked()) {
         FormatGroup *fg = m_editFormatGroup->formatGroup();
@@ -208,52 +249,108 @@ void DurationTypeForm::timeChecked(bool checked)
 {
     if (!checked)
         return;
+
+    m_labelTime->setEnabled(true);
     m_editFormatGroup->setEnabled(true);
     m_spinUnitNumberValue->setEnabled(false);
     m_spinRate->setEnabled(false);
     m_spinFactorNumerator->setEnabled(false);
     m_spinFactorDenominator->setEnabled(false);
+    m_checkUnitNumberValue->setEnabled(false);
+    m_checkRate->setEnabled(false);
+    m_checkFactorNumerator->setEnabled(false);
+    m_checkFactorDenominator->setEnabled(false);
+    m_labelTimecode->setEnabled(false);
     m_editTimecode->setEnabled(false);
-    m_editNormalPlaytime->setEnabled(false);
+    m_labelNormalPlaytimeHour->setEnabled(false);
+    m_labelNormalPlaytimeMinute->setEnabled(false);
+    m_labelNormalPlaytimeSecond->setEnabled(false);
+    m_labelNormalPlaytimeMSecond->setEnabled(false);
+    m_spinNormalPlaytimeHour->setEnabled(false);
+    m_spinNormalPlaytimeMinute->setEnabled(false);
+    m_spinNormalPlaytimeSecond->setEnabled(false);
+    m_spinNormalPlaytimeMSecond->setEnabled(false);
 }
 
 void DurationTypeForm::timecodeChecked(bool checked)
 {
     if (!checked)
         return;
+
+    m_labelTime->setEnabled(false);
     m_editFormatGroup->setEnabled(false);
     m_spinUnitNumberValue->setEnabled(false);
     m_spinRate->setEnabled(false);
     m_spinFactorNumerator->setEnabled(false);
     m_spinFactorDenominator->setEnabled(false);
+    m_checkUnitNumberValue->setEnabled(false);
+    m_checkRate->setEnabled(false);
+    m_checkFactorNumerator->setEnabled(false);
+    m_checkFactorDenominator->setEnabled(false);
+    m_labelTimecode->setEnabled(true);
     m_editTimecode->setEnabled(true);
-    m_editNormalPlaytime->setEnabled(false);
+    m_labelNormalPlaytimeHour->setEnabled(false);
+    m_labelNormalPlaytimeMinute->setEnabled(false);
+    m_labelNormalPlaytimeSecond->setEnabled(false);
+    m_labelNormalPlaytimeMSecond->setEnabled(false);
+    m_spinNormalPlaytimeHour->setEnabled(false);
+    m_spinNormalPlaytimeMinute->setEnabled(false);
+    m_spinNormalPlaytimeSecond->setEnabled(false);
+    m_spinNormalPlaytimeMSecond->setEnabled(false);
 }
 
 void DurationTypeForm::normalPlaytimeChecked(bool checked)
 {
     if (!checked)
         return;
+
+    m_labelTime->setEnabled(false);
     m_editFormatGroup->setEnabled(false);
     m_spinUnitNumberValue->setEnabled(false);
     m_spinRate->setEnabled(false);
     m_spinFactorNumerator->setEnabled(false);
     m_spinFactorDenominator->setEnabled(false);
+    m_checkUnitNumberValue->setEnabled(false);
+    m_checkRate->setEnabled(false);
+    m_checkFactorNumerator->setEnabled(false);
+    m_checkFactorDenominator->setEnabled(false);
+    m_labelTimecode->setEnabled(false);
     m_editTimecode->setEnabled(false);
-    m_editNormalPlaytime->setEnabled(true);
+    m_labelNormalPlaytimeHour->setEnabled(true);
+    m_labelNormalPlaytimeMinute->setEnabled(true);
+    m_labelNormalPlaytimeSecond->setEnabled(true);
+    m_labelNormalPlaytimeMSecond->setEnabled(true);
+    m_spinNormalPlaytimeHour->setEnabled(true);
+    m_spinNormalPlaytimeMinute->setEnabled(true);
+    m_spinNormalPlaytimeSecond->setEnabled(true);
+    m_spinNormalPlaytimeMSecond->setEnabled(true);
 }
 
 void DurationTypeForm::editUnitNumberChecked(bool checked)
 {
     if (!checked)
         return;
+
+    m_labelTime->setEnabled(false);
     m_editFormatGroup->setEnabled(false);
     m_spinUnitNumberValue->setEnabled(true);
     m_spinRate->setEnabled(true);
     m_spinFactorNumerator->setEnabled(true);
     m_spinFactorDenominator->setEnabled(true);
+    m_checkUnitNumberValue->setEnabled(true);
+    m_checkRate->setEnabled(true);
+    m_checkFactorNumerator->setEnabled(true);
+    m_checkFactorDenominator->setEnabled(true);
+    m_labelTimecode->setEnabled(false);
     m_editTimecode->setEnabled(false);
-    m_editNormalPlaytime->setEnabled(false);
+    m_labelNormalPlaytimeHour->setEnabled(false);
+    m_labelNormalPlaytimeMinute->setEnabled(false);
+    m_labelNormalPlaytimeSecond->setEnabled(false);
+    m_labelNormalPlaytimeMSecond->setEnabled(false);
+    m_spinNormalPlaytimeHour->setEnabled(false);
+    m_spinNormalPlaytimeMinute->setEnabled(false);
+    m_spinNormalPlaytimeSecond->setEnabled(false);
+    m_spinNormalPlaytimeMSecond->setEnabled(false);
 }
 
 void DurationTypeForm::rateChanged()
@@ -275,4 +372,3 @@ void DurationTypeForm::unitNumberValueChanged()
 {
     m_checkUnitNumberValue->setChecked(true);
 }
-

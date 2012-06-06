@@ -2,21 +2,22 @@
 #define DURATIONTYPEFORM_H
 
 #include "stackablewidget.h"
+#include <QTimeEdit>
 
 class DurationType;
 class QLineEdit;
 class QSpinBox;
 class QCheckBox;
-class QRadioButton;
 class FormatGroupEditBox;
+class QRadioButton;
 
 class DurationTypeForm : public StackableWidget
 {
     Q_OBJECT
 public:
-    explicit DurationTypeForm(DurationType *duration,
-                              QEbuMainWindow *mainWindow,
-                              QWidget *parent = 0);
+    explicit DurationTypeForm(  DurationType *duration,
+                                QEbuMainWindow *mainWindow,
+                                QWidget *parent = 0);
     QString toString();
 signals:
 private slots:
@@ -35,8 +36,16 @@ private slots:
 private:
     void updateListAndButtons();
 
+    QLabel *m_labelTimecode;
     QLineEdit *m_editTimecode;
-    QLineEdit *m_editNormalPlaytime;
+    QLabel *m_labelNormalPlaytimeHour;
+    QLabel *m_labelNormalPlaytimeMinute;
+    QLabel *m_labelNormalPlaytimeSecond;
+    QLabel *m_labelNormalPlaytimeMSecond;
+    QSpinBox *m_spinNormalPlaytimeHour;
+    QSpinBox *m_spinNormalPlaytimeMinute;
+    QSpinBox *m_spinNormalPlaytimeSecond;
+    QSpinBox *m_spinNormalPlaytimeMSecond;
     QSpinBox *m_spinRate;
     QSpinBox *m_spinFactorNumerator;
     QSpinBox *m_spinFactorDenominator;
@@ -45,6 +54,7 @@ private:
     QCheckBox *m_checkFactorNumerator;
     QCheckBox *m_checkFactorDenominator;
     QCheckBox *m_checkUnitNumberValue;
+    QLabel *m_labelTime;
     FormatGroupEditBox *m_editFormatGroup;
     QRadioButton *m_radioTimecode;
     QRadioButton *m_radioNormalPlaytime;
@@ -52,6 +62,5 @@ private:
     QRadioButton *m_radioEditUnitNumber;
     DurationType *m_duration;
 };
-
 
 #endif // DURATIONTYPEFORM_H
