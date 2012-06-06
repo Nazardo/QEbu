@@ -952,16 +952,14 @@ RightsType::RightsType()
 
 RightsType::~RightsType()
 {
-    int s = m_formats.size();
-    for (int i=0; i < s; ++i) {
-        delete (m_formats.takeAt(0));
-    }
+    // Note: m_formats pointer are not owned by this
+    // object and thus must not be deleted.
     delete m_rights;
     delete m_rightsHolder;
     delete m_exploitationIssues;
     delete m_coverage;
     delete m_rightsClearanceFlag;
-    s = m_disclaimer.size();
+    int s = m_disclaimer.size();
     for (int i=0; i < s; ++i) {
         delete (m_disclaimer.takeAt(0));
     }
