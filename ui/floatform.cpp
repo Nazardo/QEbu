@@ -64,6 +64,8 @@ void FloatForm::applyClicked()
 {
     if (m_checkValue->isChecked())
         m_float->setValue(m_spinValue->value());
+    else
+        m_float->clearValue();
     m_editTypeGroup->updateExistingTypeGroup(m_float);
 
     emit closed(m_op, QVarPtr<Float>::asQVariant(m_float));

@@ -279,6 +279,12 @@ void VideoFormatType::setRegionDelimX(unsigned int regionDelimX)
     m_regionDelimX = new unsigned int(regionDelimX);
 }
 
+void VideoFormatType::clearRegionDelimX()
+{
+    delete m_regionDelimX;
+    m_regionDelimX = 0;
+}
+
 unsigned int *VideoFormatType::regionDelimY() const
 {
     return m_regionDelimY;
@@ -288,6 +294,12 @@ void VideoFormatType::setRegionDelimY(unsigned int regionDelimY)
 {
     delete m_regionDelimY;
     m_regionDelimY = new unsigned int(regionDelimY);
+}
+
+void VideoFormatType::clearRegionDelimY()
+{
+    delete m_regionDelimX;
+    m_regionDelimX = 0;
 }
 
 LengthType *VideoFormatType::width() const
@@ -573,6 +585,12 @@ void AncillaryDataFormatType::setDID(int DID)
     m_DID = new int(DID);
 }
 
+void AncillaryDataFormatType::clearDID()
+{
+    delete m_DID;
+    m_DID = 0;
+}
+
 int *AncillaryDataFormatType::SDID() const
 {
     return m_SDID;
@@ -582,6 +600,12 @@ void AncillaryDataFormatType::setSDID(int SDID)
 {
     delete m_SDID;
     m_SDID = new int(SDID);
+}
+
+void AncillaryDataFormatType::clearSDID()
+{
+    delete m_SDID;
+    m_SDID = 0;
 }
 
 QList<int> &AncillaryDataFormatType::lineNumber()
@@ -598,6 +622,12 @@ void AncillaryDataFormatType::setWrappingType(int wrappingType)
 {
     delete m_wrappingType;
     m_wrappingType = new int(wrappingType);
+}
+
+void AncillaryDataFormatType::clearWrappingType()
+{
+    delete m_wrappingType;
+    m_wrappingType = 0;
 }
 
 QString AncillaryDataFormatType::toString() const
@@ -827,6 +857,12 @@ void DocumentFormatType::setWordCount(int wordCount)
     m_wordCount = new int(wordCount);
 }
 
+void DocumentFormatType::clearWordCount()
+{
+    delete m_wordCount;
+    m_wordCount = 0;
+}
+
 unsigned int *DocumentFormatType::regionDelimX() const
 {
     return m_regionDelimX;
@@ -838,6 +874,12 @@ void DocumentFormatType::setRegionDelimX(unsigned int regionDelimX)
     m_regionDelimX = new unsigned int(regionDelimX);
 }
 
+void DocumentFormatType::clearRegionDelimX()
+{
+    delete m_regionDelimX;
+    m_regionDelimX = 0;
+}
+
 unsigned int *DocumentFormatType::regionDelimY() const
 {
     return m_regionDelimY;
@@ -847,6 +889,12 @@ void DocumentFormatType::setRegionDelimY(unsigned int regionDelimY)
 {
     delete m_regionDelimY;
     m_regionDelimY = new unsigned int(regionDelimY);
+}
+
+void DocumentFormatType::clearRegionDelimY()
+{
+    delete m_regionDelimY;
+    m_regionDelimY = 0;
 }
 
 LengthType *DocumentFormatType::width() const

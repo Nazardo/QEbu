@@ -60,6 +60,8 @@ void Uint16Form::applyClicked()
 {
     if (m_checkValue->isChecked())
         m_uint16->setValue(m_spinValue->value());
+    else
+        m_uint16->clearValue();
     m_editTypeGroup->updateExistingTypeGroup(m_uint16);
     emit closed(m_op, QVarPtr<UInt16>::asQVariant(m_uint16));
 }

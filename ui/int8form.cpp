@@ -62,6 +62,8 @@ void Int8Form::applyClicked()
 {
     if (m_checkValue->isChecked())
         m_int8->setValue(m_spinValue->value());
+    else
+        m_int8->clearValue();
     m_editTypeGroup->updateExistingTypeGroup(m_int8);
 
     emit closed(m_op, QVarPtr<Int8>::asQVariant(m_int8));

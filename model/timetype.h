@@ -36,12 +36,16 @@ public:
     void setNormalPlayTime(const QDateTime &normalPlayTime);
     unsigned int *editRate() const;
     void setEditRate(unsigned int editRate);
+    void clearEditRate();
     unsigned int factorNumerator() const;
     void setFactorNumerator(unsigned int factorNumerator);
+    void clearFactorNumerator();
     unsigned int factorDenominator() const;
     void setFactorDenominator(unsigned int factorDenominator);
+    void clearFactorDenominator();
     unsigned long *editUnitNumberValue() const;
     void setEditUnitNumberValue(unsigned long editUnitNumberValue);
+    void clearEditUnitNumberValue();
     QString timeValue() const;
     void setTimeValue(const QString &timeValue);
     FormatGroup *time() const;

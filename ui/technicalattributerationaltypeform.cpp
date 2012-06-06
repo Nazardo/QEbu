@@ -88,10 +88,16 @@ void TechnicalAttributeRationalTypeForm::applyClicked()
 {
     if (m_checkValue->isChecked())
         m_rational->setValue(m_spinValue->value());
+    else
+        m_rational->clearValue();
     if (m_checkDenominator->isChecked())
         m_rational->setFactorDenominator(m_spinFactorDenominator->value());
+    else
+        m_rational->clearFactorDenominator();
     if (m_checkNumerator->isChecked())
         m_rational->setFactorNumerator(m_spinFactorNumerator->value());
+    else
+        m_rational->clearFactorNumerator();
     m_editTypeGroup->updateExistingTypeGroup(m_rational);
     emit closed(m_op, QVarPtr<TechnicalAttributeRationalType>::asQVariant(m_rational));
 }

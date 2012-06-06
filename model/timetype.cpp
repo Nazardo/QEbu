@@ -96,6 +96,12 @@ void TimeType::setEditRate(unsigned int editRate)
     m_editRate = new unsigned int(editRate);
 }
 
+void TimeType::clearEditRate()
+{
+    delete m_editRate;
+    m_editRate = 0;
+}
+
 unsigned int TimeType::factorNumerator() const
 {
     return m_factorNumerator;
@@ -105,6 +111,11 @@ void TimeType::setFactorNumerator(unsigned int factorNumerator)
 {
     m_timeTypeRepresentation = TimeType::enumEditUnitNumber;
     m_factorNumerator = factorNumerator;
+}
+
+void TimeType::clearFactorNumerator()
+{
+    m_factorNumerator = 0;
 }
 
 unsigned int TimeType::factorDenominator() const
@@ -118,6 +129,11 @@ void TimeType::setFactorDenominator(unsigned int factorDenominator)
     m_factorDenominator = factorDenominator;
 }
 
+void TimeType::clearFactorDenominator()
+{
+    m_factorDenominator = 0;
+}
+
 unsigned long *TimeType::editUnitNumberValue() const
 {
     return m_editUnitNumberValue;
@@ -128,6 +144,12 @@ void TimeType::setEditUnitNumberValue(unsigned long editUnitNumberValue)
     m_timeTypeRepresentation = TimeType::enumEditUnitNumber;
     delete m_editUnitNumberValue;
     m_editUnitNumberValue = new unsigned long(editUnitNumberValue);
+}
+
+void TimeType::clearEditUnitNumberValue()
+{
+    delete m_editUnitNumberValue;
+    m_editUnitNumberValue = 0;
 }
 
 QString TimeType::timeValue() const

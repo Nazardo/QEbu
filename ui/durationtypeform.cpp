@@ -234,12 +234,20 @@ void DurationTypeForm::applyClicked()
     } else if (m_radioEditUnitNumber->isChecked()) {
         if (m_checkRate->isChecked())
             m_duration->setEditRate(m_spinRate->value());
+        else
+            m_duration->clearEditRate();
         if (m_checkUnitNumberValue->isChecked())
             m_duration->setEditUnitNumberValue(m_spinUnitNumberValue->value());
+        else
+            m_duration->clearEditUnitNumberValue();
         if (m_checkFactorNumerator->isChecked())
             m_duration->setFactorNumerator(m_spinFactorNumerator->value());
+        else
+            m_duration->clearFactorNumerator();
         if (m_checkFactorDenominator->isChecked())
             m_duration->setFactorDenominator(m_spinFactorDenominator->value());
+        else
+            m_duration->clearFactorDenominator();
     }
 
     emit closed(m_op, QVarPtr<DurationType>::asQVariant(m_duration));

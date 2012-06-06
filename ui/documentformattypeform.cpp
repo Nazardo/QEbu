@@ -124,10 +124,16 @@ void DocumentFormatTypeForm::applyClicked()
 {
     if (m_checkWordCount->isChecked())
         m_documentFormat->setWordCount(m_spinWordCount->value());
+    else
+        m_documentFormat->clearWordCount();
     if (m_checkRegionDelimX->isChecked())
         m_documentFormat->setRegionDelimX(m_spinRegionDelimX->value());
+    else
+        m_documentFormat->clearRegionDelimX();
     if (m_checkRegionDelimY->isChecked())
         m_documentFormat->setRegionDelimY(m_spinRegionDelimY->value());
+    else
+        m_documentFormat->clearRegionDelimY();
     m_editTypeGroup->updateExistingTypeGroup(m_documentFormat);
     m_formatTypeGroup->updateExistingFormatGroup(m_documentFormat);
     m_documentFormat->setDocumentFormatId(m_editDocumentFormatId->text());

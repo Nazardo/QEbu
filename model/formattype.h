@@ -107,8 +107,10 @@ public:
     // Elements
     unsigned int *regionDelimX() const;
     void setRegionDelimX(unsigned int regionDelimX);
+    void clearRegionDelimX();
     unsigned int *regionDelimY() const;
     void setRegionDelimY(unsigned int regionDelimY);
+    void clearRegionDelimY();
     LengthType *width() const;
     void setWidth(LengthType *width);
     LengthType *height() const;
@@ -219,11 +221,14 @@ public:
     // Elements (all optional)
     int *DID() const;
     void setDID(int DID);
+    void clearDID();
     int *SDID() const;
     void setSDID(int SDID);
+    void clearSDID();
     QList<int> &lineNumber();
     int *wrappingType() const;
     void setWrappingType(int wrappingType);
+    void clearWrappingType();
     QString toString() const;
 private:
     // Attributes
@@ -312,10 +317,13 @@ public:
     // Elements
     int *wordCount() const;
     void setWordCount(int wordCount);
+    void clearWordCount();
     unsigned int *regionDelimX() const;
     void setRegionDelimX(unsigned int regionDelimX);
+    void clearRegionDelimX();
     unsigned int *regionDelimY() const;
     void setRegionDelimY(unsigned int regionDelimY);
+    void clearRegionDelimY();
     LengthType *width() const;
     void setWidth(LengthType *length);
     LengthType *height() const;

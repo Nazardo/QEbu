@@ -165,6 +165,11 @@ void TitleType::setAttributionDate(const QDateTime &attributionDate)
     m_attributionDate = attributionDate;
 }
 
+void TitleType::clearAttributionDate()
+{
+    m_attributionDate.setDate(QDate());
+}
+
 QString TitleType::note() const
 {
     return m_note;
@@ -740,6 +745,12 @@ void RelationType::setRunningOrderNumber(int runningOrderNumber)
     m_runningOrderNumber = new int(runningOrderNumber);
 }
 
+void RelationType::clearRunningOrderNumber()
+{
+    delete m_runningOrderNumber;
+    m_runningOrderNumber = 0;
+}
+
 TemporalType::TemporalType()
 {
     m_periodOfTime = 0;
@@ -805,6 +816,11 @@ void CoordinatesType::setPosy(float posy)
     m_posy = posy;
 }
 
+void CoordinatesType::clearPosy()
+{
+    m_posy = 0;
+}
+
 float CoordinatesType::posx() const
 {
     return m_posx;
@@ -813,6 +829,11 @@ float CoordinatesType::posx() const
 void CoordinatesType::setPosx(float posx)
 {
     m_posx = posx;
+}
+
+void CoordinatesType::clearPosx()
+{
+    m_posx = 0;
 }
 
 QString CoordinatesType::toString() const
@@ -1055,6 +1076,12 @@ void RightsType::setRightsClearanceFlag(bool rightsClearanceFlag)
 {
     delete m_rightsClearanceFlag;
     m_rightsClearanceFlag = new bool(rightsClearanceFlag);
+}
+
+void RightsType::clearRightsClearanceFlag()
+{
+    delete m_rightsClearanceFlag;
+    m_rightsClearanceFlag = 0;
 }
 
 QList<ElementType *> &RightsType::disclaimer()

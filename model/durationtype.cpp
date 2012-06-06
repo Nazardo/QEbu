@@ -106,6 +106,12 @@ void DurationType::setEditRate(unsigned int editRate)
     m_editRate = new unsigned int(editRate);
 }
 
+void DurationType::clearEditRate()
+{
+    delete m_editRate;
+    m_editRate = 0;
+}
+
 unsigned int DurationType::factorNumerator() const
 {
     return m_factorNumerator;
@@ -115,6 +121,11 @@ void DurationType::setFactorNumerator(unsigned int factorNumerator)
 {
     m_durationTypeRepresentation = DurationType::enumEditUnitNumber;
     m_factorNumerator = factorNumerator;
+}
+
+void DurationType::clearFactorNumerator()
+{
+    m_factorNumerator = 0;
 }
 
 unsigned int DurationType::factorDenominator() const
@@ -128,6 +139,11 @@ void DurationType::setFactorDenominator(unsigned int factorDenominator)
     m_factorDenominator = factorDenominator;
 }
 
+void DurationType::clearFactorDenominator()
+{
+    m_factorDenominator = 0;
+}
+
 unsigned long *DurationType::editUnitNumberValue() const
 {
     return m_editUnitNumberValue;
@@ -138,6 +154,12 @@ void DurationType::setEditUnitNumberValue(unsigned long editUnitNumberValue)
     m_durationTypeRepresentation = DurationType::enumEditUnitNumber;
     delete m_editUnitNumberValue;
     m_editUnitNumberValue = new unsigned long(editUnitNumberValue);
+}
+
+void DurationType::clearEditUnitNumberValue()
+{
+    delete m_editUnitNumberValue;
+    m_editUnitNumberValue = 0;
 }
 
 QString DurationType::timeValue() const

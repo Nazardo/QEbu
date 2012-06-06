@@ -77,6 +77,7 @@ public:
     //Attributes
     qint8 *value() const;
     void setValue(qint8 value);
+    void clearValue();
     QString toString() const;
 private:
     qint8 *m_value;
@@ -90,6 +91,7 @@ public:
     //Attributes
     qint16 *value() const;
     void setValue(qint16 value);
+    void clearValue();
     QString toString() const;
 private:
     qint16 *m_value;
@@ -103,6 +105,7 @@ public:
     //Attributes
     qint32 *value() const;
     void setValue(qint32 value);
+    void clearValue();
     QString toString() const;
 private:
     qint32 *m_value;
@@ -116,6 +119,7 @@ public:
     //Attributes
     qint64 *value() const;
     void setValue(qint64 value);
+    void clearValue();
     QString toString() const;
 private:
     qint64 *m_value;
@@ -129,6 +133,7 @@ public:
     //Attributes
     quint8 *value() const;
     void setValue(quint8 value);
+    void clearValue();
     QString toString() const;
 private:
     quint8 *m_value;
@@ -142,6 +147,7 @@ public:
     //Attributes
     quint16 *value() const;
     void setValue(quint16 value);
+    void clearValue();
     QString toString() const;
 private:
     quint16 *m_value;
@@ -155,6 +161,7 @@ public:
     //Attributes
     quint32 *value() const;
     void setValue(quint32 value);
+    void clearValue();
     QString toString() const;
 private:
     quint32 *m_value;
@@ -168,6 +175,7 @@ public:
     //Attributes
     quint64 *value() const;
     void setValue(quint64 value);
+    void clearValue();
     QString toString() const;
 private:
     quint64 *m_value;
@@ -194,6 +202,7 @@ public:
     //Attributes
     double *value() const;
     void setValue(double value);
+    void clearValue();
     QString toString() const;
 private:
     double *m_value;
@@ -219,10 +228,13 @@ public:
     //Attributes
     long *value() const;
     void setValue(long value);
+    void clearValue();
     int *factorNumerator() const;
     void setFactorNumerator (int factorNumerator);
+    void clearFactorNumerator();
     int *factorDenominator() const;
     void setFactorDenominator (int factorDenominator);
+    void clearFactorDenominator();
     QString toString() const;
 
 private:

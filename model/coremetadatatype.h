@@ -119,6 +119,7 @@ public:
     ~TitleType();
     QDateTime attributionDate() const;
     void setAttributionDate (const QDateTime &attributionDate);
+    void clearAttributionDate();
     QString note() const;
     void setNote(const QString &note);
     ElementType *title() const;
@@ -275,6 +276,7 @@ public:
     ~RelationType();
     int *runningOrderNumber() const;
     void setRunningOrderNumber(int runningOrderNumber);
+    void clearRunningOrderNumber();
     QString note() const;
     void setNote(const QString &note);
     ElementType *relation() const;
@@ -340,8 +342,10 @@ public:
     CoordinatesType();
     float posy() const;
     void setPosy(float posy);
+    void clearPosy();
     float posx() const;
     void setPosx(float posx);
+    void clearPosx();
     QString toString() const;
 private:
     float m_posy;
@@ -409,6 +413,7 @@ public:
     void setCoverage(CoverageType *coverage);
     bool *rightsClearanceFlag() const;
     void setRightsClearanceFlag(bool rightsClearanceFlag);
+    void clearRightsClearanceFlag();
     QList<ElementType *> &disclaimer();
     QList<IdentifierType *> &rightsID();
     QList<ContactDetailsType *> &contactDetails();

@@ -59,6 +59,8 @@ void Uint64Form::applyClicked()
 {
     if (m_checkValue->isChecked())
         m_uint64->setValue(m_spinValue->value());
+    else
+        m_uint64->clearValue();
     m_editTypeGroup->updateExistingTypeGroup(m_uint64);
     emit closed(m_op, QVarPtr<UInt64>::asQVariant(m_uint64));
 }

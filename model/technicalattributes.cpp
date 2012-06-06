@@ -156,6 +156,12 @@ void TechnicalAttributeRationalType::setValue(long value)
     m_value = new long(value);
 }
 
+void TechnicalAttributeRationalType::clearValue()
+{
+    delete m_value;
+    m_value = 0;
+}
+
 int *TechnicalAttributeRationalType::factorNumerator() const
 {
     return m_factorNumerator;
@@ -167,6 +173,12 @@ void TechnicalAttributeRationalType::setFactorNumerator(int factorNumerator)
     m_factorNumerator = new int(factorNumerator);
 }
 
+void TechnicalAttributeRationalType::clearFactorNumerator()
+{
+    delete m_factorNumerator;
+    m_factorNumerator = 0;
+}
+
 int *TechnicalAttributeRationalType::factorDenominator() const
 {
     return m_factorDenominator;
@@ -176,6 +188,12 @@ void TechnicalAttributeRationalType::setFactorDenominator(int factorDenominator)
 {
     delete m_factorDenominator;
     m_factorDenominator = new int(factorDenominator);
+}
+
+void TechnicalAttributeRationalType::clearFactorDenominator()
+{
+    delete m_factorDenominator;
+    m_factorDenominator = 0;
 }
 
 QString TechnicalAttributeRationalType::toString() const
@@ -225,6 +243,12 @@ void Float::setValue(double value)
 {
     delete m_value;
     m_value = new double(value);
+}
+
+void Float::clearValue()
+{
+    delete m_value;
+    m_value = 0;
 }
 
 QString Float::toString() const
@@ -283,6 +307,12 @@ void UInt64::setValue(quint64 value)
     m_value = new quint64(value);
 }
 
+void UInt64::clearValue()
+{
+    delete m_value;
+    m_value = 0;
+}
+
 QString UInt64::toString() const
 {
     if (!m_value)
@@ -309,6 +339,12 @@ void UInt32::setValue(quint32 value)
 {
     delete m_value;
     m_value = new quint32(value);
+}
+
+void UInt32::clearValue()
+{
+    delete m_value;
+    m_value = 0;
 }
 
 QString UInt32::toString() const
@@ -339,6 +375,12 @@ void UInt16::setValue(quint16 value)
     m_value = new quint16(value);
 }
 
+void UInt16::clearValue()
+{
+    delete m_value;
+    m_value = 0;
+}
+
 QString UInt16::toString() const
 {
     if (!m_value)
@@ -367,6 +409,13 @@ void UInt8::setValue(quint8 value)
     m_value = new quint8(value);
 }
 
+void UInt8::clearValue()
+{
+    delete m_value;
+    m_value = 0;
+}
+
+
 QString UInt8::toString() const
 {
     if (!m_value)
@@ -393,6 +442,12 @@ void Int64::setValue(qint64 value)
 {
     delete m_value;
     m_value = new qint64(value);
+}
+
+void Int64::clearValue()
+{
+    delete m_value;
+    m_value = 0;
 }
 
 QString Int64::toString() const
@@ -423,6 +478,12 @@ void Int32::setValue(qint32 value)
     m_value = new qint32(value);
 }
 
+void Int32::clearValue()
+{
+    delete m_value;
+    m_value = 0;
+}
+
 QString Int32::toString() const
 {
     if (!m_value)
@@ -451,6 +512,12 @@ void Int16::setValue(qint16 value)
     m_value = new qint16(value);
 }
 
+void Int16::clearValue()
+{
+    delete m_value;
+    m_value = 0;
+}
+
 QString Int16::toString() const
 {
     if (!m_value)
@@ -477,6 +544,12 @@ void Int8::setValue(qint8 value)
 {
     delete m_value;
     m_value = new qint8(value);
+}
+
+void Int8::clearValue()
+{
+    delete m_value;
+    m_value = 0;
 }
 
 QString Int8::toString() const

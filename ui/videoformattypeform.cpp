@@ -144,8 +144,12 @@ void VideoFormatTypeForm::applyClicked()
     m_videoFormat->setVideoFormatDefinition(m_editVideoFormatDefinition->text());
     if (m_checkRegionDelimX->isChecked())
         m_videoFormat->setRegionDelimX(m_spinRegionDelimX->value());
+    else
+        m_videoFormat->clearRegionDelimX();
     if (m_checkRegionDelimY->isChecked())
         m_videoFormat->setRegionDelimY(m_spinRegionDelimY->value());
+    else
+        m_videoFormat->clearRegionDelimY();
     m_videoFormat->setWidth(m_editWidth->lengthType());
     m_videoFormat->setHeight(m_editHeight->lengthType());
     emit closed(m_op, QVarPtr<VideoFormatType>::asQVariant(m_videoFormat));

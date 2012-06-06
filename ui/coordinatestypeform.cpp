@@ -69,8 +69,12 @@ void CoordinatesTypeForm::applyClicked()
 {
     if (m_checkPosx->isChecked())
         m_coordinates->setPosx(m_spinPosx->value());
+    else
+        m_coordinates->clearPosx();
     if (m_checkPosy->isChecked())
         m_coordinates->setPosy(m_spinPosy->value());
+    else
+        m_coordinates->clearPosy();
     m_editFormatGroup->updateExistingFormatGroup(m_coordinates);
     emit closed(m_op, QVarPtr<CoordinatesType>::asQVariant(m_coordinates));
 }

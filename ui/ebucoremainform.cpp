@@ -12,6 +12,8 @@
 
 // just for test
 #include "coremetadatatypeform.h"
+#include "formattypeform.h"
+#include "alternativetitletypeform.h"
 
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
                                  QEbuMainWindow *mainWindow,
@@ -176,6 +178,6 @@ void EbuCoreMainForm::metadataProviderClosed(Operation op, QVariant value)
 void EbuCoreMainForm::testClicked()
 {
     // TEST PURPOSES!
-    CoreMetadataTypeForm *test = new CoreMetadataTypeForm(0, mainWindow());
+    AlternativeTitleTypeForm *test = new AlternativeTitleTypeForm(0, mainWindow());
     mainWindow()->pushWidget(test);
 }

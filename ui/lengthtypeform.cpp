@@ -64,6 +64,8 @@ void LengthTypeForm::applyClicked()
     m_length->setUnit(m_editUnit->text());
     if (m_checkValue->isChecked())
         m_length->setValue(m_spinValue->value());
+    else
+        m_length->clearValue();
     emit closed(m_op, QVarPtr<LengthType>::asQVariant(m_length));
 }
 

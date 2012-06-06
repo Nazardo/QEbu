@@ -11,6 +11,7 @@ public:
     LengthType(const unsigned int &value, const QString &unit);
     unsigned int *value() const;
     void setValue(const unsigned int &value);
+    void clearValue();
     QString unit() const;
     void setUnit(const QString &unit);
     QString toString() const;

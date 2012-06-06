@@ -203,12 +203,20 @@ void TimeTypeForm::applyClicked()
     } else if (m_radioEditUnitNumber->isChecked()) {
         if (m_checkRate->isChecked())
             m_time->setEditRate(m_spinRate->value());
+        else
+            m_time->clearEditRate();
         if (m_checkUnitNumberValue->isChecked())
             m_time->setEditUnitNumberValue(m_spinUnitNumberValue->value());
+        else
+            m_time->clearEditUnitNumberValue();
         if (m_checkFactorNumerator->isChecked())
             m_time->setFactorNumerator(m_spinFactorNumerator->value());
+        else
+            m_time->clearFactorNumerator();
         if (m_checkFactorDenominator->isChecked())
             m_time->setFactorDenominator(m_spinFactorDenominator->value());
+        else
+            m_time->clearFactorDenominator();
     }
 
     emit closed(m_op, QVarPtr<TimeType>::asQVariant(m_time));

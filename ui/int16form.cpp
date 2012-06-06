@@ -63,6 +63,8 @@ void Int16Form::applyClicked()
 {
     if (m_checkValue->isChecked())
         m_int16->setValue(m_spinValue->value());
+    else
+        m_int16->clearValue();
     m_editTypeGroup->updateExistingTypeGroup(m_int16);
 
     emit closed(m_op, QVarPtr<Int16>::asQVariant(m_int16));

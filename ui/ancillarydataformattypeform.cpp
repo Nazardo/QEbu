@@ -166,10 +166,16 @@ void AncillaryDataFormatTypeForm::applyClicked()
     m_ancillaryDataFormat->setAncillaryDataFormatName(m_editAncillaryDataFormatName->text());
     if (m_checkDID->isChecked())
         m_ancillaryDataFormat->setDID(m_spinDID->value());
+    else
+        m_ancillaryDataFormat->clearDID();
     if (m_checkSDID->isChecked())
         m_ancillaryDataFormat->setSDID(m_spinSDID->value());
+    else
+        m_ancillaryDataFormat->clearSDID();
     if (m_checkWrappingType->isChecked())
         m_ancillaryDataFormat->setWrappingType(m_spinWrappingType->value());
+    else
+        m_ancillaryDataFormat->clearWrappingType();
     emit closed(m_op, QVarPtr<AncillaryDataFormatType>::asQVariant(m_ancillaryDataFormat));
 }
 

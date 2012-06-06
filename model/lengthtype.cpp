@@ -28,6 +28,12 @@ void LengthType::setValue(const unsigned int &value)
     m_value = new unsigned int(value);
 }
 
+void LengthType::clearValue()
+{
+    delete m_value;
+    m_value = 0;
+}
+
 QString LengthType::unit() const
 {
     return m_unit;

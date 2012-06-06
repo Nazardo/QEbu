@@ -63,6 +63,8 @@ void Int32Form::applyClicked()
 {
     if (m_checkValue->isChecked())
         m_int32->setValue(m_spinValue->value());
+    else
+        m_int32->clearValue();
     m_editTypeGroup->updateExistingTypeGroup(m_int32);
 
     emit closed(m_op, QVarPtr<Int32>::asQVariant(m_int32));

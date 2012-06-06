@@ -139,6 +139,8 @@ void RelationTypeForm::applyClicked()
     m_editTypeGroup->updateExistingTypeGroup(m_relation);
     if (m_checkRunningOrderNumber->isChecked())
         m_relation->setRunningOrderNumber(m_spinRunningOrderNumber->value());
+    else
+        m_relation->clearRunningOrderNumber();
     m_relation->setRelation(new ElementType(
                                 m_editElementRelation->editValue()->text(),
                                 m_editElementRelation->editLang()->text()));
