@@ -23,11 +23,17 @@ private slots:
 
     void actionOpen();
     void actionSave();
-
+    void actionClose();
+    void actionQuit();
+    void actionAbout();
 private:
     void resetView();
     bool removeWidgetFromTop();
     void updateLabel();
+
+    bool doOpen();
+    bool doSave();
+    bool doClose();
 
     QLayout *m_mainCentralLayout;
     EbuCoreMainType *m_ebuCoreMain;
