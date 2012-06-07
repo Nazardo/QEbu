@@ -5,7 +5,7 @@
 
 class Int64;
 class TypeGroupEditBox;
-class QSpinBox;
+class QSignedSpinBox;
 class QCheckBox;
 
 class Int64Form : public StackableWidget
@@ -22,7 +22,7 @@ private slots:
     void applyClicked();
     void valueChanged();
 private:
-    QSpinBox *m_spinValue;
+    QSignedSpinBox *m_spinValue;
     QCheckBox *m_checkValue;
     TypeGroupEditBox *m_editTypeGroup;
     Int64 *m_int64;

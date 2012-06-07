@@ -6,6 +6,7 @@
 #include "technicalattributesform.h"
 #include "qvarptr.h"
 #include "../model/qebulimits.h"
+#include "qextendedspinbox.h"
 #include <QPushButton>
 #include <QLineEdit>
 #include <QLabel>
@@ -59,22 +60,21 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
         QObject::connect(m_spinWordCount, SIGNAL(valueChanged(int)),
                          this, SLOT(wordCountChanged()));
 
-
-        m_spinRegionDelimX = new QSpinBox;
+        m_spinRegionDelimX = new QUnsignedSpinBox;
         m_checkRegionDelimX = new QCheckBox(tr("Region Delim X"));
-        m_spinRegionDelimX->setRange(0, qEbuLimits::getMaxInt());
+        m_spinRegionDelimX->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         gl->addWidget(m_checkRegionDelimX, 1, 0);
         gl->addWidget(m_spinRegionDelimX, 1, 1);
-        QObject::connect(m_spinRegionDelimX, SIGNAL(valueChanged(int)),
+        QObject::connect(m_spinRegionDelimX, SIGNAL(valueChanged()),
                          this, SLOT(regionDelimXChanged()));
 
 
-        m_spinRegionDelimY = new QSpinBox;
+        m_spinRegionDelimY = new QUnsignedSpinBox;
         m_checkRegionDelimY = new QCheckBox(tr("Region Delim X"));
-        m_spinRegionDelimY->setRange(0, qEbuLimits::getMaxInt());
+        m_spinRegionDelimY->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         gl->addWidget(m_checkRegionDelimY, 2, 0);
         gl->addWidget(m_spinRegionDelimY, 2, 1);
-        QObject::connect(m_spinRegionDelimY, SIGNAL(valueChanged(int)),
+        QObject::connect(m_spinRegionDelimY, SIGNAL(valueChanged()),
                          this, SLOT(regionDelimYChanged()));
 
         m_editWidth = new LengthTypeEditBox(m_documentFormat->width());
@@ -104,11 +104,28 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
         vl->addLayout(hl);
     }
     this->setLayout(vl);
+
+    //Set data fields...
+    m_editDocumentFormatId->setText(m_documentFormat->documentFormatId());
+    m_editDocumentFormatName->setText(m_documentFormat->documentFormatName());
+    m_editDocumentFormatDefinition->setText(m_documentFormat->documentFormatDefinition());
+    if (m_documentFormat->regionDelimX()) {
+        m_spinRegionDelimX->setValue(*(m_documentFormat->regionDelimX()));
+        m_checkRegionDelimX->setChecked(true);
+    }
+    if (m_documentFormat->regionDelimY()) {
+        m_spinRegionDelimY->setValue(*(m_documentFormat->regionDelimY()));
+        m_checkRegionDelimY->setChecked(true);
+    }
+    if (m_documentFormat->wordCount()) {
+        m_spinWordCount->setValue(*(m_documentFormat->wordCount()));
+        m_checkWordCount->setChecked(true);
+    }
 }
 
 QString DocumentFormatTypeForm::toString()
 {
-    return QString("Documento Format Type");
+    return QString("Document Format Type");
 }
 
 void DocumentFormatTypeForm::cancelClicked()
@@ -139,6 +156,8 @@ void DocumentFormatTypeForm::applyClicked()
     m_documentFormat->setDocumentFormatId(m_editDocumentFormatId->text());
     m_documentFormat->setDocumentFormatDefinition(m_editDocumentFormatDefinition->text());
     m_documentFormat->setDocumentFormatName(m_editDocumentFormatName->text());
+    m_documentFormat->setWidth(m_editWidth->lengthType());
+    m_documentFormat->setHeight(m_editHeight->lengthType());
     emit closed(m_op, QVarPtr<DocumentFormatType>::asQVariant(m_documentFormat));
 }
 

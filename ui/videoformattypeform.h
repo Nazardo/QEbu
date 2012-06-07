@@ -7,7 +7,7 @@ class VideoFormatType;
 class QLineEdit;
 class QPushButton;
 class QCheckBox;
-class QSpinBox;
+class QUnsignedSpinBox;
 class ListView;
 class LengthTypeEditBox;
 
@@ -47,8 +47,8 @@ private:
     QLineEdit *m_editVideoFormatId;
     QLineEdit *m_editVideoFormatName;
     QLineEdit *m_editVideoFormatDefinition;
-    QSpinBox *m_spinRegionDelimX;
-    QSpinBox *m_spinRegionDelimY;
+    QUnsignedSpinBox *m_spinRegionDelimX;
+    QUnsignedSpinBox *m_spinRegionDelimY;
     QCheckBox *m_checkRegionDelimX;
     QCheckBox *m_checkRegionDelimY;
     LengthTypeEditBox *m_editWidth;

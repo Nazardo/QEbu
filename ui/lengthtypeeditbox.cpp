@@ -5,6 +5,7 @@
 #include <QSpinBox>
 #include <QHBoxLayout>
 #include <QLineEdit>
+#include "qextendedspinbox.h"
 
 LengthTypeEditBox::LengthTypeEditBox(LengthType *length, QWidget *parent) :
     QWidget(parent)
@@ -12,7 +13,7 @@ LengthTypeEditBox::LengthTypeEditBox(LengthType *length, QWidget *parent) :
     QHBoxLayout *hl = new QHBoxLayout;
     m_check = new QCheckBox(tr("Length"));
     hl->addWidget(m_check);
-    m_editValue = new QSpinBox;
+    m_editValue = new QUnsignedSpinBox;
     m_editValue->setRange(qEbuLimits::getMinUInt(),
                           qEbuLimits::getMaxUInt());
     hl->addWidget(m_editValue);

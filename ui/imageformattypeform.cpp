@@ -12,10 +12,10 @@
 #include <QGroupBox>
 #include <QLineEdit>
 #include <QCheckBox>
-#include <QSpinBox>
 #include <QComboBox>
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include "qextendedspinbox.h"
 
 ImageFormatTypeForm::ImageFormatTypeForm(ImageFormatType *imageFormat,
                                          QEbuMainWindow *mainWindow,
@@ -44,26 +44,28 @@ ImageFormatTypeForm::ImageFormatTypeForm(ImageFormatType *imageFormat,
     {
         QGridLayout *gridLayout = new QGridLayout;
         m_checkRegionDelimX = new QCheckBox(tr("Region Delim X"));
-        m_editRegionDelimX = new QSpinBox;
+        m_editRegionDelimX = new QUnsignedSpinBox;
         m_editRegionDelimX->setRange(qEbuLimits::getMinUInt(),
                                      qEbuLimits::getMaxUInt());
         gridLayout->addWidget(m_checkRegionDelimX, 0, 0);
         gridLayout->addWidget(m_editRegionDelimX, 0, 1);
-        QObject::connect(m_editRegionDelimX, SIGNAL(valueChanged(int)),
+        QObject::connect(m_editRegionDelimX, SIGNAL(valueChanged()),
                          this, SLOT(regionDelimXChanged()));
         m_checkRegionDelimY = new QCheckBox(tr("Region Delim Y"));
-        m_editRegionDelimY = new QSpinBox;
+        m_editRegionDelimY = new QUnsignedSpinBox;
         m_editRegionDelimY->setRange(qEbuLimits::getMinUInt(),
                                      qEbuLimits::getMaxUInt());
         gridLayout->addWidget(m_checkRegionDelimY, 1, 0);
         gridLayout->addWidget(m_editRegionDelimY, 1, 1);
-        QObject::connect(m_editRegionDelimY, SIGNAL(valueChanged(int)),
+        QObject::connect(m_editRegionDelimY, SIGNAL(valueChanged()),
                          this, SLOT(regionDelimYChanged()));
 
         m_editWidth = new LengthTypeEditBox(m_imageFormat->width());
+        m_editWidth->setLabel(tr("Width"));
         gridLayout->addWidget(m_editWidth, 2, 0, 1, 2);
 
         m_editHeight = new LengthTypeEditBox(m_imageFormat->height());
+        m_editHeight->setLabel(tr("Height"));
         gridLayout->addWidget(m_editHeight, 3, 0, 1, 2);
 
         m_checkOrientation = new QCheckBox(tr("Orientation"));

@@ -3,9 +3,10 @@
 #include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include "../model/qebulimits.h"
-#include <QSpinBox>
 #include <QCheckBox>
+#include <QSpinBox>
 #include <QLayout>
+#include "qextendedspinbox.h"
 
 TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         TechnicalAttributeRationalType *rational,
@@ -23,10 +24,10 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
     {
         QGridLayout *gl = new QGridLayout;
 
-        m_spinValue = new QDoubleSpinBox;
-        m_spinValue->setRange(qEbuLimits::getMinDouble(), qEbuLimits::getMaxDouble());
+        m_spinValue = new QSignedSpinBox;
+        m_spinValue->setRange(qEbuLimits::getMinInt64(), qEbuLimits::getMaxInt64());
         m_checkValue = new QCheckBox(tr("Value"));
-        QObject::connect(m_spinValue, SIGNAL(valueChanged(double)),
+        QObject::connect(m_spinValue, SIGNAL(valueChanged()),
                          this, SLOT(valueChanged()));
         gl->addWidget(m_checkValue, 0, 0);
         gl->addWidget(m_spinValue, 0, 1);
@@ -64,10 +65,14 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         m_spinFactorNumerator->setValue(*(m_rational->factorNumerator()));
         m_checkNumerator->setChecked(true);
     }
+    else
+        m_spinFactorNumerator->setValue(1);
     if (m_rational->factorDenominator()) {
         m_spinFactorDenominator->setValue(*(m_rational->factorDenominator()));
         m_checkDenominator->setChecked(true);
     }
+    else
+        m_spinFactorDenominator->setValue(1);
 }
 
 QString TechnicalAttributeRationalTypeForm::toString()

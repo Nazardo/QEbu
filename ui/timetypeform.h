@@ -6,7 +6,8 @@
 
 class TimeType;
 class QLineEdit;
-class QSpinBox;
+class QSignedSpinBox;
+class QUnsignedSpinBox;
 class QCheckBox;
 class FormatGroupEditBox;
 class QRadioButton;
@@ -40,10 +41,10 @@ private:
     QLineEdit *m_editTimecode;
     QWidget *m_labelNormalPlaytime;
     QTimeEdit *m_editNormalPlaytime;
-    QSpinBox *m_spinRate;
-    QSpinBox *m_spinFactorNumerator;
-    QSpinBox *m_spinFactorDenominator;
-    QSpinBox *m_spinUnitNumberValue;
+    QUnsignedSpinBox *m_spinRate;
+    QUnsignedSpinBox *m_spinFactorNumerator;
+    QUnsignedSpinBox *m_spinFactorDenominator;
+    QSignedSpinBox *m_spinUnitNumberValue;
     QCheckBox *m_checkRate;
     QCheckBox *m_checkFactorNumerator;
     QCheckBox *m_checkFactorDenominator;

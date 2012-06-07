@@ -5,7 +5,9 @@
 
 class TechnicalAttributeRationalType;
 class QDoubleSpinBox;
+class QSignedSpinBox;
 class QSpinBox;
+class QUnsignedSpinBox;
 class QCheckBox;
 class TypeGroupEditBox;
 
@@ -25,7 +27,7 @@ private slots:
     void numeratorChanged();
     void denominatorChanged();
 private:
-    QDoubleSpinBox *m_spinValue;
+    QSignedSpinBox *m_spinValue;
     QSpinBox *m_spinFactorNumerator;
     QSpinBox *m_spinFactorDenominator;
     QCheckBox *m_checkValue;

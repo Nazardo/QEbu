@@ -6,6 +6,7 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QLayout>
+#include "qextendedspinbox.h"
 
 Uint16Form::Uint16Form(UInt16 *uint16,
                        QEbuMainWindow *mainWindow,
@@ -21,10 +22,10 @@ Uint16Form::Uint16Form(UInt16 *uint16,
     QVBoxLayout *vl = new QVBoxLayout;
     {
         QGridLayout *gl = new QGridLayout;
-        m_spinValue = new QSpinBox;
+        m_spinValue = new QUnsignedSpinBox;
         m_spinValue->setRange(qEbuLimits::getMinUInt16(), qEbuLimits::getMaxUInt16());
         m_checkValue = new QCheckBox(tr("Value"));
-        QObject::connect(m_spinValue, SIGNAL(valueChanged(unsigned int)),
+        QObject::connect(m_spinValue, SIGNAL(valueChanged()),
                          this, SLOT(valueChanged()));
         gl->addWidget(m_checkValue, 0, 0);
         gl->addWidget(m_spinValue, 0, 1);

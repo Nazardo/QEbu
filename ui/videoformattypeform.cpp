@@ -12,9 +12,9 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QLineEdit>
-#include <QSpinBox>
 #include <QCheckBox>
 #include <QFormLayout>
+#include "qextendedspinbox.h"
 
 VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
                                          QEbuMainWindow *mainWindow,
@@ -42,26 +42,28 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
     {
         QGridLayout *gl = new QGridLayout;
 
-        m_spinRegionDelimX = new QSpinBox;
-        m_spinRegionDelimX->setRange(0, qEbuLimits::getMaxInt());
+        m_spinRegionDelimX = new QUnsignedSpinBox;
+        m_spinRegionDelimX->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         m_checkRegionDelimX = new QCheckBox(tr("Region delim X"));
         gl->addWidget(m_checkRegionDelimX, 0, 0);
         gl->addWidget(m_spinRegionDelimX, 0, 1);
-        QObject::connect(m_spinRegionDelimX, SIGNAL(valueChanged(int)),
+        QObject::connect(m_spinRegionDelimX, SIGNAL(valueChanged()),
                          this, SLOT(regionDelimXChanged()));
 
-        m_spinRegionDelimY = new QSpinBox;
-        m_spinRegionDelimY->setRange(0, qEbuLimits::getMaxInt());
+        m_spinRegionDelimY = new QUnsignedSpinBox;
+        m_spinRegionDelimY->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         m_checkRegionDelimY = new QCheckBox(tr("Region delim Y"));
         gl->addWidget(m_checkRegionDelimY, 1, 0);
         gl->addWidget(m_spinRegionDelimY, 1, 1);
-        QObject::connect(m_spinRegionDelimY, SIGNAL(valueChanged(int)),
+        QObject::connect(m_spinRegionDelimY, SIGNAL(valueChanged()),
                          this, SLOT(regionDelimYChanged()));
 
         m_editWidth = new LengthTypeEditBox(m_videoFormat->width());
+        m_editWidth->setLabel(tr("Width"));
         gl->addWidget(m_editWidth, 2, 0, 1, 2);
 
         m_editHeight = new LengthTypeEditBox(m_videoFormat->height());
+        m_editHeight->setLabel(tr("Heigth"));
         gl->addWidget(m_editHeight, 3, 0, 1, 2);
 
         vl->addLayout(gl);

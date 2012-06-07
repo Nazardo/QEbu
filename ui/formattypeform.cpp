@@ -30,6 +30,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QButtonGroup>
+#include "qextendedspinbox.h"
 
 FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -61,12 +62,12 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
         m_vTab->addWidget(m_editElementFormat);
 
         QGridLayout *gl = new QGridLayout;
-        m_spinFileSize = new QSpinBox;
-        m_spinFileSize->setRange(0, qEbuLimits::getMaxInt());
+        m_spinFileSize = new QSignedSpinBox;
+        m_spinFileSize->setRange(0, qEbuLimits::getMaxInt64());
         m_checkFileSize = new QCheckBox(tr("File Size"));
         gl->addWidget(m_checkFileSize, 0, 0, 1, 1);
         gl->addWidget(m_spinFileSize, 0, 1, 1, 3);
-        QObject::connect(m_spinFileSize, SIGNAL(valueChanged(int)),
+        QObject::connect(m_spinFileSize, SIGNAL(valueChanged()),
                          this, SLOT(fileSizeChanged()));
 
 
@@ -158,19 +159,19 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
         m_vTab->addLayout(vlGeneral);
 
         QGridLayout *gl = new QGridLayout;
-        m_spinRegionDelimX = new QSpinBox;
-        m_spinRegionDelimX->setRange(0, qEbuLimits::getMaxInt());
+        m_spinRegionDelimX = new QUnsignedSpinBox;
+        m_spinRegionDelimX->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         m_checkRegionDelimX = new QCheckBox(tr("Region Delim X"));
         gl->addWidget(m_checkRegionDelimX, 0, 0, 1, 2);
         gl->addWidget(m_spinRegionDelimX, 0, 1, 1, 2);
-        QObject::connect(m_spinRegionDelimX, SIGNAL(valueChanged(int)),
+        QObject::connect(m_spinRegionDelimX, SIGNAL(valueChanged()),
                          this, SLOT(regionDelimXChanged()));
-        m_spinRegionDelimY = new QSpinBox;
-        m_spinRegionDelimY->setRange(0, qEbuLimits::getMaxInt());
+        m_spinRegionDelimY = new QUnsignedSpinBox;
+        m_spinRegionDelimY->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         m_checkRegionDelimY = new QCheckBox(tr("Region Delim Y"));
         gl->addWidget(m_checkRegionDelimY, 1, 0, 1, 2);
         gl->addWidget(m_spinRegionDelimY, 1, 1, 1, 2);
-        QObject::connect(m_spinRegionDelimY, SIGNAL(valueChanged(int)),
+        QObject::connect(m_spinRegionDelimY, SIGNAL(valueChanged()),
                          this, SLOT(regionDelimYChanged()));
         m_vTab->addLayout(gl);
 

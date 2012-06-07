@@ -5,7 +5,7 @@
 
 class UInt16;
 class TypeGroupEditBox;
-class QSpinBox;
+class QUnsignedSpinBox;
 class QCheckBox;
 
 class Uint16Form : public StackableWidget
@@ -23,7 +23,7 @@ private slots:
     void valueChanged();
 private:
     TypeGroupEditBox *m_editTypeGroup;
-    QSpinBox *m_spinValue;
+    QUnsignedSpinBox *m_spinValue;
     QCheckBox *m_checkValue;
     UInt16 *m_uint16;
 };

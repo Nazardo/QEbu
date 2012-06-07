@@ -72,7 +72,9 @@ HEADERS += \
     ui/coremetadatatypeform.h \
     ui/parttypeform.h \
     ui/verticalscrollarea.h \
-    ui/formattypeform.h
+    ui/formattypeform.h \
+    ui/extendedvalidator.h \
+    ui/qextendedspinbox.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \

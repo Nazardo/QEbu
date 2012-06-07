@@ -6,7 +6,7 @@
 class ImageFormatType;
 class QLineEdit;
 class QCheckBox;
-class QSpinBox;
+class QUnsignedSpinBox;
 class QComboBox;
 class LengthTypeEditBox;
 class ListView;
@@ -42,9 +42,9 @@ private:
     QLineEdit *m_editImageFormatName;
     QLineEdit *m_editImageFormatDefinition;
     QCheckBox *m_checkRegionDelimX;
-    QSpinBox *m_editRegionDelimX;
+    QUnsignedSpinBox *m_editRegionDelimX;
     QCheckBox *m_checkRegionDelimY;
-    QSpinBox *m_editRegionDelimY;
+    QUnsignedSpinBox *m_editRegionDelimY;
     LengthTypeEditBox *m_editWidth;
     LengthTypeEditBox *m_editHeight;
     QCheckBox *m_checkOrientation;

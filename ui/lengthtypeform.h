@@ -4,7 +4,7 @@
 #include "stackablewidget.h"
 
 class QLineEdit;
-class QSpinBox;
+class QUnsignedSpinBox;
 class QCheckBox;
 class LengthType;
 
@@ -24,7 +24,7 @@ private slots:
     void valueChanged();
 private:
     QLineEdit *m_editUnit;
-    QSpinBox *m_spinValue;
+    QUnsignedSpinBox *m_spinValue;
     QCheckBox *m_checkValue;
     LengthType *m_length;
 };

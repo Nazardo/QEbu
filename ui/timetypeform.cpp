@@ -18,6 +18,7 @@
 #include <QCheckBox>
 #include <QFormLayout>
 #include <QLabel>
+#include "qextendedspinbox.h"
 
 TimeTypeForm::TimeTypeForm(TimeType *time,
                            QEbuMainWindow *mainWindow,
@@ -64,34 +65,35 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
         {
             QGridLayout *gl = new QGridLayout;
 
-            m_spinRate = new QSpinBox;
-            m_spinRate->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
+            m_spinRate = new QUnsignedSpinBox;
+            m_spinRate->setRange(1, qEbuLimits::getMaxUInt());
+            m_spinRate->setValue(1);
             m_checkRate = new QCheckBox(tr("Rate"));
-            QObject::connect(m_spinRate, SIGNAL(valueChanged(int)),
+            QObject::connect(m_spinRate, SIGNAL(valueChanged()),
                              this, SLOT(rateChanged()));
             gl->addWidget(m_checkRate, 0, 0);
             gl->addWidget(m_spinRate, 0, 1);
 
-            m_spinFactorNumerator = new QSpinBox;
-            m_spinFactorNumerator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
+            m_spinFactorNumerator = new QUnsignedSpinBox;
+            m_spinFactorNumerator->setRange(1, qEbuLimits::getMaxUInt());
             m_checkFactorNumerator = new QCheckBox(tr("Factor numerator"));
-            QObject::connect(m_spinFactorNumerator, SIGNAL(valueChanged(int)),
+            QObject::connect(m_spinFactorNumerator, SIGNAL(valueChanged()),
                              this, SLOT(factorNumeratorChanged()));
             gl->addWidget(m_checkFactorNumerator, 1, 0);
             gl->addWidget(m_spinFactorNumerator, 1, 1);
 
-            m_spinFactorDenominator = new QSpinBox;
-            m_spinFactorDenominator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
+            m_spinFactorDenominator = new QUnsignedSpinBox;
+            m_spinFactorDenominator->setRange(1, qEbuLimits::getMaxUInt());
             m_checkFactorDenominator = new QCheckBox(tr("Factor denominator"));
-            QObject::connect(m_spinFactorDenominator, SIGNAL(valueChanged(int)),
+            QObject::connect(m_spinFactorDenominator, SIGNAL(valueChanged()),
                              this, SLOT(factorDenominatorChanged()));
             gl->addWidget(m_checkFactorDenominator, 2, 0);
             gl->addWidget(m_spinFactorDenominator, 2, 1);
 
-            m_spinUnitNumberValue = new QSpinBox;
-            m_spinUnitNumberValue->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
+            m_spinUnitNumberValue = new QSignedSpinBox;
+            m_spinUnitNumberValue->setRange(qEbuLimits::getMinInt64(), qEbuLimits::getMaxInt64());
             m_checkUnitNumberValue = new QCheckBox(tr("Unit value"));
-            QObject::connect(m_spinUnitNumberValue, SIGNAL(valueChanged(int)),
+            QObject::connect(m_spinUnitNumberValue, SIGNAL(valueChanged()),
                              this, SLOT(unitNumberValueChanged()));
             gl->addWidget(m_checkUnitNumberValue, 3, 0);
             gl->addWidget(m_spinUnitNumberValue, 3, 1);

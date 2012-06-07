@@ -4,7 +4,7 @@
 #include <QWidget>
 
 class QCheckBox;
-class QSpinBox;
+class QUnsignedSpinBox;
 class QLineEdit;
 class LengthType;
 
@@ -18,7 +18,7 @@ public:
     void setLabel(const QString &label);
 private:
     QCheckBox *m_check;
-    QSpinBox *m_editValue;
+    QUnsignedSpinBox *m_editValue;
     QLineEdit *m_editUnit;
 };
 

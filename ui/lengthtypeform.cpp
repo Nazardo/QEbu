@@ -3,9 +3,9 @@
 #include "../model/qebulimits.h"
 #include "qvarptr.h"
 #include <QLineEdit>
-#include <QSpinBox>
 #include <QCheckBox>
 #include <QFormLayout>
+#include "qextendedspinbox.h"
 
 LengthTypeForm::LengthTypeForm(LengthType *length,
                                QEbuMainWindow *mainWindow,
@@ -27,10 +27,10 @@ LengthTypeForm::LengthTypeForm(LengthType *length,
     }
     {
         QGridLayout *gl = new QGridLayout;
-        m_spinValue = new QSpinBox;
-        m_spinValue->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
+        m_spinValue = new QUnsignedSpinBox;
+        m_spinValue->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         m_checkValue = new QCheckBox(tr("Value"));
-        QObject::connect(m_spinValue, SIGNAL(valueChanged(int)),
+        QObject::connect(m_spinValue, SIGNAL(valueChanged()),
                          this, SLOT(valueChanged()));
         gl->addWidget(m_checkValue, 0, 0);
         gl->addWidget(m_spinValue, 0, 1);
