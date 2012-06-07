@@ -121,6 +121,8 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
         m_spinWordCount->setValue(*(m_documentFormat->wordCount()));
         m_checkWordCount->setChecked(true);
     }
+    if (m_documentFormat->technicalAttributes())
+        m_editTechnicalAttributes->setText(m_documentFormat->technicalAttributes()->toString());
 }
 
 QString DocumentFormatTypeForm::toString()

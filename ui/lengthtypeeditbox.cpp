@@ -17,9 +17,13 @@ LengthTypeEditBox::LengthTypeEditBox(LengthType *length, QWidget *parent) :
     m_editValue->setRange(qEbuLimits::getMinUInt(),
                           qEbuLimits::getMaxUInt());
     hl->addWidget(m_editValue);
+    QObject::connect(m_editValue, SIGNAL(valueChanged()),
+                     this, SLOT(lengthChanged()));
     m_editUnit = new QLineEdit;
     m_editUnit->setPlaceholderText(tr("Unit"));
     hl->addWidget(m_editUnit);
+    QObject::connect(m_editUnit, SIGNAL(textChanged(QString)),
+                     this, SLOT(lengthChanged()));
     this->setLayout(hl);
     // Set text fields
     if (!length)
@@ -43,4 +47,9 @@ LengthType *LengthTypeEditBox::lengthType()
 void LengthTypeEditBox::setLabel(const QString &label)
 {
     m_check->setText(label);
+}
+
+void LengthTypeEditBox::lengthChanged()
+{
+    m_check->setChecked(true);
 }

@@ -16,6 +16,8 @@ public:
                                QWidget *parent = 0);
     LengthType *lengthType();
     void setLabel(const QString &label);
+private slots:
+    void lengthChanged();
 private:
     QCheckBox *m_check;
     QUnsignedSpinBox *m_editValue;

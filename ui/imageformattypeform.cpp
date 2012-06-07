@@ -128,6 +128,8 @@ ImageFormatTypeForm::ImageFormatTypeForm(ImageFormatType *imageFormat,
         else
             m_comboOrientation->setCurrentIndex(ImageFormatType::Landscape);
     }
+    if (m_imageFormat->technicalAttributes())
+        m_editTechnicalAttributes->setText(m_imageFormat->technicalAttributes()->toString());
     int s = m_imageFormat->imageEncoding().size();
     for (int i=0; i < s; ++i) {
         m_listView->addItem(m_imageFormat->imageEncoding().at(i)->toString());
