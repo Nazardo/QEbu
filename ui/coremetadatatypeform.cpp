@@ -731,11 +731,10 @@ void CoreMetadataTypeForm::editClicked()
         break;
     case Format:
     {
-        /// @todo: comment
-//        FormatTypeForm *formatForm = new FormatTypeForm(m_coreMetadata->format().at(index), this->mainWindow());
-//        QObject::connect(formatForm, SIGNAL(closed(Operation,QVariant)),
-//                         this, SLOT(formatFormClosed(Operation,QVariant)));
-//        this->mainWindow()->pushWidget(formatForm);
+        FormatTypeForm *formatForm = new FormatTypeForm(m_coreMetadata->format().at(index), this->mainWindow());
+        QObject::connect(formatForm, SIGNAL(closed(Operation,QVariant)),
+                         this, SLOT(formatFormClosed(Operation,QVariant)));
+        this->mainWindow()->pushWidget(formatForm);
     }
         break;
     case Identifier:
