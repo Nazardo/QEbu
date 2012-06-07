@@ -46,8 +46,6 @@ private:
     QCheckBox *m_checkRegionDelimX;
     QUnsignedSpinBox *m_spinRegionDelimY;
     QCheckBox *m_checkRegionDelimY;
-    LengthType *m_lengthWidth;
-    LengthType *m_lengthHeight;
     LengthTypeEditBox *m_editWidth;
     LengthTypeEditBox *m_editHeight;
     DocumentFormatType *m_documentFormat;
