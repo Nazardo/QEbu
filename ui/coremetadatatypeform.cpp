@@ -274,16 +274,11 @@ CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata,
     m_groupTabs[0]->addButton(m_buttonDate);
     m_buttonType->setCheckable(true);
     m_groupTabs[0]->addButton(m_buttonType);
-    m_buttonFormat->setCheckable(true);
-    m_groupTabs[0]->addButton(m_buttonFormat);
     m_buttonIdentifier->setCheckable(true);
     m_groupTabs[0]->addButton(m_buttonIdentifier);
-    m_buttonSource->setCheckable(true);
-    m_groupTabs[0]->addButton(m_buttonSource);
-    m_buttonLanguage->setCheckable(true);
-    m_groupTabs[0]->addButton(m_buttonLanguage);
-    m_buttonRelation->setCheckable(true);
+
     m_groupTabs[1] = new QButtonGroup(this);
+    m_buttonRelation->setCheckable(true);
     m_groupTabs[1]->addButton(m_buttonRelation);
     m_buttonIsVersionOf->setCheckable(true);
     m_groupTabs[1]->addButton(m_buttonIsVersionOf);
@@ -315,8 +310,16 @@ CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata,
     m_groupTabs[1]->addButton(m_buttonIsEpisodeOf);
     m_buttonIsMemberOf->setCheckable(true);
     m_groupTabs[1]->addButton(m_buttonIsMemberOf);
-    m_buttonCoverage->setCheckable(true);
+
+
     m_groupTabs[2] = new QButtonGroup(this);
+    m_buttonFormat->setCheckable(true);
+    m_groupTabs[2]->addButton(m_buttonFormat);
+    m_buttonSource->setCheckable(true);
+    m_groupTabs[2]->addButton(m_buttonSource);
+    m_buttonLanguage->setCheckable(true);
+    m_groupTabs[2]->addButton(m_buttonLanguage);
+    m_buttonCoverage->setCheckable(true);
     m_groupTabs[2]->addButton(m_buttonCoverage);
     m_buttonRights->setCheckable(true);
     m_groupTabs[2]->addButton(m_buttonRights);
