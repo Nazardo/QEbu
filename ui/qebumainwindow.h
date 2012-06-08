@@ -2,7 +2,7 @@
 #define QEBUMAINWINDOW_H
 
 #include <QMainWindow>
-#include <QHash>
+#include <QMap>
 
 class QLayout;
 class EbuCoreMainType;
@@ -19,7 +19,7 @@ public:
     ~QEbuMainWindow();
     void pushWidget(StackableWidget *widget);
     EbuCoreMainType *ebuCoreMain();
-    QHash<QString,QString> getMap(QString name);
+    QMap<QString,QString> getMap(QString name);
 private slots:
     void childClosed();
 
@@ -42,7 +42,7 @@ private:
     QStackedWidget *m_stackedWidget;
     QLabel *m_labelNavigation;
     QList<QString> m_listLabel;
-    QHash<QString, QHash<QString,QString> > m_maps;
+    QMap<QString, QMap<QString,QString> > m_maps;
 };
 
 #endif // QEBUMAINWINDOW_H

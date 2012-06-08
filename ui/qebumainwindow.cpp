@@ -282,13 +282,13 @@ void QEbuMainWindow::actionAbout()
                        tr("QEbu about text goes here."));
 }
 
-QHash<QString, QString> QEbuMainWindow::getMap(QString name)
+QMap<QString, QString> QEbuMainWindow::getMap(QString name)
 {
     if (m_maps.contains(name)) {
         return m_maps.value("name");
     } else {
         // Dynamical load from file
-        QHash<QString, QString> map;
+        QMap<QString, QString> map;
 
         QFile file(".\\debug\\XML_autoComp\\"+name+".xml");
         QString baseUrl;
