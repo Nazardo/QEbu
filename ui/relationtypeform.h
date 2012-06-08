@@ -20,6 +20,7 @@ public:
                               QWidget *parent = 0);
     QString toString();
     bool checkCompliance();
+    void setTitle(const QString &title);
 signals:
 private slots:
     void cancelClicked();
@@ -40,6 +41,7 @@ private:
     ElementTypeEditBox *m_editElementRelation;
     QLineEdit *m_editRelationIdentifier;
     RelationType *m_relation;
+    QString m_title;
 };
 
 #endif // RELATIONTYPEFORM_H

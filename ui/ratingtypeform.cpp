@@ -72,7 +72,7 @@ RatingTypeForm::RatingTypeForm(RatingType *rating,
 
 QString RatingTypeForm::toString()
 {
-    return QString(tr("Rating Type"));
+    return QString(tr("Rating"));
 }
 
 void RatingTypeForm::ratingProviderRemoveClicked()
@@ -87,6 +87,7 @@ void RatingTypeForm::ratingProviderClicked()
 {
     EntityTypeForm *ratingProviderForm = new EntityTypeForm(
                 m_rating->ratingProvider(),this->mainWindow());
+    ratingProviderForm->setTitle(tr("Rating Provider"));
     QObject::connect(ratingProviderForm, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(ratingProviderClosed(Operation,QVariant)));
     this->mainWindow()->pushWidget(ratingProviderForm);

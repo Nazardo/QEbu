@@ -80,7 +80,7 @@ TypeTypeForm::TypeTypeForm(TypeType *type,
 
 QString TypeTypeForm::toString()
 {
-    return QString("Type Type");
+    return QString(tr("Type"));
 }
 
 void TypeTypeForm::cancelClicked()
@@ -113,6 +113,7 @@ void TypeTypeForm::addClicked()
     case Genre:
     {
         TypeGroupForm *genreForm = new TypeGroupForm(0, this->mainWindow());
+        genreForm->setTitle(tr("Genre"));
         QObject::connect(genreForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(genreFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(genreForm);
@@ -121,6 +122,7 @@ void TypeTypeForm::addClicked()
     case ObjectType:
     {
         TypeGroupForm *objectTypeForm = new TypeGroupForm(0, this->mainWindow());
+        objectTypeForm->setTitle(tr("Object Type"));
         QObject::connect(objectTypeForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(objectTypeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(objectTypeForm);
@@ -129,6 +131,7 @@ void TypeTypeForm::addClicked()
     case TargetAudience:
     {
         TypeGroupForm *targetAudienceForm = new TypeGroupForm(0, this->mainWindow());
+        targetAudienceForm->setTitle(tr("Target Audience"));
         QObject::connect(targetAudienceForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(targetAudienceFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(targetAudienceForm);
@@ -155,6 +158,7 @@ void TypeTypeForm::editClicked()
     case Genre:
     {
         TypeGroupForm *genreForm = new TypeGroupForm(m_type->genre().at(index), this->mainWindow());
+        genreForm->setTitle(tr("Genre"));
         QObject::connect(genreForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(genreFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(genreForm);
@@ -163,6 +167,7 @@ void TypeTypeForm::editClicked()
     case ObjectType:
     {
         TypeGroupForm *objectTypeForm = new TypeGroupForm(m_type->objectType().at(index), this->mainWindow());
+        objectTypeForm->setTitle(tr("Object Type"));
         QObject::connect(objectTypeForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(objectTypeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(objectTypeForm);
@@ -171,6 +176,7 @@ void TypeTypeForm::editClicked()
     case TargetAudience:
     {
         TypeGroupForm *targetAudienceForm = new TypeGroupForm(m_type->targetAudience().at(index), this->mainWindow());
+        targetAudienceForm->setTitle(tr("Target Audience"));
         QObject::connect(targetAudienceForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(targetAudienceFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(targetAudienceForm);

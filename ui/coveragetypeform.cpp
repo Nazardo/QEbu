@@ -67,7 +67,7 @@ CoverageTypeForm::CoverageTypeForm(CoverageType *coverage,
 
 QString CoverageTypeForm::toString()
 {
-    return QString("Coverage Type");
+    return QString(tr("Coverage"));
 }
 
 void CoverageTypeForm::cancelClicked()

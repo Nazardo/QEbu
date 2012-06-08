@@ -349,7 +349,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
 QString FormatTypeForm::toString()
 {
-     return QString("Format Type");
+     return QString(tr("Format"));
 }
 
 void FormatTypeForm::cancelClicked()
@@ -432,6 +432,7 @@ void FormatTypeForm::locatorClicked()
 {
     TypeGroupForm *locatorForm = new TypeGroupForm(
                 m_format->locator(),this->mainWindow());
+    locatorForm->setTitle(tr("Locator"));
     QObject::connect(locatorForm, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(locatorClosed(Operation,QVariant)));
     this->mainWindow()->pushWidget(locatorForm);
@@ -459,6 +460,7 @@ void FormatTypeForm::dateCreatedClicked()
 {
     DateGroupForm *dateCreatedForm = new DateGroupForm(
                 m_format->dateCreated(),this->mainWindow());
+    dateCreatedForm->setTitle("Date Created");
     QObject::connect(dateCreatedForm, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(dateCreatedClosed(Operation,QVariant)));
     this->mainWindow()->pushWidget(dateCreatedForm);
@@ -486,6 +488,7 @@ void FormatTypeForm::dateModifiedClicked()
 {
     DateGroupForm *dateModifiedForm = new DateGroupForm(
                 m_format->dateModified(),this->mainWindow());
+    dateModifiedForm->setTitle(tr("Date Modified"));
     QObject::connect(dateModifiedForm, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(dateModifiedClosed(Operation,QVariant)));
     this->mainWindow()->pushWidget(dateModifiedForm);
@@ -862,6 +865,7 @@ void FormatTypeForm::addClicked()
     case MimeType:
     {
         TypeGroupForm *form = new TypeGroupForm(0, this->mainWindow());
+        form->setTitle(tr("Mime Type"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mimeTypeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -870,6 +874,7 @@ void FormatTypeForm::addClicked()
     case Medium:
     {
         TypeGroupForm *form = new TypeGroupForm(0, this->mainWindow());
+        form->setTitle(tr("Medium"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mediumFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -878,6 +883,7 @@ void FormatTypeForm::addClicked()
     case ContainerFormat:
     {
         FormatGroupForm *form = new FormatGroupForm(0, this->mainWindow());
+        form->setTitle("Container Format");
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(containerFormatFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -935,6 +941,7 @@ void FormatTypeForm::editClicked()
     case MimeType:
     {
         TypeGroupForm *form = new TypeGroupForm(m_format->mimeType().at(index), this->mainWindow());
+        form->setTitle(tr("Mime Type"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mimeTypeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -943,6 +950,7 @@ void FormatTypeForm::editClicked()
     case Medium:
     {
         TypeGroupForm *form = new TypeGroupForm(m_format->mimeType().at(index), this->mainWindow());
+        form->setTitle(tr("Medium"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mediumFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -951,6 +959,7 @@ void FormatTypeForm::editClicked()
     case ContainerFormat:
     {
         FormatGroupForm *form = new FormatGroupForm(m_format->containerFormat().at(index), this->mainWindow());
+        form->setTitle(tr("Container Format"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(containerFormatFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);

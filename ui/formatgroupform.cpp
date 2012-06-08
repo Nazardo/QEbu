@@ -14,11 +14,17 @@ FormatGroupForm::FormatGroupForm(FormatGroup *formatGroup,
     m_editFormatGroup = new FormatGroupEditBox(formatGroup);
     vl->addWidget(m_editFormatGroup);
     this->setLayout(vl);
+    m_title = QString(tr("Format Group"));
 }
 
 QString FormatGroupForm::toString()
 {
-    return QString("FormatGroup");
+    return m_title;
+}
+
+void FormatGroupForm::setTitle(const QString &title)
+{
+    m_title = title;
 }
 
 void FormatGroupForm::applyClicked()

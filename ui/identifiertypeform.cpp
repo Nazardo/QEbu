@@ -68,7 +68,7 @@ IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindo
 
 QString IdentifierTypeForm::toString()
 {
-    return QString(tr("Identifier Type"));
+    return QString(tr("Identifier"));
 }
 
 void IdentifierTypeForm::attributorRemoveClicked()
@@ -83,6 +83,7 @@ void IdentifierTypeForm::attributorClicked()
 {
     EntityTypeForm *attributorForm = new EntityTypeForm(
                 m_identifier->attributor(),this->mainWindow());
+    attributorForm->setTitle(tr("Attributor"));
     QObject::connect(attributorForm, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(attributorClosed(Operation,QVariant)));
     this->mainWindow()->pushWidget(attributorForm);

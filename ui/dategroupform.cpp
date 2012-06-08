@@ -16,16 +16,18 @@ DateGroupForm::DateGroupForm(DateGroup *dateGroup,
     m_editDateGroup = new DateGroupEditBox(dateGroup);
     vl->addWidget(m_editDateGroup);
     this->setLayout(vl);
+    m_title = QString(tr("Date Group"));
 }
 
 QString DateGroupForm::toString()
 {
-    return QString(tr("DateGroup"));
+    return m_title;
 }
 
 void DateGroupForm::setTitle(const QString &title)
 {
     m_editDateGroup->setLabel(title);
+    m_title = title;
 }
 
 void DateGroupForm::cancelClicked()

@@ -19,10 +19,10 @@ AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindo
         QFormLayout *fl = new QFormLayout;
 
         m_editTrackId = new QLineEdit;
-        fl->addRow(tr("Track id"),m_editTrackId);
+        fl->addRow(tr("Track Id"),m_editTrackId);
 
         m_editTrackName = new QLineEdit;
-        fl->addRow(tr("Track name"),m_editTrackName);
+        fl->addRow(tr("Track Name"),m_editTrackName);
 
         m_editTrackLanguage = new QLineEdit;
         fl->addRow(tr("Language"),m_editTrackLanguage);
@@ -42,7 +42,7 @@ AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindo
 
 QString AudioTrackTypeForm::toString()
 {
-    return QString(tr("Audio Track Type"));
+    return QString(tr("Audio Track"));
 }
 
 void AudioTrackTypeForm::cancelClicked()

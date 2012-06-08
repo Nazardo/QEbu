@@ -107,6 +107,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
         m_radioTime->setCheckable(true);
         l->addWidget(m_radioTime);
         m_editFormatGroup = new FormatGroupEditBox(m_time->time());
+        m_editFormatGroup->setLabel("Time");
         l->addWidget(m_editFormatGroup);
     }
 
@@ -178,7 +179,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
 
 QString TimeTypeForm::toString()
 {
-    return QString("Time Type");
+    return QString(tr("Time"));
 }
 
 void TimeTypeForm::cancelClicked()

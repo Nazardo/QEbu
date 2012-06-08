@@ -71,7 +71,7 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
 
 QString PublicationHistoryTypeForm::toString()
 {
-    return QString("Publication History Type");
+    return QString(tr("Publication History"));
 }
 
 void PublicationHistoryTypeForm::cancelClicked()

@@ -47,7 +47,7 @@ Int32Form::Int32Form(Int32 *int32,
 
 QString Int32Form::toString()
 {
-    return QString("Int32");
+    return QString(tr("Integer"));
 }
 
 void Int32Form::cancelClicked()

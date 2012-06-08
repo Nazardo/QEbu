@@ -22,16 +22,18 @@ ElementTypeForm::ElementTypeForm(ElementType *element,
     // Set values in text fields
     m_editElementType->editValue()->setText(m_element->value());
     m_editElementType->editLang()->setText(m_element->lang());
+    m_title = QString(tr("Element"));
 }
 
 QString ElementTypeForm::toString()
 {
-    return QString("ElementType");
+    return m_title;
 }
 
 void ElementTypeForm::setTitle(const QString &title)
 {
     m_editElementType->setLabel(title);
+    m_title = title;
 }
 
 void ElementTypeForm::applyClicked()

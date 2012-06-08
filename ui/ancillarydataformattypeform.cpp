@@ -102,7 +102,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(
 
 QString AncillaryDataFormatTypeForm::toString()
 {
-    return QString(tr("Ancillary data format"));
+    return QString(tr("Ancillary Data Format"));
 }
 
 void AncillaryDataFormatTypeForm::addClicked()

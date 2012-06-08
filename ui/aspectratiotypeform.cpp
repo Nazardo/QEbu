@@ -35,7 +35,7 @@ AspectRatioTypeForm::AspectRatioTypeForm(AspectRatioType *aspectRatio,
 
 QString AspectRatioTypeForm::toString()
 {
-    return QString("Aspect Ratio Type");
+    return QString(tr("Aspect Ratio"));
 }
 
 void AspectRatioTypeForm::cancelClicked()

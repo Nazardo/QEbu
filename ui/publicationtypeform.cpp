@@ -47,7 +47,7 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
 
 QString PublicationTypeForm::toString()
 {
-    return QString("Publication Type");
+    return QString(tr("Publication"));
 }
 
 void PublicationTypeForm::cancelClicked()

@@ -120,7 +120,7 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
 
 QString RightsTypeForm::toString()
 {
-    return QString("Rights Type");
+    return QString(tr("Rights"));
 }
 
 void RightsTypeForm::cancelClicked()
@@ -177,6 +177,7 @@ void RightsTypeForm::addClicked()
     case RightsHolder:
     {
         EntityTypeForm *rightsHolderForm = new EntityTypeForm(0, this->mainWindow());
+        rightsHolderForm->setTitle(tr("Rights Holder"));
         QObject::connect(rightsHolderForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(rightsHolderFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rightsHolderForm);
@@ -264,6 +265,7 @@ void RightsTypeForm::editClicked()
     {
         EntityTypeForm *rightsHolderForm = new EntityTypeForm(
                     m_rights->rightsHolder(), this->mainWindow());
+        rightsHolderForm->setTitle(tr("Rights Holder"));
         QObject::connect(rightsHolderForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(rightsHolderFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rightsHolderForm);

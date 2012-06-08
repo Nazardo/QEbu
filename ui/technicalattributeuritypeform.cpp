@@ -35,7 +35,7 @@ TechicalAttributeUriTypeForm::TechicalAttributeUriTypeForm(TechnicalAttributeUri
 
 QString TechicalAttributeUriTypeForm::toString()
 {
-    return QString("TechicalAttributeUriType");
+    return QString(tr("Techical Attribute Uri"));
 }
 
 void TechicalAttributeUriTypeForm::cancelClicked()

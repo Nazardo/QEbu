@@ -44,7 +44,7 @@ TemporalTypeForm::TemporalTypeForm(TemporalType *temporal,
 
 QString TemporalTypeForm::toString()
 {
-    return QString("Temporal Type");
+    return QString(tr("Temporal"));
 }
 
 void TemporalTypeForm::cancelClicked()

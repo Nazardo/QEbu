@@ -32,11 +32,11 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
     {
         QFormLayout *fl = new QFormLayout;
         m_editVideoFormatId = new QLineEdit;
-        fl->addRow(tr("Video format ID"), m_editVideoFormatId);
+        fl->addRow(tr("Video Format Id"), m_editVideoFormatId);
         m_editVideoFormatName = new QLineEdit;
-        fl->addRow(tr("Video format name"), m_editVideoFormatName);
+        fl->addRow(tr("Video Format Name"), m_editVideoFormatName);
         m_editVideoFormatDefinition = new QLineEdit;
-        fl->addRow(tr("Video format definition"), m_editVideoFormatDefinition);
+        fl->addRow(tr("Video Format Definition"), m_editVideoFormatDefinition);
         vl->addLayout(fl);
     }
     {
@@ -44,7 +44,7 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
 
         m_spinRegionDelimX = new QUnsignedSpinBox;
         m_spinRegionDelimX->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
-        m_checkRegionDelimX = new QCheckBox(tr("Region delim X"));
+        m_checkRegionDelimX = new QCheckBox(tr("Region Delim X"));
         gl->addWidget(m_checkRegionDelimX, 0, 0);
         gl->addWidget(m_spinRegionDelimX, 0, 1);
         QObject::connect(m_spinRegionDelimX, SIGNAL(valueChanged()),
@@ -52,7 +52,7 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
 
         m_spinRegionDelimY = new QUnsignedSpinBox;
         m_spinRegionDelimY->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
-        m_checkRegionDelimY = new QCheckBox(tr("Region delim Y"));
+        m_checkRegionDelimY = new QCheckBox(tr("Region Delim Y"));
         gl->addWidget(m_checkRegionDelimY, 1, 0);
         gl->addWidget(m_spinRegionDelimY, 1, 1);
         QObject::connect(m_spinRegionDelimY, SIGNAL(valueChanged()),
@@ -72,19 +72,19 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
         QFormLayout *fl = new QFormLayout;
 
         m_buttonAspectRatio = new QPushButton(">>");
-        fl->addRow(tr("Aspect ratio"), m_buttonAspectRatio);
+        fl->addRow(tr("Aspect Ratio"), m_buttonAspectRatio);
         QObject::connect(m_buttonAspectRatio, SIGNAL(toggled(bool)),
                          this, SLOT(aspectRatioChecked(bool)));
         m_buttonVideoEncoding = new QPushButton(">>");
-        fl->addRow(tr("Video encoding"), m_buttonVideoEncoding);
+        fl->addRow(tr("Video Encoding"), m_buttonVideoEncoding);
         QObject::connect(m_buttonVideoEncoding, SIGNAL(toggled(bool)),
                          this, SLOT(videoEncodingChecked(bool)));
         m_buttonVideoTrack = new QPushButton(">>");
-        fl->addRow(tr("Video track"), m_buttonVideoTrack);
+        fl->addRow(tr("Video Track"), m_buttonVideoTrack);
         QObject::connect(m_buttonVideoTrack, SIGNAL(toggled(bool)),
                          this, SLOT(videoTrackTypeChecked(bool)));
         m_buttonTechnicalAttributes = new QPushButton(">>");
-        fl->addRow(tr("Technical attributes"), m_buttonTechnicalAttributes);
+        fl->addRow(tr("Technical Attributes"), m_buttonTechnicalAttributes);
         QObject::connect(m_buttonTechnicalAttributes, SIGNAL(toggled(bool)),
                          this, SLOT(technicalAttributesChecked(bool)));
         vl->addLayout(fl);
@@ -127,7 +127,7 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
 
 QString VideoFormatTypeForm::toString()
 {
-    return QString("Video Format Type");
+    return QString(tr("Video Format"));
 }
 
 void VideoFormatTypeForm::cancelClicked()
@@ -181,6 +181,7 @@ void VideoFormatTypeForm::addClicked()
     case VideoEncoding:
     {
         TypeGroupForm *videoEncodingForm = new TypeGroupForm(0, this->mainWindow());
+        videoEncodingForm->setTitle(tr("Video Encoding"));
         QObject::connect(videoEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(videoEncodingFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(videoEncodingForm);
@@ -224,6 +225,7 @@ void VideoFormatTypeForm::editClicked()
     {
         TypeGroupForm *videoEncodingForm = new TypeGroupForm(
                     m_videoFormat->videoEncoding().at(index), this->mainWindow());
+        videoEncodingForm->setTitle(tr("Video Encoding"));
         QObject::connect(videoEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(videoEncodingFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(videoEncodingForm);
@@ -399,13 +401,13 @@ void VideoFormatTypeForm::updateListAndButtons()
 {
     QString title;
     if (m_currentEditMode == AspectRatio)
-        title = tr("Aspect ratio");
+        title = tr("Aspect Ratio");
     else if (m_currentEditMode == VideoEncoding)
-        title = tr("Video encoding");
+        title = tr("Video Encoding");
     else if (m_currentEditMode == VideoTrack)
-        title = tr("Video track");
+        title = tr("Video Track");
     else if (m_currentEditMode == TechnicalAttributesMode)
-        title = tr("Technical attributes");
+        title = tr("Technical Attributes");
     m_listView->setTitle(title);
     m_listView->clear();
 }

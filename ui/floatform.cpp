@@ -48,7 +48,7 @@ FloatForm::FloatForm(Float *p_float,
 
 QString FloatForm::toString()
 {
-    return QString("Float");
+    return QString(tr("Float"));
 }
 
 void FloatForm::cancelClicked()

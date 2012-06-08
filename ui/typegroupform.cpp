@@ -11,14 +11,22 @@ TypeGroupForm::TypeGroupForm(TypeGroup *typeGroup,
 {
     m_op = (typeGroup) ? Edit : Add;
     QVBoxLayout *vl = new QVBoxLayout;
+    m_title = QString(tr("Type Group"));
     m_editTypeGroup = new TypeGroupEditBox(typeGroup);
+    m_editTypeGroup->setLabel(m_title);
     vl->addWidget(m_editTypeGroup);
     this->setLayout(vl);
 }
 
 QString TypeGroupForm::toString()
 {
-    return QString("TypeGroup");
+    return m_title;
+}
+
+void TypeGroupForm::setTitle(const QString &title)
+{
+    m_title = title;
+    m_editTypeGroup->setLabel(title);
 }
 
 void TypeGroupForm::applyClicked()

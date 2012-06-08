@@ -38,7 +38,7 @@ BooleanForm::BooleanForm(Boolean *boolean, QEbuMainWindow *mainWindow, QWidget *
 
 QString BooleanForm::toString()
 {
-    return QString("Boolean");
+    return QString(tr("Boolean"));
 }
 
 void BooleanForm::cancelClicked()

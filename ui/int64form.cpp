@@ -48,7 +48,7 @@ Int64Form::Int64Form(Int64 *int64,
 
 QString Int64Form::toString()
 {
-    return QString("Int64");
+    return QString(tr("Long"));
 }
 
 void Int64Form::cancelClicked()

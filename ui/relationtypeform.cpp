@@ -89,11 +89,17 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
     if (m_relation->relationIdentifier()) {
         m_editRelationIdentifier->setText(m_relation->relationIdentifier()->toString());
     }
+    m_title = QString(tr("Relation"));
 }
 
 QString RelationTypeForm::toString()
 {
-    return QString(tr("Relation Type"));
+    return m_title;
+}
+
+void RelationTypeForm::setTitle(const QString &title)
+{
+    m_title = title;
 }
 
 void RelationTypeForm::relationIdentifierRemoveClicked()

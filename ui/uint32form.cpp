@@ -45,7 +45,7 @@ Uint32Form::Uint32Form(UInt32 *uint32,
 
 QString Uint32Form::toString()
 {
-    return QString(tr("uint32"));
+    return QString(tr("Unsigned Integer"));
 }
 
 void Uint32Form::cancelClicked()

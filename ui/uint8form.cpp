@@ -45,7 +45,7 @@ Uint8Form::Uint8Form(UInt8 *uint8,
 
 QString Uint8Form::toString()
 {
-    return QString(tr("Uint8"));
+    return QString(tr("Unsigned Byte"));
 }
 
 void Uint8Form::cancelClicked()

@@ -84,7 +84,7 @@ OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(
 
 QString OrganisationDetailsTypeForm::toString()
 {
-    return QString("Organisation Details Type");
+    return QString(tr("Organisation Details"));
 }
 
 void OrganisationDetailsTypeForm::cancelClicked()
@@ -129,6 +129,7 @@ void OrganisationDetailsTypeForm::addClicked()
     case Contacts:
     {
         EntityTypeForm *contactsForm = new EntityTypeForm(0, this->mainWindow());
+        contactsForm->setTitle(tr("Contacts"));
         QObject::connect(contactsForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(contactsFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(contactsForm);
@@ -165,6 +166,7 @@ void OrganisationDetailsTypeForm::editClicked()
     {
         EntityTypeForm *contactsForm = new EntityTypeForm(
                     m_organisationDetails->contacts().at(index), this->mainWindow());
+        contactsForm->setTitle(tr("Contacts"));
         QObject::connect(contactsForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(contactsFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(contactsForm);

@@ -123,7 +123,7 @@ ContactDetailsTypeForm::ContactDetailsTypeForm(
 
 QString ContactDetailsTypeForm::toString()
 {
-    return QString("Contact Details Type");
+    return QString(tr("Contact Details"));
 }
 
 void ContactDetailsTypeForm::cancelClicked()
@@ -180,6 +180,7 @@ void ContactDetailsTypeForm::addClicked()
     case Related:
     {
         EntityTypeForm *relatedForm = new EntityTypeForm(0, this->mainWindow());
+        relatedForm->setTitle(tr("Related Contacts"));
         QObject::connect(relatedForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(relatedContactsFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(relatedForm);
@@ -218,6 +219,7 @@ void ContactDetailsTypeForm::editClicked()
     {
         EntityTypeForm *relatedForm = new EntityTypeForm(
                     m_contactDetails->relatedContacts().at(index), this->mainWindow());
+        relatedForm->setTitle(tr("Related Contacts"));
         QObject::connect(relatedForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(relatedContactsFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(relatedForm);

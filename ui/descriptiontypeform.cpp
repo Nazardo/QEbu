@@ -50,7 +50,7 @@ DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description,
 
 QString DescriptionTypeForm::toString()
 {
-    return QString(tr("Description Type"));
+    return QString(tr("Description"));
 }
 
 void DescriptionTypeForm::cancelClicked()

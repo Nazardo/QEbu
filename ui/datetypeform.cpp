@@ -84,7 +84,7 @@ DateTypeForm::DateTypeForm(DateType *date,
 
 QString DateTypeForm::toString()
 {
-    return QString(tr("DateType"));
+    return QString(tr("Date"));
 }
 
 void DateTypeForm::applyClicked()

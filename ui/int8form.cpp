@@ -46,7 +46,7 @@ Int8Form::Int8Form(Int8 *int8,
 
 QString Int8Form::toString()
 {
-    return QString("Int8");
+    return QString(tr("Byte"));
 }
 
 void Int8Form::cancelClicked()

@@ -53,7 +53,7 @@ CoordinatesTypeForm::CoordinatesTypeForm(CoordinatesType *coordinates, QEbuMainW
 
 QString CoordinatesTypeForm::toString()
 {
-    return QString("Coordinates Type");
+    return QString(tr("Coordinates"));
 }
 
 void CoordinatesTypeForm::cancelClicked()

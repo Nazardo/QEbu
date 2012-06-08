@@ -47,7 +47,7 @@ Int16Form::Int16Form(Int16 *int16,
 
 QString Int16Form::toString()
 {
-    return QString("Int16");
+    return QString(tr("Short"));
 }
 
 void Int16Form::cancelClicked()

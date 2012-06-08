@@ -174,6 +174,7 @@ void EbuCoreMainForm::metadataProviderClicked()
 {
     EntityTypeForm *metadataProviderForm = new EntityTypeForm(
                 m_ebuCoreMain->metadataProvider(),this->mainWindow());
+    metadataProviderForm->setTitle(tr("Metadata Provider"));
     QObject::connect(metadataProviderForm, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(metadataProviderClosed(Operation,QVariant)));
     this->mainWindow()->pushWidget(metadataProviderForm);

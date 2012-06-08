@@ -13,12 +13,12 @@ FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup,
     m_editFormatLink = new QLineEdit(this);
     QHBoxLayout *l = new QHBoxLayout;
     QFormLayout *formL = new QFormLayout;
-    QGroupBox *group = new QGroupBox(tr("Format"));
+    m_groupBox = new QGroupBox(tr("Format"));
     formL->addRow(tr("Label"), m_editFormatLabel);
     formL->addRow(tr("Definition"), m_editFormatDefinition);
     formL->addRow(tr("Link"), m_editFormatLink);
-    group->setLayout(formL);
-    l->addWidget(group);
+    m_groupBox->setLayout(formL);
+    l->addWidget(m_groupBox);
     this->setLayout(l);
     if (!formatGroup)
         return;
@@ -32,6 +32,11 @@ FormatGroup *FormatGroupEditBox::formatGroup()
     FormatGroup *formatGroup = new FormatGroup;
     updateExistingFormatGroup(formatGroup);
     return formatGroup;
+}
+
+void FormatGroupEditBox::setLabel(const QString &label)
+{
+    m_groupBox->setTitle(label);
 }
 
 void FormatGroupEditBox::updateExistingFormatGroup(FormatGroup *formatGroup)

@@ -60,7 +60,7 @@ LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainW
 
 QString LocationTypeForm::toString()
 {
-    return QString("Location Type");
+    return QString(tr("Location"));
 }
 
 void LocationTypeForm::cancelClicked()

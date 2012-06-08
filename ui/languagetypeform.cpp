@@ -46,7 +46,7 @@ LanguageTypeForm::LanguageTypeForm(LanguageType *language,
 
 QString LanguageTypeForm::toString()
 {
-    return QString(tr("Language Type"));
+    return QString(tr("Language"));
 }
 
 void LanguageTypeForm::cancelClicked()

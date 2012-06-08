@@ -138,7 +138,7 @@ ImageFormatTypeForm::ImageFormatTypeForm(ImageFormatType *imageFormat,
 
 QString ImageFormatTypeForm::toString()
 {
-    return QString(tr("ImageFormatType"));
+    return QString(tr("Image Format"));
 }
 
 void ImageFormatTypeForm::applyClicked()
@@ -185,6 +185,7 @@ void ImageFormatTypeForm::cancelClicked()
 void ImageFormatTypeForm::addClicked()
 {
     TypeGroupForm *form = new TypeGroupForm(0, mainWindow());
+    form->setTitle(tr("Image Encoding"));
     QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(typeGroupFormClosed(Operation,QVariant)));
     mainWindow()->pushWidget(form);

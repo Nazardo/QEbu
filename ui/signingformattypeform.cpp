@@ -65,7 +65,7 @@ SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, Q
 
 QString SigningFormatTypeForm::toString()
 {
-    return QString(tr("Signing Format Type"));
+    return QString(tr("Signing Format"));
 }
 
 void SigningFormatTypeForm::cancelClicked()

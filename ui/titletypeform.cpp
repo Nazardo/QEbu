@@ -55,7 +55,7 @@ TitleTypeForm::TitleTypeForm(TitleType *title,
 
 QString TitleTypeForm::toString()
 {
-    return QString("Title Type");
+    return QString(tr("Title"));
 }
 
 void TitleTypeForm::cancelClicked()

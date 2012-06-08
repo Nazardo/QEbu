@@ -38,11 +38,10 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
     }
     {
         QVBoxLayout *v = new QVBoxLayout;
-        QGroupBox *group = new QGroupBox(tr("Country"));
         m_editCountry = new TypeGroupEditBox(m_address->country());
+        m_editCountry->setLabel(tr("Country"));
         v->addWidget(m_editCountry);
-        group->setLayout(v);
-        l->addWidget(group);
+        l->addLayout(v);
     }
     {
         QFormLayout *fl = new QFormLayout;
@@ -76,7 +75,7 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
 
 QString AddressTypeForm::toString()
 {
-    return QString("Address Type");
+    return QString(tr("Address"));
 }
 
 void AddressTypeForm::cancelClicked()

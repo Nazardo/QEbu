@@ -40,7 +40,7 @@ StringForm::StringForm(String *string,
 
 QString StringForm::toString()
 {
-    return QString("String");
+    return QString(tr("String"));
 }
 
 void StringForm::cancelClicked()

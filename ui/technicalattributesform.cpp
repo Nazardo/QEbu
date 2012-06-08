@@ -184,7 +184,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
 
 QString TechnicalAttributesForm::toString()
 {
-    return QString("Technical Attributes");
+    return QString(tr("Technical Attributes"));
 }
 
 void TechnicalAttributesForm::cancelClicked()

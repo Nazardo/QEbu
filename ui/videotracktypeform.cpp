@@ -37,7 +37,7 @@ VideoTrackTypeForm::VideoTrackTypeForm(VideoTrackType *videoTrack,
 
 QString VideoTrackTypeForm::toString()
 {
-        return QString("Video Track Type");
+        return QString(tr("Video Track"));
 }
 
 void VideoTrackTypeForm::cancelClicked()

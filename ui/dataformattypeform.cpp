@@ -80,7 +80,7 @@ DataFormatTypeForm::DataFormatTypeForm(DataFormatType *dataFormat,
 
 QString DataFormatTypeForm::toString()
 {
-    return QString("Data Format Type");
+    return QString(tr("Data Format"));
 }
 
 void DataFormatTypeForm::cancelClicked()

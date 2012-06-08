@@ -129,7 +129,7 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
 
 QString HasTrackPartTypeForm::toString()
 {
-    return QString(tr("HasTrackPart Type"));
+    return QString(tr("Has Track Part"));
 }
 
 void HasTrackPartTypeForm::cancelClicked()

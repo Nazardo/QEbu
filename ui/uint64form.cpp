@@ -44,7 +44,7 @@ Uint64Form::Uint64Form(UInt64 *uint64,
 
 QString Uint64Form::toString()
 {
-    return QString(tr("uint64"));
+    return QString(tr("Unsigned Long"));
 }
 
 void Uint64Form::cancelClicked()

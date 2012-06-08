@@ -61,7 +61,7 @@ PartTypeForm::PartTypeForm(PartType *part, QEbuMainWindow *mainWindow, QWidget *
 
 QString PartTypeForm::toString()
 {
-    return QString(tr("Part Type"));
+    return QString(tr("Part"));
 }
 
 void PartTypeForm::coreDetailsRemoveClicked()

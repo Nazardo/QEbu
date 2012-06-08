@@ -58,7 +58,7 @@ CaptioningFormatTypeForm::CaptioningFormatTypeForm(
 
 QString CaptioningFormatTypeForm::toString()
 {
-    return QString("Captioning Format Type");
+    return QString(tr("Captioning Format"));
 }
 
 void CaptioningFormatTypeForm::cancelClicked()

@@ -70,7 +70,7 @@ DetailsTypeForm::DetailsTypeForm(DetailsType *details,
 
 QString DetailsTypeForm::toString()
 {
-    return QString("Details Type");
+    return QString(tr("Details"));
 }
 
 void DetailsTypeForm::cancelClicked()

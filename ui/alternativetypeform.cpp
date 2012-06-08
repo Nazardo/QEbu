@@ -25,7 +25,7 @@ AlternativeTypeForm::AlternativeTypeForm(AlternativeType *alternative,
 
 QString AlternativeTypeForm::toString()
 {
-    return QString(tr("DateGroup"));
+    return QString(tr("Alternative"));
 }
 
 void AlternativeTypeForm::setTitle(const QString &title)

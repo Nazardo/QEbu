@@ -16,6 +16,7 @@ public:
                             QEbuMainWindow *mainWindow,
                             QWidget *parent = 0);
     QString toString();
+    void setTitle(const QString &title);
 signals:
 private slots:
     void cancelClicked();
@@ -47,6 +48,7 @@ private:
     QPushButton *m_buttonRole;
     EntityType *m_entity;
     EditMode m_currentEditMode;
+    QString m_title;
 };
 
 #endif // ENTITYTYPEFORM_H

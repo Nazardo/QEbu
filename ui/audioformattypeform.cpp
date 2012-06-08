@@ -30,23 +30,23 @@ AudioFormatTypeForm::AudioFormatTypeForm(AudioFormatType *audioFormat,
         m_editAudioFormatId = new QLineEdit;
         m_editAudioFormatDefinition = new QLineEdit;
         m_editAudioFormatName = new QLineEdit;
-        gl->addRow(tr("AudioFormat Id"), m_editAudioFormatId);
-        gl->addRow(tr("AudioFormat Name"), m_editAudioFormatName);
-        gl->addRow(tr("AudioFormat Definition"), m_editAudioFormatDefinition);
+        gl->addRow(tr("Audio Format Id"), m_editAudioFormatId);
+        gl->addRow(tr("Audio Format Name"), m_editAudioFormatName);
+        gl->addRow(tr("Audio Format Definition"), m_editAudioFormatDefinition);
         l->addLayout(gl);
     }
     {
         QFormLayout *fl = new QFormLayout;
         m_buttonAudioEncoding = new QPushButton(">>");
-        fl->addRow(tr("Audio encoding"), m_buttonAudioEncoding);
+        fl->addRow(tr("Audio Encoding"), m_buttonAudioEncoding);
         QObject::connect(m_buttonAudioEncoding, SIGNAL(toggled(bool)),
                          this, SLOT(audioEncodingChecked(bool)));
         m_buttonAudioTrackConfiguration = new QPushButton(">>");
-        fl->addRow(tr("AudioTrack Configuration"), m_buttonAudioTrackConfiguration);
+        fl->addRow(tr("Audio Track Configuration"), m_buttonAudioTrackConfiguration);
         QObject::connect(m_buttonAudioTrackConfiguration, SIGNAL(toggled(bool)),
                          this, SLOT(audioTrackConfigurationChecked(bool)));
         m_buttonAudioTrack = new QPushButton(">>");
-        fl->addRow(tr("AudioTrack"), m_buttonAudioTrack);
+        fl->addRow(tr("Audio Track"), m_buttonAudioTrack);
         QObject::connect(m_buttonAudioTrack, SIGNAL(toggled(bool)),
                          this, SLOT(audioTrackChecked(bool)));
         m_buttonTechnicalAttributes = new QPushButton(">>");
@@ -85,7 +85,7 @@ AudioFormatTypeForm::AudioFormatTypeForm(AudioFormatType *audioFormat,
 
 QString AudioFormatTypeForm::toString()
 {
-    return QString("AudioFormat Type");
+    return QString(tr("Audio Format"));
 }
 
 void AudioFormatTypeForm::cancelClicked()
@@ -111,6 +111,7 @@ void AudioFormatTypeForm::addClicked()
     case AudioEncoding:
     {
         TypeGroupForm *audioEncodingForm = new TypeGroupForm(0, this->mainWindow());
+        audioEncodingForm->setTitle(tr("Audio Encoding"));
         QObject::connect(audioEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioEncodingFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(audioEncodingForm);
@@ -119,6 +120,7 @@ void AudioFormatTypeForm::addClicked()
     case AudioTrackConfiguration:
     {
         TypeGroupForm *audioTrackConfigurationForm = new TypeGroupForm(0, this->mainWindow());
+        audioTrackConfigurationForm->setTitle(tr("Audio Track Configuration"));
         QObject::connect(audioTrackConfigurationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioTrackConfigurationFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(audioTrackConfigurationForm);
@@ -153,6 +155,7 @@ void AudioFormatTypeForm::editClicked()
     {
         TypeGroupForm *audioEncodingForm = new TypeGroupForm(
                     m_audioFormat->audioEncoding().at(index), this->mainWindow());
+        audioEncodingForm->setTitle(tr("Audio Encoding"));
         QObject::connect(audioEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioEncodingFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(audioEncodingForm);
@@ -162,6 +165,7 @@ void AudioFormatTypeForm::editClicked()
     {
         TypeGroupForm *audioTrackConfigurationForm = new TypeGroupForm(
                     m_audioFormat->audioTrackConfiguration(), this->mainWindow());
+        audioTrackConfigurationForm->setTitle(tr("Audio Track Configuration"));
         QObject::connect(audioTrackConfigurationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioTrackConfigurationFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(audioTrackConfigurationForm);
@@ -338,11 +342,11 @@ void AudioFormatTypeForm::updateListAndButtons()
 {
     QString title;
     if (m_currentEditMode == AudioEncoding)
-        title = tr("Audio encoding");
+        title = tr("Audio Encoding");
     else if (m_currentEditMode == AudioTrackConfiguration)
-        title = tr("AudioTrack configuration");
+        title = tr("Audio Track Configuration");
     else if (m_currentEditMode == AudioTrack)
-        title = tr("AudioTrack");
+        title = tr("Audio Track");
     else if (m_currentEditMode == TechnicalAttributesMode)
         title = tr("Technical Attributes");
     m_listView->setTitle(title);

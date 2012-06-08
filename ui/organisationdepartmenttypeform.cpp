@@ -36,7 +36,7 @@ OrganisationDepartmentTypeForm::OrganisationDepartmentTypeForm(
 
 QString OrganisationDepartmentTypeForm::toString()
 {
-    return QString("Organisation Department Type");
+    return QString(tr("Organisation Department"));
 }
 
 void OrganisationDepartmentTypeForm::applyClicked()

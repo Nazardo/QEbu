@@ -346,7 +346,7 @@ CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata,
 
 QString CoreMetadataTypeForm::toString()
 {
-    return QString("CoreMetadata Type");
+    return QString(tr("CoreMetadata"));
 }
 
 void CoreMetadataTypeForm::cancelClicked()
@@ -385,6 +385,7 @@ void CoreMetadataTypeForm::addClicked()
     case Creator:
     {
         EntityTypeForm *creatorForm = new EntityTypeForm(0, this->mainWindow());
+        creatorForm->setTitle(tr("Creator"));
         QObject::connect(creatorForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(creatorFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(creatorForm);
@@ -409,6 +410,7 @@ void CoreMetadataTypeForm::addClicked()
     case Publisher:
     {
         EntityTypeForm *publisherForm = new EntityTypeForm(0, this->mainWindow());
+        publisherForm->setTitle(tr("Publisher"));
         QObject::connect(publisherForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(publisherFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(publisherForm);
@@ -417,6 +419,7 @@ void CoreMetadataTypeForm::addClicked()
     case Contributor:
     {
         EntityTypeForm *contributorForm = new EntityTypeForm(0, this->mainWindow());
+        contributorForm->setTitle(tr("Contributor"));
         QObject::connect(contributorForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(contributorFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(contributorForm);
@@ -474,6 +477,7 @@ void CoreMetadataTypeForm::addClicked()
     case Relation:
     {
         RelationTypeForm *relationForm = new RelationTypeForm(0, this->mainWindow());
+        relationForm->setTitle(tr("Relation"));
         QObject::connect(relationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(relationFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(relationForm);
@@ -482,6 +486,7 @@ void CoreMetadataTypeForm::addClicked()
     case IsVersionOf:
     {
         RelationTypeForm *isVersionOfForm = new RelationTypeForm(0, this->mainWindow());
+        isVersionOfForm->setTitle(tr("Is Version Of"));
         QObject::connect(isVersionOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isVersionOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isVersionOfForm);
@@ -490,6 +495,7 @@ void CoreMetadataTypeForm::addClicked()
     case HasVersion:
     {
         RelationTypeForm *hasVersionForm = new RelationTypeForm(0, this->mainWindow());
+        hasVersionForm->setTitle(tr("Has Version"));
         QObject::connect(hasVersionForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(hasVersionFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(hasVersionForm);
@@ -498,6 +504,7 @@ void CoreMetadataTypeForm::addClicked()
     case IsReplacedBy:
     {
         RelationTypeForm *isReplacedByForm = new RelationTypeForm(0, this->mainWindow());
+        isReplacedByForm->setTitle(tr("Is Replaced By"));
         QObject::connect(isReplacedByForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isReplacedByFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isReplacedByForm);
@@ -506,6 +513,7 @@ void CoreMetadataTypeForm::addClicked()
     case Replaces:
     {
         RelationTypeForm *replacesForm = new RelationTypeForm(0, this->mainWindow());
+        replacesForm->setTitle(tr("Replaces"));
         QObject::connect(replacesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(replacesFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(replacesForm);
@@ -514,6 +522,7 @@ void CoreMetadataTypeForm::addClicked()
     case IsRequiredBy:
     {
         RelationTypeForm *isRequiredByForm = new RelationTypeForm(0, this->mainWindow());
+        isRequiredByForm->setTitle(tr("Is Required"));
         QObject::connect(isRequiredByForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isRequiredByFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isRequiredByForm);
@@ -522,6 +531,7 @@ void CoreMetadataTypeForm::addClicked()
     case Requires:
     {
         RelationTypeForm *requiresForm = new RelationTypeForm(0, this->mainWindow());
+        requiresForm->setTitle(tr("Requires"));
         QObject::connect(requiresForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(requiresFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(requiresForm);
@@ -530,6 +540,7 @@ void CoreMetadataTypeForm::addClicked()
     case IsPartOf:
     {
         RelationTypeForm *isPartOfForm = new RelationTypeForm(0, this->mainWindow());
+        isPartOfForm->setTitle(tr("Is Part Of"));
         QObject::connect(isPartOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isPartOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isPartOfForm);
@@ -538,6 +549,7 @@ void CoreMetadataTypeForm::addClicked()
     case HasPart:
     {
         RelationTypeForm *hasPartForm = new RelationTypeForm(0, this->mainWindow());
+        hasPartForm->setTitle(tr("Has Part"));
         QObject::connect(hasPartForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(hasPartFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(hasPartForm);
@@ -554,6 +566,7 @@ void CoreMetadataTypeForm::addClicked()
     case IsReferencedBy:
     {
         RelationTypeForm *isReferencedByForm = new RelationTypeForm(0, this->mainWindow());
+        isReferencedByForm->setTitle(tr("Is Referenced By"));
         QObject::connect(isReferencedByForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isReferencedByFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isReferencedByForm);
@@ -562,6 +575,7 @@ void CoreMetadataTypeForm::addClicked()
     case References:
     {
         RelationTypeForm *referencesForm = new RelationTypeForm(0, this->mainWindow());
+        referencesForm->setTitle(tr("References"));
         QObject::connect(referencesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(referencesFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(referencesForm);
@@ -570,6 +584,7 @@ void CoreMetadataTypeForm::addClicked()
     case IsFormatOf:
     {
         RelationTypeForm *isFormatOfForm = new RelationTypeForm(0, this->mainWindow());
+        isFormatOfForm->setTitle(tr("Is Format Of"));
         QObject::connect(isFormatOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isFormatOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isFormatOfForm);
@@ -578,6 +593,7 @@ void CoreMetadataTypeForm::addClicked()
     case HasFormat:
     {
         RelationTypeForm *hasFormatForm = new RelationTypeForm(0, this->mainWindow());
+        hasFormatForm->setTitle(tr("Has Format"));
         QObject::connect(hasFormatForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(hasFormatFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(hasFormatForm);
@@ -586,6 +602,7 @@ void CoreMetadataTypeForm::addClicked()
     case IsEpisodeOf:
     {
         RelationTypeForm *isEpisodeOfForm = new RelationTypeForm(0, this->mainWindow());
+        isEpisodeOfForm->setTitle(tr("Is Episode Of"));
         QObject::connect(isEpisodeOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isEpisodeOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isEpisodeOfForm);
@@ -594,6 +611,7 @@ void CoreMetadataTypeForm::addClicked()
     case IsMemberOf:
     {
         RelationTypeForm *isMemberOfForm = new RelationTypeForm(0, this->mainWindow());
+        isMemberOfForm->setTitle(tr("Is Member Of"));
         QObject::connect(isMemberOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isMemberOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isMemberOfForm);
@@ -676,6 +694,7 @@ void CoreMetadataTypeForm::editClicked()
     case Creator:
     {
         EntityTypeForm *creatorForm = new EntityTypeForm(m_coreMetadata->creator().at(index), this->mainWindow());
+        creatorForm->setTitle(tr("Creator"));
         QObject::connect(creatorForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(creatorFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(creatorForm);
@@ -700,6 +719,7 @@ void CoreMetadataTypeForm::editClicked()
     case Publisher:
     {
         EntityTypeForm *publisherForm = new EntityTypeForm(m_coreMetadata->publisher().at(index), this->mainWindow());
+        publisherForm->setTitle(tr("Publisher"));
         QObject::connect(publisherForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(publisherFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(publisherForm);
@@ -708,6 +728,7 @@ void CoreMetadataTypeForm::editClicked()
     case Contributor:
     {
         EntityTypeForm *contributorForm = new EntityTypeForm(m_coreMetadata->contributor().at(index), this->mainWindow());
+        contributorForm->setTitle(tr("Contributor"));
         QObject::connect(contributorForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(contributorFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(contributorForm);
@@ -765,6 +786,7 @@ void CoreMetadataTypeForm::editClicked()
     case Relation:
     {
         RelationTypeForm *relationForm = new RelationTypeForm(m_coreMetadata->relation().at(index), this->mainWindow());
+        relationForm->setTitle(tr("Relation"));
         QObject::connect(relationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(relationFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(relationForm);
@@ -773,6 +795,7 @@ void CoreMetadataTypeForm::editClicked()
     case IsVersionOf:
     {
         RelationTypeForm *isVersionOfForm = new RelationTypeForm(m_coreMetadata->isVersionOf().at(index), this->mainWindow());
+        isVersionOfForm->setTitle(tr("Is Version Of"));
         QObject::connect(isVersionOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isVersionOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isVersionOfForm);
@@ -781,6 +804,7 @@ void CoreMetadataTypeForm::editClicked()
     case HasVersion:
     {
         RelationTypeForm *hasVersionForm = new RelationTypeForm(m_coreMetadata->hasVersion().at(index), this->mainWindow());
+        hasVersionForm->setTitle(tr("Has Version"));
         QObject::connect(hasVersionForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(hasVersionFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(hasVersionForm);
@@ -789,6 +813,7 @@ void CoreMetadataTypeForm::editClicked()
     case IsReplacedBy:
     {
         RelationTypeForm *isReplacedByForm = new RelationTypeForm(m_coreMetadata->isReplacedBy().at(index), this->mainWindow());
+        isReplacedByForm->setTitle(tr("Is Replaced By"));
         QObject::connect(isReplacedByForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isReplacedByFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isReplacedByForm);
@@ -797,6 +822,7 @@ void CoreMetadataTypeForm::editClicked()
     case Replaces:
     {
         RelationTypeForm *replacesForm = new RelationTypeForm(m_coreMetadata->replaces().at(index), this->mainWindow());
+        replacesForm->setTitle(tr("Replaces"));
         QObject::connect(replacesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(replacesFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(replacesForm);
@@ -805,6 +831,7 @@ void CoreMetadataTypeForm::editClicked()
     case IsRequiredBy:
     {
         RelationTypeForm *isRequiredByForm = new RelationTypeForm(m_coreMetadata->isRequiredBy().at(index), this->mainWindow());
+        isRequiredByForm->setTitle(tr("Is Required"));
         QObject::connect(isRequiredByForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isRequiredByFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isRequiredByForm);
@@ -813,6 +840,7 @@ void CoreMetadataTypeForm::editClicked()
     case Requires:
     {
         RelationTypeForm *requiresForm = new RelationTypeForm(m_coreMetadata->requires().at(index), this->mainWindow());
+        requiresForm->setTitle(tr("Requires"));
         QObject::connect(requiresForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(requiresFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(requiresForm);
@@ -821,6 +849,7 @@ void CoreMetadataTypeForm::editClicked()
     case IsPartOf:
     {
         RelationTypeForm *isPartOfForm = new RelationTypeForm(m_coreMetadata->isPartOf().at(index), this->mainWindow());
+        isPartOfForm->setTitle(tr("Is Part Of"));
         QObject::connect(isPartOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isPartOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isPartOfForm);
@@ -829,6 +858,7 @@ void CoreMetadataTypeForm::editClicked()
     case HasPart:
     {
         RelationTypeForm *hasPartForm = new RelationTypeForm(m_coreMetadata->hasPart().at(index), this->mainWindow());
+        hasPartForm->setTitle(tr("Has Part"));
         QObject::connect(hasPartForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(hasPartFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(hasPartForm);
@@ -845,6 +875,7 @@ void CoreMetadataTypeForm::editClicked()
     case IsReferencedBy:
     {
         RelationTypeForm *isReferencedByForm = new RelationTypeForm(m_coreMetadata->isReferencedBy().at(index), this->mainWindow());
+        isReferencedByForm->setTitle(tr("Is Referenced By"));
         QObject::connect(isReferencedByForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isReferencedByFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isReferencedByForm);
@@ -853,6 +884,7 @@ void CoreMetadataTypeForm::editClicked()
     case References:
     {
         RelationTypeForm *referencesForm = new RelationTypeForm(m_coreMetadata->references().at(index), this->mainWindow());
+        referencesForm->setTitle(tr("References"));
         QObject::connect(referencesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(referencesFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(referencesForm);
@@ -861,6 +893,7 @@ void CoreMetadataTypeForm::editClicked()
     case IsFormatOf:
     {
         RelationTypeForm *isFormatOfForm = new RelationTypeForm(m_coreMetadata->isFormatOf().at(index), this->mainWindow());
+        isFormatOfForm->setTitle(tr("Is Format Of"));
         QObject::connect(isFormatOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isFormatOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isFormatOfForm);
@@ -869,6 +902,7 @@ void CoreMetadataTypeForm::editClicked()
     case HasFormat:
     {
         RelationTypeForm *hasFormatForm = new RelationTypeForm(m_coreMetadata->hasFormat().at(index), this->mainWindow());
+        hasFormatForm->setTitle(tr("Has Format"));
         QObject::connect(hasFormatForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(hasFormatFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(hasFormatForm);
@@ -877,6 +911,7 @@ void CoreMetadataTypeForm::editClicked()
     case IsEpisodeOf:
     {
         RelationTypeForm *isEpisodeOfForm = new RelationTypeForm(m_coreMetadata->isEpisodeOf().at(index), this->mainWindow());
+        isEpisodeOfForm->setTitle(tr("Is Episode Of"));
         QObject::connect(isEpisodeOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isEpisodeOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isEpisodeOfForm);
@@ -885,6 +920,7 @@ void CoreMetadataTypeForm::editClicked()
     case IsMemberOf:
     {
         RelationTypeForm *isMemberOfForm = new RelationTypeForm(m_coreMetadata->isMemberOf().at(index), this->mainWindow());
+        isMemberOfForm->setTitle(tr("Is Member Of"));isMemberOfForm->setTitle(tr("Is Member Of"));
         QObject::connect(isMemberOfForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(isMemberOfFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(isMemberOfForm);

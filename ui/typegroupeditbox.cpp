@@ -13,12 +13,12 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     m_editTypeLink = new QLineEdit(this);
     QHBoxLayout *l = new QHBoxLayout;
     QFormLayout *formL = new QFormLayout;
-    QGroupBox *group = new QGroupBox(tr("Type"));
+    m_groupBox = new QGroupBox(tr("Type"));
     formL->addRow(tr("Label"), m_editTypeLabel);
     formL->addRow(tr("Definition"), m_editTypeDefinition);
     formL->addRow(tr("Link"), m_editTypeLink);
-    group->setLayout(formL);
-    l->addWidget(group);
+    m_groupBox->setLayout(formL);
+    l->addWidget(m_groupBox);
     this->setLayout(l);
     if (!typeGroup)
         return;
@@ -33,6 +33,11 @@ TypeGroup *TypeGroupEditBox::typeGroup()
     TypeGroup *typeGroup = new TypeGroup();
     updateExistingTypeGroup(typeGroup);
     return typeGroup;
+}
+
+void TypeGroupEditBox::setLabel(const QString &label)
+{
+    m_groupBox->setTitle(label);
 }
 
 void TypeGroupEditBox::updateExistingTypeGroup(TypeGroup *typeGroup)

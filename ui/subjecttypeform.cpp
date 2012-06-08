@@ -79,7 +79,7 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
 
 QString SubjectTypeForm::toString()
 {
-    return QString(tr("Subject Type"));
+    return QString(tr("Subject"));
 }
 
 void SubjectTypeForm::attributorRemoveClicked()
@@ -94,6 +94,7 @@ void SubjectTypeForm::attributorClicked()
 {
     EntityTypeForm *attributorForm = new EntityTypeForm(
                 m_subject->attributor(),this->mainWindow());
+    attributorForm->setTitle(tr("Attributor"));
     QObject::connect(attributorForm, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(attributorClosed(Operation,QVariant)));
     this->mainWindow()->pushWidget(attributorForm);

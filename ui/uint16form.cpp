@@ -45,7 +45,7 @@ Uint16Form::Uint16Form(UInt16 *uint16,
 
 QString Uint16Form::toString()
 {
-    return QString(tr("uint16"));
+    return QString(tr("Unsigned Short"));
 }
 
 void Uint16Form::cancelClicked()

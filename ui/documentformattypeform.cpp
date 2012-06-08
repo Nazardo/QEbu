@@ -127,7 +127,7 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
 
 QString DocumentFormatTypeForm::toString()
 {
-    return QString("Document Format Type");
+    return QString(tr("Document Format"));
 }
 
 void DocumentFormatTypeForm::cancelClicked()

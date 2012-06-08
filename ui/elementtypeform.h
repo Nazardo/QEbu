@@ -19,6 +19,7 @@ public slots:
     void applyClicked();
     void cancelClicked();
 private:
+    QString m_title;
     ElementType *m_element;
     ElementTypeEditBox *m_editElementType;
 };

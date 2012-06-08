@@ -124,10 +124,11 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
     }
     {
         m_labelTime = new QLabel(tr("Time"));
-        m_radioTime = new QRadioButton(m_labelTime);
+        m_radioTime = new QRadioButton(m_labelTime->text());
         m_radioTime->setCheckable(true);
         l->addWidget(m_radioTime);
         m_editFormatGroup = new FormatGroupEditBox(m_duration->time());
+        m_editFormatGroup->setLabel(tr("Time"));
         l->addWidget(m_editFormatGroup);
     }
 
@@ -205,7 +206,7 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
 
 QString DurationTypeForm::toString()
 {
-    return QString("Duration Type");
+    return QString(tr("Duration"));
 }
 
 void DurationTypeForm::cancelClicked()

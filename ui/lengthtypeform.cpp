@@ -47,7 +47,7 @@ LengthTypeForm::LengthTypeForm(LengthType *length,
 
 QString LengthTypeForm::toString()
 {
-    return QString(tr("Length Type"));
+    return QString(tr("Length"));
 }
 
 void LengthTypeForm::cancelClicked()

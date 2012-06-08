@@ -69,11 +69,17 @@ EntityTypeForm::EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, Q
     // Set data fields...
     m_editEntityId->setText(m_entity->entityId());
     m_buttonContactDetails->setChecked(true);
+    m_title = QString(tr("Entity"));
 }
 
 QString EntityTypeForm::toString()
 {
-    return QString("Entity Type");
+    return m_title;
+}
+
+void EntityTypeForm::setTitle(const QString &title)
+{
+    m_title = title;
 }
 
 void EntityTypeForm::cancelClicked()
@@ -113,6 +119,7 @@ void EntityTypeForm::addClicked()
     case Roles:
     {
         TypeGroupForm *rolesForm = new TypeGroupForm(0, this->mainWindow());
+        rolesForm->setTitle(tr("Role"));
         QObject::connect(rolesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(roleFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rolesForm);
@@ -149,6 +156,7 @@ void EntityTypeForm::editClicked()
     {
         TypeGroupForm *rolesForm = new TypeGroupForm(
                     m_entity->roles().at(index), this->mainWindow());
+        rolesForm->setTitle(tr("Role"));
         QObject::connect(rolesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(roleFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rolesForm);

@@ -57,7 +57,7 @@ AlternativeTitleTypeForm::AlternativeTitleTypeForm(
 
 QString AlternativeTitleTypeForm::toString()
 {
-    return QString(tr("AlternativeTitleType"));
+    return QString(tr("Alternative Title"));
 }
 
 void AlternativeTitleTypeForm::applyClicked()

@@ -77,7 +77,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
 
 QString TechnicalAttributeRationalTypeForm::toString()
 {
-    return QString("TechnicalAttributeRationalType");
+    return QString(tr("Technical Attribute Rational"));
 }
 
 void TechnicalAttributeRationalTypeForm::cancelClicked()

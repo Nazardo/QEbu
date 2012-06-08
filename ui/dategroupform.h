@@ -20,6 +20,7 @@ private slots:
     void applyClicked();
 private:
     DateGroupEditBox *m_editDateGroup;
+    QString m_title;
 };
 
 #endif // DATEGROUPFORM_H
