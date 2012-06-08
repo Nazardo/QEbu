@@ -285,7 +285,7 @@ void QEbuMainWindow::actionAbout()
 QMap<QString, QString> QEbuMainWindow::getMap(QString name)
 {
     if (m_maps.contains(name)) {
-        return m_maps.value("name");
+        return m_maps.value(name);
     } else {
         // Dynamical load from file
         QMap<QString, QString> map;
