@@ -31,7 +31,6 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     m_editTypeLink->setEditable(true);
     m_editTypeLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editTypeLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
-    QObject::connect(m_editTypeLink, SIGNAL(editTextChanged(QString)), this, SLOT(onInsertion(QString)));
 }
 
 TypeGroup *TypeGroupEditBox::typeGroup()
@@ -46,24 +45,21 @@ void TypeGroupEditBox::setLabel(const QString &label)
     m_groupBox->setTitle(label);
 }
 
-void TypeGroupEditBox::addLinksMap(QMap<QString, QString> values)
+void TypeGroupEditBox::addLinksMap(QMap<QString, QString> *values)
 {
     QString currentData = m_editTypeLink->itemData(m_editTypeLink->currentIndex()).toString();
     QString currentText;
 
-    m_linksMap.unite(values);
-
-    QList<QString> keys = m_linksMap.keys();
+    QList<QString> keys = values->keys();
     for (int i=0; i < keys.size(); ++i) {
-         m_editTypeLink->addItem(m_linksMap.value(keys.at(i)),keys.at(i));
+         m_editTypeLink->addItem(values->value(keys.at(i)),keys.at(i));
          if (keys.at(i) == currentData)
-            currentText = m_linksMap.value(keys.at(i));
+            currentText = values->value(keys.at(i));
     }
 
-    if (currentText.isEmpty())
-        m_editTypeLink->setCurrentIndex(0);  //if cant find that value, select the first
-    else
-        m_editTypeLink->setCurrentIndex(m_editTypeLink->findText(currentText));
+    m_editTypeLink->setCurrentIndex(m_editTypeLink->findText(currentText));
+
+    m_linkMaps.append(values);
 }
 
 void TypeGroupEditBox::updateExistingTypeGroup(TypeGroup *typeGroup)
@@ -74,13 +70,21 @@ void TypeGroupEditBox::updateExistingTypeGroup(TypeGroup *typeGroup)
 }
 
 void TypeGroupEditBox::onChange(int index) {
-    if(m_editTypeLink->itemData(index).isValid())
+    if(m_editTypeLink->itemData(index).isValid()) {
         qDebug() << m_editTypeLink->itemData(index).toString();
-    else
+    } else {
         qDebug() << m_editTypeLink->currentText();
-}
 
-void TypeGroupEditBox::onInsertion(QString text) {
-    m_linksMap.insert(text,text);
-    m_editTypeLink->itemData(m_editTypeLink->currentIndex()).setValue(text);
+        //If its is a new value, add it to the autocompletion maps
+        QString linkData = m_editTypeLink->itemData(index).toString();
+        QString linkText = m_editTypeLink->itemText(index);
+        bool newValue = true;
+        for (int i=0;    i<m_linkMaps.size();    i++)
+            if (m_linkMaps[i]->contains(linkData))
+                newValue = false;
+
+        if (newValue)
+            for (int i=0;    i<m_linkMaps.size();    i++)
+                m_linkMaps[i]->insert(linkData,linkText);
+    }
 }

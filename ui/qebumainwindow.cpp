@@ -84,6 +84,9 @@ QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
 QEbuMainWindow::~QEbuMainWindow()
 {
     delete m_ebuCoreMain;
+
+    for (int i=0;  i<m_maps.keys().size(); i++)
+        delete m_maps.value(m_maps.keys()[i]);
 }
 
 void QEbuMainWindow::pushWidget(StackableWidget *widget)
@@ -421,13 +424,13 @@ void QEbuMainWindow::actionWizard()
     wizard->show();
 }
 
-QMap<QString, QString> QEbuMainWindow::getMap(QString name)
+QMap<QString, QString> *QEbuMainWindow::getMap(QString name)
 {
     if (m_maps.contains(name)) {
         return m_maps.value(name);
     } else {
         // Dynamical load from file
-        QMap<QString, QString> map;
+        QMap<QString, QString> *map = new QMap<QString, QString>();
 
         QFile file(".\\debug\\XML_autoComp\\"+name+".xml");
         QString baseUrl;
@@ -454,7 +457,7 @@ QMap<QString, QString> QEbuMainWindow::getMap(QString name)
                     if (xml->name() == "Name") {
                         // Get the text to define the value
                         QString val = xml->readElementText();
-                        map.insert(currentTerm, val);
+                        map->insert(currentTerm, val);
                         qDebug() << currentTerm << val;
                         continue;
                     }

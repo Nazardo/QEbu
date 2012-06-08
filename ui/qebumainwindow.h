@@ -19,7 +19,7 @@ public:
     ~QEbuMainWindow();
     void pushWidget(StackableWidget *widget);
     EbuCoreMainType *ebuCoreMain();
-    QMap<QString,QString> getMap(QString name);
+    QMap<QString,QString> *getMap(QString name);
 private slots:
     void childClosed();
 
@@ -43,7 +43,7 @@ private:
     QStackedWidget *m_stackedWidget;
     QLabel *m_labelNavigation;
     QList<QString> m_listLabel;
-    QMap<QString, QMap<QString,QString> > m_maps;
+    QMap<QString, QMap<QString,QString> * > m_maps;
 };
 
 #endif // QEBUMAINWINDOW_H
