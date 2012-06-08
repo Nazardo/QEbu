@@ -457,8 +457,9 @@ QMap<QString, QString> *QEbuMainWindow::getMap(QString name)
                     if (xml->name() == "Name") {
                         // Get the text to define the value
                         QString val = xml->readElementText();
-                        map->insert(currentTerm, val);
-                        qDebug() << currentTerm << val;
+                        //map->insert(currentTerm, val);
+                        map->insert(baseUrl+"#"+currentTerm, val);
+                        qDebug() <<baseUrl+"#"+currentTerm << val;
                         continue;
                     }
                 }
