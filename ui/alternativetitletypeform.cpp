@@ -9,6 +9,7 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QFormLayout>
+#include <QMessageBox>
 
 AlternativeTitleTypeForm::AlternativeTitleTypeForm(
         AlternativeTitleType *alternativeTitle,
@@ -60,8 +61,27 @@ QString AlternativeTitleTypeForm::toString()
     return QString(tr("Alternative Title"));
 }
 
+bool AlternativeTitleTypeForm::checkCompliance()
+{
+    bool ok = true;
+    QStringList fields;
+    if (m_editTitle->editValue()->text().isEmpty()) {
+        ok = false;
+        fields += tr("Title");
+    }
+    if(!ok) {
+        QMessageBox::warning(this, this->toString(),
+                             tr("<b>Required fields:</b><br>")
+                             +fields.join(",<br>"),
+                             QMessageBox::Ok, QMessageBox::Ok);
+    }
+    return ok;
+}
+
 void AlternativeTitleTypeForm::applyClicked()
 {
+    if (!checkCompliance())
+            return
     m_alternativeTitle->setNote(m_textNote->toPlainText());
     m_editTypeGroup->updateExistingTypeGroup(m_alternativeTitle);
     m_editStatusGroup->updateExistingStatusGroup(m_alternativeTitle);

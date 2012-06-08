@@ -63,7 +63,33 @@ TechnicalAttributes::~TechnicalAttributes()
 
 QString TechnicalAttributes::toString()
 {
-    return "Technical Attributes";
+    if (m_technicalAttributeString.size() > 0)
+         return "Technical Attributes";
+    if (m_technicalAttributeByte.size() > 0)
+         return "Technical Attributes";
+    if (m_technicalAttributeShort.size() >0)
+        return "Technical Attributes";
+    if (m_technicalAttributeInteger.size() > 0)
+        return "Technical Attributes";
+    if (m_technicalAttributeLong.size() > 0)
+        return "Technical Attributes";
+    if (m_technicalAttributeUnsignedByte.size() > 0)
+        return "Technical Attributes";
+    if (m_technicalAttributeUnsignedShort.size() > 0)
+        return "Technical Attributes";
+    if (m_technicalAttributeUnsignedInteger.size() > 0)
+        return "Technical Attributes";
+    if (m_technicalAttributeUnsignedLong.size() > 0)
+        return "Technical Attributes";
+    if (m_technicalAttributeBoolean.size() > 0)
+        return "Technical Attributes";
+    if (m_technicalAttributeFloat.size() > 0)
+        return "Technical Attributes";
+    if (m_technicalAttributeRational.size() > 0)
+        return "Technical Attributes";
+    if (m_technicalAttributeUri.size() > 0)
+        return "Technical Attributes";
+    return "Technical Attributes - empty";
 }
 
 QList<String *> &TechnicalAttributes::technicalAttributeString()
@@ -199,7 +225,7 @@ void TechnicalAttributeRationalType::clearFactorDenominator()
 QString TechnicalAttributeRationalType::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return QString::number(*m_value, 10);
 }
 
@@ -220,7 +246,7 @@ void TechnicalAttributeUriType::setValue(const QString &value)
 QString TechnicalAttributeUriType::toString() const
 {  
     if (m_value.isEmpty())
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return m_value;
 }
 
@@ -282,7 +308,7 @@ void Boolean::setValue(bool value)
 QString Boolean::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return *m_value ? "true" : "false";
 }
 
@@ -316,7 +342,7 @@ void UInt64::clearValue()
 QString UInt64::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return QString::number(*m_value, 10);
 }
 
@@ -350,7 +376,7 @@ void UInt32::clearValue()
 QString UInt32::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return QString::number(*m_value, 10);
 }
 
@@ -384,7 +410,7 @@ void UInt16::clearValue()
 QString UInt16::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return QString::number(*m_value, 10);
 }
 
@@ -419,7 +445,7 @@ void UInt8::clearValue()
 QString UInt8::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return QString::number(*m_value, 10);
 }
 
@@ -453,7 +479,7 @@ void Int64::clearValue()
 QString Int64::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return QString::number(*m_value, 10);
 }
 
@@ -487,7 +513,7 @@ void Int32::clearValue()
 QString Int32::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return QString::number(*m_value, 10);
 }
 
@@ -521,7 +547,7 @@ void Int16::clearValue()
 QString Int16::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return QString::number(*m_value, 10);
 }
 
@@ -555,7 +581,7 @@ void Int8::clearValue()
 QString Int8::toString() const
 {
     if (!m_value)
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return QString::number(*m_value, 10);
 }
 
@@ -576,6 +602,6 @@ void String::setValue(const QString &value)
 QString String::toString() const
 {
     if (m_value.isEmpty())
-        return QObject::tr("Undefined technical attribute");
+        return QObject::tr("Unspecified technical attribute");
     return m_value;
 }

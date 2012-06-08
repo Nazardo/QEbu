@@ -7,6 +7,7 @@
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QFormLayout>
+#include <QMessageBox>
 
 TitleTypeForm::TitleTypeForm(TitleType *title,
                              QEbuMainWindow *mainWindow,
@@ -69,6 +70,8 @@ void TitleTypeForm::cancelClicked()
 
 void TitleTypeForm::applyClicked()
 {
+    if (!checkCompliance())
+        return;
     if (m_checkAttributionDate->isChecked()) {
         QDateTime *qdt = new QDateTime;
         qdt->setDate(m_editAttributionDate->date());
@@ -83,4 +86,21 @@ void TitleTypeForm::applyClicked()
 void TitleTypeForm::attributionDateChanged()
 {
     m_checkAttributionDate->setChecked(true);
+}
+
+bool TitleTypeForm::checkCompliance()
+{
+    bool ok = true;
+    QStringList fields;
+    if (m_editTitle->editValue()->text().isEmpty()) {
+        ok = false;
+        fields += tr("Title");
+    }
+    if(!ok) {
+        QMessageBox::warning(this, this->toString(),
+                             tr("<b>Required fields:</b><br>")
+                             +fields.join(",<br>"),
+                             QMessageBox::Ok, QMessageBox::Ok);
+    }
+    return ok;
 }

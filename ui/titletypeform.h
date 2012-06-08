@@ -21,6 +21,7 @@ private slots:
     void cancelClicked();
     void applyClicked();
     void attributionDateChanged();
+    bool checkCompliance();
 private:
     QDateEdit *m_editAttributionDate;
     QTextEdit *m_textNote;

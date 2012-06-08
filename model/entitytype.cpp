@@ -54,6 +54,6 @@ QList<TypeGroup *> &EntityType::roles()
 QString EntityType::toString() const
 {
     if (m_entityId.isEmpty())
-        return QObject::tr("Unnamed Entity");
+        return QObject::tr("Unspecified Entity");
     return m_entityId;
 }

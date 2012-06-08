@@ -38,7 +38,7 @@ QString TypeGroup::toString() const
         return m_typeDefinition;
     if (!m_typeLink.isEmpty())
         return m_typeLink;
-    return QObject::tr("Undefined type");
+    return QObject::tr("Unspecified type");
 }
 
 QString TypeGroup::typeLink() const

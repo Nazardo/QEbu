@@ -151,10 +151,11 @@ void ImageFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttri
 
 QString ImageFormatType::toString()
 {
+    if (!imageFormatName().isEmpty())
+        return imageFormatName();
     if (!imageFormatId().isEmpty())
         return imageFormatId();
-    else
-        return "Undefined Image Format";
+     return QObject::tr("Unnamed image format");
 }
 
 /* ------------------------------ AspectRatioType -------------------------- */
@@ -174,7 +175,9 @@ void AspectRatioType::setNote(const QString &note)
 
 QString AspectRatioType::toString() const
 {
-    return "TODO:aspectRatio";
+    if (!formatLabel().isEmpty())
+        return formatLabel();
+    return "Unspecified Ratio";
 }
 
 /* ------------------------------ VideoTrackType -------------------------- */
@@ -204,9 +207,11 @@ void VideoTrackType::setTrackName(const QString &trackName)
 
 QString VideoTrackType::toString() const
 {
-    if (m_trackId.isEmpty())
-        return QObject::tr("Unnamed video track");
-    return m_trackId;
+    if (!m_trackName.isEmpty())
+        return m_trackName;
+    if (!m_trackId.isEmpty())
+        return m_trackId;
+    return QObject::tr("Unnamed video track");
 }
 
 /* ------------------------------ VideoFormatType -------------------------- */
@@ -362,7 +367,11 @@ void VideoFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttri
 
 QString VideoFormatType::toString() const
 {
-    return "TODO:videoFormat";
+    if (!m_videoFormatName.isEmpty())
+        return m_videoFormatName;
+    if (!m_videoFormatId.isEmpty())
+        return m_videoFormatId;
+    return "Unnamed Video Format";
 }
 
 /* ------------------------------ AudioTrackType -------------------------- */
@@ -402,9 +411,11 @@ void AudioTrackType::setTrackName(const QString &trackName)
 
 QString AudioTrackType::toString() const
 {
-    if (m_trackId.isEmpty())
-        return QObject::tr("Unnamed audio track");
-    return m_trackId;
+    if (!m_trackName.isEmpty())
+        return m_trackName;
+    if (!m_trackId.isEmpty())
+         return m_trackId;
+    return QObject::tr("Unnamed audio track");
 }
 
 /* ------------------------------ AudioFormatType -------------------------- */
@@ -494,7 +505,11 @@ void AudioFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttri
 
 QString AudioFormatType::toString() const
 {
-    return "TODO:videoFormat";
+    if (!m_audioFormatName.isEmpty())
+        return m_audioFormatName;
+    if (!m_audioFormatId.isEmpty())
+        return m_audioFormatId;
+    return "Unnamed Video Format";
 }
 
 /* ------------------------------ CaptioningFormatType -------------------------- */
@@ -534,9 +549,11 @@ void CaptioningFormatType::setCaptioningFormatName(const QString &captioningForm
 
 QString CaptioningFormatType::toString() const
 {
-    if (m_captioningFormatId.isEmpty())
-        return QObject::tr("Unnamed captioning format");
-    return m_captioningFormatId;
+    if (!m_captioningFormatName.isEmpty())
+        return m_captioningFormatName;
+    if (!m_captioningFormatId.isEmpty())
+        return m_captioningFormatId;
+    return QObject::tr("Unnamed captioning format");
 }
 
 /* ------------------------------ AncillaryDataFormatType -------------------------- */
@@ -632,9 +649,11 @@ void AncillaryDataFormatType::clearWrappingType()
 
 QString AncillaryDataFormatType::toString() const
 {
-    if (m_ancillaryDataFormatId.isEmpty())
-        return QObject::tr("Unnamed ancillary data format");
-    return m_ancillaryDataFormatId;
+    if (!m_ancillaryDataFormatName.isEmpty())
+        return m_ancillaryDataFormatName;
+    if (!m_ancillaryDataFormatId.isEmpty())
+        return m_ancillaryDataFormatId;
+    return QObject::tr("Unnamed ancillary data format");
 }
 
 /* ------------------------------ DataFormatType -------------------------- */
@@ -710,7 +729,11 @@ void DataFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAttrib
 
 QString DataFormatType::toString() const
 {
-    return "TODO:dataFormat";
+    if (!m_dataFormatName.isEmpty())
+        return m_dataFormatName;
+    if (!m_dataFormatId.isEmpty())
+        return m_dataFormatId;
+    return QObject::tr("Unnamed Data Format");
 }
 
 /* ------------------------------ SigningFormatType -------------------------- */
@@ -790,9 +813,11 @@ void SigningFormatType::setSigningFormatDefinition(const QString &signingFormatD
 
 QString SigningFormatType::toString() const
 {
-    if (m_signingFormatId.isEmpty())
-        return QObject::tr("Unnamed signing format");
-    return m_signingFormatId;
+    if (!m_signingFormatName.isEmpty())
+        return m_signingFormatName;
+    if (!m_signingFormatId.isEmpty())
+        return m_signingFormatId;
+    return QObject::tr("Unnamed signing format");
 }
 
 /* ------------------------------ DocumentFormatType -------------------------- */
@@ -935,9 +960,11 @@ void DocumentFormatType::setTechnicalAttributes(TechnicalAttributes *technicalAt
 
 QString DocumentFormatType::toString() const
 {
-    if (m_documentFormatId.isEmpty())
-        return QObject::tr("Unnamed document format");
-    return m_documentFormatId;
+    if (!m_documentFormatName.isEmpty())
+        return m_documentFormatName;
+    if (!m_documentFormatId.isEmpty())
+        return m_documentFormatId;
+    return QObject::tr("Unnamed document format");
 }
 
 /* ------------------------------ FormatType -------------------------- */
@@ -1272,5 +1299,9 @@ QString FormatType::toString() const
 {
     if (m_format)
         return m_format->toString();
-    return QObject::tr("Undefined format");
+    if (!m_formatName.isEmpty())
+        return m_formatName;
+    if (!m_formatId.isEmpty())
+        return m_formatId;
+    return QObject::tr("Unspecified format");
 }

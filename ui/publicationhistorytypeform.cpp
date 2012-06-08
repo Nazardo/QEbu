@@ -12,7 +12,9 @@
 #include <QTimeEdit>
 #include <QDateEdit>
 #include <QComboBox>
-#include <QFormLayout>
+#include <QGridLayout>
+#include <QCheckBox>
+#include <QLabel>
 
 PublicationHistoryTypeForm::PublicationHistoryTypeForm(
         PublicationHistoryType *publicationHistory,
@@ -28,22 +30,34 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
     QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
-        QFormLayout *fl = new QFormLayout;
+        QGridLayout *gl = new QGridLayout;
         m_editFirstPublicationDate = new QDateEdit;
+        m_checkFirstPublicationDate = new QCheckBox(tr("First publication date"));
+        QObject::connect(m_editFirstPublicationDate, SIGNAL(dateChanged(QDate)),
+                         this, SLOT(firstPublicationDateChanged()));
         m_editFirstPublicationDate->setCalendarPopup(true);
-        fl->addRow(tr("First publication date"), m_editFirstPublicationDate);
+        gl->addWidget(m_checkFirstPublicationDate, 0, 0);
+        gl->addWidget(m_editFirstPublicationDate, 0, 1);
         m_editFirstPublicationTime = new QTimeEdit;
-        fl->addRow(tr("First publication time"), m_editFirstPublicationTime);
+        m_checkFirstPublicationTime = new QCheckBox(tr("First publication time"));
+        QObject::connect(m_editFirstPublicationTime, SIGNAL(timeChanged(QTime)),
+                         this, SLOT(firstPublicationTimeChanged()));
+        gl->addWidget(m_checkFirstPublicationTime, 1, 0);
+        gl->addWidget(m_editFirstPublicationTime, 1, 1);
         m_editFirstPublicationChannel = new QComboBox;
         QStringList sl(mainWindow->ebuCoreMain()->formatMap().keys());
         m_editFirstPublicationChannel->addItems(sl);
-        fl->addRow(tr("First publication channel"), m_editFirstPublicationChannel);
+        //gl->addRow(tr("First publication channel"), m_editFirstPublicationChannel);
+        gl->addWidget(new QLabel(tr("First publication channel")), 2, 0);
+        gl->addWidget(m_editFirstPublicationChannel, 2, 1);
         m_buttonRepeat = new QPushButton(">>");
         m_buttonRepeat->setCheckable(true);
-        fl->addRow(tr("Repetitions"), m_buttonRepeat);
+        //gl->addRow(tr("Repetitions"), m_buttonRepeat);
+        gl->addWidget(new QLabel(tr("Repetitions")), 3, 0);
+        gl->addWidget(m_buttonRepeat, 3, 1);
         QObject::connect(m_buttonRepeat, SIGNAL(toggled(bool)),
                          this, SLOT(repeatChecked(bool)));
-        l->addLayout(fl);
+        l->addLayout(gl);
     }
     mainHLayout->addLayout(l);
     // Add list view on the right
@@ -86,8 +100,14 @@ void PublicationHistoryTypeForm::cancelClicked()
 void PublicationHistoryTypeForm::applyClicked()
 {
     PublicationType *pt = new PublicationType;
-    pt->setTime(m_editFirstPublicationTime->dateTime());
-    pt->setDate(m_editFirstPublicationDate->dateTime());
+    if (m_checkFirstPublicationTime->isChecked())
+        pt->setTime(m_editFirstPublicationTime->dateTime());
+    else
+        pt->clearTime();
+    if (m_checkFirstPublicationDate->isChecked())
+        pt->setDate(m_editFirstPublicationDate->dateTime());
+    else
+        pt->clearDate();
     pt->setChannel(0); /// @todo
     m_publicationHistory->setFirstPublication(pt);
     emit closed(m_op, QVarPtr<PublicationHistoryType>::asQVariant(m_publicationHistory));
@@ -136,6 +156,16 @@ void PublicationHistoryTypeForm::repeatChecked(bool checked)
             continue;
         m_listView->addItem(rep->toString());
     }
+}
+
+void PublicationHistoryTypeForm::firstPublicationTimeChanged()
+{
+    m_checkFirstPublicationTime->setChecked(true);
+}
+
+void PublicationHistoryTypeForm::firstPublicationDateChanged()
+{
+    m_checkFirstPublicationDate->setChecked(true);
 }
 
 void PublicationHistoryTypeForm::repeatFormClosed(StackableWidget::Operation op, QVariant value)

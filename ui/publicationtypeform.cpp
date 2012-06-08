@@ -9,7 +9,9 @@
 #include <QTimeEdit>
 #include <QDateEdit>
 #include <QComboBox>
-#include <QFormLayout>
+#include <QGridLayout>
+#include <QCheckBox>
+#include <QLabel>
 
 PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
                                          QEbuMainWindow *mainWindow,
@@ -22,17 +24,26 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
     else
         m_publication = publication;
     // Layout
-    QFormLayout *fl = new QFormLayout;
+    QGridLayout *gl = new QGridLayout;
     m_editPublicationDate = new QDateEdit;
     m_editPublicationDate->setCalendarPopup(true);
-    fl->addRow(tr("Publication date"), m_editPublicationDate);
+    m_checkPublicationDate = new QCheckBox(tr("Publication date"));
+    QObject::connect(m_editPublicationDate, SIGNAL(dateChanged(QDate)),
+                     this, SLOT(publicationDateChanged()));
+    gl->addWidget(m_checkPublicationDate, 0, 0);
+    gl->addWidget(m_editPublicationDate, 0, 1);
     m_editPublicationTime = new QTimeEdit;
-    fl->addRow(tr("Publication time"), m_editPublicationTime);
+    m_checkPublicationTime = new QCheckBox(tr("Publication Time"));
+    QObject::connect(m_editPublicationTime, SIGNAL(timeChanged(QTime)),
+                     this, SLOT(publicationTimeChanged()));
+    gl->addWidget(m_checkPublicationTime, 1, 0);
+    gl->addWidget(m_editPublicationTime, 1, 1);
     m_editPublicationChannel = new QComboBox;
     QStringList sl(mainWindow->ebuCoreMain()->formatMap().keys());
     m_editPublicationChannel->addItems(sl);
-    fl->addRow(tr("Publication channel"), m_editPublicationChannel);
-    this->setLayout(fl);
+    gl->addWidget(new QLabel(tr("Pubblication channel")), 2, 0);
+    gl->addWidget(m_editPublicationChannel, 2, 1);
+    this->setLayout(gl);
 
     // Set data fields...
     if (m_publication) {
@@ -61,8 +72,24 @@ void PublicationTypeForm::cancelClicked()
 
 void PublicationTypeForm::applyClicked()
 {
-    m_publication->setTime(m_editPublicationTime->dateTime());
-    m_publication->setDate(m_editPublicationDate->dateTime());
+    if (m_checkPublicationTime->isChecked())
+        m_publication->setTime(m_editPublicationTime->dateTime());
+    else
+        m_publication->clearTime();
+    if (m_checkPublicationDate->isChecked())
+        m_publication->setDate(m_editPublicationDate->dateTime());
+    else
+        m_publication->clearDate();
     m_publication->setChannel(0); /// @todo
     emit closed(m_op, QVarPtr<PublicationType>::asQVariant(m_publication));
+}
+
+void PublicationTypeForm::publicationTimeChanged()
+{
+    m_checkPublicationTime->setChecked(true);
+}
+
+void PublicationTypeForm::publicationDateChanged()
+{
+    m_checkPublicationDate->setChecked(true);
 }

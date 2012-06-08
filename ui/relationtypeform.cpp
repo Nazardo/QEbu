@@ -13,6 +13,7 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QFormLayout>
+#include <QMessageBox>
 
 RelationTypeForm::RelationTypeForm(RelationType *relation,
                                    QEbuMainWindow *mainWindow,
@@ -102,6 +103,33 @@ void RelationTypeForm::setTitle(const QString &title)
     m_title = title;
 }
 
+bool RelationTypeForm::checkCompliance()
+{
+    bool ok = true;
+    QStringList fields;
+    if (m_editElementRelation->editValue()->text().isEmpty()) {
+        ok = false;
+        fields += tr("Relation");
+    }
+    if (m_editRelationLink->text().isEmpty())
+    {
+        ok = false;
+        fields += tr("Relation Link");
+    }
+    if (m_editRelationIdentifier->text().isEmpty())
+    {
+        ok = false;
+        fields += tr("Relation Identifier");
+    }
+    if(!ok) {
+        QMessageBox::warning(this, this->toString(),
+                             tr("<b>Required fields:</b><br>")
+                             +fields.join(",<br>"),
+                             QMessageBox::Ok, QMessageBox::Ok);
+    }
+    return ok;
+}
+
 void RelationTypeForm::relationIdentifierRemoveClicked()
 {
     if (!m_relation->relationIdentifier())
@@ -140,6 +168,8 @@ void RelationTypeForm::cancelClicked()
 
 void RelationTypeForm::applyClicked()
 {
+    if (!checkCompliance())
+        return;
     m_relation->setNote(m_textNote->toPlainText());
 
     m_editTypeGroup->updateExistingTypeGroup(m_relation);

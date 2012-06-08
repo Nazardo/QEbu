@@ -1,5 +1,6 @@
 #include "coremetadatatype.h"
 #include <QObject>
+#include <QStringList>
 
 CoreMetadataType::CoreMetadataType()
 {
@@ -434,7 +435,44 @@ QList<AlternativeType *> &DateType::alternative()
 
 QString DateType::toString() const
 {
-    return "TODO:date";
+    QStringList sl;
+    if (m_date.size() > 0)
+    {
+        sl.append("Date:");
+        sl.append(m_date.first()->toString());
+        return sl.join(" ");
+    }
+    if (m_created)
+    {
+        sl.append("Date created:");
+        sl.append(m_created->toString());
+        return sl.join(" ");
+    }
+    if (m_issued)
+    {
+        sl.append("Date issued:");
+        sl.append(m_issued->toString());
+        return sl.join(" ");
+    }
+    if (m_modified)
+    {
+        sl.append("Date modified:");
+        sl.append(m_modified->toString());
+        return sl.join(" ");
+    }
+    if (m_digitised)
+    {
+        sl.append("Date digitised:");
+        sl.append(m_digitised->toString());
+        return sl.join(" ");
+    }
+    if (m_alternative.size() > 0)
+    {
+        sl.append("Alternative:");
+        sl.append(m_alternative.first()->toString());
+        return sl.join(" ");
+    }
+    return "Unspecified Date";
 }
 
 TypeType::~TypeType()
@@ -489,7 +527,32 @@ QList<TypeGroup *> &TypeType::targetAudience()
 
 QString TypeType::toString() const
 {
-    return "TODO:type";
+    QStringList sl;
+    if (m_type.size() > 0)
+    {
+        sl.append("Type:");
+        sl.append(m_type.first()->toString());
+        return sl.join(" ");
+    }
+    if (m_genre.size() > 0)
+    {
+        sl.append("Genre:");
+        sl.append(m_genre.first()->toString());
+        return sl.join(" ");
+    }
+    if (m_objectType.size() > 0)
+    {
+        sl.append("Object Type:");
+        sl.append(m_objectType.first()->toString());
+        return sl.join(" ");
+    }
+    if (m_targetAudience.size() > 0)
+    {
+        sl.append("Target Audience:");
+        sl.append(m_targetAudience.first()->toString());
+        return sl.join(" ");
+    }
+    return "Unspecified Type";
 }
 
 IdentifierType::IdentifierType()
@@ -795,9 +858,11 @@ void TemporalType::setPeriodOfTime(DateGroup *periodOfTime)
 
 QString TemporalType::toString() const
 {
-    if (m_periodId.isEmpty())
-        return QObject::tr("Unnamed period");
-    return m_periodId;
+    if (!m_periodId.isEmpty())
+        return m_periodId;
+    if (!typeLabel().isEmpty())
+        return typeLabel();
+    return QObject::tr("Unnamed period");
 }
 
 CoordinatesType::CoordinatesType()
@@ -1103,7 +1168,9 @@ QString RightsType::toString() const
 {
     if (m_rights)
         return m_rights->toString();
-    return QObject::tr("Unnamed rights");
+    if (!typeLabel().isEmpty())
+        return typeLabel();
+    return QObject::tr("Unspecified rights");
 }
 
 PublicationType::PublicationType()
@@ -1126,6 +1193,11 @@ void PublicationType::setDate(const QDateTime &date)
     m_date = date;
 }
 
+void PublicationType::clearDate()
+{
+    m_date = QDateTime();
+}
+
 QDateTime PublicationType::time() const
 {
     return m_time;
@@ -1134,6 +1206,11 @@ QDateTime PublicationType::time() const
 void PublicationType::setTime(const QDateTime &time)
 {
     m_time = time;
+}
+
+void PublicationType::clearTime()
+{
+    m_time = QDateTime();
 }
 
 FormatType *PublicationType::channel() const
@@ -1272,6 +1349,8 @@ void PartType::setPartName(const QString &partName)
 
 QString PartType::toString() const
 {
+    if (!m_partName.isEmpty())
+        return m_partName;
     if (m_partId.isEmpty())
         return QObject::tr("Unnamed part");
     return m_partId;

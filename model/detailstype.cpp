@@ -1,4 +1,5 @@
 #include "detailstype.h"
+#include <QStringList>
 
 DetailsType::DetailsType()
 {
@@ -64,7 +65,32 @@ void DetailsType::setMobileTelephoneNumber(const QString &mobileTelephoneNumber)
 
 QString DetailsType::toString() const
 {
-    return "TODO:details";
+    QStringList sl;
+    if (!m_emailAddress.isEmpty())
+    {
+        sl.append("Email Address:");
+        sl.append(m_emailAddress);
+        return sl.join(" ");
+    }
+    if (!m_webAddress.isEmpty())
+    {
+        sl.append("Web Address:");
+        sl.append(m_webAddress);
+        return sl.join(" ");
+    }
+    if (!m_telephoneNumber.isEmpty())
+    {
+        sl.append("Telephone Number:");
+        sl.append(m_telephoneNumber);
+        return sl.join(" ");
+    }
+    if (!m_mobileTelephoneNumber.isEmpty())
+    {
+        sl.append("Mobile Telephone Number:");
+        sl.append(m_mobileTelephoneNumber);
+        return sl.join(" ");
+    }
+    return "Unspecified Details";
 }
 
 AddressType::AddressType()
@@ -131,7 +157,20 @@ void AddressType::setCountry(TypeGroup *country)
 
 QString AddressType::toString() const
 {
-    return "TODO:address";
+    QStringList sl;
+    if (m_lines.size() > 0)
+    {
+        sl.append("Address:");
+        sl.append(m_lines.first());
+        return sl.join(" ");
+    }
+    if (!m_townCity.isEmpty())
+    {
+        sl.append("Town City:");
+        sl.append(m_townCity);
+        return sl.join(" ");
+    }
+    return "Unspecified address";
 }
 
 

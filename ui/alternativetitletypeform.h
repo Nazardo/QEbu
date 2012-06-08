@@ -18,6 +18,7 @@ public:
                                       QEbuMainWindow *mainWindow,
                                       QWidget *parent = 0);
     QString toString();
+    bool checkCompliance();
 private slots:
     void applyClicked();
     void cancelClicked();

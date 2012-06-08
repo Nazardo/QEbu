@@ -35,6 +35,6 @@ void ElementType::setLang(const QString &lang)
 QString ElementType::toString() const
 {
     if (m_value.isEmpty())
-        return QObject::tr("Undefined element");
+        return QObject::tr("Unspecified element");
     return m_value;
 }

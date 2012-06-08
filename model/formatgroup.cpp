@@ -50,5 +50,5 @@ QString FormatGroup::toString() const
         return m_formatDefinition;
     if (!m_formatLink.isEmpty())
         return m_formatLink;
-    return QObject::tr("Undefined format");
+    return QObject::tr("Unspecified format");
 }

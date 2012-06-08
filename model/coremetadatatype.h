@@ -439,8 +439,10 @@ public:
     ~PublicationType();
     QDateTime date() const;
     void setDate (const QDateTime &date);
+    void clearDate();
     QDateTime time() const;
     void setTime (const QDateTime &time);
+    void clearTime();
     FormatType *channel() const;
     void setChannel(FormatType *channel);
     QString toString() const;

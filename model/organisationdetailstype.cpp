@@ -67,9 +67,11 @@ QList<EntityType*> &OrganisationDetailsType::contacts()
 
 QString OrganisationDetailsType::toString() const
 {
-    if (m_organisationId.isEmpty())
-        return QObject::tr("Unnamed organisation");
-    return m_organisationId;
+    if (m_organisationName)
+        return m_organisationName->toString();
+    if (!m_organisationId.isEmpty())
+        return m_organisationId;
+    return QObject::tr("Unnamed organisation");
 }
 
 OrganisationDepartmentType::OrganisationDepartmentType()

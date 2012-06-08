@@ -10,6 +10,7 @@
 #include <QTextEdit>
 #include <QLabel>
 #include <QFormLayout>
+#include <QMessageBox>
 
 IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -71,6 +72,23 @@ QString IdentifierTypeForm::toString()
     return QString(tr("Identifier"));
 }
 
+bool IdentifierTypeForm::checkCompliance()
+{
+    bool ok = true;
+    QStringList fields;
+    if (m_editElementIdentifier->editValue()->text().isEmpty()) {
+        ok = false;
+        fields += tr("Identifier");
+    }
+    if(!ok) {
+        QMessageBox::warning(this, this->toString(),
+                             tr("<b>Required fields:</b><br>")
+                             +fields.join(",<br>"),
+                             QMessageBox::Ok, QMessageBox::Ok);
+    }
+    return ok;
+}
+
 void IdentifierTypeForm::attributorRemoveClicked()
 {
     if (!m_identifier->attributor())
@@ -81,6 +99,8 @@ void IdentifierTypeForm::attributorRemoveClicked()
 
 void IdentifierTypeForm::attributorClicked()
 {
+    if (!checkCompliance())
+        return;
     EntityTypeForm *attributorForm = new EntityTypeForm(
                 m_identifier->attributor(),this->mainWindow());
     attributorForm->setTitle(tr("Attributor"));
