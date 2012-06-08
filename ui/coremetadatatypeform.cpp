@@ -95,27 +95,11 @@ CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata,
             gl->addWidget(m_buttonType, 8, 1);
             QObject::connect(m_buttonType, SIGNAL(toggled(bool)),
                              this, SLOT(typeChecked(bool)));
-            m_buttonFormat = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Format")), 9, 0);
-            gl->addWidget(m_buttonFormat, 9, 1);
-            QObject::connect(m_buttonFormat, SIGNAL(toggled(bool)),
-                             this, SLOT(formatChecked(bool)));
             m_buttonIdentifier = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Identifier")), 10, 0);
-            gl->addWidget(m_buttonIdentifier, 10, 1);
+            gl->addWidget(new QLabel(tr("Identifier")), 9, 0);
+            gl->addWidget(m_buttonIdentifier, 9, 1);
             QObject::connect(m_buttonIdentifier, SIGNAL(toggled(bool)),
                              this, SLOT(identifierChecked(bool)));
-            m_buttonSource = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Source")), 11, 0);
-            gl->addWidget(m_buttonSource, 11, 1);
-            QObject::connect(m_buttonSource, SIGNAL(toggled(bool)),
-                             this, SLOT(sourceChecked(bool)));
-            m_buttonLanguage = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Language")), 12, 0);
-            gl->addWidget(m_buttonLanguage, 12, 1);
-            QObject::connect(m_buttonLanguage, SIGNAL(toggled(bool)),
-                             this, SLOT(languageChecked(bool)));
-
         }
         firstTab->setLayout(gl);
     }
@@ -216,34 +200,49 @@ CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata,
     {
         QGridLayout *gl = new QGridLayout;
         {
+            m_buttonFormat = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Format")), 0, 0);
+            gl->addWidget(m_buttonFormat, 0, 1);
+            QObject::connect(m_buttonFormat, SIGNAL(toggled(bool)),
+                             this, SLOT(formatChecked(bool)));
+            m_buttonSource = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Source")), 1, 0);
+            gl->addWidget(m_buttonSource, 1, 1);
+            QObject::connect(m_buttonSource, SIGNAL(toggled(bool)),
+                             this, SLOT(sourceChecked(bool)));
+            m_buttonLanguage = new QPushButton(">>");
+            gl->addWidget(new QLabel(tr("Language")), 2, 0);
+            gl->addWidget(m_buttonLanguage, 2, 1);
+            QObject::connect(m_buttonLanguage, SIGNAL(toggled(bool)),
+                             this, SLOT(languageChecked(bool)));
             m_buttonCoverage = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Coverage")), 0, 0);
-            gl->addWidget(m_buttonCoverage, 0, 1);
+            gl->addWidget(new QLabel(tr("Coverage")), 3, 0);
+            gl->addWidget(m_buttonCoverage, 3, 1);
             QObject::connect(m_buttonCoverage, SIGNAL(toggled(bool)),
                              this, SLOT(coverageChecked(bool)));
             m_buttonRights = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Rights")), 1, 0);
-            gl->addWidget(m_buttonRights, 1, 1);
+            gl->addWidget(new QLabel(tr("Rights")), 4, 0);
+            gl->addWidget(m_buttonRights, 4, 1);
             QObject::connect(m_buttonRights, SIGNAL(toggled(bool)),
                              this, SLOT(rightsChecked(bool)));
             m_buttonVersion = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Version")), 2, 0);
-            gl->addWidget(m_buttonVersion, 2, 1);
+            gl->addWidget(new QLabel(tr("Version")), 5, 0);
+            gl->addWidget(m_buttonVersion, 5, 1);
             QObject::connect(m_buttonVersion, SIGNAL(toggled(bool)),
                              this, SLOT(versionChecked(bool)));
             m_buttonPublicationHistory = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Publication History")), 3, 0);
-            gl->addWidget(m_buttonPublicationHistory, 3, 1);
+            gl->addWidget(new QLabel(tr("Publication History")), 6, 0);
+            gl->addWidget(m_buttonPublicationHistory, 6, 1);
             QObject::connect(m_buttonPublicationHistory, SIGNAL(toggled(bool)),
                              this, SLOT(publicationHistoryChecked(bool)));
             m_buttonRating = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Rating")), 4, 0);
-            gl->addWidget(m_buttonRating, 4, 1);
+            gl->addWidget(new QLabel(tr("Rating")), 7, 0);
+            gl->addWidget(m_buttonRating, 7, 1);
             QObject::connect(m_buttonRating, SIGNAL(toggled(bool)),
                              this, SLOT(ratingChecked(bool)));
             m_buttonPart = new QPushButton(">>");
-            gl->addWidget(new QLabel(tr("Part")), 5, 0);
-            gl->addWidget(m_buttonPart, 5, 1);
+            gl->addWidget(new QLabel(tr("Part")), 8, 0);
+            gl->addWidget(m_buttonPart, 8, 1);
             QObject::connect(m_buttonPart, SIGNAL(toggled(bool)),
                              this, SLOT(partChecked(bool)));
 
