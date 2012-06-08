@@ -28,6 +28,7 @@ private slots:
     void actionClose();
     void actionQuit();
     void actionAbout();
+    void actionWizard();
 private:
     void resetView();
     bool removeWidgetFromTop();
