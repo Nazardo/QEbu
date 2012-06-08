@@ -48,16 +48,20 @@ void TypeGroupEditBox::setLabel(const QString &label)
 void TypeGroupEditBox::addLinksMap(QMap<QString, QString> *values)
 {
     QString currentData = m_editTypeLink->itemData(m_editTypeLink->currentIndex()).toString();
-    QString currentText;
+    m_editStatusLink->setItemData(m_editStatusLink->currentIndex(),"");
+    QString selectedText;
 
     QList<QString> keys = values->keys();
     for (int i=0; i < keys.size(); ++i) {
-         m_editTypeLink->addItem(values->value(keys.at(i)),keys.at(i));
-         if (keys.at(i) == currentData)
-            currentText = values->value(keys.at(i));
+        QString key = keys.at(i);
+        if (m_editTypeLink->findText(values->value(key)) == -1) {
+            m_editTypeLink->addItem(values->value(key),key);
+            if (key == currentData)
+                selectedText = values->value(key);
+        }
     }
 
-    m_editTypeLink->setCurrentIndex(m_editTypeLink->findText(currentText));
+    m_editTypeLink->setCurrentIndex(m_editTypeLink->findText(selectedText));
 
     m_linkMaps.append(values);
 }

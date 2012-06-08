@@ -25,9 +25,10 @@ AlternativeTitleTypeForm::AlternativeTitleTypeForm(
     QHBoxLayout *hLayout = new QHBoxLayout;
     QVBoxLayout *leftVLayout = new QVBoxLayout;
     m_editTypeGroup = new TypeGroupEditBox(m_alternativeTitle);
-    m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_ObjectTypeCodeCS")); //Autocompletion
+    m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_ObjectTypeCodeCS")); //Autocompletion values
     leftVLayout->addWidget(m_editTypeGroup);
     m_editStatusGroup = new StatusGroupEditBox(m_alternativeTitle);
+    m_editStatusGroup->addLinksMap(mainWindow->getMap("ebu_TitleStatusCodeCS")); //Autocompletion values
     leftVLayout->addWidget(m_editStatusGroup);
     m_editTitle = new ElementTypeEditBox;
     m_editTitle->setLabel(tr("Title"));

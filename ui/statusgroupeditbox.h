@@ -2,9 +2,12 @@
 #define STATUSGROUPEDITBOX_H
 
 #include <QWidget>
+#include <QMap>
 
 class StatusGroup;
 class QLineEdit;
+class QComboBox;
+class QString;
 
 class StatusGroupEditBox : public QWidget
 {
@@ -14,10 +17,14 @@ public:
                                 QWidget *parent = 0);
     StatusGroup *statusGroup();
     void updateExistingStatusGroup(StatusGroup *statusGroup);
+    void addLinksMap(QMap<QString, QString> *values);
+private slots:
+    void onChange(int index);
 private:
     QLineEdit *m_editStatusLabel;
     QLineEdit *m_editStatusDefinition;
-    QLineEdit *m_editStatusLink;
+    QComboBox *m_editStatusLink;
+    QList<QMap<QString, QString> *> m_linkMaps;
 };
 
 #endif // STATUSGROUPEDITBOX_H
