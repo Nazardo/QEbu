@@ -25,6 +25,7 @@ DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description,
     QVBoxLayout *vl = new QVBoxLayout;
     {
         m_editTypeGroup = new TypeGroupEditBox(description);
+        m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_DescriptionTypeCodeCS")); //Autocompletion values
         vl->addWidget(m_editTypeGroup);
     }
     {
