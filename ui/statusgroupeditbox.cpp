@@ -43,8 +43,9 @@ StatusGroup *StatusGroupEditBox::statusGroup()
 void StatusGroupEditBox::addLinksMap(QMap<QString, QString> *values)
 {
     QString selectedData = m_editStatusLink->itemData(m_editStatusLink->currentIndex()).toString();
+    QString selectedText = m_editStatusLink->itemText(m_editStatusLink->currentIndex());
     m_editStatusLink->setItemData(m_editStatusLink->currentIndex(),"");
-    QString selectedText;
+
 
     QList<QString> keys = values->keys();
     for (int i=0; i < keys.size(); ++i) {

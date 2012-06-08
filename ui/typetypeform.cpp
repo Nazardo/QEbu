@@ -11,6 +11,7 @@
 #include <QButtonGroup>
 #include <QTextEdit>
 #include <QFormLayout>
+#include <QDebug>
 
 TypeTypeForm::TypeTypeForm(TypeType *type,
                            QEbuMainWindow *mainWindow,
@@ -114,6 +115,12 @@ void TypeTypeForm::addClicked()
     {
         TypeGroupForm *genreForm = new TypeGroupForm(0, this->mainWindow());
         genreForm->setTitle(tr("Genre"));
+        genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentAlertSchemeCodeCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentGenreCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("ebu_EditorialFormatCodeCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("ebu_IntentionCodeCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("tva_ContentCommercialCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("tva_ContentAlertCS"));
         QObject::connect(genreForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(genreFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(genreForm);
@@ -123,6 +130,7 @@ void TypeTypeForm::addClicked()
     {
         TypeGroupForm *objectTypeForm = new TypeGroupForm(0, this->mainWindow());
         objectTypeForm->setTitle(tr("Object Type"));
+        objectTypeForm->addLinksMap(mainWindow()->getMap("ebu_ObjectTypeCS"));
         QObject::connect(objectTypeForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(objectTypeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(objectTypeForm);
@@ -132,6 +140,8 @@ void TypeTypeForm::addClicked()
     {
         TypeGroupForm *targetAudienceForm = new TypeGroupForm(0, this->mainWindow());
         targetAudienceForm->setTitle(tr("Target Audience"));
+        targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_IntendedAudienceCodeCS"));
+        targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_ParentalGuidanceCodeCS"));
         QObject::connect(targetAudienceForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(targetAudienceFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(targetAudienceForm);
@@ -145,6 +155,7 @@ void TypeTypeForm::editClicked()
     int index = m_listView->selected();
     if (index < 0)
         return;
+
     switch (m_currentEditMode) {
     case Type:
     {
@@ -159,6 +170,12 @@ void TypeTypeForm::editClicked()
     {
         TypeGroupForm *genreForm = new TypeGroupForm(m_type->genre().at(index), this->mainWindow());
         genreForm->setTitle(tr("Genre"));
+        genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentAlertSchemeCodeCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentGenreCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("ebu_EditorialFormatCodeCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("ebu_IntentionCodeCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("tva_ContentCommercialCS"));
+        genreForm->addLinksMap(mainWindow()->getMap("tva_ContentAlertCS"));
         QObject::connect(genreForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(genreFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(genreForm);
@@ -168,6 +185,7 @@ void TypeTypeForm::editClicked()
     {
         TypeGroupForm *objectTypeForm = new TypeGroupForm(m_type->objectType().at(index), this->mainWindow());
         objectTypeForm->setTitle(tr("Object Type"));
+        objectTypeForm->addLinksMap(mainWindow()->getMap("ebu_ObjectTypeCS"));
         QObject::connect(objectTypeForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(objectTypeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(objectTypeForm);
@@ -177,6 +195,8 @@ void TypeTypeForm::editClicked()
     {
         TypeGroupForm *targetAudienceForm = new TypeGroupForm(m_type->targetAudience().at(index), this->mainWindow());
         targetAudienceForm->setTitle(tr("Target Audience"));
+        targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_IntendedAudienceCodeCS"));
+        targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_ParentalGuidanceCodeCS"));
         QObject::connect(targetAudienceForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(targetAudienceFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(targetAudienceForm);

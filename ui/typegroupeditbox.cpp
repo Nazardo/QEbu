@@ -28,6 +28,7 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     m_editTypeLabel->setText(typeGroup->typeLabel());
     m_editTypeDefinition->setText(typeGroup->typeDefinition());
     m_editTypeLink->addItem("",typeGroup->typeLink());
+    qDebug() <<"  stored: " <<typeGroup->typeLink();
     m_editTypeLink->setEditable(true);
     m_editTypeLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editTypeLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
@@ -48,13 +49,16 @@ void TypeGroupEditBox::setLabel(const QString &label)
 void TypeGroupEditBox::addLinksMap(QMap<QString, QString> *values)
 {
     QString currentData = m_editTypeLink->itemData(m_editTypeLink->currentIndex()).toString();
-    m_editStatusLink->setItemData(m_editStatusLink->currentIndex(),"");
-    QString selectedText;
+
+    m_editTypeLink->setItemData(m_editTypeLink->currentIndex(),"");
+    QString selectedText = m_editTypeLink->itemText(m_editTypeLink->currentIndex());
 
     QList<QString> keys = values->keys();
     for (int i=0; i < keys.size(); ++i) {
         QString key = keys.at(i);
         if (m_editTypeLink->findText(values->value(key)) == -1) {
+            // Discart duplicates
+            // (new user-defined values are saved in every maps used)
             m_editTypeLink->addItem(values->value(key),key);
             if (key == currentData)
                 selectedText = values->value(key);
@@ -62,7 +66,7 @@ void TypeGroupEditBox::addLinksMap(QMap<QString, QString> *values)
     }
 
     m_editTypeLink->setCurrentIndex(m_editTypeLink->findText(selectedText));
-
+    qDebug() <<"    current: " <<m_editTypeLink->findText(selectedText) <<"  @ " <<selectedText;
     m_linkMaps.append(values);
 }
 

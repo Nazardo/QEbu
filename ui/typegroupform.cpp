@@ -3,6 +3,7 @@
 #include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include <QLayout>
+#include <QString>
 
 TypeGroupForm::TypeGroupForm(TypeGroup *typeGroup,
                              QEbuMainWindow *mainWindow,
@@ -16,6 +17,10 @@ TypeGroupForm::TypeGroupForm(TypeGroup *typeGroup,
     m_editTypeGroup->setLabel(m_title);
     vl->addWidget(m_editTypeGroup);
     this->setLayout(vl);
+}
+
+void TypeGroupForm::addLinksMap(QMap<QString, QString> *values) {
+    m_editTypeGroup->addLinksMap(values); //Autocompletion values
 }
 
 QString TypeGroupForm::toString()

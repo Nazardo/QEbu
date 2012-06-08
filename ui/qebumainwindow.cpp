@@ -465,7 +465,6 @@ QMap<QString, QString> *QEbuMainWindow::getMap(QString name)
                 }
             }
         }
-
         m_maps.insert(name,map);
         return map;
     }
