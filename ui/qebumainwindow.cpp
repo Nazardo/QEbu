@@ -11,6 +11,9 @@
 #include <QMenuBar>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QFile>
+#include <QXmlStreamReader>
+#include <QDebug>
 
 
 QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
@@ -277,4 +280,50 @@ void QEbuMainWindow::actionAbout()
     /// @todo Real about dialog, maybe using the designer this time.
     QMessageBox::about(this, tr("About QEbu"),
                        tr("QEbu about text goes here."));
+}
+
+QHash<QString, QString> QEbuMainWindow::getMap(QString name)
+{
+    if (m_maps.contains(name)) {
+        return m_maps.value("name");
+    } else {
+        // Dynamical load from file
+        QHash<QString, QString> map;
+
+        QFile file(".\\debug\\XML_autoComp\\"+name+".xml");
+        QString baseUrl;
+        QString currentTerm;
+
+        if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+            // NO FILE FOUND, SKIP MAP COMPLETION
+            qDebug() <<"autocompletion file not found:" <<QString(".\\debug\\XML_autoComp\\"+name+".xml");
+        } else {
+            QXmlStreamReader *xml = new QXmlStreamReader(&file);
+            while (!xml->atEnd() && !xml->hasError()) {
+                if(xml->readNextStartElement()) {
+                    if (xml->name() == "ClassificationScheme") {
+                        // Get the uri attribute to define base url
+                        baseUrl = xml->attributes().value("uri").toString();
+                        qDebug() << baseUrl;
+                        continue;
+                    }
+                    if (xml->name() == "Term") {
+                        // Get the termId attribute to define the key
+                        currentTerm = xml->attributes().value("termID").toString();
+                        continue;
+                    }
+                    if (xml->name() == "Name") {
+                        // Get the text to define the value
+                        QString val = xml->readElementText();
+                        map.insert(currentTerm, val);
+                        qDebug() << currentTerm << val;
+                        continue;
+                    }
+                }
+            }
+        }
+
+        m_maps.insert(name,map);
+        return map;
+    }
 }
