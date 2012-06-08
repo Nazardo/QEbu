@@ -2,10 +2,13 @@
 #define TYPEGROUPEDITBOX_H
 
 #include <QWidget>
+#include <QMap>
 
 class TypeGroup;
 class QLineEdit;
 class QGroupBox;
+class QComboBox;
+class QString;
 
 class TypeGroupEditBox : public QWidget
 {
@@ -16,11 +19,16 @@ public:
     TypeGroup *typeGroup();
     void updateExistingTypeGroup(TypeGroup *typeGroup);
     void setLabel(const QString &label);
+    void addLinksMap(QMap<QString, QString> values);
+private slots:
+    void onChange(int index);
+    void onInsertion(QString text);
 private:
     QGroupBox *m_groupBox;
     QLineEdit *m_editTypeLabel;
     QLineEdit *m_editTypeDefinition;
-    QLineEdit *m_editTypeLink;
+    QComboBox *m_editTypeLink;
+    QMap<QString, QString> m_linksMap;
 };
 
 #endif // TYPEGROUPEDITBOX_H
