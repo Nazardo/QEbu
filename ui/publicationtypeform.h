@@ -7,6 +7,7 @@ class PublicationType;
 class QDateEdit;
 class QTimeEdit;
 class QComboBox;
+class QLineEdit;
 class QCheckBox;
 
 class PublicationTypeForm : public StackableWidget
@@ -32,6 +33,7 @@ private:
     QCheckBox *m_checkPublicationDate;
     QCheckBox *m_checkPublicationTime;
     QComboBox *m_editPublicationChannel;
+    QLineEdit *m_editPublicationChannelString;
     PublicationType *m_publication;
 };
 

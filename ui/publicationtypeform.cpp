@@ -8,8 +8,10 @@
 #include "typegroupform.h"
 #include <QTimeEdit>
 #include <QDateEdit>
+#include <QLineEdit>
 #include <QComboBox>
-#include <QGridLayout>
+#include <QGroupBox>
+#include <QVBoxLayout>
 #include <QCheckBox>
 #include <QLabel>
 
@@ -24,6 +26,7 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
     else
         m_publication = publication;
     // Layout
+    QGroupBox *group = new QGroupBox(tr("Publication"));
     QGridLayout *gl = new QGridLayout;
     m_editPublicationDate = new QDateEdit;
     m_editPublicationDate->setCalendarPopup(true);
@@ -41,9 +44,15 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
     m_editPublicationChannel = new QComboBox;
     QStringList sl(mainWindow->ebuCoreMain()->formatMap().keys());
     m_editPublicationChannel->addItems(sl);
-    gl->addWidget(new QLabel(tr("Pubblication channel")), 2, 0);
+    gl->addWidget(new QLabel(tr("Channel format")), 2, 0);
     gl->addWidget(m_editPublicationChannel, 2, 1);
-    this->setLayout(gl);
+    m_editPublicationChannelString = new QLineEdit;
+    gl->addWidget(new QLabel(tr("Channel title")), 3, 0);
+    gl->addWidget(m_editPublicationChannelString, 3, 1);
+    group->setLayout(gl);
+    QVBoxLayout *l = new QVBoxLayout;
+    l->addWidget(group);
+    this->setLayout(l);
 
     // Set data fields...
     if (m_publication) {
@@ -53,6 +62,7 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
             int index = m_editPublicationChannel->findText(m_publication->channel()->formatId());
             m_editPublicationChannel->setCurrentIndex(index);
         }
+        m_editPublicationChannelString->setText(m_publication->channelString());
     }
 }
 
@@ -80,7 +90,19 @@ void PublicationTypeForm::applyClicked()
         m_publication->setDate(m_editPublicationDate->dateTime());
     else
         m_publication->clearDate();
-    m_publication->setChannel(0); /// @todo
+    if (!m_editPublicationChannel->currentText().isEmpty()) {
+        QString formatIdRef = m_editPublicationChannel->currentText();
+        QMap<QString, FormatType*> &formatMap = mainWindow()->ebuCoreMain()->formatMap();
+        QMap<QString, FormatType*>::const_iterator iter = formatMap.find(formatIdRef);
+        if (iter != formatMap.end()) {
+            m_publication->setChannel(iter.value());
+        } else {
+            m_publication->setChannel(0);
+        }
+    } else {
+        m_publication->setChannel(0);
+    }
+    m_publication->setChannelString(m_editPublicationChannelString->text());
     emit closed(m_op, QVarPtr<PublicationType>::asQVariant(m_publication));
 }
 

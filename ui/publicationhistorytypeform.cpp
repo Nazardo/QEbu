@@ -12,6 +12,7 @@
 #include <QTimeEdit>
 #include <QDateEdit>
 #include <QComboBox>
+#include <QGroupBox>
 #include <QGridLayout>
 #include <QCheckBox>
 #include <QLabel>
@@ -28,18 +29,18 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
         m_publicationHistory = publicationHistory;
     // Layout
     QHBoxLayout *mainHLayout = new QHBoxLayout;
-    QVBoxLayout *l = new QVBoxLayout;
     {
+        QGroupBox *group = new QGroupBox(tr("First publication"));
         QGridLayout *gl = new QGridLayout;
         m_editFirstPublicationDate = new QDateEdit;
-        m_checkFirstPublicationDate = new QCheckBox(tr("First publication date"));
+        m_checkFirstPublicationDate = new QCheckBox(tr("Date"));
         QObject::connect(m_editFirstPublicationDate, SIGNAL(dateChanged(QDate)),
                          this, SLOT(firstPublicationDateChanged()));
         m_editFirstPublicationDate->setCalendarPopup(true);
         gl->addWidget(m_checkFirstPublicationDate, 0, 0);
         gl->addWidget(m_editFirstPublicationDate, 0, 1);
         m_editFirstPublicationTime = new QTimeEdit;
-        m_checkFirstPublicationTime = new QCheckBox(tr("First publication time"));
+        m_checkFirstPublicationTime = new QCheckBox(tr("Time"));
         QObject::connect(m_editFirstPublicationTime, SIGNAL(timeChanged(QTime)),
                          this, SLOT(firstPublicationTimeChanged()));
         gl->addWidget(m_checkFirstPublicationTime, 1, 0);
@@ -47,21 +48,17 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
         m_editFirstPublicationChannel = new QComboBox;
         QStringList sl(mainWindow->ebuCoreMain()->formatMap().keys());
         m_editFirstPublicationChannel->addItems(sl);
-        //gl->addRow(tr("First publication channel"), m_editFirstPublicationChannel);
-        gl->addWidget(new QLabel(tr("First publication channel")), 2, 0);
+        gl->addWidget(new QLabel(tr("Channel format")), 2, 0);
         gl->addWidget(m_editFirstPublicationChannel, 2, 1);
-        m_buttonRepeat = new QPushButton(">>");
-        m_buttonRepeat->setCheckable(true);
-        //gl->addRow(tr("Repetitions"), m_buttonRepeat);
-        gl->addWidget(new QLabel(tr("Repetitions")), 3, 0);
-        gl->addWidget(m_buttonRepeat, 3, 1);
-        QObject::connect(m_buttonRepeat, SIGNAL(toggled(bool)),
-                         this, SLOT(repeatChecked(bool)));
-        l->addLayout(gl);
+        m_editFirstPublicationChannelString = new QLineEdit;
+        gl->addWidget(new QLabel(tr("Channel title")), 3, 0);
+        gl->addWidget(m_editFirstPublicationChannelString, 3, 1);
+        group->setLayout(gl);
+        // l->addWidget(group);
+        mainHLayout->addWidget(group);
     }
-    mainHLayout->addLayout(l);
     // Add list view on the right
-    m_listView = new ListView();
+    m_listView = new ListView(tr("Repetitions"));
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
                      this, SLOT(addClicked()));
     QObject::connect(m_listView->buttonEdit(), SIGNAL(clicked()),
@@ -70,17 +67,23 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
-
     // Set data fields...
     if (m_publicationHistory->firstPublication()) {
         m_editFirstPublicationDate->setDate(m_publicationHistory->firstPublication()->date().date());
         m_editFirstPublicationTime->setTime(m_publicationHistory->firstPublication()->time().time());
+        m_editFirstPublicationChannelString->setText(m_publicationHistory->firstPublication()->channelString());
         if (m_publicationHistory->firstPublication()->channel()) {
             int index = m_editFirstPublicationChannel->findText(m_publicationHistory->firstPublication()->channel()->formatId());
             m_editFirstPublicationChannel->setCurrentIndex(index);
         }
     }
-    m_buttonRepeat->setChecked(true);
+    int s = m_publicationHistory->repetitions().size();
+    for (int i=0; i < s; ++i) {
+        PublicationType *rep = m_publicationHistory->repetitions().at(i);
+        if (!rep)
+            continue;
+        m_listView->addItem(rep->toString());
+    }
 }
 
 QString PublicationHistoryTypeForm::toString()
@@ -108,7 +111,19 @@ void PublicationHistoryTypeForm::applyClicked()
         pt->setDate(m_editFirstPublicationDate->dateTime());
     else
         pt->clearDate();
-    pt->setChannel(0); /// @todo
+    if (!m_editFirstPublicationChannel->currentText().isEmpty()) {
+        QString formatIdRef = m_editFirstPublicationChannel->currentText();
+        QMap<QString, FormatType*> &formatMap = mainWindow()->ebuCoreMain()->formatMap();
+        QMap<QString, FormatType*>::const_iterator iter = formatMap.find(formatIdRef);
+        if (iter != formatMap.end()) {
+            pt->setChannel(iter.value());
+        } else {
+            pt->setChannel(0);
+        }
+    } else {
+        pt->setChannel(0);
+    }
+    pt->setChannelString(m_editFirstPublicationChannelString->text());
     m_publicationHistory->setFirstPublication(pt);
     emit closed(m_op, QVarPtr<PublicationHistoryType>::asQVariant(m_publicationHistory));
 }
@@ -144,20 +159,6 @@ void PublicationHistoryTypeForm::removeClicked()
     delete(m_publicationHistory->repetitions().takeAt(row));
 }
 
-void PublicationHistoryTypeForm::repeatChecked(bool checked)
-{
-    if (!checked)
-        return;
-    updateListAndButtons();
-    int s = m_publicationHistory->repetitions().size();
-    for (int i=0; i < s; ++i) {
-        PublicationType *rep = m_publicationHistory->repetitions().at(i);
-        if (!rep)
-            continue;
-        m_listView->addItem(rep->toString());
-    }
-}
-
 void PublicationHistoryTypeForm::firstPublicationTimeChanged()
 {
     m_checkFirstPublicationTime->setChecked(true);
@@ -181,13 +182,4 @@ void PublicationHistoryTypeForm::repeatFormClosed(StackableWidget::Operation op,
         m_listView->setItem(row, repeat->toString());
     }
 }
-
-void PublicationHistoryTypeForm::updateListAndButtons()
-{
-    QString title;
-    title = tr("Repetitions");
-    m_listView->setTitle(title);
-    m_listView->clear();
-}
-
 

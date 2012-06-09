@@ -1225,9 +1225,33 @@ void PublicationType::setChannel(FormatType *channel)
     m_channel = channel;
 }
 
+QString PublicationType::channelString() const
+{
+    return m_channelString;
+}
+
+void PublicationType::setChannelString(const QString &channelString)
+{
+    m_channelString = channelString;
+}
+
 QString PublicationType::toString() const
 {
-    return "TODO:publication";
+    QStringList output;
+    if (!m_channelString.isEmpty()) {
+        output.append(m_channelString);
+    } else if (m_channel) {
+        output.append(m_channel->toString());
+    }
+    if (m_date.isValid())
+        output.append(m_date.toString());
+    if (m_time.isValid())
+        output.append(m_date.toString());
+    if (output.isEmpty()) {
+        return QObject::tr("Undefined publication");
+    } else {
+        return output.join(" ");
+    }
 }
 
 PublicationHistoryType::PublicationHistoryType()
@@ -1265,7 +1289,9 @@ QString PublicationHistoryType::toString() const
 {
     if (m_firstPublication)
         return m_firstPublication->toString();
-    return QObject::tr("Unnamed publication");
+    else if (!m_repetitions.isEmpty())
+        return m_repetitions.at(0)->toString();
+    return QObject::tr("Empty publication history");
 }
 
 RatingType::RatingType()

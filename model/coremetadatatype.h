@@ -445,10 +445,13 @@ public:
     void clearTime();
     FormatType *channel() const;
     void setChannel(FormatType *channel);
+    QString channelString() const;
+    void setChannelString(const QString &channelString);
     QString toString() const;
 private:
     QDateTime m_date;
     QDateTime m_time;
+    QString m_channelString;
     FormatType *m_channel;
 };
 

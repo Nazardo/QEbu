@@ -2233,14 +2233,21 @@ PublicationHistoryType *EbuParser::parsePublicationHistoryType(const QDomElement
     if (!el.isNull()) {
         if (!pub)
             pub = new PublicationType();
-        QMap<QString, FormatType*>::const_iterator iter = m_root->formatMap().find(el.text());
-        if (iter != m_root->formatMap().end())
-            pub->setChannel(iter.value());
-        else {
-            m_errorMsg = "Invalid formatIDRef";
-            delete pub;
-            delete publicationHistory;
-            return 0;
+        // Search for format with referenced Id
+        QString formatIdRef = el.attribute("formatIdRef");
+        if (!formatIdRef.isEmpty()) {
+            QMap<QString, FormatType*>::const_iterator iter = m_root->formatMap().find(formatIdRef);
+            if (iter != m_root->formatMap().end())
+                pub->setChannel(iter.value());
+            else {
+                m_errorMsg = "Invalid formatIDRef";
+                delete pub;
+                delete publicationHistory;
+                return 0;
+            }
+        }
+        if (!el.text().isEmpty()) {
+            pub->setChannelString(el.text());
         }
     }
     if (pub) {
@@ -2281,14 +2288,23 @@ PublicationHistoryType *EbuParser::parsePublicationHistoryType(const QDomElement
                 pub = 0;
             }
             i = 3;
-            QMap<QString, FormatType*>::const_iterator iter = m_root->formatMap().find(el.text());
-            if (iter != m_root->formatMap().end())
-                pub->setChannel(iter.value());
-            else {
-                m_errorMsg = "Invalid formatIDRef";
-                delete pub;
-                delete publicationHistory;
-                return 0;
+            // Search for format with referenced Id
+            QString formatIdRef = el.attribute("formatIdRef");
+            if (!formatIdRef.isEmpty()) {
+                QMap<QString, FormatType*>::const_iterator iter = m_root->formatMap().find(formatIdRef);
+                if (iter != m_root->formatMap().end()) {
+                    if (!pub)
+                        pub = new PublicationType;
+                    pub->setChannel(iter.value());
+                } else {
+                    m_errorMsg = "Invalid formatIDRef";
+                    delete pub;
+                    delete publicationHistory;
+                    return 0;
+                }
+            }
+            if (!el.text().isEmpty()) {
+                pub->setChannelString(el.text());
             }
         } else {
             break;

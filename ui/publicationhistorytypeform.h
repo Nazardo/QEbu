@@ -8,8 +8,8 @@ class ListView;
 class QDateEdit;
 class QTimeEdit;
 class QComboBox;
-class QPushButton;
 class QCheckBox;
+class QLineEdit;
 
 class PublicationHistoryTypeForm : public StackableWidget
 {
@@ -28,14 +28,11 @@ private slots:
     void editClicked();
     void removeClicked();
     // -
-    void repeatChecked(bool checked);
-    // -
     void firstPublicationTimeChanged();
     void firstPublicationDateChanged();
     // -
     void repeatFormClosed(Operation op, QVariant value);
 private:
-    void updateListAndButtons();
 
     ListView *m_listView;
     QCheckBox *m_checkFirstPublicationDate;
@@ -43,7 +40,7 @@ private:
     QDateEdit *m_editFirstPublicationDate;
     QTimeEdit *m_editFirstPublicationTime;
     QComboBox *m_editFirstPublicationChannel;
-    QPushButton *m_buttonRepeat;
+    QLineEdit *m_editFirstPublicationChannelString;
     PublicationHistoryType *m_publicationHistory;
 };
 

@@ -1368,11 +1368,16 @@ QDomElement EbuSerializer::serializePublicationHistory(PublicationHistoryType *p
             e.appendChild(textNode);
             p.appendChild(e);
         }
-        if(!first->channel()->formatId().isEmpty()) {
+        if(first->channel() || !first->channelString().isEmpty()) {
             QDomElement e = m_doc.createElement(" ");
             e.setTagName("ebucore:firstPublicationChannel");
-            QDomText textNode = m_doc.createTextNode(first->channel()->formatId());
-            e.appendChild(textNode);
+            if (!first->channel()->formatId().isEmpty()) {
+                e.setAttribute("formatIdRef", first->channel()->formatId());
+            }
+            if (!first->channelString().isEmpty()) {
+                QDomText textNode = m_doc.createTextNode(first->channelString());
+                e.appendChild(textNode);
+            }
             p.appendChild(e);
         }
     }
@@ -1394,11 +1399,16 @@ QDomElement EbuSerializer::serializePublicationHistory(PublicationHistoryType *p
                 e.appendChild(textNode);
                 p.appendChild(e);
             }
-            if(!rep->channel()->formatId().isEmpty()) {
+            if(rep->channel() || !rep->channelString().isEmpty()) {
                 QDomElement e = m_doc.createElement(" ");
                 e.setTagName("ebucore:repeatChannel");
-                QDomText textNode = m_doc.createTextNode(rep->channel()->formatId());
-                e.appendChild(textNode);
+                if (!rep->channel()->formatId().isEmpty()) {
+                    e.setAttribute("formatIdRef", rep->channel()->formatId());
+                }
+                if (!rep->channelString().isEmpty()) {
+                    QDomText textNode = m_doc.createTextNode(rep->channelString());
+                    e.appendChild(textNode);
+                }
                 p.appendChild(e);
             }
         }
