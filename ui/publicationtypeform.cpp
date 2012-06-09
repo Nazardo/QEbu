@@ -30,13 +30,13 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
     QGridLayout *gl = new QGridLayout;
     m_editPublicationDate = new QDateEdit;
     m_editPublicationDate->setCalendarPopup(true);
-    m_checkPublicationDate = new QCheckBox(tr("Publication date"));
+    m_checkPublicationDate = new QCheckBox(tr("Date"));
     QObject::connect(m_editPublicationDate, SIGNAL(dateChanged(QDate)),
                      this, SLOT(publicationDateChanged()));
     gl->addWidget(m_checkPublicationDate, 0, 0);
     gl->addWidget(m_editPublicationDate, 0, 1);
     m_editPublicationTime = new QTimeEdit;
-    m_checkPublicationTime = new QCheckBox(tr("Publication Time"));
+    m_checkPublicationTime = new QCheckBox(tr("Time"));
     QObject::connect(m_editPublicationTime, SIGNAL(timeChanged(QTime)),
                      this, SLOT(publicationTimeChanged()));
     gl->addWidget(m_checkPublicationTime, 1, 0);
@@ -44,7 +44,10 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
     m_editPublicationChannel = new QComboBox;
     QStringList sl(mainWindow->ebuCoreMain()->formatMap().keys());
     m_editPublicationChannel->addItems(sl);
-    gl->addWidget(new QLabel(tr("Channel format")), 2, 0);
+    m_checkPublicationChannel = new QCheckBox(tr("Channel format"));
+    QObject::connect(m_editPublicationChannel, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(publicationChannelChanged()));
+    gl->addWidget(m_checkPublicationChannel, 2, 0);
     gl->addWidget(m_editPublicationChannel, 2, 1);
     m_editPublicationChannelString = new QLineEdit;
     gl->addWidget(new QLabel(tr("Channel title")), 3, 0);
@@ -59,6 +62,7 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
         m_editPublicationDate->setDate(m_publication->date().date());
         m_editPublicationTime->setTime(m_publication->time().time());
         if (m_publication->channel()) {
+            m_checkPublicationChannel->setChecked(true);
             int index = m_editPublicationChannel->findText(m_publication->channel()->formatId());
             m_editPublicationChannel->setCurrentIndex(index);
         }
@@ -90,7 +94,7 @@ void PublicationTypeForm::applyClicked()
         m_publication->setDate(m_editPublicationDate->dateTime());
     else
         m_publication->clearDate();
-    if (!m_editPublicationChannel->currentText().isEmpty()) {
+    if (m_checkPublicationChannel->isChecked()) {
         QString formatIdRef = m_editPublicationChannel->currentText();
         QMap<QString, FormatType*> &formatMap = mainWindow()->ebuCoreMain()->formatMap();
         QMap<QString, FormatType*>::const_iterator iter = formatMap.find(formatIdRef);
@@ -114,4 +118,9 @@ void PublicationTypeForm::publicationTimeChanged()
 void PublicationTypeForm::publicationDateChanged()
 {
     m_checkPublicationDate->setChecked(true);
+}
+
+void PublicationTypeForm::publicationChannelChanged()
+{
+    m_checkPublicationChannel->setChecked(true);
 }

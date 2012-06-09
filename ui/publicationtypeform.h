@@ -25,6 +25,7 @@ private slots:
     // -
     void publicationTimeChanged();
     void publicationDateChanged();
+    void publicationChannelChanged();
 private:
     void updateListAndButtons();
 
@@ -32,6 +33,7 @@ private:
     QTimeEdit *m_editPublicationTime;
     QCheckBox *m_checkPublicationDate;
     QCheckBox *m_checkPublicationTime;
+    QCheckBox *m_checkPublicationChannel;
     QComboBox *m_editPublicationChannel;
     QLineEdit *m_editPublicationChannelString;
     PublicationType *m_publication;

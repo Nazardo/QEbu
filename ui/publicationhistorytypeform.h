@@ -30,6 +30,7 @@ private slots:
     // -
     void firstPublicationTimeChanged();
     void firstPublicationDateChanged();
+    void firstPublicationChannelChanged();
     // -
     void repeatFormClosed(Operation op, QVariant value);
 private:
@@ -39,6 +40,7 @@ private:
     QCheckBox *m_checkFirstPublicationTime;
     QDateEdit *m_editFirstPublicationDate;
     QTimeEdit *m_editFirstPublicationTime;
+    QCheckBox *m_checkFirstPublicationChannel;
     QComboBox *m_editFirstPublicationChannel;
     QLineEdit *m_editFirstPublicationChannelString;
     PublicationHistoryType *m_publicationHistory;

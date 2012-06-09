@@ -48,7 +48,10 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
         m_editFirstPublicationChannel = new QComboBox;
         QStringList sl(mainWindow->ebuCoreMain()->formatMap().keys());
         m_editFirstPublicationChannel->addItems(sl);
-        gl->addWidget(new QLabel(tr("Channel format")), 2, 0);
+        m_checkFirstPublicationChannel = new QCheckBox(tr("Channel format"));
+        QObject::connect(m_editFirstPublicationChannel, SIGNAL(currentIndexChanged(int)),
+                         this, SLOT(firstPublicationChannelChanged()));
+        gl->addWidget(m_checkFirstPublicationChannel, 2, 0);
         gl->addWidget(m_editFirstPublicationChannel, 2, 1);
         m_editFirstPublicationChannelString = new QLineEdit;
         gl->addWidget(new QLabel(tr("Channel title")), 3, 0);
@@ -73,6 +76,7 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
         m_editFirstPublicationTime->setTime(m_publicationHistory->firstPublication()->time().time());
         m_editFirstPublicationChannelString->setText(m_publicationHistory->firstPublication()->channelString());
         if (m_publicationHistory->firstPublication()->channel()) {
+            m_checkFirstPublicationChannel->setChecked(true);
             int index = m_editFirstPublicationChannel->findText(m_publicationHistory->firstPublication()->channel()->formatId());
             m_editFirstPublicationChannel->setCurrentIndex(index);
         }
@@ -111,7 +115,7 @@ void PublicationHistoryTypeForm::applyClicked()
         pt->setDate(m_editFirstPublicationDate->dateTime());
     else
         pt->clearDate();
-    if (!m_editFirstPublicationChannel->currentText().isEmpty()) {
+    if (m_checkFirstPublicationChannel->isChecked()) {
         QString formatIdRef = m_editFirstPublicationChannel->currentText();
         QMap<QString, FormatType*> &formatMap = mainWindow()->ebuCoreMain()->formatMap();
         QMap<QString, FormatType*>::const_iterator iter = formatMap.find(formatIdRef);
@@ -167,6 +171,11 @@ void PublicationHistoryTypeForm::firstPublicationTimeChanged()
 void PublicationHistoryTypeForm::firstPublicationDateChanged()
 {
     m_checkFirstPublicationDate->setChecked(true);
+}
+
+void PublicationHistoryTypeForm::firstPublicationChannelChanged()
+{
+    m_checkFirstPublicationChannel->setChecked(true);
 }
 
 void PublicationHistoryTypeForm::repeatFormClosed(StackableWidget::Operation op, QVariant value)
