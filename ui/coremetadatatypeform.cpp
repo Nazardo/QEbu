@@ -1,5 +1,6 @@
 #include "coremetadatatypeform.h"
 #include "../model/coremetadatatype.h"
+#include "../model/ebucoremaintype.h"
 #include "ui/titletypeform.h"
 #include "ui/alternativetitletypeform.h"
 #include "ui/entitytypeform.h"
@@ -1034,7 +1035,12 @@ void CoreMetadataTypeForm::removeClicked()
         break;
     case Format:
     {
-        delete(m_coreMetadata->format().takeAt(row));
+        FormatType *format = m_coreMetadata->format().takeAt(row);
+        // Updates global formatMap
+        if (!format->formatId().isEmpty()) {
+            mainWindow()->ebuCoreMain()->formatMap().remove(format->formatId());
+        }
+        delete format;
     }
         break;
     case Identifier:

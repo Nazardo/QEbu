@@ -12,6 +12,7 @@
 #include "dataformattypeform.h"
 #include "durationtypeform.h"
 #include "lengthtypeeditbox.h"
+#include "../model/ebucoremaintype.h"
 #include "../model/typegroup.h"
 #include "../model/formattype.h"
 #include "../model/formatgroup.h"
@@ -30,6 +31,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QButtonGroup>
+#include <QMessageBox>
 #include "qextendedspinbox.h"
 
 FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -363,7 +365,26 @@ void FormatTypeForm::cancelClicked()
 
 void FormatTypeForm::applyClicked()
 {
-    m_format->setFormatId(m_editFormatId->text());
+    QString newFormatId = m_editFormatId->text();
+    // Check ID uniqueness
+    if (!newFormatId.isEmpty()) {
+        if (mainWindow()->ebuCoreMain()->formatMap().contains(newFormatId)) {
+            QMessageBox::warning(this, tr("Id conflict"),
+                                 tr("Chosen ID is already in use by another format."));
+            m_editFormatId->setFocus(Qt::OtherFocusReason);
+            return; // Do not close form.
+        }
+    }
+    // Update global formatMap
+    if (newFormatId != m_format->formatId()) {
+        // Remove old Id, if not empty
+        if (!m_format->formatId().isEmpty())
+            mainWindow()->ebuCoreMain()->formatMap().remove(m_format->formatId());
+        // Insert new Id, if not empty
+        if (!newFormatId.isEmpty())
+            mainWindow()->ebuCoreMain()->formatMap().insert(newFormatId, m_format);
+    }
+    m_format->setFormatId(newFormatId);
     m_format->setFormatName(m_editFormatName->text());
     m_format->setFormatDefinition(m_editFormatDefinition->text());
     m_format->setFileName(m_editFileName->text());

@@ -1180,7 +1180,8 @@ PublicationType::PublicationType()
 
 PublicationType::~PublicationType()
 {
-    delete m_channel;
+    // PublicationType do not own the m_channel pointed object,
+    // so it must not delete it.
 }
 
 QDateTime PublicationType::date() const
