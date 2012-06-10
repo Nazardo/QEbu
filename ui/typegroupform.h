@@ -24,6 +24,7 @@ private slots:
 private:
     TypeGroupEditBox *m_editTypeGroup;
     QString m_title;
+    TypeGroup *m_typeGroup;
 };
 
 #endif // TYPEGROUPFORM_H
