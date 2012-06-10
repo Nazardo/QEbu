@@ -46,8 +46,7 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
         gl->addWidget(m_checkFirstPublicationTime, 1, 0);
         gl->addWidget(m_editFirstPublicationTime, 1, 1);
         m_editFirstPublicationChannel = new QComboBox;
-        QStringList sl(mainWindow->ebuCoreMain()->formatMap().keys());
-        m_editFirstPublicationChannel->addItems(sl);
+        m_editFirstPublicationChannel->addItems(mainWindow->ebuCoreMain()->formatIdRefs());
         m_checkFirstPublicationChannel = new QCheckBox(tr("Channel format"));
         QObject::connect(m_editFirstPublicationChannel, SIGNAL(currentIndexChanged(int)),
                          this, SLOT(firstPublicationChannelChanged()));
@@ -117,10 +116,9 @@ void PublicationHistoryTypeForm::applyClicked()
         pt->clearDate();
     if (m_checkFirstPublicationChannel->isChecked()) {
         QString formatIdRef = m_editFirstPublicationChannel->currentText();
-        QMap<QString, FormatType*> &formatMap = mainWindow()->ebuCoreMain()->formatMap();
-        QMap<QString, FormatType*>::const_iterator iter = formatMap.find(formatIdRef);
-        if (iter != formatMap.end()) {
-            pt->setChannel(iter.value());
+        const FormatType *format = mainWindow()->ebuCoreMain()->formatById(formatIdRef, pt);
+        if (format) {
+            pt->setChannel(format);
         } else {
             pt->setChannel(0);
         }

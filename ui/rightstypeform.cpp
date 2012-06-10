@@ -147,7 +147,7 @@ void RightsTypeForm::addClicked()
     case FormatIDRefs:
     {
         bool ok;
-        QStringList sl = QStringList(mainWindow()->ebuCoreMain()->formatMap().keys());
+        QStringList sl = mainWindow()->ebuCoreMain()->formatIdRefs();
         if (sl.size() <= 0) {
             QMessageBox::warning(this, this->toString(),
                                  tr("No format IDs available to choose from"),
@@ -157,10 +157,10 @@ void RightsTypeForm::addClicked()
         QString text = QInputDialog::getItem(this, tr("RightsType > Format IDRef"),
                                               tr("Format ID"), sl, 0, false, &ok);
         if (ok && !text.isEmpty()) {
-            QMap<QString, FormatType*>::const_iterator iter = mainWindow()->ebuCoreMain()->formatMap().find(text);
-            if ( iter != mainWindow()->ebuCoreMain()->formatMap().end()) {
+            const FormatType * format = mainWindow()->ebuCoreMain()->formatById(text, m_rights);
+            if (format) {
                 m_listView->addItem(text);
-                m_rights->formats().append(iter.value());
+                m_rights->formats().append(format);
             }
         }
     }
@@ -237,16 +237,16 @@ void RightsTypeForm::editClicked()
     case FormatIDRefs:
     {
         bool ok;
-        QStringList sl = QStringList(mainWindow()->ebuCoreMain()->formatMap().keys());
+        QStringList sl = mainWindow()->ebuCoreMain()->formatIdRefs();
         QString selected = m_listView->item(index);
         int active = sl.indexOf(selected);
         QString text = QInputDialog::getItem(this, tr("RightsType > Format IDRef"),
                                               tr("Format ID"), sl, active, false, &ok);
         if (ok && !text.isEmpty()) {
-            QMap<QString, FormatType*>::const_iterator iter = mainWindow()->ebuCoreMain()->formatMap().find(text);
-            if ( iter != mainWindow()->ebuCoreMain()->formatMap().end()) {
+            const FormatType *format = mainWindow()->ebuCoreMain()->formatById(text, m_rights);
+            if (format) {
                 m_listView->addItem(text);
-                m_rights->formats().append(iter.value());
+                m_rights->formats().append(format);
             }
         }
     }
@@ -331,7 +331,8 @@ void RightsTypeForm::removeClicked()
         switch (m_currentEditMode) {
         case FormatIDRefs:
         {
-            delete(m_rights->formats().takeAt(row));
+            const FormatType *format = m_rights->formats().takeAt(row);
+            mainWindow()->ebuCoreMain()->unlinkListener(format->formatId(), m_rights);
         }
             break;
         case Rights:
@@ -385,9 +386,7 @@ void RightsTypeForm::formatIDRefsChecked(bool checked)
     updateListAndButtons();
     int s = m_rights->formats().size();
     for (int i=0; i < s; ++i) {
-        FormatType *f = m_rights->formats().at(i);
-        if (!f)
-            continue;
+        const FormatType *f = m_rights->formats().at(i);
         m_listView->addItem(f->toString());
     }
 }

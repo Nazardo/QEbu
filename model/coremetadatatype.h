@@ -13,6 +13,7 @@
 #include "statusgroup.h"
 #include "dategroup.h"
 #include "formatgroup.h"
+#include "formatupdatelistener.h"
 
 class TitleType;
 class AlternativeTitleType;
@@ -393,14 +394,14 @@ private:
     QList<LocationType *> m_location;
 };
 
-class RightsType : public TypeGroup
+class RightsType : public TypeGroup, public FormatUpdateListener
 {
 public:
     RightsType();
     ~RightsType();
     QString note() const;
     void setNote(const QString &note);
-    QList<FormatType *> &formats();
+    QList<const FormatType *> &formats();
     ElementType *rights() const;
     void setRights(ElementType *rights);
     QString rightsLink() const;
@@ -418,9 +419,11 @@ public:
     QList<IdentifierType *> &rightsID();
     QList<ContactDetailsType *> &contactDetails();
     QString toString() const;
+    // FormatUpdateListener implementation
+    void onFormatDelete(const QString &formatId);
 private:
     QString m_note;
-    QList<FormatType *> m_formats;
+    QList<const FormatType *> m_formats;
     ElementType *m_rights;
     QString m_rightsLink; // anyURI
     EntityType *m_rightsHolder;
@@ -432,7 +435,7 @@ private:
     QList<ContactDetailsType *> m_contactDetails;
 };
 
-class PublicationType
+class PublicationType : public FormatUpdateListener
 {
 public:
     PublicationType();
@@ -443,16 +446,18 @@ public:
     QDateTime time() const;
     void setTime (const QDateTime &time);
     void clearTime();
-    FormatType *channel() const;
-    void setChannel(FormatType *channel);
+    const FormatType *channel() const;
+    void setChannel(const FormatType *channel);
     QString channelString() const;
     void setChannelString(const QString &channelString);
     QString toString() const;
+    // FormatUpdateListener implementation
+    void onFormatDelete(const QString &formatId);
 private:
     QDateTime m_date;
     QDateTime m_time;
     QString m_channelString;
-    FormatType *m_channel;
+    const FormatType *m_channel;
 };
 
 class PublicationHistoryType

@@ -1037,9 +1037,8 @@ void CoreMetadataTypeForm::removeClicked()
     {
         FormatType *format = m_coreMetadata->format().takeAt(row);
         // Updates global formatMap
-        if (!format->formatId().isEmpty()) {
-            mainWindow()->ebuCoreMain()->formatMap().remove(format->formatId());
-        }
+        if (format)
+            mainWindow()->ebuCoreMain()->removeFormat(format->formatId());
         delete format;
     }
         break;

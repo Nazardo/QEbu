@@ -1285,7 +1285,7 @@ QDomElement EbuSerializer::serializeRights(RightsType *right)
     if(!right->note().isEmpty())
         r.setAttribute("note", right->note());
     QString idRefs = "";
-    QList<FormatType *> refs = right->formats();
+    QList<const FormatType *> refs = right->formats();
     for(int i=0; i<refs.size(); ++i) {
         QString r = refs.at(i)->formatId();
         idRefs += i ? " "+r : r;

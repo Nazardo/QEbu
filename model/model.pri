@@ -17,7 +17,8 @@ HEADERS += \
     model/typeconverter.h \
     model/duration.h \
     model/durationtype.h \ 
-    model/qebulimits.h
+    model/qebulimits.h \
+    model/formatupdatelistener.h
 	
 SOURCES += \
     model/ebucoremaintype.cpp \

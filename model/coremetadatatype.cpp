@@ -1069,7 +1069,7 @@ void RightsType::setNote(const QString &note)
     m_note = note;
 }
 
-QList<FormatType *> &RightsType::formats()
+QList<const FormatType *> &RightsType::formats()
 {
     return m_formats;
 }
@@ -1173,6 +1173,19 @@ QString RightsType::toString() const
     return QObject::tr("Unspecified rights");
 }
 
+void RightsType::onFormatDelete(const QString &formatId)
+{
+    // The format with ID = formatId is about to be delete,
+    // we should remove it from our list.
+    int s = m_formats.size();
+    for (int i=0; i < s; ++i) {
+        if (m_formats.at(i)->formatId() == formatId) {
+            m_formats.removeAt(i);
+            --i; --s;
+        }
+    }
+}
+
 PublicationType::PublicationType()
 {
     m_channel = 0;
@@ -1214,12 +1227,12 @@ void PublicationType::clearTime()
     m_time = QDateTime();
 }
 
-FormatType *PublicationType::channel() const
+const FormatType *PublicationType::channel() const
 {
     return m_channel;
 }
 
-void PublicationType::setChannel(FormatType *channel)
+void PublicationType::setChannel(const FormatType *channel)
 {
     if (channel != m_channel)
         delete m_channel;
@@ -1253,6 +1266,14 @@ QString PublicationType::toString() const
     } else {
         return output.join(" ");
     }
+}
+
+void PublicationType::onFormatDelete(const QString &formatId)
+{
+    // The format with formatId is about to be delete, we should
+    // remove it from our list of format.
+    if (m_channel && m_channel->formatId() == formatId)
+        m_channel = 0;
 }
 
 PublicationHistoryType::PublicationHistoryType()
