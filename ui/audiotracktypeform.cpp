@@ -30,6 +30,7 @@ AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindo
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(m_audioTrack);
+        m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_AudioChannelPurposeCodeCS"));
         vl->addWidget(m_editTypeGroup);
     }
     this->setLayout(vl);

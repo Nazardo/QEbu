@@ -111,6 +111,7 @@ void AudioFormatTypeForm::addClicked()
     case AudioEncoding:
     {
         TypeGroupForm *audioEncodingForm = new TypeGroupForm(0, this->mainWindow());
+        audioEncodingForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioCompressionCodeCS")); //Autocompletion values
         audioEncodingForm->setTitle(tr("Audio Encoding"));
         QObject::connect(audioEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioEncodingFormClosed(Operation,QVariant)));
@@ -120,6 +121,7 @@ void AudioFormatTypeForm::addClicked()
     case AudioTrackConfiguration:
     {
         TypeGroupForm *audioTrackConfigurationForm = new TypeGroupForm(0, this->mainWindow());
+        audioTrackConfigurationForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioFormatCodeCS")); //Autocompletion values
         audioTrackConfigurationForm->setTitle(tr("Audio Track Configuration"));
         QObject::connect(audioTrackConfigurationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioTrackConfigurationFormClosed(Operation,QVariant)));
@@ -155,6 +157,7 @@ void AudioFormatTypeForm::editClicked()
     {
         TypeGroupForm *audioEncodingForm = new TypeGroupForm(
                     m_audioFormat->audioEncoding().at(index), this->mainWindow());
+        audioEncodingForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioCompressionCodeCS")); //Autocompletion values
         audioEncodingForm->setTitle(tr("Audio Encoding"));
         QObject::connect(audioEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioEncodingFormClosed(Operation,QVariant)));
@@ -165,6 +168,7 @@ void AudioFormatTypeForm::editClicked()
     {
         TypeGroupForm *audioTrackConfigurationForm = new TypeGroupForm(
                     m_audioFormat->audioTrackConfiguration(), this->mainWindow());
+        audioTrackConfigurationForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioFormatCodeCS")); //Autocompletion values
         audioTrackConfigurationForm->setTitle(tr("Audio Track Configuration"));
         QObject::connect(audioTrackConfigurationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioTrackConfigurationFormClosed(Operation,QVariant)));

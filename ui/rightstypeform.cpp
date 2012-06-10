@@ -32,6 +32,7 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
     {
         QVBoxLayout *l = new QVBoxLayout;
         m_editTypeGroup = new TypeGroupEditBox(rights);
+        m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_RightsTypeCodeCS"));
         l->addWidget(m_editTypeGroup);
         QFormLayout *fl = new QFormLayout;
         m_editRightsLink = new QLineEdit;

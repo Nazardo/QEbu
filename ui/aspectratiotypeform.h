@@ -2,10 +2,12 @@
 #define ASPECTRATIOTYPE_H
 
 #include "stackablewidget.h"
+#include <QMap>
 
 class AspectRatioType;
 class FormatGroupEditBox;
 class QTextEdit;
+class QString;
 
 class AspectRatioTypeForm : public StackableWidget
 {
@@ -15,6 +17,7 @@ public:
                                  QEbuMainWindow *mainWindow,
                                  QWidget *parent = 0);
     QString toString();
+    void addLinksMap(QMap<QString, QString> *values);
 signals:
 private slots:
     void cancelClicked();

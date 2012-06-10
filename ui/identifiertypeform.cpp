@@ -26,6 +26,7 @@ IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindo
         m_editTypeGroup = new TypeGroupEditBox(identifier);
         vl->addWidget(m_editTypeGroup);
         m_editFormatGroup = new FormatGroupEditBox(identifier);
+        m_editFormatGroup->addLinksMap(mainWindow->getMap("ebu_IdentifierTypeCodeCS"));
         vl->addWidget(m_editFormatGroup);
     }
     {

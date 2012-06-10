@@ -38,7 +38,7 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
     {
         QFormLayout *fl = new QFormLayout;
 
-        m_editSubjectCode = new QLineEdit;
+        m_editSubjectCode = new QLineEdit;  ///PUT AUTOCOMPLETION HERE
         fl->addRow(tr("Subject code"), m_editSubjectCode);
 
         m_editSubjectDefinition = new QLineEdit;

@@ -173,6 +173,7 @@ void VideoFormatTypeForm::addClicked()
     case AspectRatio:
     {
         AspectRatioTypeForm *aspectRatioForm = new AspectRatioTypeForm(0, this->mainWindow());
+        aspectRatioForm->addLinksMap(this->mainWindow()->getMap("ebu_VisualAspectRatioCS")); //Autocompletion values
         QObject::connect(aspectRatioForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(aspectRatioFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(aspectRatioForm);
@@ -181,6 +182,7 @@ void VideoFormatTypeForm::addClicked()
     case VideoEncoding:
     {
         TypeGroupForm *videoEncodingForm = new TypeGroupForm(0, this->mainWindow());
+        videoEncodingForm->addLinksMap(this->mainWindow()->getMap("ebu_VideoCompressionCodeCS")); //Autocompletion values
         videoEncodingForm->setTitle(tr("Video Encoding"));
         QObject::connect(videoEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(videoEncodingFormClosed(Operation,QVariant)));
@@ -216,6 +218,7 @@ void VideoFormatTypeForm::editClicked()
     {
         AspectRatioTypeForm *aspectRatioForm = new AspectRatioTypeForm(
                     m_videoFormat->aspectRatio(), this->mainWindow());
+        aspectRatioForm->addLinksMap(this->mainWindow()->getMap("ebu_VisualAspectRatioCS")); //Autocompletion values
         QObject::connect(aspectRatioForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(aspectRatioFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(aspectRatioForm);
@@ -225,6 +228,7 @@ void VideoFormatTypeForm::editClicked()
     {
         TypeGroupForm *videoEncodingForm = new TypeGroupForm(
                     m_videoFormat->videoEncoding().at(index), this->mainWindow());
+        videoEncodingForm->addLinksMap(this->mainWindow()->getMap("ebu_VideoCompressionCodeCS")); //Autocompletion values
         videoEncodingForm->setTitle(tr("Video Encoding"));
         QObject::connect(videoEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(videoEncodingFormClosed(Operation,QVariant)));

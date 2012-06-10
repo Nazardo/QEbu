@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QTextEdit>
 #include <QFormLayout>
+#include <QString>
 
 AspectRatioTypeForm::AspectRatioTypeForm(AspectRatioType *aspectRatio,
                                          QEbuMainWindow *mainWindow,
@@ -31,6 +32,10 @@ AspectRatioTypeForm::AspectRatioTypeForm(AspectRatioType *aspectRatio,
     this->setLayout(vl);
     // Set text fields...
     m_textNote->setText(m_aspectRatio->note());
+}
+
+void AspectRatioTypeForm::addLinksMap(QMap<QString, QString> *values) {
+    m_editFormatGroup->addLinksMap(values); //Autocompletion values
 }
 
 QString AspectRatioTypeForm::toString()

@@ -119,6 +119,7 @@ void EntityTypeForm::addClicked()
     case Roles:
     {
         TypeGroupForm *rolesForm = new TypeGroupForm(0, this->mainWindow());
+        rolesForm->addLinksMap(mainWindow()->getMap("ebu_RoleCodeCS"));
         rolesForm->setTitle(tr("Role"));
         QObject::connect(rolesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(roleFormClosed(Operation,QVariant)));
@@ -156,6 +157,7 @@ void EntityTypeForm::editClicked()
     {
         TypeGroupForm *rolesForm = new TypeGroupForm(
                     m_entity->roles().at(index), this->mainWindow());
+        rolesForm->addLinksMap(mainWindow()->getMap("ebu_RoleCodeCS"));
         rolesForm->setTitle(tr("Role"));
         QObject::connect(rolesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(roleFormClosed(Operation,QVariant)));

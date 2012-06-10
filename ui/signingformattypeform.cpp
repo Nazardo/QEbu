@@ -34,6 +34,7 @@ SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, Q
     }
     {
         m_editFormatGroup = new FormatGroupEditBox(m_signingFormat);
+        m_editFormatGroup->addLinksMap(mainWindow->getMap("ebu_SignLanguageCodeCS"));
         vl->addWidget(m_editFormatGroup);
     }
     {

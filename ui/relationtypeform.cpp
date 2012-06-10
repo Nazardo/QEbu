@@ -29,6 +29,8 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
     QVBoxLayout *vl = new QVBoxLayout;
     {
         m_editTypeGroup = new TypeGroupEditBox(relation);
+        m_editTypeGroup->addLinksMap(mainWindow->getMap("tva_HowRelatedCS"));
+        m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_HowrelatedCS"));
         vl->addWidget(m_editTypeGroup);
     }
     {

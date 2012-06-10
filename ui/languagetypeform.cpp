@@ -22,6 +22,7 @@ LanguageTypeForm::LanguageTypeForm(LanguageType *language,
     QVBoxLayout *vl = new QVBoxLayout;
     {
         m_editTypeGroup = new TypeGroupEditBox(language);
+        m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_LanguagePurposeCodeCS"));
         vl->addWidget(m_editTypeGroup);
     }
     {

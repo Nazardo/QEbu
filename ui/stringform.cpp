@@ -29,6 +29,8 @@ StringForm::StringForm(String *string,
     {
         m_editFormatGroup = new FormatGroupEditBox(string);
         m_editTypeGroup = new TypeGroupEditBox(string);
+        m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_ColourCodeCS"));
+        m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_VideoFrameRateCS"));
         l->addWidget(m_editTypeGroup);
         l->addWidget(m_editFormatGroup);
     }

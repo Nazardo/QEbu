@@ -185,6 +185,7 @@ void ImageFormatTypeForm::cancelClicked()
 void ImageFormatTypeForm::addClicked()
 {
     TypeGroupForm *form = new TypeGroupForm(0, mainWindow());
+    form->addLinksMap(this->mainWindow()->getMap("ebu_VideoCompressionCodeCS")); //Autocompletion values
     form->setTitle(tr("Image Encoding"));
     QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(typeGroupFormClosed(Operation,QVariant)));
@@ -199,6 +200,7 @@ void ImageFormatTypeForm::editClicked()
     TypeGroupForm *form = new TypeGroupForm(
                 m_imageFormat->imageEncoding().at(index),
                 mainWindow());
+    form->addLinksMap(this->mainWindow()->getMap("ebu_VideoCompressionCodeCS")); //Autocompletion values
     QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(typeGroupFormClosed(Operation,QVariant)));
     mainWindow()->pushWidget(form);
