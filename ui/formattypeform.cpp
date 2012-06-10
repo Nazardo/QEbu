@@ -878,6 +878,7 @@ void FormatTypeForm::addClicked()
     case MimeType:
     {
         TypeGroupForm *form = new TypeGroupForm(0, this->mainWindow());
+        form->addLinksMap(mainWindow()->getMap("ebu_MediaTypeCS"));
         form->setTitle(tr("Mime Type"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mimeTypeFormClosed(Operation,QVariant)));
@@ -887,6 +888,7 @@ void FormatTypeForm::addClicked()
     case Medium:
     {
         TypeGroupForm *form = new TypeGroupForm(0, this->mainWindow());
+        form->addLinksMap(mainWindow()->getMap("ebu_StorageMediaTypeCode"));
         form->setTitle(tr("Medium"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mediumFormClosed(Operation,QVariant)));
@@ -896,6 +898,7 @@ void FormatTypeForm::addClicked()
     case ContainerFormat:
     {
         FormatGroupForm *form = new FormatGroupForm(0, this->mainWindow());
+        form->addLinksMap(mainWindow()->getMap("ebu_FileFormatCS"));
         form->setTitle("Container Format");
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(containerFormatFormClosed(Operation,QVariant)));
@@ -904,7 +907,7 @@ void FormatTypeForm::addClicked()
         break;
     case SigningFormat:
     {
-        SigningFormatTypeForm *form = new SigningFormatTypeForm(0, this->mainWindow());
+        SigningFormatTypeForm *form = new SigningFormatTypeForm(0, this->mainWindow());      
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(signingFormatFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);

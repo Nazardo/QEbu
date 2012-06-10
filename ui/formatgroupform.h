@@ -2,9 +2,11 @@
 #define FORMATGROUPFORM_H
 
 #include "stackablewidget.h"
+#include <QMap>
 
 class FormatGroup;
 class FormatGroupEditBox;
+class QString;
 
 class FormatGroupForm : public StackableWidget
 {
@@ -15,6 +17,7 @@ public:
                              QWidget *parent = 0);
     QString toString();
     void setTitle(const QString &title);
+    void addLinksMap(QMap<QString, QString> *values);
 private slots:
     void cancelClicked();
     void applyClicked();

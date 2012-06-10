@@ -3,6 +3,7 @@
 #include "formatgroupeditbox.h"
 #include "qvarptr.h"
 #include <QLayout>
+#include <QString>
 
 FormatGroupForm::FormatGroupForm(FormatGroup *formatGroup,
                                  QEbuMainWindow *mainWindow,
@@ -15,6 +16,10 @@ FormatGroupForm::FormatGroupForm(FormatGroup *formatGroup,
     vl->addWidget(m_editFormatGroup);
     this->setLayout(vl);
     m_title = QString(tr("Format Group"));
+}
+
+void FormatGroupForm::addLinksMap(QMap<QString, QString> *values) {
+    m_editFormatGroup->addLinksMap(values); //Autocompletion values
 }
 
 QString FormatGroupForm::toString()
