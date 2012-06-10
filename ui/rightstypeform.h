@@ -36,7 +36,6 @@ private slots:
     void rightsIdChecked(bool checked);
     void contactDetailsChecked(bool checked);
     // -
-    void formatIDRefsFormClosed(Operation op, QVariant value);
     void rightsFormClosed(Operation op, QVariant value);
     void rightsHolderFormClosed(Operation op, QVariant value);
     void exploitationIssuesFormClosed(Operation op, QVariant value);

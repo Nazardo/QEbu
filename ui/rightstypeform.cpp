@@ -245,8 +245,10 @@ void RightsTypeForm::editClicked()
         if (ok && !text.isEmpty()) {
             const FormatType *format = mainWindow()->ebuCoreMain()->formatById(text, m_rights);
             if (format) {
-                m_listView->addItem(text);
-                m_rights->formats().append(format);
+                m_listView->setItem(index, text);
+                const FormatType *old = m_rights->formats().takeAt(index);
+                mainWindow()->ebuCoreMain()->unlinkListener(old->formatId(), m_rights);
+                m_rights->formats().insert(index, format);
             }
         }
     }
@@ -485,20 +487,6 @@ void RightsTypeForm::contactDetailsChecked(bool checked)
         if (!cdt)
             continue;
         m_listView->addItem(cdt->toString());
-    }
-}
-
-void RightsTypeForm::formatIDRefsFormClosed(StackableWidget::Operation op, QVariant value)
-{
-    FormatType *format = QVarPtr<FormatType>::asPointer(value);
-    if(!format)
-        return;
-    if(op == Add) {
-        m_listView->addItem(format->toString());
-        m_rights->formats().append(format);
-    } else if(op == Edit) {
-        int row = m_rights->formats().indexOf(format);
-        m_listView->setItem(row, format->toString());
     }
 }
 
