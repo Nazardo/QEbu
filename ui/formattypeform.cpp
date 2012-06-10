@@ -746,9 +746,8 @@ void FormatTypeForm::mediumFormClosed(StackableWidget::Operation op, QVariant va
         m_listView->addItem(item->toString());
         m_format->medium().append(item);
     } else if(op == Edit) {
-        int row = m_listView->selected();
+        int row = m_format->medium().indexOf(item);
         m_listView->setItem(row, item->toString());
-        m_format->medium().replace(row,item);
     }
 }
 
@@ -761,9 +760,8 @@ void FormatTypeForm::mimeTypeFormClosed(StackableWidget::Operation op, QVariant 
         m_listView->addItem(item->toString());
         m_format->mimeType().append(item);
     } else if(op == Edit) {
-        int row = m_listView->selected();
+        int row = m_format->mimeType().indexOf(item);
         m_listView->setItem(row, item->toString());
-        m_format->mimeType().replace(row,item);
     }
 }
 
@@ -776,9 +774,8 @@ void FormatTypeForm::containerFormatFormClosed(StackableWidget::Operation op, QV
         m_listView->addItem(item->toString());
         m_format->containerFormat().append(item);
     } else if(op == Edit) {
-        int row = m_listView->selected();
+        int row = m_format->containerFormat().indexOf(item);
         m_listView->setItem(row, item->toString());
-        m_format->containerFormat().replace(row,item);
     }
 }
 
@@ -791,9 +788,8 @@ void FormatTypeForm::signingFormatFormClosed(StackableWidget::Operation op, QVar
         m_listView->addItem(item->toString());
         m_format->signingFormat().append(item);
     } else if(op == Edit) {
-        int row = m_listView->selected();
+        int row = m_format->signingFormat().indexOf(item);
         m_listView->setItem(row, item->toString());
-        m_format->signingFormat().replace(row,item);
     }
 }
 
@@ -806,9 +802,8 @@ void FormatTypeForm::imageFormatFormClosed(StackableWidget::Operation op, QVaria
         m_listView->addItem(item->toString());
         m_format->imageFormat().append(item);
     } else if(op == Edit) {
-        int row = m_listView->selected();
+        int row = m_format->imageFormat().indexOf(item);
         m_listView->setItem(row, item->toString());
-        m_format->imageFormat().replace(row,item);
     }
 }
 
@@ -821,9 +816,8 @@ void FormatTypeForm::videoFormatFormClosed(StackableWidget::Operation op, QVaria
         m_listView->addItem(item->toString());
         m_format->videoFormat().append(item);
     } else if(op == Edit) {
-        int row = m_listView->selected();
+        int row = m_format->videoFormat().indexOf(item);
         m_listView->setItem(row, item->toString());
-        m_format->videoFormat().replace(row,item);
     }
 }
 
@@ -836,9 +830,8 @@ void FormatTypeForm::audioFormatFormClosed(StackableWidget::Operation op, QVaria
         m_listView->addItem(item->toString());
         m_format->audioFormat().append(item);
     } else if(op == Edit) {
-        int row = m_listView->selected();
+        int row = m_format->audioFormat().indexOf(item);
         m_listView->setItem(row, item->toString());
-        m_format->audioFormat().replace(row,item);
     }
 }
 
@@ -851,9 +844,8 @@ void FormatTypeForm::dataFormatFormClosed(StackableWidget::Operation op, QVarian
         m_listView->addItem(item->toString());
         m_format->dataFormat().append(item);
     } else if(op == Edit) {
-        int row = m_listView->selected();
+        int row = m_format->dataFormat().indexOf(item);
         m_listView->setItem(row, item->toString());
-        m_format->dataFormat().replace(row,item);
     }
 }
 
@@ -888,7 +880,7 @@ void FormatTypeForm::addClicked()
     case Medium:
     {
         TypeGroupForm *form = new TypeGroupForm(0, this->mainWindow());
-        form->addLinksMap(mainWindow()->getMap("ebu_StorageMediaTypeCode"));
+        form->addLinksMap(mainWindow()->getMap("ebu_StorageMediaTypeCodeCS"));
         form->setTitle(tr("Medium"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mediumFormClosed(Operation,QVariant)));
@@ -958,6 +950,7 @@ void FormatTypeForm::editClicked()
     {
         TypeGroupForm *form = new TypeGroupForm(m_format->mimeType().at(index), this->mainWindow());
         form->setTitle(tr("Mime Type"));
+        form->addLinksMap(mainWindow()->getMap("ebu_MediaTypeCS"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mimeTypeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -967,6 +960,7 @@ void FormatTypeForm::editClicked()
     {
         TypeGroupForm *form = new TypeGroupForm(m_format->medium().at(index), this->mainWindow());
         form->setTitle(tr("Medium"));
+        form->addLinksMap(mainWindow()->getMap("ebu_StorageMediaTypeCodeCS"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mediumFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -976,6 +970,7 @@ void FormatTypeForm::editClicked()
     {
         FormatGroupForm *form = new FormatGroupForm(m_format->containerFormat().at(index), this->mainWindow());
         form->setTitle(tr("Container Format"));
+        form->addLinksMap(mainWindow()->getMap("ebu_FileFormatCS"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(containerFormatFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);

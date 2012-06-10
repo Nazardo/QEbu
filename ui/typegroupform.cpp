@@ -41,7 +41,7 @@ void TypeGroupForm::setTitle(const QString &title)
 void TypeGroupForm::applyClicked()
 {
     m_editTypeGroup->updateExistingTypeGroup(m_typeGroup);
-    emit closed(m_op, QVarPtr<TypeGroup>::asQVariant(m_typeGroup);
+    emit closed(m_op, QVarPtr<TypeGroup>::asQVariant(m_typeGroup));
 }
 
 void TypeGroupForm::cancelClicked()

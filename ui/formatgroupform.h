@@ -24,6 +24,7 @@ private slots:
 private:
     FormatGroupEditBox *m_editFormatGroup;
     QString m_title;
+    FormatGroup *m_formatGroup;
 };
 
 #endif // FORMATGROUPFORM_H
