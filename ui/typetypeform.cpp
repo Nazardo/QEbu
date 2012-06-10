@@ -304,8 +304,9 @@ void TypeTypeForm::typeFormClosed(StackableWidget::Operation op, QVariant value)
         m_listView->addItem(type->toString());
         m_type->type().append(type);
     } else if(op == Edit) {
-        int row = m_type->type().indexOf(type);
+        int row = m_listView->selected();
         m_listView->setItem(row, type->toString());
+        m_type->type().replace(row,type);
     }
 }
 
@@ -318,8 +319,9 @@ void TypeTypeForm::genreFormClosed(StackableWidget::Operation op, QVariant value
         m_listView->addItem(typeGroup->toString());
         m_type->genre().append(typeGroup);
     } else if (op == Edit) {
-        int row = m_type->genre().indexOf(typeGroup);
+        int row = m_listView->selected();
         m_listView->setItem(row, typeGroup->toString());
+        m_type->genre().replace(row,typeGroup);
     }
 }
 
@@ -332,8 +334,9 @@ void TypeTypeForm::objectTypeFormClosed(Operation op, QVariant value)
         m_listView->addItem(typeGroup->toString());
         m_type->objectType().append(typeGroup);
     } else if (op == Edit) {
-        int row = m_type->objectType().indexOf(typeGroup);
+        int row = m_listView->selected();
         m_listView->setItem(row, typeGroup->toString());
+        m_type->objectType().replace(row,typeGroup);
     }
 }
 
@@ -346,8 +349,9 @@ void TypeTypeForm::targetAudienceFormClosed(Operation op, QVariant value)
         m_listView->addItem(typeGroup->toString());
         m_type->targetAudience().append(typeGroup);
     } else if (op == Edit) {
-        int row = m_type->targetAudience().indexOf(typeGroup);
+        int row = m_listView->selected();
         m_listView->setItem(row, typeGroup->toString());
+        m_type->targetAudience().replace(row,typeGroup);
     }
 }
 

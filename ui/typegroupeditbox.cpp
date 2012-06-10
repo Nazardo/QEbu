@@ -22,13 +22,14 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     m_groupBox->setLayout(formL);
     l->addWidget(m_groupBox);
     this->setLayout(l);
-    if (!typeGroup)
+    if (!typeGroup) {
+        m_editTypeLink->addItem("",""); //Add an empty item
         return;
+    }
     // Set text fields
     m_editTypeLabel->setText(typeGroup->typeLabel());
     m_editTypeDefinition->setText(typeGroup->typeDefinition());
     m_editTypeLink->addItem("",typeGroup->typeLink());
-    qDebug() <<"  stored: " <<typeGroup->typeLink();
     m_editTypeLink->setEditable(true);
     m_editTypeLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editTypeLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
@@ -48,26 +49,23 @@ void TypeGroupEditBox::setLabel(const QString &label)
 
 void TypeGroupEditBox::addLinksMap(QMap<QString, QString> *values)
 {
-    QString selectedData = m_editTypeLink->itemData(m_editTypeLink->currentIndex()).toString();
-    QString selectedText = m_editTypeLink->itemText(m_editTypeLink->currentIndex());
-    m_editTypeLink->setItemData(m_editTypeLink->currentIndex(),"");
-
+    int currentIndex = m_editTypeLink->currentIndex();
+    QString selectedData = m_editTypeLink->itemData(currentIndex).toString();
 
     QList<QString> keys = values->keys();
     for (int i=0; i < keys.size(); ++i) {
         QString key = keys.at(i);
         if (m_editTypeLink->findText(values->value(key)) == -1) {
-            // Discart duplicates
-            // (new user-defined values are saved in every maps used)
+            // Discart duplicates (new user-defined values are saved in every maps used)
             m_editTypeLink->addItem(values->value(key),key);
-            if (key == selectedData)
-                selectedText = values->value(key);
+            if (currentIndex == 0 && key == selectedData) { // This is the value previously stored
+                m_editTypeLink->setItemData(currentIndex,""); //This is the empty value
+                m_editTypeLink->setCurrentIndex(m_editTypeLink->count()-1); //Select this last item
+            }
         }
     }
 
-    m_editTypeLink->setCurrentIndex(m_editTypeLink->findText(selectedText));
-    qDebug() <<"    current: " <<m_editTypeLink->findText(selectedText) <<"  @ " <<selectedText;
-    m_linkMaps.append(values);
+    m_linkMaps.append(values);  // Save the pointer to this linkMap
 }
 
 void TypeGroupEditBox::updateExistingTypeGroup(TypeGroup *typeGroup)
@@ -75,7 +73,6 @@ void TypeGroupEditBox::updateExistingTypeGroup(TypeGroup *typeGroup)
     typeGroup->setTypeDefinition(m_editTypeDefinition->text());
     typeGroup->setTypeLabel(m_editTypeLabel->text());
     typeGroup->setTypeLink(m_editTypeLink->itemData(m_editTypeLink->currentIndex()).toString());
-    qDebug() <<"saving: " <<m_editTypeLink->currentIndex() <<" data: " <<m_editTypeLink->itemData(m_editTypeLink->currentIndex()).toString();
 }
 
 void TypeGroupEditBox::onChange(int index) {

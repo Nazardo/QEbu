@@ -27,7 +27,6 @@ StatusGroupEditBox::StatusGroupEditBox(StatusGroup *statusGroup, QWidget *parent
     m_editStatusLabel->setText(statusGroup->statusLabel());
     m_editStatusDefinition->setText(statusGroup->statusDefinition());
     m_editStatusLink->addItem("",statusGroup->statusLink());
-    qDebug() <<"status------" <<statusGroup->statusLink() <<"--------";
     m_editStatusLink->setEditable(true);
     m_editStatusLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editStatusLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
