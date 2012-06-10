@@ -21,15 +21,17 @@ StatusGroupEditBox::StatusGroupEditBox(StatusGroup *statusGroup, QWidget *parent
     group->setLayout(formL);
     l->addWidget(group);
     this->setLayout(l);
+
+    m_editStatusLink->setEditable(true);
+    m_editStatusLink->setInsertPolicy(QComboBox::InsertAtTop);
+    QObject::connect(m_editStatusLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
+
     if (!statusGroup)
         return;
     // Set text fields
     m_editStatusLabel->setText(statusGroup->statusLabel());
     m_editStatusDefinition->setText(statusGroup->statusDefinition());
     m_editStatusLink->addItem("",statusGroup->statusLink());
-    m_editStatusLink->setEditable(true);
-    m_editStatusLink->setInsertPolicy(QComboBox::InsertAtTop);
-    QObject::connect(m_editStatusLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
 }
 
 StatusGroup *StatusGroupEditBox::statusGroup()

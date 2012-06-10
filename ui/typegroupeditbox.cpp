@@ -22,6 +22,11 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     m_groupBox->setLayout(formL);
     l->addWidget(m_groupBox);
     this->setLayout(l);
+
+    m_editTypeLink->setEditable(true);
+    m_editTypeLink->setInsertPolicy(QComboBox::InsertAtTop);
+    QObject::connect(m_editTypeLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
+
     if (!typeGroup) {
         m_editTypeLink->addItem("",""); //Add an empty item
         return;
@@ -30,9 +35,6 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     m_editTypeLabel->setText(typeGroup->typeLabel());
     m_editTypeDefinition->setText(typeGroup->typeDefinition());
     m_editTypeLink->addItem("",typeGroup->typeLink());
-    m_editTypeLink->setEditable(true);
-    m_editTypeLink->setInsertPolicy(QComboBox::InsertAtTop);
-    QObject::connect(m_editTypeLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
 }
 
 TypeGroup *TypeGroupEditBox::typeGroup()
@@ -79,18 +81,12 @@ void TypeGroupEditBox::onChange(int index) {
     if(m_editTypeLink->itemData(index).isValid()) {
         qDebug() << m_editTypeLink->itemData(index).toString();
     } else {
-        qDebug() << m_editTypeLink->currentText();
-
-        //If its is a new value, add it to the autocompletion maps
-        QString linkData = m_editTypeLink->itemData(index).toString();
         QString linkText = m_editTypeLink->itemText(index);
-        bool newValue = true;
-        for (int i=0;    i<m_linkMaps.size();    i++)
-            if (m_linkMaps[i]->contains(linkData))
-                newValue = false;
+        m_editTypeLink->setItemData(index, linkText);
+        qDebug() <<"New value:" << linkText;
 
-        if (newValue)
-            for (int i=0;    i<m_linkMaps.size();    i++)
-                m_linkMaps[i]->insert(linkData,linkText);
+        //Add it to the autocompletion maps
+        for (int i=0;    i<m_linkMaps.size();    i++)
+            m_linkMaps[i]->insert(linkText,linkText);
     }
 }
