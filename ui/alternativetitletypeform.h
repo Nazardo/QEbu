@@ -23,6 +23,7 @@ private slots:
     void applyClicked();
     void cancelClicked();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     AlternativeTitleType *m_alternativeTitle;
     TypeGroupEditBox *m_editTypeGroup;
     StatusGroupEditBox *m_editStatusGroup;

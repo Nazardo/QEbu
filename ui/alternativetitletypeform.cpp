@@ -10,6 +10,11 @@
 #include <QLineEdit>
 #include <QFormLayout>
 #include <QMessageBox>
+#include <QComboBox>
+#include <QEvent>
+#include <QDateEdit>
+#include <QTimeEdit>
+#include <QSpinBox>
 
 AlternativeTitleTypeForm::AlternativeTitleTypeForm(
         AlternativeTitleType *alternativeTitle,
@@ -48,6 +53,28 @@ AlternativeTitleTypeForm::AlternativeTitleTypeForm(
     hLayout->setAlignment(leftVLayout, Qt::AlignTop);
     hLayout->setAlignment(rightVLayout, Qt::AlignTop);
     this->setLayout(hLayout);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("An Alternative Title is the name other than the ‘main’ Title given to a resource.\nThe type of title is defined by the typeGroup of attributes.\nThe status of the title is defined by the statusGroup of attributes.\nAlternative Titles are recorded as they appear.\nAn Alternative Title may be attributed to a resource for several reasons described using the status (e.g. working title) and type (e.g. series title) attributes.\nThe alternativeTitle may be provided in several languages.\nIt is sometimes common practice to put dates into the alternativeTitle. If present, the attributionDate (indicating when the alternativeTitle was attributed) in the date attribute should be consistent."));
+    m_textNote->installEventFilter(this);
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
+    m_editStatusGroup->editStatusDefinition()->installEventFilter(this);
+    m_editStatusGroup->editStatusLabel()->installEventFilter(this);
+    m_editStatusGroup->editStatusLink()->installEventFilter(this);
+    m_editTitle->editValue()->installEventFilter(this);
+    m_editTitle->editLang()->installEventFilter(this);
+    m_editDateGroup->editEndDate()->installEventFilter(this);
+    m_editDateGroup->editEndTime()->installEventFilter(this);
+    m_editDateGroup->editEndYear()->installEventFilter(this);
+    m_editDateGroup->editPeriod()->installEventFilter(this);
+    m_editDateGroup->editStartDate()->installEventFilter(this);
+    m_editDateGroup->editStartTime()->installEventFilter(this);
+    m_editDateGroup->editStartYear()->installEventFilter(this);
+
+
+
     // Set text fields
     if (m_op == Add)
         return;
@@ -104,4 +131,43 @@ void AlternativeTitleTypeForm::cancelClicked()
         m_alternativeTitle = 0;
     }
     emit closed(m_op, QVarPtr<AlternativeTitleType>::asQVariant(m_alternativeTitle));
+}
+
+bool AlternativeTitleTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_textNote )
+            m_textDocumentation->setText(tr("A note element to provide additional contextual information."));
+        else if  (obj == (QObject*) m_editTitle->editValue())
+            m_textDocumentation->setText(tr("Free-text to provide alternative titles by which the resource is known.\nExample: ‘the fifth element’"));
+        else if  (obj == (QObject*) m_editTitle->editLang())
+            m_textDocumentation->setText("The language in which the title is provided.");
+        else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("An optional definition.\nExample: the ‘title’ of the series that the resource is an episode of"));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme.\n"));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text to define the type of resource.\nExample: ‘series’"));
+        else if (obj == (QObject*) m_editStatusGroup->editStatusDefinition())
+            m_textDocumentation->setText(tr("An optional definition.\nExample: a temporary title, which is different from the formal title under wbeen published"));
+        else if (obj == (QObject*) m_editStatusGroup->editStatusLink())
+            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme.\n"));
+        else if (obj == (QObject*) m_editStatusGroup->editStatusLabel())
+            m_textDocumentation->setText(tr("Free text to define the status of the title of the resource.\nExample: statusLabel: working (for ‘working title’)"));
+        else if ( obj == (QObject*) m_editDateGroup->editEndDate())
+            m_textDocumentation->setText(tr("To express an end date"));
+        else if ( obj ==(QObject*) m_editDateGroup->editEndTime())
+            m_textDocumentation->setText(tr("To express an end time"));
+        else if ( obj == (QObject*) m_editDateGroup->editEndYear())
+            m_textDocumentation->setText(tr("To express an end year"));
+        else if ( obj == (QObject*) m_editDateGroup->editPeriod())
+            m_textDocumentation->setText(tr("To express a time period"));
+        else if ( obj == (QObject*) m_editDateGroup->editStartDate())
+            m_textDocumentation->setText(tr("To express a start date"));
+        else if ( obj == (QObject*) m_editDateGroup->editStartTime())
+            m_textDocumentation->setText(tr("To express a start time"));
+        else if ( obj == (QObject*) m_editDateGroup->editStartYear())
+            m_textDocumentation->setText(tr("To express a start year"));
+    }
+    return QObject::eventFilter(obj, event);
 }
