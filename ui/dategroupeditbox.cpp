@@ -149,6 +149,41 @@ void DateGroupEditBox::setLabel(const QString &label)
     m_groupBox->setTitle(label);
 }
 
+QSpinBox *DateGroupEditBox::editStartYear()
+{
+    return m_editStartYear;
+}
+
+QDateEdit *DateGroupEditBox::editStartDate()
+{
+    return m_editStartDate;
+}
+
+QTimeEdit *DateGroupEditBox::editStartTime()
+{
+    return m_editStartTime;
+}
+
+QSpinBox *DateGroupEditBox::editEndYear()
+{
+    return m_editEndYear;
+}
+
+QDateEdit *DateGroupEditBox::editEndDate()
+{
+    return m_editEndDate;
+}
+
+QTimeEdit *DateGroupEditBox::editEndTime()
+{
+    return m_editEndTime;
+}
+
+QLineEdit *DateGroupEditBox::editPeriod()
+{
+    return m_editPeriod;
+}
+
 void DateGroupEditBox::startYearChanged()
 {
     m_checkStartYear->setChecked(true);

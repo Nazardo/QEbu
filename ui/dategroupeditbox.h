@@ -20,6 +20,13 @@ public:
     DateGroup *dateGroup();
     void updateExistingDateGroup(DateGroup *dateGroup);
     void setLabel(const QString &label);
+    QSpinBox *editStartYear();
+    QDateEdit *editStartDate();
+    QTimeEdit *editStartTime();
+    QSpinBox *editEndYear();
+    QDateEdit *editEndDate();
+    QTimeEdit *editEndTime();
+    QLineEdit *editPeriod();
 private slots:
     void startYearChanged();
     void startDateChanged();

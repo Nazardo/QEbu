@@ -19,6 +19,7 @@ private slots:
     void cancelClicked();
     void applyClicked();
 private:
+    bool eventFilter(QObject *, QEvent *);
     DateGroupEditBox *m_editDateGroup;
     QString m_title;
 };
