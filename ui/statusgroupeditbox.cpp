@@ -63,6 +63,8 @@ void StatusGroupEditBox::addLinksMap(QMap<QString, QString> *values)
     m_linkMaps.append(values);
 }
 
+
+
 void StatusGroupEditBox::updateExistingStatusGroup(StatusGroup *statusGroup)
 {
     statusGroup->setStatusDefinition(m_editStatusDefinition->text());
@@ -91,5 +93,20 @@ void StatusGroupEditBox::onChange(int index) {
             for (int i=0;    i<m_linkMaps.size();    i++)
                 m_linkMaps[i]->insert(linkData,linkText);
     }
+}
+
+QLineEdit *StatusGroupEditBox::editStatusLabel()
+{
+    return m_editStatusLabel;
+}
+
+QLineEdit *StatusGroupEditBox::editStatusDefinition()
+{
+    return m_editStatusDefinition;
+}
+
+QComboBox *StatusGroupEditBox::editStatusLink()
+{
+    return m_editStatusLink;
 }
 

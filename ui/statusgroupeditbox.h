@@ -18,6 +18,9 @@ public:
     StatusGroup *statusGroup();
     void updateExistingStatusGroup(StatusGroup *statusGroup);
     void addLinksMap(QMap<QString, QString> *values);
+    QLineEdit *editStatusLabel();
+    QComboBox *editStatusLink();
+    QLineEdit *editStatusDefinition();
 private slots:
     void onChange(int index);
 private:
