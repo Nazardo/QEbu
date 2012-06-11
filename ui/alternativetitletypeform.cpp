@@ -139,35 +139,35 @@ bool AlternativeTitleTypeForm::eventFilter(QObject *obj, QEvent *event)
         if (obj == (QObject*) m_textNote )
             m_textDocumentation->setText(tr("A note element to provide additional contextual information."));
         else if  (obj == (QObject*) m_editTitle->editValue())
-            m_textDocumentation->setText(tr("Free-text to provide alternative titles by which the resource is known.\nExample: ‘the fifth element’"));
+            m_textDocumentation->setText(tr("Free-text to provide alternative titles by which the resource is known.\nExample: ‘the fifth element’."));
         else if  (obj == (QObject*) m_editTitle->editLang())
             m_textDocumentation->setText("The language in which the title is provided.");
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
-            m_textDocumentation->setText(tr("An optional definition.\nExample: the ‘title’ of the series that the resource is an episode of"));
+            m_textDocumentation->setText(tr("An optional definition.\nExample: the ‘title’ of the series that the resource is an episode of."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
             m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme.\n"));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
-            m_textDocumentation->setText(tr("Free text to define the type of resource.\nExample: ‘series’"));
+            m_textDocumentation->setText(tr("Free text to define the type of resource.\nExample: ‘series’."));
         else if (obj == (QObject*) m_editStatusGroup->editStatusDefinition())
-            m_textDocumentation->setText(tr("An optional definition.\nExample: a temporary title, which is different from the formal title under wbeen published"));
+            m_textDocumentation->setText(tr("An optional definition.\nExample: a temporary title, which is different from the formal title under wbeen published."));
         else if (obj == (QObject*) m_editStatusGroup->editStatusLink())
             m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme.\n"));
         else if (obj == (QObject*) m_editStatusGroup->editStatusLabel())
-            m_textDocumentation->setText(tr("Free text to define the status of the title of the resource.\nExample: statusLabel: working (for ‘working title’)"));
+            m_textDocumentation->setText(tr("Free text to define the status of the title of the resource.\nExample: statusLabel: working (for ‘working title’)."));
         else if ( obj == (QObject*) m_editDateGroup->editEndDate())
-            m_textDocumentation->setText(tr("To express an end date"));
+            m_textDocumentation->setText(tr("To express an end date."));
         else if ( obj ==(QObject*) m_editDateGroup->editEndTime())
-            m_textDocumentation->setText(tr("To express an end time"));
+            m_textDocumentation->setText(tr("To express an end time."));
         else if ( obj == (QObject*) m_editDateGroup->editEndYear())
-            m_textDocumentation->setText(tr("To express an end year"));
+            m_textDocumentation->setText(tr("To express an end year."));
         else if ( obj == (QObject*) m_editDateGroup->editPeriod())
-            m_textDocumentation->setText(tr("To express a time period"));
+            m_textDocumentation->setText(tr("To express a time period."));
         else if ( obj == (QObject*) m_editDateGroup->editStartDate())
-            m_textDocumentation->setText(tr("To express a start date"));
+            m_textDocumentation->setText(tr("To express a start date."));
         else if ( obj == (QObject*) m_editDateGroup->editStartTime())
-            m_textDocumentation->setText(tr("To express a start time"));
+            m_textDocumentation->setText(tr("To express a start time."));
         else if ( obj == (QObject*) m_editDateGroup->editStartYear())
-            m_textDocumentation->setText(tr("To express a start year"));
+            m_textDocumentation->setText(tr("To express a start year."));
     }
     return QObject::eventFilter(obj, event);
 }

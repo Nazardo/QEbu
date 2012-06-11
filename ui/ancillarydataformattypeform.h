@@ -33,7 +33,7 @@ private slots:
     void wrappingTypeChanged();
 private:
     void updateListAndButtons();
-
+    bool eventFilter(QObject *obj, QEvent *event);
     ListView *m_listView;
     QPushButton *m_buttonLineNumber;
     QLineEdit *m_editAncillaryDataFormatId;

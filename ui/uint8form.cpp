@@ -6,6 +6,9 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QLayout>
+#include <QEvent>
+#include <QTextEdit>
+#include <QComboBox>
 #include "qextendedspinbox.h"
 
 Uint8Form::Uint8Form(UInt8 *uint8,
@@ -36,6 +39,13 @@ Uint8Form::Uint8Form(UInt8 *uint8,
         vl->addWidget(m_editTypeGroup);
     }
     this->setLayout(vl);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("Allows users / implementers to define their own technical parameters using the type attribute of their need."));
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
+    m_spinValue->installEventFilter(this);
 
     if (m_uint8->value()) {
         m_spinValue->setValue(*(m_uint8->value()));
@@ -70,4 +80,19 @@ void Uint8Form::applyClicked()
 void Uint8Form::valueChanged()
 {
     m_checkValue->setChecked(true);
+}
+
+bool Uint8Form::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("Free text.\nExample: ‘a flag indicating that the video bitrate corresponds to an average bitrate’."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("Link to a classification scheme."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text.\nExample: averageBitrateFlag, bitrate."));
+        else if (obj == (QObject*) m_spinValue)
+            m_textDocumentation->setText(tr("The value of the technical attribute."));
+    }
+    return QObject::eventFilter(obj, event);
 }

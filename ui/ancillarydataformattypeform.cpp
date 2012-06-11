@@ -10,6 +10,8 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QInputDialog>
+#include <QTextEdit>
+#include <QEvent>
 
 AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(
         AncillaryDataFormatType *ancillaryDataFormat,
@@ -80,6 +82,15 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(
     mainHLayout->addWidget(m_listView);
 
     this->setLayout(mainHLayout);
+
+    // Event filter
+    m_textDocumentation->setText(tr("Used to provide information on ancillary data format and purpose. This type provides inforamtion on the Ancillary Data packet type. See SMPTE 291M, SMPTE 436M."));
+    m_buttonLineNumber->installEventFilter(this);
+    m_editAncillaryDataFormatId->installEventFilter(this);
+    m_editAncillaryDataFormatName->installEventFilter(this);
+    m_spinDID->installEventFilter(this);
+    m_spinSDID->installEventFilter(this);
+    m_spinWrappingType->installEventFilter(this);
 
     //Set Data fields
     m_editAncillaryDataFormatId->setText(m_ancillaryDataFormat->ancillaryDataFormatId());
@@ -200,4 +211,23 @@ void AncillaryDataFormatTypeForm::updateListAndButtons()
     title = tr("Line number");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool AncillaryDataFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editAncillaryDataFormatId)
+            m_textDocumentation->setText(tr("An identifier associated to the ancillary data format."));
+        else if (obj == (QObject*) m_editAncillaryDataFormatName)
+            m_textDocumentation->setText(tr("An name associated to the ancillary data format."));
+        else if (obj == (QObject*) m_spinDID)
+            m_textDocumentation->setText(tr("ANC DID value."));
+        else if ( obj == (QObject*) m_spinSDID)
+            m_textDocumentation->setText(tr("ANC SDID value."));
+        else if ( obj ==(QObject*) m_spinWrappingType)
+            m_textDocumentation->setText(tr("Indicates HANC or VANC, and what field in which packets should be stored. See SMPTE 436M for legal values."));
+        else if ( obj == (QObject*) m_buttonLineNumber)
+            m_textDocumentation->setText(tr("Video line number containing the ANC packets of this type."));
+    }
+    return QObject::eventFilter(obj, event);
 }

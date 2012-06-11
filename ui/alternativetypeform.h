@@ -21,6 +21,7 @@ private slots:
     void cancelClicked();
     void applyClicked();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     AlternativeType *m_alternative;
     DateGroupEditBox *m_editDateGroup;
     TypeGroupEditBox *m_editTypeGroup;

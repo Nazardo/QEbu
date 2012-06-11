@@ -7,6 +7,8 @@
 #include "technicalattributesform.h"
 #include <QPushButton>
 #include <QLineEdit>
+#include <QEvent>
+#include <QTextEdit>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QFormLayout>
@@ -75,6 +77,16 @@ AudioFormatTypeForm::AudioFormatTypeForm(AudioFormatType *audioFormat,
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("To provide information on the Audio Format."));
+    m_editAudioFormatId->installEventFilter(this);
+    m_editAudioFormatDefinition->installEventFilter(this);
+    m_editAudioFormatName->installEventFilter(this);
+    m_buttonAudioEncoding->installEventFilter(this);
+    m_buttonAudioTrackConfiguration->installEventFilter(this);
+    m_buttonAudioTrack->installEventFilter(this);
+    m_buttonTechnicalAttributes->installEventFilter(this);
 
     // Set data fields...
     m_editAudioFormatId->setText(m_audioFormat->audioFormatId());
@@ -355,6 +367,27 @@ void AudioFormatTypeForm::updateListAndButtons()
         title = tr("Technical Attributes");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool AudioFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editAudioFormatId)
+            m_textDocumentation->setText(tr("An Identifier to identify a specific format in which the resource is available or has been published."));
+        else if ( obj ==(QObject*) m_editAudioFormatDefinition)
+            m_textDocumentation->setText(tr("A definition of the format information being provided either technical or editorial in nature."));
+        else if ( obj == (QObject*) m_editAudioFormatName)
+            m_textDocumentation->setText(tr("A name attributed to a particular format."));
+        else if ( obj == (QObject*) m_buttonAudioEncoding)
+            m_textDocumentation->setText(tr("To define the audio compression format of the resource e.g. AAC for an audio channel."));
+        else if ( obj == (QObject*) m_buttonAudioTrackConfiguration)
+            m_textDocumentation->setText(tr("To describe the audio track configuration. Used to express the arrangement or audio tracks e.g. 'stereo', '2+1', 'surround', 'surround (7+1)'."));
+        else if ( obj == (QObject*) m_buttonAudioTrack)
+            m_textDocumentation->setText(tr("To describe the track allocation e.g. in conformance with EBU R123."));
+        else if ( obj == (QObject*) m_buttonTechnicalAttributes)
+            m_textDocumentation->setText(tr("An extension element to allow users and implementers defining their own technical attributes."));
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 

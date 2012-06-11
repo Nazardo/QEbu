@@ -5,6 +5,9 @@
 #include <QLineEdit>
 #include <QVBoxLayout>
 #include <QFormLayout>
+#include <QComboBox>
+#include <QEvent>
+#include <QTextEdit>
 
 AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -34,6 +37,15 @@ AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindo
         vl->addWidget(m_editTypeGroup);
     }
     this->setLayout(vl);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("A description of some or all of the audio tracks part of the audio track configuration: track type, track ID, track name and language (for what purpose) used if relevant."));
+    m_editTrackLanguage->installEventFilter(this);
+    m_editTrackId->installEventFilter(this);
+    m_editTrackName->installEventFilter(this);
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
     // Set text fields...
     m_editTrackId->setText(m_audioTrack->trackId());
     m_editTrackName->setText(m_audioTrack->trackName());
@@ -62,4 +74,23 @@ void AudioTrackTypeForm::applyClicked()
     m_editTrackLanguage->setText(m_editTrackLanguage->text());
     m_editTypeGroup->updateExistingTypeGroup(m_audioTrack);
     emit closed(m_op, QVarPtr<AudioTrackType>::asQVariant(m_audioTrack));
+}
+
+bool AudioTrackTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("Free text for an optional definition of the purpose of the track"));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("Link to a classification scheme."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text.\nExample: ‘dubbing’."));
+        else if (obj == (QObject*) m_editTrackLanguage)
+            m_textDocumentation->setText(tr("The language used in the audio track and possible purpose refinement using languageType’s typeGroup attributes."));
+        else if (obj == (QObject*) m_editTrackId)
+            m_textDocumentation->setText(tr("An optional identifier applied to each track."));
+        else if (obj == (QObject*) m_editTrackName)
+            m_textDocumentation->setText(tr("An optional identifier applied to each track."));
+    }
+    return QObject::eventFilter(obj, event);
 }

@@ -32,7 +32,7 @@ private slots:
 private:
     enum EditMode { ContactDetails, OrganisationDetails, Roles };
     void updateListAndButtons();
-
+    bool eventFilter(QObject *obj, QEvent *event);
     ListView *m_listView;
     QLineEdit *m_editAddressTownCity;
     QLineEdit *m_editAddressCountryState;

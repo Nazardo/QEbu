@@ -13,6 +13,9 @@
 #include <QLineEdit>
 #include <QButtonGroup>
 #include <QInputDialog>
+#include <QComboBox>
+#include <QTextEdit>
+#include <QEvent>
 
 AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -65,6 +68,16 @@ AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindo
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
+
+    // Event filter
+    m_textDocumentation->setText(tr("The address of a contact/person or organisation."));
+    m_editAddressTownCity->installEventFilter(this);
+    m_editAddressCountryState->installEventFilter(this);
+    m_editAddressDeliveryCode->installEventFilter(this);
+    m_editCountry->editTypeDefinition()->installEventFilter(this);
+    m_editCountry->editTypeLabel()->installEventFilter(this);
+    m_editCountry->editTypeLink()->installEventFilter(this);
+    m_buttonAddressLine->installEventFilter(this);
 
     // Set data fields...
     m_editAddressTownCity->setText(m_address->townCity());
@@ -153,4 +166,25 @@ void AddressTypeForm::updateListAndButtons()
     QString title = tr("Address Lines");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool AddressTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editAddressTownCity )
+            m_textDocumentation->setText(tr("The name of the city/town of the address."));
+        else if  (obj == (QObject*) m_editAddressCountryState)
+            m_textDocumentation->setText(tr("The optional name of the county/state of the address."));
+        else if  (obj == (QObject*) m_editAddressDeliveryCode)
+            m_textDocumentation->setText("The delivery code of the address.");
+        else if (obj == (QObject*) m_editCountry->editTypeDefinition())
+            m_textDocumentation->setText(tr("The country of residence."));
+        else if (obj == (QObject*) m_editCountry->editTypeLink())
+            m_textDocumentation->setText(tr("The country of residence.\n"));
+        else if (obj == (QObject*) m_editCountry->editTypeLabel())
+            m_textDocumentation->setText(tr("The country of residence."));
+        else if (obj == (QObject*) m_buttonAddressLine)
+            m_textDocumentation->setText(tr("One or more address lines."));
+    }
+    return QObject::eventFilter(obj, event);
 }

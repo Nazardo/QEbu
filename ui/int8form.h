@@ -22,6 +22,7 @@ private slots:
     void applyClicked();
     void valueChanged();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     QSpinBox *m_spinValue;
     QCheckBox *m_checkValue;
     TypeGroupEditBox *m_editTypeGroup;

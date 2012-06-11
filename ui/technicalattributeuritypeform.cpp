@@ -3,7 +3,10 @@
 #include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include <QLineEdit>
+#include <QTextEdit>
+#include <QEvent>
 #include <QFormLayout>
+#include <QComboBox>
 
 TechicalAttributeUriTypeForm::TechicalAttributeUriTypeForm(TechnicalAttributeUriType *uri, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -29,6 +32,13 @@ TechicalAttributeUriTypeForm::TechicalAttributeUriTypeForm(TechnicalAttributeUri
     }
     this->setLayout(l);
 
+    // Event Filter
+    m_textDocumentation->setText(tr("Allows users / implementers to define their own technical parameters using the type attribute of their need."));
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
+    m_editValue->installEventFilter(this);
+
     // Set data fields...
     m_editValue->setText(m_uri->value());
 }
@@ -53,4 +63,19 @@ void TechicalAttributeUriTypeForm::applyClicked()
     m_editTypeGroup->updateExistingTypeGroup(m_uri);
 
     emit closed(m_op, QVarPtr<TechnicalAttributeUriType>::asQVariant(m_uri));
+}
+
+bool TechicalAttributeUriTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("Free text.\nExample: ‘a flag indicating that the video bitrate corresponds to an average bitrate’."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("Link to a classification scheme."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text.\nExample: averageBitrateFlag, bitrate."));
+        else if (obj == (QObject*) m_editValue)
+            m_textDocumentation->setText(tr("The value of the technical attribute."));
+    }
+    return QObject::eventFilter(obj, event);
 }

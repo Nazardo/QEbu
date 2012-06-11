@@ -21,6 +21,7 @@ private slots:
     void cancelClicked();
     void applyClicked();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     QCheckBox *m_checkValue;
     TypeGroupEditBox *m_editTypeGroup;
     Boolean  *m_boolean;

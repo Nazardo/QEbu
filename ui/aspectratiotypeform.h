@@ -23,6 +23,7 @@ private slots:
     void cancelClicked();
     void applyClicked();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     FormatGroupEditBox *m_editFormatGroup;
     QTextEdit *m_textNote;
     AspectRatioType *m_aspectRatio;

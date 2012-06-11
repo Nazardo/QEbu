@@ -20,6 +20,7 @@ private slots:
     void cancelClicked();
     void applyClicked();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     QLineEdit *m_editValue;
     TypeGroupEditBox *m_editTypeGroup;
     TechnicalAttributeUriType  *m_uri;

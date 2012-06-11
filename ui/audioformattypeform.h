@@ -37,7 +37,7 @@ private slots:
 private:
     enum EditMode { AudioEncoding, AudioTrackConfiguration, AudioTrack, TechnicalAttributesMode };
     void updateListAndButtons();
-
+    bool eventFilter(QObject *obj, QEvent *event);
     ListView *m_listView;
     QLineEdit *m_editAudioFormatId;
     QLineEdit *m_editAudioFormatDefinition;
