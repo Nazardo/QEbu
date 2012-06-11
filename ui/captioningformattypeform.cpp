@@ -5,6 +5,10 @@
 #include "qvarptr.h"
 #include <QPushButton>
 #include <QLineEdit>
+#include <QComboBox>
+#include <QSpinBox>
+#include <QTextEdit>
+#include <QEvent>
 #include <QVBoxLayout>
 #include <QFormLayout>
 
@@ -45,8 +49,24 @@ CaptioningFormatTypeForm::CaptioningFormatTypeForm(
         m_editCaptioningFormatName = new QLineEdit;
         fl->addRow(tr("Captioning Format Name"), m_editCaptioningFormatName);
         mainVLayout->addLayout(fl);
-    }
+    }    
     this->setLayout(mainVLayout);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("To provide information on the language, purpose and format of captoning if used in the resource."));
+    m_editTrackId->installEventFilter(this);
+    m_editTrackName->installEventFilter(this);
+    m_editLanguage->installEventFilter(this);
+    m_editCaptioningSourceUri->installEventFilter(this);
+    m_editCaptioningFormatId->installEventFilter(this);
+    m_editCaptioningFormatName->installEventFilter(this);
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
+    m_editFormatGroup->editFormatDefinition()->installEventFilter(this);
+    m_editFormatGroup->editFormatLabel()->installEventFilter(this);
+    m_editFormatGroup->editFormatLink()->installEventFilter(this);
+
     // Set text fields...
     m_editTrackId->setText(m_captioningFormat->trackId());
     m_editTrackName->setText(m_captioningFormat->trackName());
@@ -81,4 +101,35 @@ void CaptioningFormatTypeForm::applyClicked()
     m_editTypeGroup->updateExistingTypeGroup(m_captioningFormat);
     m_editFormatGroup->updateExistingFormatGroup(m_captioningFormat);
     emit closed(m_op, QVarPtr<CaptioningFormatType>::asQVariant(m_captioningFormat));
+}
+
+bool CaptioningFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editTrackId )
+            m_textDocumentation->setText(tr("An identifier associated to the captioning track."));
+        else if (obj == (QObject*) m_editTrackName )
+            m_textDocumentation->setText(tr("An name associated to the captioning track."));
+        else if  (obj == (QObject*) m_editLanguage)
+            m_textDocumentation->setText(tr("The language in which the caption is delivered.\nExample: en-UK."));
+        else if (obj == (QObject*) m_editCaptioningSourceUri)
+            m_textDocumentation->setText(tr("An optional URI from which the captioning material can be accessed."));
+        else if (obj == (QObject*) m_editCaptioningFormatId)
+            m_textDocumentation->setText(tr("An identifier associated to the captioning format."));
+        else if (obj == (QObject*) m_editCaptioningFormatName)
+            m_textDocumentation->setText(tr("An name associated to the captioning format."));
+        else if (obj == (QObject*) m_editFormatGroup->editFormatDefinition())
+            m_textDocumentation->setText(tr("Free text for an optional definition."));
+        else if (obj == (QObject*) m_editFormatGroup->editFormatLink())
+            m_textDocumentation->setText(tr("Link to a classification scheme."));
+        else if (obj == (QObject*) m_editFormatGroup->editFormatLabel())
+            m_textDocumentation->setText(tr("Free text.\nExample: close caption."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("Free text for an optional definition."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("Link to a classification scheme."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text.\nExample: dubbing."));
+    }
+    return QObject::eventFilter(obj, event);
 }

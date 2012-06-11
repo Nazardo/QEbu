@@ -22,6 +22,7 @@ private slots:
     void posxChanged();
     void posyChanged();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     QVBoxLayout *m_mainVLayout;
     FormatGroupEditBox *m_editFormatGroup;
     QDoubleSpinBox *m_spinPosx;

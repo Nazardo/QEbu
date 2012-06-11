@@ -25,6 +25,8 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QLineEdit>
+#include <QTextEdit>
+#include <QEvent>
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -332,6 +334,44 @@ CoreMetadataTypeForm::CoreMetadataTypeForm(CoreMetadataType *coreMetadata,
     m_groupTabs[2]->addButton(m_buttonRating);
     m_buttonPart->setCheckable(true);
     m_groupTabs[2]->addButton(m_buttonPart);
+
+    // Event filter
+    m_textDocumentation->setText(tr("The core element of the EBUCore schema containing the minimum core set of elements."));
+    m_buttonTitle->installEventFilter(this);
+    m_buttonAlternativeTitle->installEventFilter(this);
+    m_buttonCreator->installEventFilter(this);
+    m_buttonSubject->installEventFilter(this);
+    m_buttonDescription->installEventFilter(this);
+    m_buttonPublisher->installEventFilter(this);
+    m_buttonContributor->installEventFilter(this);
+    m_buttonDate->installEventFilter(this);
+    m_buttonType->installEventFilter(this);
+    m_buttonFormat->installEventFilter(this);
+    m_buttonIdentifier->installEventFilter(this);
+    m_buttonSource->installEventFilter(this);
+    m_buttonLanguage->installEventFilter(this);
+    m_buttonRelation->installEventFilter(this);
+    m_buttonIsVersionOf->installEventFilter(this);
+    m_buttonHasVersion->installEventFilter(this);
+    m_buttonIsReplacedBy->installEventFilter(this);
+    m_buttonReplaces->installEventFilter(this);
+    m_buttonIsRequiredBy->installEventFilter(this);
+    m_buttonRequires->installEventFilter(this);
+    m_buttonIsPartOf->installEventFilter(this);
+    m_buttonHasPart->installEventFilter(this);
+    m_buttonHasTrackPart->installEventFilter(this);
+    m_buttonIsReferencedBy->installEventFilter(this);
+    m_buttonReferences->installEventFilter(this);
+    m_buttonIsFormatOf->installEventFilter(this);
+    m_buttonHasFormat->installEventFilter(this);
+    m_buttonIsEpisodeOf->installEventFilter(this);
+    m_buttonIsMemberOf->installEventFilter(this);
+    m_buttonCoverage->installEventFilter(this);
+    m_buttonRights->installEventFilter(this);
+    m_buttonVersion->installEventFilter(this);
+    m_buttonPublicationHistory->installEventFilter(this);
+    m_buttonRating->installEventFilter(this);
+    m_buttonPart->installEventFilter(this);
 
     // Add list view on the right
     m_listView = new ListView();
@@ -2318,3 +2358,79 @@ void CoreMetadataTypeForm::updateListAndButtons()
     m_listView->clear();
 }
 
+bool CoreMetadataTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_buttonTitle)
+            m_textDocumentation->setText(tr("A Title is the ‘main’ name given to a resource e.g. a media item, a media object, or a sequence as specified by the associated title type."));
+        else if (obj == (QObject*) m_buttonAlternativeTitle)
+            m_textDocumentation->setText(tr("An Alternative Title is the name other than the ‘main’ Title given to a resource."));
+        else if (obj == (QObject*) m_buttonCreator)
+            m_textDocumentation->setText(tr("The descriptor creator identifies an ‘entity’ (a person, group of persons or organisation) primarily responsible for creating the content of the resource - behind the camera."));
+        else if (obj == (QObject*) m_buttonSubject)
+            m_textDocumentation->setText(tr("The generalised topic that represents the intellectual content of the resource. Typically, a subject is expressed by keywords, key phrases."));
+        else if (obj == (QObject*) m_buttonDescription)
+            m_textDocumentation->setText(tr("Free-form text or a narrative to report general notes, abstracts, or summaries about the intellectual content of a resource."));
+        else if (obj == (QObject*) m_buttonPublisher)
+            m_textDocumentation->setText(tr("A publisher is a person, an organization, or a service primarily responsible for distributing or making a resource available to others"));
+        else if (obj == (QObject*) m_buttonContributor)
+            m_textDocumentation->setText(tr("The descriptor contributor identifies a person or organization that has made substantial creative contributions to the content of a resource."));
+        else if (obj == (QObject*) m_buttonDate)
+            m_textDocumentation->setText(tr("Dates associated with events occurring during the life of the resource."));
+        else if (obj == (QObject*) m_buttonType)
+            m_textDocumentation->setText(tr("The nature or genre or target audience of the resource."));
+        else if (obj == (QObject*) m_buttonFormat)
+            m_textDocumentation->setText(tr("Technical metadata information on the physical or digital manifestation/instance of the resource."));
+        else if (obj == (QObject*) m_buttonIdentifier)
+            m_textDocumentation->setText(tr("A unique, unambiguous reference or identifier for a resource within a given context."));
+        else if (obj == (QObject*) m_buttonSource)
+            m_textDocumentation->setText(tr("Reference to the resource(s) from which the current resource is derived in whole or in part."));
+        else if (obj == (QObject*) m_buttonLanguage)
+            m_textDocumentation->setText(tr("Identifies languages and their use in the intellectual content of the resource."));
+        else if (obj == (QObject*) m_buttonRelation)
+            m_textDocumentation->setText(tr("Relation is used to show the relation in content to another resource."));
+        else if (obj == (QObject*) m_buttonIsVersionOf)
+            m_textDocumentation->setText(tr("A reference to the resource that the current resource is a version of."));
+        else if (obj == (QObject*) m_buttonHasVersion)
+            m_textDocumentation->setText(tr("A reference to another version of the resource."));
+        else if (obj == (QObject*) m_buttonIsReplacedBy)
+            m_textDocumentation->setText(tr("A reference to a resource replacing the current resource."));
+        else if (obj == (QObject*) m_buttonReplaces)
+            m_textDocumentation->setText(tr("A reference to a resource that the current resource replaces."));
+        else if (obj == (QObject*) m_buttonIsRequiredBy)
+            m_textDocumentation->setText(tr("A reference to a resource requiring the current resource."));
+        else if (obj == (QObject*) m_buttonRequires)
+            m_textDocumentation->setText(tr("A reference to a resource that the current resource requires."));
+        else if (obj == (QObject*) m_buttonIsPartOf)
+            m_textDocumentation->setText(tr("A reference to a resource that the current resource is a part of."));
+        else if (obj == (QObject*) m_buttonHasPart)
+            m_textDocumentation->setText(tr("A reference to a resource that forms part of the current resource."));
+        else if (obj == (QObject*) m_buttonHasTrackPart)
+            m_textDocumentation->setText(tr("An element to identify a part of a track by a title, a start time and an end time in both the media source and media destination."));
+        else if (obj == (QObject*) m_buttonIsReferencedBy)
+            m_textDocumentation->setText(tr("A reference to a resource that references the current resource."));
+        else if (obj == (QObject*) m_buttonReferences)
+            m_textDocumentation->setText(tr("A reference to a resource that the current resource references."));
+        else if (obj == (QObject*) m_buttonIsFormatOf)
+            m_textDocumentation->setText(tr("A reference to a resource with which the current resource shares a format."));
+        else if (obj == (QObject*) m_buttonHasFormat)
+            m_textDocumentation->setText(tr("A format in which the resource is also available."));
+        else if (obj == (QObject*) m_buttonIsEpisodeOf)
+            m_textDocumentation->setText(tr("A reference to a series the current resource is an episode of."));
+        else if (obj == (QObject*) m_buttonIsMemberOf)
+            m_textDocumentation->setText(tr("A reference to a group e.g. a brand, the current resource is an member of."));
+        else if (obj == (QObject*) m_buttonCoverage)
+            m_textDocumentation->setText(tr("Coverage is used to show various time and place aspects of the subject of the content."));
+        else if (obj == (QObject*) m_buttonRights)
+            m_textDocumentation->setText(tr("An all-purpose field to identify information (rights management statement or reference to a service providing such information e.g. via a URL) about copyright, intellectual property rights or other property rights held in and over a resource."));
+        else if (obj == (QObject*) m_buttonVersion)
+            m_textDocumentation->setText(tr("Expresses the version type of the resource."));
+        else if (obj == (QObject*) m_buttonPublicationHistory)
+            m_textDocumentation->setText(tr("To provide information about the publication history."));
+        else if (obj == (QObject*) m_buttonRating)
+            m_textDocumentation->setText(tr("To provide rating values of the resource."));
+        else if (obj == (QObject*) m_buttonPart)
+            m_textDocumentation->setText(tr("To identify parts/segments/fragments within the resource and provide a wide range of descriptive or technical information optionally associated to timelines."));
+    }
+    return QObject::eventFilter(obj, event);
+}

@@ -38,7 +38,7 @@ private slots:
 private:
     enum EditMode { Details, StageName, Related };
     void updateListAndButtons();
-
+    bool eventFilter(QObject *obj, QEvent *event);
     ListView *m_listView;
     QLineEdit *m_editContactId;
     QLineEdit *m_editName;

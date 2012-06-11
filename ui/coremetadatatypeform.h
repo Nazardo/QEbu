@@ -109,7 +109,7 @@ private:
         Rights, Version, PublicationHistory, Rating, Part
     };
     void updateListAndButtons();
-
+    bool eventFilter(QObject *obj, QEvent *event);
     ListView *m_listView;
 
     QButtonGroup* m_groupTabs[3];

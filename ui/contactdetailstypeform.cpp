@@ -10,6 +10,9 @@
 #include <QPushButton>
 #include <QRadioButton>
 #include <QLineEdit>
+#include <QComboBox>
+#include <QEvent>
+#include <QTextEdit>
 #include <QButtonGroup>
 #include <QInputDialog>
 #include <QMessageBox>
@@ -102,6 +105,18 @@ ContactDetailsTypeForm::ContactDetailsTypeForm(
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("Minimum information providing means to further identify and contact a person."));
+    m_editContactId->installEventFilter(this);
+    m_editName->installEventFilter(this);
+    m_editFamilyName->installEventFilter(this);
+    m_editGivenName->installEventFilter(this);
+    m_editUsername->installEventFilter(this);
+    m_editOccupation->installEventFilter(this);
+    m_buttonDetails->installEventFilter(this);
+    m_buttonStageName->installEventFilter(this);
+    m_buttonRelatedContacts->installEventFilter(this);
 
     // Set data fields...
     m_editContactId->setText(m_contactDetails->contactId());
@@ -382,4 +397,29 @@ bool ContactDetailsTypeForm::checkCompliance()
                              QMessageBox::Ok, QMessageBox::Ok);
     }
     return ok;
+}
+
+bool ContactDetailsTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editContactId )
+            m_textDocumentation->setText(tr("An attribute to uniquely identify a contact."));
+        else if (obj == (QObject*) m_editName )
+            m_textDocumentation->setText(tr("To provide the name of a person."));
+        else if  (obj == (QObject*) m_editFamilyName)
+            m_textDocumentation->setText(tr("To provide the additionally the family name of a person to complement the givenName."));
+        else if (obj == (QObject*) m_editGivenName)
+            m_textDocumentation->setText(tr("Alternatively to provide the given name of a person."));
+        else if (obj == (QObject*) m_editUsername)
+            m_textDocumentation->setText(tr("To provide a username to alternatively identify tag and rating providers."));
+        else if (obj == (QObject*) m_editOccupation)
+            m_textDocumentation->setText(tr("To provide information on the contact/person job and position."));
+        else if (obj == (QObject*) m_buttonDetails)
+            m_textDocumentation->setText(tr("To provide the contact details of a contact/person."));
+        else if (obj == (QObject*) m_buttonStageName)
+            m_textDocumentation->setText(tr("To record the name that the person has been attributed on stage.\nExamples: ‘character name’ or ‘interviewer’."));
+        else if (obj == (QObject*) m_buttonRelatedContacts)
+            m_textDocumentation->setText(tr("To provide a list of contacts through which the person can alternatively be contacted."));
+    }
+    return QObject::eventFilter(obj, event);
 }

@@ -4,6 +4,11 @@
 #include "qvarptr.h"
 #include <QDoubleSpinBox>
 #include <QCheckBox>
+#include <QEvent>
+#include <QTextEdit>
+#include <QLineEdit>
+#include <QCheckBox>
+#include <QComboBox>
 #include <QGridLayout>
 #include <QVBoxLayout>
 
@@ -39,6 +44,14 @@ CoordinatesTypeForm::CoordinatesTypeForm(CoordinatesType *coordinates, QEbuMainW
         mainVLayout->addLayout(gl);
     }
     this->setLayout(mainVLayout);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("The spatial coordinates."));
+    m_editFormatGroup->editFormatDefinition()->installEventFilter(this);
+    m_editFormatGroup->editFormatLabel()->installEventFilter(this);
+    m_editFormatGroup->editFormatLink()->installEventFilter(this);
+    m_spinPosx->installEventFilter(this);
+    m_spinPosy->installEventFilter(this);
 
     // Set text fields
     if (m_coordinates->posx()) {
@@ -87,4 +100,21 @@ void CoordinatesTypeForm::posxChanged()
 void CoordinatesTypeForm::posyChanged()
 {
     m_checkPosy->setChecked(true);
+}
+
+bool CoordinatesTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editFormatGroup->editFormatDefinition())
+            m_textDocumentation->setText(tr("Free text for an optional definition."));
+        else if (obj == (QObject*) m_editFormatGroup->editFormatLink())
+            m_textDocumentation->setText(tr("Link to a classification scheme."));
+        else if (obj == (QObject*) m_editFormatGroup->editFormatLabel())
+            m_textDocumentation->setText(tr("Free text."));
+        else if (obj == (QObject*) m_spinPosx)
+            m_textDocumentation->setText(tr("The longitude of the place or location.\nExample:-015."));
+        else if (obj == (QObject*) m_spinPosy)
+            m_textDocumentation->setText(tr("The latitude of the place or location.\nExample: 51.49."));
+    }
+    return QObject::eventFilter(obj, event);
 }

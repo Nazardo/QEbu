@@ -32,7 +32,7 @@ private slots:
 private:
     enum EditMode { Temporal, Location };
     void updateListAndButtons();
-
+    bool eventFilter(QObject *obj, QEvent *event);
     ListView *m_listView;
     ElementTypeEditBox *m_editCoverage;
     QPushButton *m_buttonTemporal;

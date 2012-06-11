@@ -7,6 +7,9 @@
 #include "locationtypeform.h"
 #include <QPushButton>
 #include <QLineEdit>
+#include <QComboBox>
+#include <QEvent>
+#include <QTextEdit>
 #include <QButtonGroup>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -56,6 +59,13 @@ CoverageTypeForm::CoverageTypeForm(CoverageType *coverage,
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("Coverage is used to show various time and place aspects of the subject of the content. Coverage will typically include spatial location (a place name or geographic coordinates), temporal period (a period label, date, or date range) or jurisdiction (such as a named administrative entity).\nRecommended best practice is to select a value from a controlled vocabulary (for example, the Thesaurus of Geographic Names) and that, where appropriate, named places or time periods be used in preference to numeric identifiers such as sets of coordinates or date ranges."));
+    m_editCoverage->editLang()->installEventFilter(this);
+    m_editCoverage->editValue()->installEventFilter(this);
+    m_buttonTemporal->installEventFilter(this);
+    m_buttonLocation->installEventFilter(this);
 
     // Set data fields
     if(m_coverage->coverage()) {
@@ -222,4 +232,19 @@ void CoverageTypeForm::updateListAndButtons()
         title = tr("Location");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool CoverageTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editCoverage->editValue())
+            m_textDocumentation->setText(tr("Free text to provide temporal or spatial/geographical information about what is shown in the resource."));
+        else if (obj == (QObject*) m_editCoverage->editLang())
+            m_textDocumentation->setText(tr("The language the information is provided."));
+        else if (obj == (QObject*) m_buttonTemporal)
+            m_textDocumentation->setText(tr("Temporal characteristics of the content of the resource."));
+        else if (obj == (QObject*) m_buttonLocation)
+            m_textDocumentation->setText(tr("Spatial characteristics of the content of the resource."));
+    }
+    return QObject::eventFilter(obj, event);
 }
