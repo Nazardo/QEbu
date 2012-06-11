@@ -8,6 +8,7 @@
 #include <QCheckBox>
 #include <QFormLayout>
 #include <QMessageBox>
+#include <QEvent>
 
 TitleTypeForm::TitleTypeForm(TitleType *title,
                              QEbuMainWindow *mainWindow,
@@ -41,6 +42,13 @@ TitleTypeForm::TitleTypeForm(TitleType *title,
     m_editTitle->setLabel(tr("Title"));
     l->addWidget(m_editTitle);
     this->setLayout(l);
+
+    // Doc filter
+    m_textDocumentation->setText("A Title is the ‘main’ name given to a resource e.g. a media item, a media object, or a sequence as specified by the associated title type. It corresponds for a series to the series title, for a programme to the programme title, for an item to the item title, etc.\nTitles are recorded as they appear.\nThe Title is the name by which a resource is formally known and that everyone should use to refer to or search for that particular resource.\nThe Title may be provided in several languages.\nIf present, the attributionDate attribute indicates when the Title was attributed.");
+    m_editAttributionDate->installEventFilter(this);
+    m_textNote->installEventFilter(this);
+    m_editTitle->editValue()->installEventFilter(this);
+    m_editTitle->editLang()->installEventFilter(this);
 
     // Set data fields
     if (m_title->title()) {
@@ -103,4 +111,19 @@ bool TitleTypeForm::checkCompliance()
                              QMessageBox::Ok, QMessageBox::Ok);
     }
     return ok;
+}
+
+bool TitleTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_editAttributionDate)
+            m_textDocumentation->setText("The date at which the title was attributed.");
+        else if ( obj == (QObject*) m_textNote )
+            m_textDocumentation->setText("A note element to provide additional contextual information.");
+        else if  (obj == (QObject*) m_editTitle->editValue())
+            m_textDocumentation->setText("Free-text to provide the main title by which the resource is known. The title can be provided in different languages.\nExample: ‘the fifth element’.");
+        else if  (obj == (QObject*) m_editTitle->editLang())
+            m_textDocumentation->setText("The language in which the title is provided.");
+    }
+    return QObject::eventFilter(obj, event);
 }

@@ -71,6 +71,21 @@ void FormatGroupEditBox::addLinksMap(QMap<QString, QString> *values)
     m_linkMaps.append(values);  // Save the pointer to this linkMap
 }
 
+QLineEdit *FormatGroupEditBox::editFormatLabel()
+{
+    return m_editFormatLabel;
+}
+
+QComboBox *FormatGroupEditBox::editFormatLink()
+{
+    return m_editFormatLink;
+}
+
+QLineEdit *FormatGroupEditBox::editFormatDefinition()
+{
+    return m_editFormatDefinition;
+}
+
 void FormatGroupEditBox::updateExistingFormatGroup(FormatGroup *formatGroup)
 {
     formatGroup->setFormatLabel(m_editFormatDefinition->text());

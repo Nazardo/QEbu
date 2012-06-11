@@ -5,6 +5,7 @@
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include <QTextEdit>
+#include <QEvent>
 
 StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
                                  QWidget *parent,
@@ -33,7 +34,10 @@ StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
     }
     m_textDocumentation = new QTextEdit;
     m_textDocumentation->setReadOnly(true);
-    // m_doc->setFrameShape( QTextEdit::NoFrame );
+    QPalette* palette = new QPalette();
+    palette->setColor(QPalette::Base,QColor(240,240,240));
+    m_textDocumentation->setFrameShape( QTextEdit::NoFrame );
+    m_textDocumentation->setPalette(*palette);
     m_textDocumentation->setFrameShadow( QTextEdit::Plain );
     m_textDocumentation->setMaximumSize(300, 500);
     lastRow->addWidget(m_textDocumentation);

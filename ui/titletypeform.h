@@ -23,6 +23,7 @@ private slots:
     void attributionDateChanged();
     bool checkCompliance();
 private:
+    bool eventFilter(QObject *, QEvent *);
     QDateEdit *m_editAttributionDate;
     QTextEdit *m_textNote;
     QCheckBox *m_checkAttributionDate;

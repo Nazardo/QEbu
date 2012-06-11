@@ -21,6 +21,10 @@ public:
     void updateExistingFormatGroup(FormatGroup *formatGroup);
     void setLabel(const QString &label);
     void addLinksMap(QMap<QString, QString> *values);
+    QLineEdit *editFormatLabel();
+    QComboBox *editFormatLink();
+    QLineEdit *editFormatDefinition();
+
 private slots:
     void onChange(int index);
 private:
