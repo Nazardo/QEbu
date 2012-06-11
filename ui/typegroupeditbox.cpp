@@ -70,6 +70,21 @@ void TypeGroupEditBox::addLinksMap(QMap<QString, QString> *values)
     m_linkMaps.append(values);  // Save the pointer to this linkMap
 }
 
+QLineEdit *TypeGroupEditBox::editTypeLabel()
+{
+    return m_editTypeLabel;
+}
+
+QComboBox *TypeGroupEditBox::editTypeLink()
+{
+    return m_editTypeLink;
+}
+
+QLineEdit *TypeGroupEditBox::editTypeDefinition()
+{
+    return m_editTypeDefinition;
+}
+
 void TypeGroupEditBox::updateExistingTypeGroup(TypeGroup *typeGroup)
 {
     typeGroup->setTypeDefinition(m_editTypeDefinition->text());

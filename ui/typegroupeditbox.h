@@ -20,6 +20,9 @@ public:
     void updateExistingTypeGroup(TypeGroup *typeGroup);
     void setLabel(const QString &label);
     void addLinksMap(QMap<QString, QString> *values);
+    QLineEdit *editTypeLabel();
+    QComboBox *editTypeLink();
+    QLineEdit *editTypeDefinition();
 private slots:
     void onChange(int index);
 private:

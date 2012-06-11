@@ -4,6 +4,7 @@
 #include <QLayout>
 #include <QDialogButtonBox>
 #include <QPushButton>
+#include <QTextEdit>
 
 StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
                                  QWidget *parent,
@@ -28,7 +29,14 @@ StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
                          SIGNAL(clicked()), this, SLOT(applyClicked()));
         QObject::connect(dialogButtonBox, SIGNAL(rejected()),
                          this, SLOT(cancelClicked()));
+
     }
+    m_textDocumentation = new QTextEdit;
+    m_textDocumentation->setReadOnly(true);
+    // m_doc->setFrameShape( QTextEdit::NoFrame );
+    m_textDocumentation->setFrameShadow( QTextEdit::Plain );
+    m_textDocumentation->setMaximumSize(300, 500);
+    lastRow->addWidget(m_textDocumentation);
     // ... maybe some day there will be other things to add.
 }
 

@@ -7,6 +7,7 @@
 
 class QVBoxLayout;
 class QLayout;
+class QTextEdit;
 
 class StackableWidget : public QWidget
 {
@@ -33,6 +34,8 @@ signals:
 protected slots:
     virtual void applyClicked();
     virtual void cancelClicked();
+protected:
+    QTextEdit *m_textDocumentation;
 private:
     QVBoxLayout *m_vLayout;
     QEbuMainWindow *m_mainWindow;
