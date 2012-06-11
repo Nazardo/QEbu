@@ -34,7 +34,6 @@ private slots:
     void rateChanged();
     void factorNumeratorChanged();
     void factorDenominatorChanged();
-    void unitNumberValueChanged();
 private:
     void updateListAndButtons();
 
@@ -55,7 +54,7 @@ private:
     QCheckBox *m_checkRate;
     QCheckBox *m_checkFactorNumerator;
     QCheckBox *m_checkFactorDenominator;
-    QCheckBox *m_checkUnitNumberValue;
+    QLabel *m_labelUnitNumber;
     QLabel *m_labelTime;
     FormatGroupEditBox *m_editFormatGroup;
     QRadioButton *m_radioTimecode;
