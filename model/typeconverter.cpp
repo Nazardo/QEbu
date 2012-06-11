@@ -281,7 +281,7 @@ QDateTime TypeConverter::stringToTime(const QString &time)
             mseconds = buf.toInt();
         }
 
-        // Timezone datas (will be stored in the year part of QDataTime)
+        // Timezone datas
         if (i < time.length()) {
 
            if (time[i] == 'Z') {
