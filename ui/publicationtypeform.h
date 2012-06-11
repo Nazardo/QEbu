@@ -28,6 +28,7 @@ private slots:
     void publicationChannelChanged();
 private:
     void updateListAndButtons();
+    bool eventFilter(QObject *obj, QEvent *event);
 
     QDateEdit *m_editPublicationDate;
     QTimeEdit *m_editPublicationTime;

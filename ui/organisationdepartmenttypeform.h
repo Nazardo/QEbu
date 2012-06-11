@@ -22,6 +22,7 @@ private slots:
 private:
     enum EditMode { ContactDetails, OrganisationDetails, Roles };
     void updateListAndButtons();
+    bool eventFilter(QObject *obj, QEvent *event);
 
     OrganisationDepartmentType *m_organisationDepartment;
     ElementTypeEditBox *m_editElementType;

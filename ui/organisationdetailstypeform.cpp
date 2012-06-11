@@ -14,6 +14,8 @@
 #include <QLabel>
 #include <QFormLayout>
 #include <QMessageBox>
+#include <QEvent>
+#include <QTextEdit>
 
 OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(
         OrganisationDetailsType *organisationDetails,
@@ -72,6 +74,15 @@ OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
+
+    // Install Event filters
+    m_textDocumentation->setText(tr("Minimum information providing means to further identify and contact an organisation."));
+    m_editOrganisationId->installEventFilter(this);
+    m_editOrganisationName->editValue()->installEventFilter(this);
+    m_editOrganisationName->editLang()->installEventFilter(this);
+    m_buttonContacts->installEventFilter(this);
+    m_buttonDetails->installEventFilter(this);
+    m_buttonOrganisationDepartment->installEventFilter(this);
 
     // Set data fields...
     if(m_organisationDetails->organisationName()) {
@@ -285,6 +296,25 @@ void OrganisationDetailsTypeForm::contactsFormClosed(Operation op, QVariant valu
         int row = m_organisationDetails->contacts().indexOf(contacts);
         m_listView->setItem(row, contacts->toString());
     }
+}
+
+bool OrganisationDetailsTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editOrganisationId)
+            m_textDocumentation->setText(tr("An attribute to uniquely indetify an organisation."));
+        else if (obj == (QObject*) m_editOrganisationName->editValue())
+            m_textDocumentation->setText(tr("To provide the name of an organisation."));
+        else if (obj == (QObject*) m_editOrganisationName->editLang())
+            m_textDocumentation->setText(tr("The language in which the organisation name is provided."));
+        else if (obj == (QObject*) m_buttonContacts)
+            m_textDocumentation->setText(tr("To provide a list of contacts/persons through which the organisation can be contacted."));
+        else if (obj == (QObject*) m_buttonDetails)
+            m_textDocumentation->setText(tr("To provide the details of an organisation."));
+        else if (obj == (QObject*) m_buttonOrganisationDepartment)
+            m_textDocumentation->setText(tr("To identify a specific department within an organisation."));
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 void OrganisationDetailsTypeForm::updateListAndButtons()

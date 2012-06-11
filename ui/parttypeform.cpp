@@ -8,6 +8,8 @@
 #include <QLineEdit>
 #include <QFormLayout>
 #include <QMessageBox>
+#include <QEvent>
+#include <QTextEdit>
 
 PartTypeForm::PartTypeForm(PartType *part, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -50,6 +52,12 @@ PartTypeForm::PartTypeForm(PartType *part, QEbuMainWindow *mainWindow, QWidget *
         vl->addLayout(hl);
     }
     this->setLayout(vl);
+
+    // Install Event filters
+    m_textDocumentation->setText(tr("To describe a part/segment/fragment within the resource."));
+    m_editPartId->installEventFilter(this);
+    m_editPartName->installEventFilter(this);
+    m_editCoreDetails->installEventFilter(this);
 
     // Set text fields...
 
@@ -155,6 +163,19 @@ void PartTypeForm::coreDetailsClosed(Operation op, QVariant value)
     if (!coreMetadara)
         return;
     m_editCoreDetails->setText("CoreMetadata Details");
+}
+
+bool PartTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editPartId)
+            m_textDocumentation->setText(tr("To identify the part/segment/fragment within the resource."));
+        else if (obj == (QObject*) m_editPartName)
+            m_textDocumentation->setText(tr("To identify the part/segment/fragment within the resource."));
+        else if (obj == (QObject*) m_editCoreDetails)
+            m_textDocumentation->setText(tr("To provide all the core descriptive information regarding the part/segment/fragment."));
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 void PartTypeForm::cancelClicked()

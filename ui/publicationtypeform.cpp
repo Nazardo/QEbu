@@ -14,6 +14,8 @@
 #include <QVBoxLayout>
 #include <QCheckBox>
 #include <QLabel>
+#include <QEvent>
+#include <QTextEdit>
 
 PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
                                          QEbuMainWindow *mainWindow,
@@ -55,6 +57,13 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
     QVBoxLayout *l = new QVBoxLayout;
     l->addWidget(group);
     this->setLayout(l);
+
+    // Install Event filters
+    m_textDocumentation->setText(tr("To provide information about a repeated publication."));
+    m_editPublicationDate->installEventFilter(this);
+    m_editPublicationTime->installEventFilter(this);
+    m_editPublicationChannelString->installEventFilter(this);
+    m_editPublicationChannel->installEventFilter(this);
 
     // Set data fields...
     if (m_publication) {
@@ -125,4 +134,20 @@ void PublicationTypeForm::publicationDateChanged()
 void PublicationTypeForm::publicationChannelChanged()
 {
     m_checkPublicationChannel->setChecked(true);
+}
+
+
+bool PublicationTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editPublicationDate)
+            m_textDocumentation->setText(tr("The repeat publication date."));
+        else if (obj == (QObject*) m_editPublicationTime)
+            m_textDocumentation->setText(tr("The repeat publication time."));
+        else if (obj == (QObject*) m_editPublicationChannelString)
+            m_textDocumentation->setText(tr("The channel on which the title was re-transmitted."));
+        else if (obj == (QObject*) m_editPublicationChannel)
+            m_textDocumentation->setText(tr("A reference to an existing format."));
+    }
+    return QObject::eventFilter(obj, event);
 }

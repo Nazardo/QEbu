@@ -40,6 +40,7 @@ private:
         Details,
         Contacts
     };
+    bool eventFilter(QObject *obj, QEvent *event);
     void updateListAndButtons();
 
     ListView *m_listView;

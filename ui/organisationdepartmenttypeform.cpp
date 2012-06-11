@@ -4,6 +4,8 @@
 #include "qvarptr.h"
 #include <QFormLayout>
 #include <QLineEdit>
+#include <QEvent>
+#include <QTextEdit>
 
 
 OrganisationDepartmentTypeForm::OrganisationDepartmentTypeForm(
@@ -28,6 +30,13 @@ OrganisationDepartmentTypeForm::OrganisationDepartmentTypeForm(
 
     vl->addWidget(m_editElementType);
     this->setLayout(vl);
+
+    // Install Event filters
+    m_textDocumentation->setText(tr("To identify a specific department within an organisation."));
+    m_editDepartmentId->installEventFilter(this);
+    m_editElementType->editValue()->installEventFilter(this);
+    m_editElementType->editLang()->installEventFilter(this);
+
     // Set values in text fields
     m_editDepartmentId->setText(m_organisationDepartment->departmentId());
     m_editElementType->editValue()->setText(m_organisationDepartment->value());
@@ -54,4 +63,18 @@ void OrganisationDepartmentTypeForm::cancelClicked()
         m_organisationDepartment = 0;
     }
     emit closed(m_op, QVarPtr<OrganisationDepartmentType>::asQVariant(m_organisationDepartment));
+}
+
+
+bool OrganisationDepartmentTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editDepartmentId)
+            m_textDocumentation->setText(tr("To identify a specific department within an organisation."));
+        else if (obj == (QObject*) m_editElementType->editValue())
+            m_textDocumentation->setText(tr("To identify a specific department within an organisation."));
+        else if (obj == (QObject*) m_editElementType->editLang())
+            m_textDocumentation->setText(tr("The language in which the department name is provided."));
+    }
+    return QObject::eventFilter(obj, event);
 }

@@ -34,6 +34,7 @@ private slots:
     // -
     void repeatFormClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
 
     ListView *m_listView;
     QCheckBox *m_checkFirstPublicationDate;

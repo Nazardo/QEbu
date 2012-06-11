@@ -16,6 +16,8 @@
 #include <QGridLayout>
 #include <QCheckBox>
 #include <QLabel>
+#include <QEvent>
+#include <QTextEdit>
 
 PublicationHistoryTypeForm::PublicationHistoryTypeForm(
         PublicationHistoryType *publicationHistory,
@@ -69,6 +71,14 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
+
+    // Install Event filters
+    m_textDocumentation->setText(tr("To provide information about the publication history."));
+    m_editFirstPublicationDate->installEventFilter(this);
+    m_editFirstPublicationTime->installEventFilter(this);
+    m_editFirstPublicationChannelString->installEventFilter(this);
+    m_editFirstPublicationChannel->installEventFilter(this);
+
     // Set data fields...
     if (m_publicationHistory->firstPublication()) {
         m_editFirstPublicationDate->setDate(m_publicationHistory->firstPublication()->date().date());
@@ -188,5 +198,20 @@ void PublicationHistoryTypeForm::repeatFormClosed(StackableWidget::Operation op,
         int row = m_publicationHistory->repetitions().indexOf(repeat);
         m_listView->setItem(row, repeat->toString());
     }
+}
+
+bool PublicationHistoryTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editFirstPublicationDate)
+            m_textDocumentation->setText(tr("The first publication date."));
+        if (obj == (QObject*) m_editFirstPublicationTime)
+            m_textDocumentation->setText(tr("The first publication time."));
+        if (obj == (QObject*) m_editFirstPublicationChannelString)
+            m_textDocumentation->setText(tr("The channel on which the title was first transmitted."));
+        if (obj == (QObject*) m_editFirstPublicationChannel)
+            m_textDocumentation->setText(tr("A reference to an existing format."));
+    }
+    return QObject::eventFilter(obj, event);
 }
 

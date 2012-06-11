@@ -25,6 +25,8 @@ private slots:
     void coreDetailsClicked();
     void coreDetailsClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
+
     QLineEdit *m_editPartId;
     QLineEdit *m_editPartName;
     QLineEdit *m_editCoreDetails;
