@@ -22,6 +22,7 @@ private:
     bool eventFilter(QObject *, QEvent *);
     DateGroupEditBox *m_editDateGroup;
     QString m_title;
+    DateGroup *m_dateGroup;
 };
 
 #endif // DATEGROUPFORM_H

@@ -18,8 +18,12 @@ DateGroupForm::DateGroupForm(DateGroup *dateGroup,
     StackableWidget(mainWindow, parent)
 {
     m_op = (dateGroup) ? Edit : Add;
+    if (!dateGroup)
+        m_dateGroup = new DateGroup;
+    else
+        m_dateGroup = dateGroup;
     QVBoxLayout *vl = new QVBoxLayout;
-    m_editDateGroup = new DateGroupEditBox(dateGroup);
+    m_editDateGroup = new DateGroupEditBox(m_dateGroup);
     m_editDateGroup->editEndDate()->installEventFilter(this);
     m_editDateGroup->editEndTime()->installEventFilter(this);
     m_editDateGroup->editEndYear()->installEventFilter(this);
@@ -51,7 +55,8 @@ void DateGroupForm::cancelClicked()
 
 void DateGroupForm::applyClicked()
 {
-    emit closed(m_op, QVarPtr<DateGroup>::asQVariant(m_editDateGroup->dateGroup()));
+    m_editDateGroup->updateExistingDateGroup(m_dateGroup);
+    emit closed(m_op, QVarPtr<DateGroup>::asQVariant(m_dateGroup));
 }
 
 bool DateGroupForm::eventFilter(QObject *obj, QEvent *event)

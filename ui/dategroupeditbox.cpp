@@ -1,5 +1,6 @@
 #include "dategroupeditbox.h"
 #include "../model/dategroup.h"
+#include "timezoneeditbox.h"
 #include <QDateEdit>
 #include <QLineEdit>
 #include <QTimeEdit>
@@ -35,38 +36,47 @@ DateGroupEditBox::DateGroupEditBox(DateGroup *dateGroup, QWidget *parent) :
 
     m_editStartTime = new QTimeEdit;
     m_checkStartTime = new QCheckBox(tr("Start time"));
+    m_editStartTimeTimezone = new TimezoneEditBox();
     innerLayout->addWidget(m_checkStartTime, 2, 0);
     innerLayout->addWidget(m_editStartTime, 2, 1);
+    innerLayout->addWidget(m_editStartTimeTimezone, 3, 1);
     QObject::connect(m_editStartTime, SIGNAL(timeChanged(QTime)),
                      this, SLOT(startTimeChanged()));
+    QObject::connect(m_editStartTimeTimezone, SIGNAL(currentIndexChanged(int)),
+                     this, SLOT(startTimeChanged()));
+
 
     m_editEndYear = new QSpinBox;
     m_editEndYear->setRange(1, 9999);
     m_editEndYear->setValue(2000);
     m_checkEndYear = new QCheckBox(tr("End year"));
-    innerLayout->addWidget(m_checkEndYear, 3, 0);
-    innerLayout->addWidget(m_editEndYear, 3, 1);
+    innerLayout->addWidget(m_checkEndYear, 4, 0);
+    innerLayout->addWidget(m_editEndYear, 4, 1);
     QObject::connect(m_editEndYear, SIGNAL(valueChanged(int)),
                      this, SLOT(endYearChanged()));
 
     m_editEndDate = new QDateEdit;
     m_editEndDate->setCalendarPopup(true);
     m_checkEndDate = new QCheckBox(tr("End date"));
-    innerLayout->addWidget(m_checkEndDate, 4, 0);
-    innerLayout->addWidget(m_editEndDate, 4, 1);
+    innerLayout->addWidget(m_checkEndDate, 5, 0);
+    innerLayout->addWidget(m_editEndDate, 5, 1);
     QObject::connect(m_editEndDate, SIGNAL(dateChanged(QDate)),
                      this, SLOT(endDateChanged()));
 
     m_editEndTime = new QTimeEdit;
     m_checkEndTime = new QCheckBox(tr("End time"));
-    innerLayout->addWidget(m_checkEndTime, 5, 0);
-    innerLayout->addWidget(m_editEndTime, 5, 1);
+    m_editEndTimeTimezone = new TimezoneEditBox();
+    innerLayout->addWidget(m_checkEndTime, 6, 0);
+    innerLayout->addWidget(m_editEndTime, 6, 1);
+    innerLayout->addWidget(m_editEndTimeTimezone, 7, 1);
     QObject::connect(m_editEndTime, SIGNAL(timeChanged(QTime)),
+                     this, SLOT(endTimeChanged()));
+    QObject::connect(m_editEndTimeTimezone, SIGNAL(currentIndexChanged(int)),
                      this, SLOT(endTimeChanged()));
 
     m_editPeriod = new QLineEdit;
-    innerLayout->addWidget(new QLabel(tr("Period")), 6, 0);
-    innerLayout->addWidget(m_editPeriod, 6, 1);
+    innerLayout->addWidget(new QLabel(tr("Period")), 8, 0);
+    innerLayout->addWidget(m_editPeriod, 8, 1);
 
     m_groupBox->setLayout(innerLayout);
     outerLayout->addWidget(m_groupBox);
@@ -86,6 +96,8 @@ DateGroupEditBox::DateGroupEditBox(DateGroup *dateGroup, QWidget *parent) :
     if (dateGroup->startTime().isValid()) {
         m_checkStartTime->setChecked(true);
         m_editStartTime->setDateTime(dateGroup->startTime());
+        if (dateGroup->startTime().timeSpec()!=Qt::LocalTime)
+            m_editStartTimeTimezone->setUTCOffset(dateGroup->startTime().utcOffset()/60);
     }
     if (dateGroup->endYear()) {
         m_checkEndYear->setChecked(true);
@@ -98,6 +110,8 @@ DateGroupEditBox::DateGroupEditBox(DateGroup *dateGroup, QWidget *parent) :
     if (dateGroup->endTime().isValid()) {
         m_checkEndTime->setChecked(true);
         m_editEndTime->setDateTime(dateGroup->endTime());
+        if (dateGroup->endTime().timeSpec()!=Qt::LocalTime)
+            m_editEndTimeTimezone->setUTCOffset(dateGroup->endTime().utcOffset()/60);
     }
     m_editPeriod->setText(dateGroup->period());
 }
@@ -121,9 +135,13 @@ void DateGroupEditBox::updateExistingDateGroup(DateGroup *dateGroup)
     else
         dateGroup->setStartDate(QDateTime());
 
-    if (m_checkStartTime->isChecked())
-        dateGroup->setStartTime(m_editStartTime->dateTime());
-    else
+    if (m_checkStartTime->isChecked()) {
+        QDateTime dt(m_editStartTime->dateTime());
+        dt.setUtcOffset(m_editStartTimeTimezone->getUTCOffset()*60);
+        if (m_editStartTimeTimezone->isLocal())
+            dt.setTimeSpec(Qt::LocalTime);
+        dateGroup->setStartTime(dt);
+    } else
         dateGroup->setStartTime(QDateTime());
 
     if (m_checkEndYear->isChecked())
@@ -136,9 +154,13 @@ void DateGroupEditBox::updateExistingDateGroup(DateGroup *dateGroup)
     else
         dateGroup->setEndDate(QDateTime());
 
-    if (m_checkEndTime->isChecked())
-        dateGroup->setEndTime(m_editEndTime->dateTime());
-    else
+    if (m_checkEndTime->isChecked()) {
+        QDateTime dt(m_editEndTime->dateTime());
+        dt.setUtcOffset(m_editEndTimeTimezone->getUTCOffset()*60);
+        if (m_editEndTimeTimezone->isLocal())
+            dt.setTimeSpec(Qt::LocalTime);
+        dateGroup->setEndTime(dt);
+    } else
         dateGroup->setEndTime(QDateTime());
 
     dateGroup->setPeriod(m_editPeriod->text());

@@ -10,6 +10,7 @@ class QTimeEdit;
 class QGroupBox;
 class QCheckBox;
 class QLineEdit;
+class TimezoneEditBox;
 
 class DateGroupEditBox : public QWidget
 {
@@ -42,12 +43,14 @@ private:
     QDateEdit *m_editStartDate;
     QCheckBox *m_checkStartTime;
     QTimeEdit *m_editStartTime;
+    TimezoneEditBox *m_editStartTimeTimezone;
     QCheckBox *m_checkEndYear;
     QSpinBox *m_editEndYear;
     QCheckBox *m_checkEndDate;
     QDateEdit *m_editEndDate;
     QCheckBox *m_checkEndTime;
     QTimeEdit *m_editEndTime;
+    TimezoneEditBox *m_editEndTimeTimezone;
     QLineEdit *m_editPeriod;
 };
 
