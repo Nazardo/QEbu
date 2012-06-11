@@ -24,6 +24,7 @@ private slots:
     void coordinatesRemoveClicked();
     void coordinatesClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     TypeGroupEditBox *m_editTypeGroup;
     QLineEdit *m_editLocationId;
     QTextEdit *m_textNote;

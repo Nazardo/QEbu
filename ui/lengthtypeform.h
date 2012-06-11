@@ -23,6 +23,7 @@ private slots:
     // -
     void valueChanged();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     QLineEdit *m_editUnit;
     QUnsignedSpinBox *m_spinValue;
     QCheckBox *m_checkValue;

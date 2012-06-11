@@ -36,6 +36,7 @@ private slots:
     void typeGroupFormClosed(Operation op, QVariant value);
     void technicalAttributesFormClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     ImageFormatType *m_imageFormat;
     // Edit fields:
     QLineEdit *m_editImageFormatId;
@@ -51,6 +52,7 @@ private:
     QComboBox *m_comboOrientation;
     ListView *m_listView;
     QLineEdit *m_editTechnicalAttributes;
+    ///@todo: here misses imageEncoding!
     QPushButton *m_buttonTechnicalAttributes;
 };
 

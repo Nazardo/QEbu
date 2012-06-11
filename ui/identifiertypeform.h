@@ -28,10 +28,10 @@ private slots:
     void attributorClicked();
     void attributorClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     TypeGroupEditBox *m_editTypeGroup;
     FormatGroupEditBox *m_editFormatGroup;
     QTextEdit *m_textNote;
-    QLineEdit *m_editRelationLink;
     ElementTypeEditBox *m_editElementIdentifier;
     QLineEdit *m_editAttributor;
     IdentifierType *m_identifier;

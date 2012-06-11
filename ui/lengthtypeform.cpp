@@ -3,6 +3,8 @@
 #include "../model/qebulimits.h"
 #include "qvarptr.h"
 #include <QLineEdit>
+#include <QTextEdit>
+#include <QEvent>
 #include <QCheckBox>
 #include <QFormLayout>
 #include "qextendedspinbox.h"
@@ -38,6 +40,12 @@ LengthTypeForm::LengthTypeForm(LengthType *length,
     }
     this->setLayout(vl);
 
+    // Event Filter
+    m_textDocumentation->setText(tr(""));
+    m_editUnit->installEventFilter(this);
+    m_spinValue->installEventFilter(this);
+
+    // Set data fields...
     if (m_length->value()) {
         m_spinValue->setValue(*(m_length->value()));
         m_checkValue->setChecked(true);
@@ -74,5 +82,7 @@ void LengthTypeForm::valueChanged()
     m_checkValue->setChecked(true);
 }
 
-
-
+bool LengthTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    return true;
+}

@@ -21,6 +21,7 @@ private slots:
     void cancelClicked();
     void applyClicked();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     TypeGroupEditBox *m_editTypeGroup;
     QTextEdit *m_textNote;
     ElementTypeEditBox *m_editElementLanguage;

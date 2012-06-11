@@ -39,6 +39,7 @@ private slots:
     void relationClosed(Operation op, QVariant value);
 
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     QLineEdit *m_editRelation;
     QLineEdit *m_editTrackPartTitle;
     QLineEdit *m_editDestinationStart;

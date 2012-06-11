@@ -13,6 +13,8 @@
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QTextEdit>
+#include <QEvent>
 #include <QDialogButtonBox>
 #include <QPushButton>
 #include "qextendedspinbox.h"
@@ -106,6 +108,21 @@ ImageFormatTypeForm::ImageFormatTypeForm(ImageFormatType *imageFormat,
         mainHLayout->addWidget(m_listView);
     }
     this->setLayout(mainHLayout);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("A description of image characteristics of the resource to provide technical information such as width, height, orientation, encoding."));
+    m_editImageFormatId->installEventFilter(this);
+    m_editImageFormatName->installEventFilter(this);
+    m_editImageFormatDefinition->installEventFilter(this);
+    m_editRegionDelimX->installEventFilter(this);
+    m_editRegionDelimY->installEventFilter(this);
+    m_editTechnicalAttributes->installEventFilter(this);
+    m_editWidth->editUnit()->installEventFilter(this);
+    m_editWidth->editValue()->installEventFilter(this);
+    m_editHeight->editUnit()->installEventFilter(this);
+    m_editHeight->editValue()->installEventFilter(this);
+    m_comboOrientation->installEventFilter(this);
+
     // Set fields...
     if (m_op == Add)
         return;
@@ -269,4 +286,33 @@ void ImageFormatTypeForm::technicalAttributesFormClosed(StackableWidget::Operati
     if (op == Add)
         m_imageFormat->setTechnicalAttributes(technicalAttributes);
     m_editTechnicalAttributes->setText(technicalAttributes->toString());
+}
+
+bool ImageFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editImageFormatId )
+            m_textDocumentation->setText(tr("An Identifier to identify a specific format in which the resource is available or has been published."));
+        else if  (obj == (QObject*) m_editImageFormatName)
+            m_textDocumentation->setText(tr("A name attributed to a particular format."));
+        else if  (obj == (QObject*) m_editImageFormatDefinition)
+            m_textDocumentation->setText(tr("A definition of the format information being provided either technical or editorial in nature."));
+        else if (obj == (QObject*) m_editRegionDelimX)
+            m_textDocumentation->setText(tr("The identification of a region in a document, an image or a video is done by defining the coordinates of the bottom left corner of the region. The region is defined from this point of reference using the width and height properties. regionDelimX is the coordinate on the horizontal axis and uses the same unit as the width attribute."));
+        else if (obj == (QObject*) m_editRegionDelimY)
+            m_textDocumentation->setText(tr("The identification of a region in a document, an image or a video is done by defining the coordinates of the bottom left corner of the region. The region is defined from this point of reference using the width and height properties. regionDelimY is the coordinate on the vertical axis uses the same unit as the height attribute."));
+        else if (obj == (QObject*) m_editWidth->editUnit())
+            m_textDocumentation->setText(tr("An attribute to specify the unit in which the width is expressed."));
+        else if (obj == (QObject*) m_editWidth->editValue())
+            m_textDocumentation->setText(tr("The width of the image or picture. Used as numerator to define the aspect ratio for video content."));
+        else if (obj == (QObject*) m_editHeight->editUnit())
+            m_textDocumentation->setText(tr("An attribute to specify the unit in which the height is expressed."));
+        else if (obj == (QObject*) m_editHeight->editValue())
+            m_textDocumentation->setText(tr("The height of the image or picture. Used as denominator to define the aspect ratio for video content."));
+        else if  (obj == (QObject*) m_editTechnicalAttributes)
+            m_textDocumentation->setText(tr("An extension element to allowusers and implementers defining their own technical attributes."));
+        else if  (obj == (QObject*) m_comboOrientation)
+            m_textDocumentation->setText(tr("To express the orientation of the image, i.e. 'portrait' or 'landscape'."));
+    }
+    return QObject::eventFilter(obj, event);
 }

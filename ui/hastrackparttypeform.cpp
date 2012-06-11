@@ -7,6 +7,8 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QLabel>
+#include <QEvent>
+#include <QTextEdit>
 #include <QMessageBox>
 #include <QLayout>
 
@@ -112,6 +114,17 @@ HasTrackPartTypeForm::HasTrackPartTypeForm(HasTrackPartType *hasTrackPart,
                          this, SLOT(relationRemovedClicked()));
         gl->addWidget(buttonRelationRemove, 5, 3);
     }
+
+    // Event Filter
+    m_textDocumentation->setText(tr("An element to identify a part of a track by a title, a start time and an end time in both the media source and media destination."));
+    m_editRelation->installEventFilter(this);
+    m_editTrackPartTitle->installEventFilter(this);
+    m_editDestinationStart->installEventFilter(this);
+    m_editDestinationEnd->installEventFilter(this);
+    m_editSourceStart->installEventFilter(this);
+    m_editSourceEnd->installEventFilter(this);
+
+    // Set fields
     if (m_hasTrackPart->trackPartTitle())
         m_editTrackPartTitle->setText(m_hasTrackPart->trackPartTitle()->toString());
     if (m_hasTrackPart->destinationStart())
@@ -318,6 +331,25 @@ void HasTrackPartTypeForm::relationClosed(StackableWidget::Operation op, QVarian
     if (!relation)
         return;
     m_editRelation->setText(relation->toString());
+}
+
+bool HasTrackPartTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editRelation)
+            m_textDocumentation->setText(tr("Relation details associated with the track part."));
+        else if (obj == (QObject*) m_editTrackPartTitle)
+            m_textDocumentation->setText(tr("Alternative title for the track part."));
+        else if (obj == (QObject*) m_editDestinationStart)
+            m_textDocumentation->setText(tr("Identifies the start time within the media destination."));
+        else if (obj == (QObject*) m_editDestinationEnd)
+            m_textDocumentation->setText(tr("Identifies the end time within the media destination."));
+        else if (obj == (QObject*) m_editSourceStart)
+            m_textDocumentation->setText(tr("Identifies the start time within the media source."));
+        else if (obj == (QObject*) m_editSourceEnd)
+            m_textDocumentation->setText(tr("Identifies the end time within the media source."));
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 bool HasTrackPartTypeForm::checkCompliance()

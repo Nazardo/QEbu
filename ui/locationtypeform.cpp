@@ -6,7 +6,9 @@
 #include <QTextEdit>
 #include <QLineEdit>
 #include <QLabel>
+#include <QEvent>
 #include <QPushButton>
+#include <QComboBox>
 #include <QFormLayout>
 
 LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainWindow, QWidget *parent)  :
@@ -48,6 +50,17 @@ LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainW
         mainVLayout->addLayout(hl);
     }
     this->setLayout(mainVLayout);
+
+    // Event Filter
+    m_textDocumentation->setText(tr("Spatial characteristics of the content of the resource."));
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
+    m_editLocationId->installEventFilter(this);
+    m_editName->installEventFilter(this);
+    m_editCoordinates->installEventFilter(this);
+    m_editCode->installEventFilter(this);
+    m_textNote->installEventFilter(this);
 
     // Set data fields
     m_editLocationId->setText(m_location->locationId());
@@ -109,3 +122,25 @@ void LocationTypeForm::coordinatesClosed(StackableWidget::Operation op, QVariant
     m_editCoordinates->setText(coordinatesType->toString());
 }
 
+bool LocationTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_textNote )
+            m_textDocumentation->setText(tr("A note for additional contextual information."));
+        else if  (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("Free text o precise the type of place and location information provided.\nExample: ‘to provide a name of a city’."));
+        else if  (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text.\nExample: ‘city’."));
+        else if  (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("A link to a classification scheme."));
+        else if  (obj == (QObject*) m_editName)
+            m_textDocumentation->setText(tr("The name of the place or location.\nExample: ‘London’."));
+        else if  (obj == (QObject*) m_editCoordinates)
+            m_textDocumentation->setText(tr("The spatial coordinates."));
+        else if  (obj == (QObject*) m_editCode)
+            m_textDocumentation->setText(tr("The code under the which the place or location may be known/referenced.\nExample: ‘W1AA 4WW’."));
+        else if  (obj == (QObject*) m_editLocationId)
+            m_textDocumentation->setText(tr("An attribute to identify the place or location."));
+    }
+    return QObject::eventFilter(obj, event);
+}

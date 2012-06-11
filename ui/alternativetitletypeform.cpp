@@ -73,8 +73,6 @@ AlternativeTitleTypeForm::AlternativeTitleTypeForm(
     m_editDateGroup->editStartTime()->installEventFilter(this);
     m_editDateGroup->editStartYear()->installEventFilter(this);
 
-
-
     // Set text fields
     if (m_op == Add)
         return;
@@ -145,13 +143,13 @@ bool AlternativeTitleTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
             m_textDocumentation->setText(tr("An optional definition.\nExample: the ‘title’ of the series that the resource is an episode of."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme.\n"));
+            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(tr("Free text to define the type of resource.\nExample: ‘series’."));
         else if (obj == (QObject*) m_editStatusGroup->editStatusDefinition())
             m_textDocumentation->setText(tr("An optional definition.\nExample: a temporary title, which is different from the formal title under wbeen published."));
         else if (obj == (QObject*) m_editStatusGroup->editStatusLink())
-            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme.\n"));
+            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme."));
         else if (obj == (QObject*) m_editStatusGroup->editStatusLabel())
             m_textDocumentation->setText(tr("Free text to define the status of the title of the resource.\nExample: statusLabel: working (for ‘working title’)."));
         else if ( obj == (QObject*) m_editDateGroup->editEndDate())
