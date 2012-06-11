@@ -2,12 +2,15 @@
 #define SUBJECTTYPEFORM_H
 
 #include "stackablewidget.h"
+#include <QMap>
 
 class SubjectType;
 class TypeGroupEditBox;
 class ElementTypeEditBox;
 class QTextEdit;
 class QLineEdit;
+class QComboBox;
+class QString;
 
 class SubjectTypeForm : public StackableWidget
 {
@@ -26,14 +29,16 @@ private slots:
     void attributorRemoveClicked();
     void attributorClicked();
     void attributorClosed(Operation op, QVariant value);
+    void onChange(int index);
 private:
     TypeGroupEditBox *m_editTypeGroup;
     QTextEdit *m_textNote;
     ElementTypeEditBox *m_editElementSubject;
-    QLineEdit *m_editSubjectCode;
+    QComboBox *m_editSubjectCode;
     QLineEdit *m_editSubjectDefinition;
     QLineEdit *m_editAttributor;
     SubjectType *m_subject;
+    QMap<QString, QString> *m_linkMap;
 };
 
 #endif // SUBJECTTYPEFORM_H

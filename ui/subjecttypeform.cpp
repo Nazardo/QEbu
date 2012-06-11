@@ -10,6 +10,9 @@
 #include <QLineEdit>
 #include <QFormLayout>
 #include <QMessageBox>
+#include <QString>
+#include <QComboBox>
+#include <QDebug>
 
 SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -19,6 +22,7 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
         m_subject = new SubjectType;
     else
         m_subject = subject;
+
     QVBoxLayout *vl = new QVBoxLayout;
     {
         m_editTypeGroup = new TypeGroupEditBox(subject);
@@ -38,7 +42,17 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
     {
         QFormLayout *fl = new QFormLayout;
 
-        m_editSubjectCode = new QLineEdit;  ///PUT AUTOCOMPLETION HERE
+        m_editSubjectCode = new QComboBox;
+        m_editSubjectCode->setEditable(true);
+        m_editSubjectCode->setInsertPolicy(QComboBox::InsertAtTop);
+        m_linkMap = mainWindow->getMap("ebu_SubjectCodeCS");
+        QList<QString> keys = m_linkMap->keys();
+        for (int i=0; i < keys.size(); ++i) {
+            QString key = keys.at(i);
+            m_editSubjectCode->addItem(m_linkMap->value(key),key);
+        }
+
+        QObject::connect(m_editSubjectCode, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
         fl->addRow(tr("Subject code"), m_editSubjectCode);
 
         m_editSubjectDefinition = new QLineEdit;
@@ -71,7 +85,8 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
         m_editElementSubject->editLang()->setText(m_subject->subject()->lang());
         m_editElementSubject->editValue()->setText(m_subject->subject()->value());
     }
-    m_editSubjectCode->setText(m_subject->subjectCode());
+
+    m_editSubjectCode->setCurrentIndex(m_editSubjectCode->findData(m_subject->subjectCode()));
     m_editSubjectDefinition->setText(m_subject->subjectDefinition());
     if (m_subject->attributor())
         m_editAttributor->setText(m_subject->attributor()->toString());
@@ -128,7 +143,7 @@ void SubjectTypeForm::applyClicked()
     m_subject->setSubject(new ElementType(
                               m_editElementSubject->editValue()->text(),
                               m_editElementSubject->editLang()->text()));
-    m_subject->setSubjectCode(m_editSubjectCode->text());
+    m_subject->setSubjectCode(m_editSubjectCode->itemData(m_editSubjectCode->currentIndex()).toString());
     m_subject->setSubjectDefinition(m_editSubjectDefinition->text());
     emit closed(m_op, QVarPtr<SubjectType>::asQVariant(m_subject));
 }
@@ -148,4 +163,17 @@ bool SubjectTypeForm::checkCompliance()
                              QMessageBox::Ok, QMessageBox::Ok);
     }
     return ok;
+}
+
+void SubjectTypeForm::onChange(int index) {
+    if(m_editSubjectCode->itemData(index).isValid()) {
+        qDebug() << m_editSubjectCode->itemData(index).toString();
+    } else {
+        QString linkText = m_editSubjectCode->itemText(index);
+        m_editSubjectCode->setItemData(index, linkText);
+        qDebug() <<"New value:" << linkText;
+
+        //Add it to the autocompletion map
+        m_linkMap->insert(linkText,linkText);
+    }
 }
