@@ -62,6 +62,11 @@ RatingTypeForm::RatingTypeForm(RatingType *rating,
         vl->addLayout(hl);
     }
     this->setLayout(vl);
+
+    //Event filter
+    m_textDocumentation->setText(tr("An element to provide rating values attributed to the media resource."));
+
+
     // Set text fields...
     m_editRatingValue->setText(m_rating->ratingValue());
     m_editRatingScaleMaxValue->setText(m_rating->ratingScaleMaxValue());

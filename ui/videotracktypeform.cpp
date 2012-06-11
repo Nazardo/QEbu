@@ -33,7 +33,7 @@ VideoTrackTypeForm::VideoTrackTypeForm(VideoTrackType *videoTrack,
     this->setLayout(l);
 
     //Event filter
-    m_textDocumentation->setText(tr("To describe the main features of video tracks such as in multiview systems"));
+    m_textDocumentation->setText(tr("To describe the main features of video tracks such as in multiview systems."));
     m_editTrackId->installEventFilter(this);
     m_editTrackName->installEventFilter(this);
     m_editTypeGroup->editTypeDefinition()->installEventFilter(this);

@@ -14,6 +14,8 @@
 #include <QCheckBox>
 #include <QFormLayout>
 #include <QMessageBox>
+#include <QEvent>
+#include <QComboBox>
 
 RelationTypeForm::RelationTypeForm(RelationType *relation,
                                    QEbuMainWindow *mainWindow,
@@ -58,7 +60,7 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
     {
         QFormLayout *fl = new QFormLayout;
         m_editRelationLink = new QLineEdit;
-        fl->addRow(tr("Relation link"), m_editRelationLink);
+        fl->addRow(tr("Relation Link"), m_editRelationLink);
         vl->addLayout(fl);
     }
     {
@@ -78,6 +80,19 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
         vl->addLayout(hl);
     }
     this->setLayout(vl);
+
+    //Event filter
+    m_textDocumentation->setText(tr("Relation is used to show the relation in content to another resource."));
+    m_editElementRelation->editLang()->installEventFilter(this);
+    m_editElementRelation->editValue()->installEventFilter(this);
+    m_textNote->installEventFilter(this);
+    m_editRelationIdentifier->installEventFilter(this);
+    m_editRelationLink->installEventFilter(this);
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
+    m_spinRunningOrderNumber->installEventFilter(this);
+
     // Set text fields...
     if (m_relation->runningOrderNumber()) {
         m_spinRunningOrderNumber->setValue(*(m_relation->runningOrderNumber()));
@@ -189,4 +204,29 @@ void RelationTypeForm::applyClicked()
 void RelationTypeForm::runningOrderNumberChanged()
 {
     m_checkRunningOrderNumber->setChecked(true);
+}
+
+bool RelationTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if  (obj == (QObject*) m_editElementRelation->editValue())
+            m_textDocumentation->setText(tr("Free-text to provide a title for the relation."));
+        else if  (obj == (QObject*) m_editElementRelation->editLang())
+            m_textDocumentation->setText(tr("The language in which the title is provided."));
+        else if (obj == (QObject*) m_textNote)
+            m_textDocumentation->setText(tr("A note element to provide additional contextual information."));
+        else if (obj == (QObject*) m_spinRunningOrderNumber)
+            m_textDocumentation->setText(tr("An optional element that provides the ranking/running order within an ordered list."));
+        else if  (obj == (QObject* ) m_editRelationLink)
+            m_textDocumentation->setText(tr("A link related to material."));
+        else if  (obj == (QObject* ) m_editRelationIdentifier)
+            m_textDocumentation->setText(tr("A element to specify an identifier."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("An optional definition."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme.\n"));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text to show the type of relation to another resource, i.e. identifies ways in which the resource is related by intellectual content to some other resource."));
+    }
+    return QObject::eventFilter(obj, event);
 }

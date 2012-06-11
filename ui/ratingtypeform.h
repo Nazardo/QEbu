@@ -26,6 +26,8 @@ private slots:
     void ratingProviderClicked();
     void ratingProviderClosed(Operation op, QVariant value);
 private:
+    //bool eventFilter(QObject *obj, QEvent *event);
+
     TypeGroupEditBox *m_editTypeGroup;
     FormatGroupEditBox *m_editFormatGroup;
     QLineEdit *m_editRatingValue;

@@ -44,6 +44,7 @@ private slots:
     void rightsIdFormClosed(Operation op, QVariant value);
     void contactDetailsFormClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     enum EditMode {
         FormatIDRefs,
         Rights,

@@ -450,11 +450,11 @@ bool VideoFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if  (obj == (QObject*) m_editWidth->editValue())
             m_textDocumentation->setText(tr("To define the width of a video image."));
         else if  (obj == (QObject*) m_editWidth->editUnit())
-            m_textDocumentation->setText("An attribute to specify the unit in which the width is expressed.");
+            m_textDocumentation->setText(tr("An attribute to specify the unit in which the width is expressed."));
         else if  (obj == (QObject*) m_editHeight->editValue())
             m_textDocumentation->setText(tr("To define the height of a video image."));
         else if  (obj == (QObject*) m_editHeight->editUnit())
-            m_textDocumentation->setText("An attribute to specify the unit in which the height is expressed.");
+            m_textDocumentation->setText(tr("An attribute to specify the unit in which the height is expressed."));
         else if ( obj == (QObject*) m_buttonAspectRatio)
             m_textDocumentation->setText(tr("A string to define e.g. the ratio of the picture (the width by the height), for instance '4:3' or '16 9' (rational). The format of the aspect ratio is precised in the format attributes."));
         else if ( obj == (QObject*) m_buttonVideoEncoding)

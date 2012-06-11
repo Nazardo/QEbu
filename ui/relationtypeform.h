@@ -32,6 +32,7 @@ private slots:
     // -
     void runningOrderNumberChanged();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
 
     TypeGroupEditBox *m_editTypeGroup;
     QSpinBox *m_spinRunningOrderNumber;

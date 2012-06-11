@@ -18,6 +18,7 @@
 #include <QFormLayout>
 #include <QMessageBox>
 #include <QInputDialog>
+#include <QEvent>
 
 RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -111,6 +112,23 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
                      this, SLOT(removeClicked()));
     hl->addWidget(m_listView);
     this->setLayout(hl);
+
+    //Event filter
+    m_textDocumentation->setText(tr("An all-purpose field to identify information (rights management statement or reference to a service providing such information e.g. via a URL) about copyright, intellectual property rights or other property rights held in and over a resource."));
+    m_buttonRights->installEventFilter(this);
+    m_editRightsLink->installEventFilter(this);
+    m_buttonRightsHolder->installEventFilter(this);
+    m_buttonExploitationIssues->installEventFilter(this);
+    m_buttonCoverage->installEventFilter(this);
+    m_checkRightsClearanceFlag->installEventFilter(this);
+    m_buttonDisclaimer->installEventFilter(this);
+    m_buttonRightsId->installEventFilter(this);
+    m_buttonContactDetails->installEventFilter(this);
+    m_comboFormatIDRefs->installEventFilter(this);
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
+    m_textNote->installEventFilter(this);
 
     // Set data fields
     m_editRightsLink->setText(m_rights->rightsLink());
@@ -615,4 +633,39 @@ void RightsTypeForm::updateListAndButtons()
         title = tr("Contact Details");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool RightsTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_buttonRights )
+            m_textDocumentation->setText(tr("An element to express any form of rights related matters."));
+        else if  (obj == (QObject*) m_editRightsLink)
+            m_textDocumentation->setText(tr("A url pointing to a declaration of rights."));
+        else if  (obj == (QObject*) m_buttonRightsHolder)
+            m_textDocumentation->setText("To identify the person or organisation holding or managing the rights related to the resource.");
+        else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("An optional definition."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text to define the type of rights information provided."));
+        else if (obj == (QObject*) m_buttonExploitationIssues)
+            m_textDocumentation->setText(tr("Use to state any other restrictions, such as non-rights ones, e.g. legal. State by media, territory, scope (restriction on whole item or extracts) and possibly language. The presence of this information can be used by asset management system implementing traffic lights like mechanism to signal that content may be subject to particular restrictions to be clarified before exploitation."));
+        else if (obj == (QObject*) m_buttonCoverage)
+            m_textDocumentation->setText(tr("Specifies a specific start date, end date or period for the availability of the item or the date from which the rights or exploitation issues apply. It may refer to start dates for the availability of an item that is used within a particular geographical area e.g. broadcast locally, regionally, nationally or internationally, or for web-based distribution. A specific time may also be associated with the date."));
+        else if (obj == (QObject*) m_checkRightsClearanceFlag)
+            m_textDocumentation->setText(tr("A flag to signal if content is subject to rights open issues."));
+        else if ( obj == (QObject*) m_buttonDisclaimer)
+            m_textDocumentation->setText(tr("A field for a disclaimer about the content, its content, and its use."));
+        else if ( obj ==(QObject*) m_buttonRightsId)
+            m_textDocumentation->setText(tr("A identifier related to rights, e.g. attributed for a particular purpose by a specific agency in the context of use and exploitation."));
+        else if ( obj == (QObject*) m_buttonContactDetails)
+            m_textDocumentation->setText(tr("Minimum information providing means to further identify and contact the rights manager for the resource in the organisation."));
+        else if ( obj == (QObject*) m_comboFormatIDRefs)
+            m_textDocumentation->setText(tr("A list of formats in which the content is available and to which the set of rights apply."));
+        else if ( obj == (QObject*) m_textNote)
+            m_textDocumentation->setText(tr("A note element to provide additional contextual information."));
+    }
+    return QObject::eventFilter(obj, event);
 }
