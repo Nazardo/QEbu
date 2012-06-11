@@ -41,6 +41,7 @@ private slots:
     void videoTrackFormClosed(Operation op, QVariant value);
     void technicalAttributesFormClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     enum EditMode { AspectRatio, VideoEncoding, VideoTrack, TechnicalAttributesMode };
     void updateListAndButtons();
 

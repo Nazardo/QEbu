@@ -19,6 +19,8 @@ private slots:
     void cancelClicked();
     void applyClicked();
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
+
     QLineEdit *m_editTrackId;
     QLineEdit *m_editTrackName;
     TypeGroupEditBox *m_editTypeGroup;

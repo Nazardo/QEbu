@@ -53,3 +53,13 @@ void LengthTypeEditBox::lengthChanged()
 {
     m_check->setChecked(true);
 }
+
+QUnsignedSpinBox *LengthTypeEditBox::editValue()
+{
+    return m_editValue;
+}
+
+QLineEdit *LengthTypeEditBox::editUnit()
+{
+    return m_editUnit;
+}

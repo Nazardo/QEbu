@@ -16,6 +16,8 @@ public:
                                QWidget *parent = 0);
     LengthType *lengthType();
     void setLabel(const QString &label);
+    QUnsignedSpinBox *editValue();
+    QLineEdit *editUnit();
 private slots:
     void lengthChanged();
 private:

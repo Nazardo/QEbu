@@ -12,9 +12,11 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QLineEdit>
+#include <QTextEdit>
 #include <QCheckBox>
 #include <QFormLayout>
 #include "qextendedspinbox.h"
+#include <QEvent>
 
 VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
                                          QEbuMainWindow *mainWindow,
@@ -109,6 +111,22 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
+
+    //Event filter
+    m_textDocumentation->setText(tr("To list all the characteristics of the video signal."));
+    m_editVideoFormatId->installEventFilter(this);
+    m_editVideoFormatDefinition->installEventFilter(this);
+    m_editVideoFormatName->installEventFilter(this);
+    m_spinRegionDelimX->installEventFilter(this);
+    m_spinRegionDelimY->installEventFilter(this);
+    m_editWidth->editValue()->installEventFilter(this);
+    m_editWidth->editUnit()->installEventFilter(this);
+    m_editHeight->editValue()->installEventFilter(this);
+    m_editHeight->editUnit()->installEventFilter(this);
+    m_buttonAspectRatio->installEventFilter(this);
+    m_buttonVideoEncoding->installEventFilter(this);
+    m_buttonVideoTrack->installEventFilter(this);
+    m_buttonTechnicalAttributes->installEventFilter(this);
 
     //Set data fields...
     m_editVideoFormatId->setText(m_videoFormat->videoFormatId());
@@ -414,4 +432,37 @@ void VideoFormatTypeForm::updateListAndButtons()
         title = tr("Technical Attributes");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool VideoFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editVideoFormatId)
+            m_textDocumentation->setText(tr("An Identifier to identify a specific format in which the resource is available or has been published."));
+        else if ( obj ==(QObject*) m_editVideoFormatDefinition)
+            m_textDocumentation->setText(tr("A definition of the format information being provided either technical or editorial in nature."));
+        else if ( obj == (QObject*) m_editVideoFormatName)
+            m_textDocumentation->setText(tr("A name attributed to a particular format."));
+        else if (obj == (QObject*) m_spinRegionDelimX)
+            m_textDocumentation->setText(tr("The identification of a region in a document, an image or a video is done by defining the coordinates of the bottom left corner of the region. The region is defined from this point of reference using the width and height properties. regionDelimX uses the same unit as width."));
+        else if ( obj ==(QObject*) m_spinRegionDelimY)
+            m_textDocumentation->setText(tr("The identification of a region in a document, an image or a video is done by defining the coordinates of the bottom left corner of the region. The region is defined from this point of reference using the width and height properties. regionDelimY uses the same unit as height."));
+        else if  (obj == (QObject*) m_editWidth->editValue())
+            m_textDocumentation->setText(tr("To define the width of a video image."));
+        else if  (obj == (QObject*) m_editWidth->editUnit())
+            m_textDocumentation->setText("An attribute to specify the unit in which the width is expressed.");
+        else if  (obj == (QObject*) m_editHeight->editValue())
+            m_textDocumentation->setText(tr("To define the height of a video image."));
+        else if  (obj == (QObject*) m_editHeight->editUnit())
+            m_textDocumentation->setText("An attribute to specify the unit in which the height is expressed.");
+        else if ( obj == (QObject*) m_buttonAspectRatio)
+            m_textDocumentation->setText(tr("A string to define e.g. the ratio of the picture (the width by the height), for instance '4:3' or '16 9' (rational). The format of the aspect ratio is precised in the format attributes."));
+        else if ( obj == (QObject*) m_buttonVideoEncoding)
+            m_textDocumentation->setText(tr("Used to express the encoding parameters of the resource e.g. H264 for a video channel."));
+        else if ( obj == (QObject*) m_buttonVideoTrack)
+            m_textDocumentation->setText(tr("To describe the main features of video tracks such as in multiview systems."));
+        else if ( obj == (QObject*) m_buttonTechnicalAttributes)
+            m_textDocumentation->setText(tr("An extension element to allow users and implementers defining their own technical attributes."));
+    }
+    return QObject::eventFilter(obj, event);
 }
