@@ -647,7 +647,7 @@ bool RightsTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
             m_textDocumentation->setText(tr("An optional definition."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme."));
+            m_textDocumentation->setText(tr("A link to a classification scheme."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(tr("Free text to define the type of rights information provided."));
         else if (obj == (QObject*) m_buttonExploitationIssues)

@@ -216,15 +216,15 @@ bool RelationTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_textNote)
             m_textDocumentation->setText(tr("A note element to provide additional contextual information."));
         else if (obj == (QObject*) m_spinRunningOrderNumber)
-            m_textDocumentation->setText(tr("An optional element that provides the ranking/running order within an ordered list."));
+            m_textDocumentation->setText(tr("An optional element that provides the ranking or the running order within an ordered list."));
         else if  (obj == (QObject* ) m_editRelationLink)
             m_textDocumentation->setText(tr("A link related to material."));
         else if  (obj == (QObject* ) m_editRelationIdentifier)
-            m_textDocumentation->setText(tr("A element to specify an identifier."));
+            m_textDocumentation->setText(tr("An element to specify an identifier."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
             m_textDocumentation->setText(tr("An optional definition."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme.\n"));
+            m_textDocumentation->setText(tr("A link to a classification scheme."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(tr("Free text to show the type of relation to another resource, i.e. identifies ways in which the resource is related by intellectual content to some other resource."));
     }

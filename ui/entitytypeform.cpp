@@ -12,6 +12,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFormLayout>
+#include <QEvent>
+#include <QTextEdit>
 
 EntityTypeForm::EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -65,6 +67,13 @@ EntityTypeForm::EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, Q
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
+
+    //Event filter
+    m_textDocumentation->setText(tr("Provides detailed information about a person, a group of persons, or organisation."));
+    m_editEntityId->installEventFilter(this);
+    m_buttonContactDetails->installEventFilter(this);
+    m_buttonOrganisationDetails->installEventFilter(this);
+    m_buttonRole->installEventFilter(this);
 
     // Set data fields...
     m_editEntityId->setText(m_entity->entityId());
@@ -292,4 +301,17 @@ void EntityTypeForm::updateListAndButtons()
     m_listView->clear();
 }
 
-
+bool EntityTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editEntityId )
+            m_textDocumentation->setText(tr("An attribute to uniquely identify the person or organisation."));
+        else if  (obj == (QObject*) m_buttonContactDetails )
+            m_textDocumentation->setText(tr("Minimum information providing means to further identify and contact the entity."));
+        else if  (obj == (QObject*) m_buttonOrganisationDetails )
+            m_textDocumentation->setText(tr("Minimum information providing means to further identify and contact the entity as an organisation. Cardinality is '1'. Only one organisation is acting as an entity or only one organisation is associated to a person in relation to is occupation in the context of the current content description."));
+        else if (obj == (QObject*) m_buttonRole )
+            m_textDocumentation->setText(tr("Used to identify the function fulfilled by the person, group or organisation described as an entity. It can be used for example to detail the role of a 'contributor' or a 'creator', as several functions can be seen as participating to the creative process."));
+    }
+    return QObject::eventFilter(obj, event);
+}

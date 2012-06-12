@@ -34,6 +34,7 @@ private slots:
     void organisationDetailsFormClosed(Operation op, QVariant value);
     void roleFormClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     enum EditMode {
         ContactDetails,
         OrganisationDetails,

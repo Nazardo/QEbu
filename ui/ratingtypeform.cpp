@@ -11,6 +11,8 @@
 #include <QPushButton>
 #include <QFormLayout>
 #include <QMessageBox>
+#include <QEvent>
+#include <QComboBox>
 
 RatingTypeForm::RatingTypeForm(RatingType *rating,
                                QEbuMainWindow *mainWindow,
@@ -65,7 +67,16 @@ RatingTypeForm::RatingTypeForm(RatingType *rating,
 
     //Event filter
     m_textDocumentation->setText(tr("An element to provide rating values attributed to the media resource."));
-
+    m_editRatingValue->installEventFilter(this);
+    m_editRatingScaleMaxValue->installEventFilter(this);
+    m_editRatingScaleMinValue->installEventFilter(this);
+    m_editRatingProvider->installEventFilter(this);
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
+    m_editFormatGroup->editFormatDefinition()->installEventFilter(this);
+    m_editFormatGroup->editFormatLabel()->installEventFilter(this);
+    m_editFormatGroup->editFormatLink()->installEventFilter(this);
 
     // Set text fields...
     m_editRatingValue->setText(m_rating->ratingValue());
@@ -160,3 +171,29 @@ bool RatingTypeForm::checkCompliance()
     return ok;
 }
 
+bool RatingTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editRatingValue )
+            m_textDocumentation->setText(tr("The value given to the rating e.g. a number or else."));
+        else if  (obj == (QObject*) m_editRatingScaleMaxValue)
+            m_textDocumentation->setText(tr("Provides the maximum value of the rating scale."));
+        else if  (obj == (QObject*) m_editRatingScaleMinValue)
+            m_textDocumentation->setText(tr("Provides the minimum value of the rating scale."));
+        else if (obj == (QObject*) m_editRatingProvider)
+            m_textDocumentation->setText(tr("An entity element to identify the provider of the rating value."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("An optional definition of the type of rating used."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("A link to a classification scheme."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text to define the type of rating used."));
+        else if (obj == (QObject*) m_editFormatGroup->editFormatDefinition())
+            m_textDocumentation->setText(tr("An optional definition of the type of format of the rating used."));
+        else if (obj == (QObject*) m_editFormatGroup->editFormatLink())
+            m_textDocumentation->setText(tr("A link to a classification scheme."));
+        else if (obj == (QObject*) m_editFormatGroup->editFormatLabel())
+            m_textDocumentation->setText(tr("Free text to define the type of format of the rating used."));
+    }
+    return QObject::eventFilter(obj, event);
+}

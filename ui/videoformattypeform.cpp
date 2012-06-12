@@ -113,7 +113,7 @@ VideoFormatTypeForm::VideoFormatTypeForm(VideoFormatType *videoFormat,
     this->setLayout(mainHLayout);
 
     //Event filter
-    m_textDocumentation->setText(tr("To list all the characteristics of the video signal."));
+    m_textDocumentation->setText(tr("A description of video characteristics of the resource to provide technical information such as colour, greyscale or black and white colour schemes, frame rate, sampling rate, scanning format, encoding, track configuration."));
     m_editVideoFormatId->installEventFilter(this);
     m_editVideoFormatDefinition->installEventFilter(this);
     m_editVideoFormatName->installEventFilter(this);

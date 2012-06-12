@@ -77,7 +77,7 @@ bool VideoTrackTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
             m_textDocumentation->setText(tr("An optional definition."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme.\n"));
+            m_textDocumentation->setText(tr("A link to a classification scheme.\n"));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(tr("Free text to define the type of video track.\nExample: particular view angle."));
     }
