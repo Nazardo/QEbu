@@ -51,8 +51,6 @@ public:
     {
         if (min >= max)
             return;
-        if (min < 0)
-            min = 0;
         m_min = min;
         m_max = max;
         if (m_validator)
