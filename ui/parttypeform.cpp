@@ -64,7 +64,7 @@ PartTypeForm::PartTypeForm(PartType *part, QEbuMainWindow *mainWindow, QWidget *
     m_editPartId->setText(m_part->partId());
     m_editPartName->setText(m_part->partName());
     if (m_part)
-        m_editCoreDetails->setText(tr("CoreMetada details"));
+        m_editCoreDetails->setText(tr("Core Metada details"));
 }
 
 QString PartTypeForm::toString()
@@ -162,7 +162,7 @@ void PartTypeForm::coreDetailsClosed(Operation op, QVariant value)
     CoreMetadataType *coreMetadara = QVarPtr<CoreMetadataType>::asPointer(value);
     if (!coreMetadara)
         return;
-    m_editCoreDetails->setText("CoreMetadata Details");
+    m_editCoreDetails->setText(tr("Core Metadata Details"));
 }
 
 bool PartTypeForm::eventFilter(QObject *obj, QEvent *event)

@@ -110,6 +110,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(
         m_checkWrappingType->setChecked(true);
     }
 
+
     m_buttonLineNumber->setChecked(true);
 }
 
@@ -162,6 +163,9 @@ void AncillaryDataFormatTypeForm::numberLineChecked(bool checked)
     if (!checked)
         return;
     updateListAndButtons();
+    for (int i = 0; i < m_ancillaryDataFormat->lineNumber().size(); ++i) {
+        m_listView->addItem(QString::number(m_ancillaryDataFormat->lineNumber().at(i)));
+    }
 }
 
 void AncillaryDataFormatTypeForm::cancelClicked()

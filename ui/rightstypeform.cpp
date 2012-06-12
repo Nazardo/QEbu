@@ -135,7 +135,8 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
     // Set data fields
     m_editRightsLink->setText(m_rights->rightsLink());
     m_textNote->setText(m_rights->note());
-    m_checkRightsClearanceFlag->setChecked(m_rights->rightsClearanceFlag());
+    if (m_rights->rightsClearanceFlag())
+        m_checkRightsClearanceFlag->setChecked((bool) *(m_rights->rightsClearanceFlag()));
     m_comboFormatIDRefs->setChecked(true);
 }
 
