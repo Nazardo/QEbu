@@ -76,7 +76,7 @@ private:
 
     void focusOutEvent(QFocusEvent *event)
     {
-        (void) event;
+        QAbstractSpinBox::focusOutEvent(event);
         lineEdit()->setText(QString::number(m_value, 10));
     }
 
@@ -191,7 +191,7 @@ private:
 
     void focusOutEvent(QFocusEvent *event)
     {
-        (void) event;
+        QAbstractSpinBox::focusOutEvent(event);
         lineEdit()->setText(QString::number(m_value, 10));
     }
 
