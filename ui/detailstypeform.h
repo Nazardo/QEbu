@@ -31,7 +31,7 @@ private slots:
     void addressFormClosed(Operation op, QVariant value);
 private:
     void updateListAndButtons();
-
+    bool eventFilter(QObject *, QEvent *);
     ListView *m_listView;
     TypeGroupEditBox *m_editTypeGroup;
     QLineEdit *m_editEmailAddress;

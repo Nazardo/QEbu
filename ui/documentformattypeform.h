@@ -34,6 +34,7 @@ private slots:
     void technicalAttributesClicked();
     void technicalAttributesFormClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *, QEvent *);
     TypeGroupEditBox *m_editTypeGroup;
     FormatGroupEditBox *m_formatTypeGroup;
     QLineEdit *m_editDocumentFormatId;

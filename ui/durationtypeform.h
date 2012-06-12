@@ -36,7 +36,7 @@ private slots:
     void factorDenominatorChanged();
 private:
     void updateListAndButtons();
-
+    bool eventFilter(QObject *, QEvent *);
     QLabel *m_labelTimecode;
     QLineEdit *m_editTimecode;
     QLabel *m_labelNormalPlaytimeHour;

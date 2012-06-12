@@ -39,7 +39,7 @@ private:
         TechnicalAttributesMode
     };
     void updateListAndButtons();
-
+    bool eventFilter(QObject *, QEvent *);
     QLineEdit *m_editDataFormatId;
     QLineEdit *m_editDataFormatName;
     QLineEdit *m_editDataFormatDefinition;

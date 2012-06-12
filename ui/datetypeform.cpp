@@ -10,6 +10,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFormLayout>
+#include <QEvent>
+#include <QTextEdit>
 
 DateTypeForm::DateTypeForm(DateType *date,
                            QEbuMainWindow *mainWindow,
@@ -26,45 +28,51 @@ DateTypeForm::DateTypeForm(DateType *date,
     QVBoxLayout *leftVLayout = new QVBoxLayout;
     QFormLayout *formLayout = new QFormLayout;
 
-    QPushButton *buttonDate = new QPushButton(">>");
-    formLayout->addRow(tr("Date"), buttonDate);
-    QObject::connect(buttonDate, SIGNAL(toggled(bool)),
+    m_buttonDate = new QPushButton(">>");
+    m_buttonDate->installEventFilter(this);
+    formLayout->addRow(tr("Date"), m_buttonDate);
+    QObject::connect(m_buttonDate, SIGNAL(toggled(bool)),
                      this, SLOT(dateChecked(bool)));
-    QPushButton *buttonCreated = new QPushButton(">>");
-    formLayout->addRow(tr("Date Created"), buttonCreated);
-    QObject::connect(buttonCreated, SIGNAL(toggled(bool)),
+    m_buttonCreated = new QPushButton(">>");
+    m_buttonCreated->installEventFilter(this);
+    formLayout->addRow(tr("Date Created"), m_buttonCreated);
+    QObject::connect(m_buttonCreated, SIGNAL(toggled(bool)),
                      this, SLOT(createdChecked(bool)));
-    QPushButton *buttonIssued = new QPushButton(">>");
-    formLayout->addRow(tr("Date Issued"), buttonIssued);
-    QObject::connect(buttonIssued, SIGNAL(toggled(bool)),
+    m_buttonIssued = new QPushButton(">>");
+    m_buttonIssued->installEventFilter(this);
+    formLayout->addRow(tr("Date Issued"), m_buttonIssued);
+    QObject::connect(m_buttonIssued, SIGNAL(toggled(bool)),
                      this, SLOT(issuedChecked(bool)));
-    QPushButton *buttonModified = new QPushButton(">>");
-    formLayout->addRow(tr("Date Modified"), buttonModified);
-    QObject::connect(buttonModified, SIGNAL(toggled(bool)),
+    m_buttonModified = new QPushButton(">>");
+    m_buttonModified->installEventFilter(this);
+    formLayout->addRow(tr("Date Modified"), m_buttonModified);
+    QObject::connect(m_buttonModified, SIGNAL(toggled(bool)),
                      this, SLOT(modifiedChecked(bool)));
-    QPushButton *buttonDigitised = new QPushButton(">>");
-    formLayout->addRow(tr("Date Digitised"), buttonDigitised);
-    QObject::connect(buttonDigitised, SIGNAL(toggled(bool)),
+    m_buttonDigitised = new QPushButton(">>");
+    m_buttonDigitised->installEventFilter(this);
+    formLayout->addRow(tr("Date Digitised"), m_buttonDigitised);
+    QObject::connect(m_buttonDigitised, SIGNAL(toggled(bool)),
                      this, SLOT(digitisedChecked(bool)));
-    QPushButton *buttonAlternative = new QPushButton(">>");
-    formLayout->addRow(tr("Date Alternative"), buttonAlternative);
-    QObject::connect(buttonAlternative, SIGNAL(toggled(bool)),
+    m_buttonAlternative = new QPushButton(">>");
+    m_buttonAlternative->installEventFilter(this);
+    formLayout->addRow(tr("Date Alternative"), m_buttonAlternative);
+    QObject::connect(m_buttonAlternative, SIGNAL(toggled(bool)),
                      this, SLOT(alternativeChecked(bool)));
     leftVLayout->addLayout(formLayout);
 
     QButtonGroup *group = new QButtonGroup(this);
-    buttonDate->setCheckable(true);
-    group->addButton(buttonDate);
-    buttonCreated->setCheckable(true);
-    group->addButton(buttonCreated);
-    buttonIssued->setCheckable(true);
-    group->addButton(buttonIssued);
-    buttonModified->setCheckable(true);
-    group->addButton(buttonModified);
-    buttonDigitised->setCheckable(true);
-    group->addButton(buttonDigitised);
-    buttonAlternative->setCheckable(true);
-    group->addButton(buttonAlternative);
+    m_buttonDate->setCheckable(true);
+    group->addButton(m_buttonDate);
+    m_buttonCreated->setCheckable(true);
+    group->addButton(m_buttonCreated);
+    m_buttonIssued->setCheckable(true);
+    group->addButton(m_buttonIssued);
+    m_buttonModified->setCheckable(true);
+    group->addButton(m_buttonModified);
+    m_buttonDigitised->setCheckable(true);
+    group->addButton(m_buttonDigitised);
+    m_buttonAlternative->setCheckable(true);
+    group->addButton(m_buttonAlternative);
 
     mainHLayout->addLayout(leftVLayout);
     {
@@ -79,7 +87,8 @@ DateTypeForm::DateTypeForm(DateType *date,
     }
     this->setLayout(mainHLayout);
     // Set text fields...
-    buttonDate->setChecked(true);
+    m_buttonDate->setChecked(true);
+    m_textDocumentation->setText(tr("Dates associated with events occurring during the life of the resource.\nTypically, Date will be associated with the creation, modification or availability of the resource."));
 }
 
 QString DateTypeForm::toString()
@@ -374,6 +383,25 @@ void DateTypeForm::updateListTitle()
         title = tr("Alternative Date");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool DateTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_buttonDate)
+            m_textDocumentation->setText(tr("An element to provide a date in the xml:date format"));
+        else if ( obj == (QObject*) m_buttonCreated )
+            m_textDocumentation->setText(tr("An element to specify the creation date for a particular version or rendition of a resource across its life cycle. It is the moment in time that the media item was finalized during its production process and is forwarded to other divisions or agencies to make it ready for publication or distribution."));
+        else if  (obj == (QObject*) m_buttonIssued)
+            m_textDocumentation->setText(tr("Date of formal issuance (e.g. publication) of the resource.\nSpecifies the formal date for a particular version or rendition of a resource has been made ready or officially released for distribution, publication or consumption, e.g. the broadcasting date of a radio programme.\nA specific time may also be associated with the date."));
+        else if  (obj == (QObject*) m_buttonModified)
+            m_textDocumentation->setText(tr("Date on which the resource was last changed."));
+        else if  (obj == (QObject*) m_buttonDigitised)
+            m_textDocumentation->setText(tr("Date on which the resource was digitised."));
+        else if  (obj == (QObject*) m_buttonAlternative)
+            m_textDocumentation->setText(tr("To define an alternative date important to qualify the resource."));
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 void DateTypeForm::dateChecked(bool checked)

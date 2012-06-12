@@ -9,7 +9,9 @@
 #include <QMessageBox>
 #include <QVBoxLayout>
 #include <QFormLayout>
-
+#include <QEvent>
+#include <QTextEdit>
+#include <QComboBox>
 
 DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description,
                                          QEbuMainWindow *mainWindow,
@@ -26,21 +28,28 @@ DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description,
     {
         m_editElementDescription = new ElementTypeEditBox;
         m_editElementDescription->setLabel(tr("Description"));
+        m_editElementDescription->editLang()->installEventFilter(this);
+        m_editElementDescription->editValue()->installEventFilter(this);
         vl->addWidget(m_editElementDescription);
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(description);
+        m_editTypeGroup = new TypeGroupEditBox(m_description);
         m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_DescriptionTypeCodeCS")); //Autocompletion values
+        m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+        m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+        m_editTypeGroup->editTypeLink()->installEventFilter(this);
         vl->addWidget(m_editTypeGroup);
     }
     {
         QFormLayout *fl = new QFormLayout;
         m_textNote = new QTextEdit;
+        m_textNote->installEventFilter(this);
         fl->addRow(tr("Note"), m_textNote);
         vl->addLayout(fl);
     }
-    this->setLayout(vl);
     // Set text fields...
+    m_textDocumentation->setText(tr("Free-form text or a narrative to report general notes, abstracts, or summaries about the intellectual content of a resource. The information may be in the form of a paragraph giving an individual program description, anecdotal interpretations, or brief content reviews. The description may also consist of outlines, lists, bullet points, edit decision lists, indexes, or tables of content, a reference to a graphical representation of content or even a pointer (URI, URL) to an external resource.\nA running order can also be provided as a description.\nFor a Radio or television programme a running order can be used as description.\nA description can be provided in different languages."));
     m_textNote->setText(m_description->note());
     if (m_description->description()) {
         m_editElementDescription->editLang()->setText(m_description->description()->lang());
@@ -73,6 +82,25 @@ void DescriptionTypeForm::applyClicked()
                               m_editElementDescription->editValue()->text(),
                               m_editElementDescription->editLang()->text()));
     emit closed(m_op, QVarPtr<DescriptionType>::asQVariant(m_description));
+}
+
+bool DescriptionTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("An optional definition."));
+        else if ( obj == (QObject*) m_editTypeGroup->editTypeLabel() )
+            m_textDocumentation->setText(tr("Free text to define the type."));
+        else if  (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme"));
+        else if  (obj == (QObject*) m_editElementDescription->editLang())
+            m_textDocumentation->setText(tr("The language in which the title is provided."));
+        else if  (obj == (QObject*) m_editElementDescription->editValue())
+            m_textDocumentation->setText(tr("Free-text to provide the main title by which the resource is known. The title can be provided in different languages.\nExample: ‘the fifth element’."));
+        else if  (obj == (QObject*) m_textNote)
+            m_textDocumentation->setText(tr("A note element to provide additional contextual information"));
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 bool DescriptionTypeForm::checkCompliance()

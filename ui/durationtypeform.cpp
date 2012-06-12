@@ -18,6 +18,8 @@
 #include <QCheckBox>
 #include <QFormLayout>
 #include <QLabel>
+#include <QEvent>
+#include <QTextEdit>
 #include "qextendedspinbox.h"
 
 DurationTypeForm::DurationTypeForm( DurationType *duration,
@@ -40,6 +42,7 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
 
         m_labelTimecode = new QLabel(tr("Start time"));
         m_editTimecode = new QLineEdit();
+        m_editTimecode->installEventFilter(this);
         QRegExp SMPTE_ST_2021_1_2009("[0-9][0-9]:[0-5][0-9]:[0-5][0-9]:[0-9][0-9]");
         m_editTimecode->setValidator(new QRegExpValidator(SMPTE_ST_2021_1_2009));
         m_editTimecode->setPlaceholderText("hh:mm:ss:ff");
@@ -63,6 +66,10 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
             m_spinNormalPlaytimeMinute = new QSpinBox;
             m_spinNormalPlaytimeSecond = new QSpinBox;
             m_spinNormalPlaytimeMSecond = new QSpinBox;
+            m_spinNormalPlaytimeHour->installEventFilter(this);
+            m_spinNormalPlaytimeMinute->installEventFilter(this);
+            m_spinNormalPlaytimeSecond->installEventFilter(this);
+            m_spinNormalPlaytimeMSecond->installEventFilter(this);
             m_spinNormalPlaytimeHour->setMinimum(0);
             m_spinNormalPlaytimeMinute->setMinimum(0);
             m_spinNormalPlaytimeSecond->setMinimum(0);
@@ -88,11 +95,13 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
 
             m_spinUnitNumberValue = new QSignedSpinBox;
             m_spinUnitNumberValue->setRange(qEbuLimits::getMinInt64(), qEbuLimits::getMaxInt64());
+            m_spinUnitNumberValue->installEventFilter(this);
             m_labelUnitNumber = new QLabel(tr("Unit value"));
             gl->addWidget(m_labelUnitNumber, 0, 0);
             gl->addWidget(m_spinUnitNumberValue, 0, 1);
 
             m_spinRate = new QUnsignedSpinBox;
+            m_spinRate->installEventFilter(this);
             m_spinRate->setRange(1, qEbuLimits::getMaxUInt());
             m_spinRate->setValue(1);
             m_checkRate = new QCheckBox(tr("Rate"));
@@ -102,6 +111,7 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
             gl->addWidget(m_spinRate, 1, 1);
 
             m_spinFactorNumerator = new QUnsignedSpinBox;
+            m_spinFactorNumerator->installEventFilter(this);
             m_spinFactorNumerator->setRange(1, qEbuLimits::getMaxUInt());
             m_checkFactorNumerator = new QCheckBox(tr("Factor numerator"));
             QObject::connect(m_spinFactorNumerator, SIGNAL(valueChanged()),
@@ -110,6 +120,7 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
             gl->addWidget(m_spinFactorNumerator, 2, 1);
 
             m_spinFactorDenominator = new QUnsignedSpinBox;
+            m_spinFactorDenominator->installEventFilter(this);
             m_spinFactorDenominator->setRange(1, qEbuLimits::getMaxUInt());
             m_checkFactorDenominator = new QCheckBox(tr("Factor denominator"));
             QObject::connect(m_spinFactorDenominator, SIGNAL(valueChanged()),
@@ -126,6 +137,9 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
         m_radioTime->setCheckable(true);
         l->addWidget(m_radioTime);
         m_editFormatGroup = new FormatGroupEditBox(m_duration->time());
+        m_editFormatGroup->editFormatDefinition()->installEventFilter(this);
+        m_editFormatGroup->editFormatLabel()->installEventFilter(this);
+        m_editFormatGroup->editFormatLink()->installEventFilter(this);
         m_editFormatGroup->setLabel(tr("Time"));
         l->addWidget(m_editFormatGroup);
     }
@@ -148,6 +162,7 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
     this->setLayout(l);
 
     // Set data fields...
+    m_textDocumentation->setText(tr("To express a duration"));
     m_editTimecode->setText(m_duration->timecode());
     if (m_duration->normalPlayTime()) {
         m_spinNormalPlaytimeHour->setValue(m_duration->normalPlayTime()->hours());
@@ -373,4 +388,35 @@ void DurationTypeForm::factorNumeratorChanged()
 void DurationTypeForm::factorDenominatorChanged()
 {
     m_checkFactorDenominator->setChecked(true);
+}
+
+bool DurationTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_editTimecode)
+            m_textDocumentation->setText(tr("To express the duration using timecode compliant with SMPTE ST\n2021-1:2009"));
+        else if ( obj == (QObject*) m_spinNormalPlaytimeHour )
+            m_textDocumentation->setText(tr("To express the duration in the format HH:MM:SS.S"));
+        else if  (obj == (QObject*) m_spinNormalPlaytimeMinute)
+            m_textDocumentation->setText(tr("To express the duration in the format HH:MM:SS.S"));
+        else if  (obj == (QObject*) m_spinNormalPlaytimeSecond)
+            m_textDocumentation->setText(tr("To express the duration in the format HH:MM:SS.S"));
+        else if  (obj == (QObject*) m_spinNormalPlaytimeMSecond)
+            m_textDocumentation->setText(tr("To express the duration in the format HH:MM:SS.S"));
+        else if  (obj == (QObject*) m_spinUnitNumberValue)
+            m_textDocumentation->setText(tr("The express the duration as a number of edit Units"));
+        else if  (obj == (QObject*) m_spinRate)
+            m_textDocumentation->setText(tr("The base reference for the material, i.e. the frame rate for video or sample rate for audio"));
+        else if  (obj == (QObject*) m_spinFactorNumerator)
+            m_textDocumentation->setText(tr("The numerator of the correction factor if applicable, Value is '1' by default."));
+        else if  (obj == (QObject*) m_spinFactorDenominator)
+            m_textDocumentation->setText(tr("The denominator of the correction factor if applicable Value is '1' by default."));
+        else if  (obj == (QObject*) m_editFormatGroup->editFormatDefinition())
+            m_textDocumentation->setText(tr("An optional definition."));
+        else if  (obj == (QObject*) m_editFormatGroup->editFormatLabel())
+            m_textDocumentation->setText(tr("Free text."));
+        else if  (obj == (QObject*) m_editFormatGroup->editFormatLink())
+            m_textDocumentation->setText(tr("A URI to e.g. a classification scheme term."));
+    }
+    return QObject::eventFilter(obj, event);
 }

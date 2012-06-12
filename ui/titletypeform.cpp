@@ -10,6 +10,7 @@
 #include <QMessageBox>
 #include <QEvent>
 
+
 TitleTypeForm::TitleTypeForm(TitleType *title,
                              QEbuMainWindow *mainWindow,
                              QWidget *parent) :

@@ -21,6 +21,7 @@ signals:
 private slots:
     void cancelClicked();
     void applyClicked();
+    bool eventFilter(QObject *, QEvent *);
 private:
     TypeGroupEditBox *m_editTypeGroup;
     QTextEdit *m_textNote;

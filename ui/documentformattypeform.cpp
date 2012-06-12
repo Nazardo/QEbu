@@ -13,6 +13,9 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QFormLayout>
+#include <QTextEdit>
+#include <QEvent>
+#include <QComboBox>
 
 DocumentFormatTypeForm::DocumentFormatTypeForm(
         DocumentFormatType *documentFormat,
@@ -28,23 +31,32 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
     QVBoxLayout *vl = new QVBoxLayout;
     {
         m_editTypeGroup = new TypeGroupEditBox(documentFormat);
+        m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+        m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+        m_editTypeGroup->editTypeLink()->installEventFilter(this);
         vl->addWidget(m_editTypeGroup);
     }
 
     {
         m_formatTypeGroup = new FormatGroupEditBox(documentFormat);
+        m_formatTypeGroup->editFormatDefinition()->installEventFilter(this);
+        m_formatTypeGroup->editFormatLabel()->installEventFilter(this);
+        m_formatTypeGroup->editFormatLink()->installEventFilter(this);
         vl->addWidget(m_formatTypeGroup);
     }
     {
         QFormLayout *fl = new QFormLayout;
 
         m_editDocumentFormatId = new QLineEdit;
+        m_editDocumentFormatId->installEventFilter(this);
         fl->addRow(tr("Document Format Id:"),m_editDocumentFormatId);
 
         m_editDocumentFormatName = new QLineEdit;
+        m_editDocumentFormatName->installEventFilter(this);
         fl->addRow(tr("Document Format Name:"),m_editDocumentFormatName);
 
         m_editDocumentFormatDefinition = new QLineEdit;
+        m_editDocumentFormatDefinition->installEventFilter(this);
         fl->addRow(tr("Document Format Definition:"),m_editDocumentFormatDefinition);
 
         vl->addLayout(fl);
@@ -53,14 +65,17 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
         QGridLayout *gl = new QGridLayout;
 
         m_spinWordCount = new QSpinBox;
+        m_spinWordCount->installEventFilter(this);
         m_checkWordCount = new QCheckBox(tr("Word Count"));
         m_spinWordCount->setRange(0, qEbuLimits::getMaxInt());
+        m_spinWordCount->installEventFilter(this);
         gl->addWidget(m_checkWordCount, 0, 0);
         gl->addWidget(m_spinWordCount, 0, 1);
         QObject::connect(m_spinWordCount, SIGNAL(valueChanged(int)),
                          this, SLOT(wordCountChanged()));
 
         m_spinRegionDelimX = new QUnsignedSpinBox;
+        m_spinRegionDelimX->installEventFilter(this);
         m_checkRegionDelimX = new QCheckBox(tr("Region Delim X"));
         m_spinRegionDelimX->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         gl->addWidget(m_checkRegionDelimX, 1, 0);
@@ -70,6 +85,7 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
 
 
         m_spinRegionDelimY = new QUnsignedSpinBox;
+        m_spinRegionDelimY->installEventFilter(this);
         m_checkRegionDelimY = new QCheckBox(tr("Region Delim X"));
         m_spinRegionDelimY->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         gl->addWidget(m_checkRegionDelimY, 2, 0);
@@ -78,10 +94,14 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
                          this, SLOT(regionDelimYChanged()));
 
         m_editWidth = new LengthTypeEditBox(m_documentFormat->width());
+        m_editWidth->editValue()->installEventFilter(this);
+        m_editWidth->editUnit()->installEventFilter(this);
         m_editWidth->setLabel(tr("Width"));
         gl->addWidget(m_editWidth, 3, 0, 1, 2);
 
         m_editHeight = new LengthTypeEditBox(m_documentFormat->height());
+        m_editHeight->editUnit()->installEventFilter(this);
+        m_editHeight->editValue()->installEventFilter(this);
         m_editHeight->setLabel(tr("Height"));
         gl->addWidget(m_editHeight, 4, 0, 1, 2);
 
@@ -91,6 +111,7 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Technical attributes")));
         m_editTechnicalAttributes = new QLineEdit;
+        m_editTechnicalAttributes->installEventFilter(this);
         m_editTechnicalAttributes->setReadOnly(true);
         hl->addWidget(m_editTechnicalAttributes);
         QPushButton *buttonTechnicalAttributes = new QPushButton(tr("Add/Edit"));
@@ -106,6 +127,7 @@ DocumentFormatTypeForm::DocumentFormatTypeForm(
     this->setLayout(vl);
 
     //Set data fields...
+    m_textDocumentation->setText(tr("A description of characteristics of the resource if a document."));
     m_editDocumentFormatId->setText(m_documentFormat->documentFormatId());
     m_editDocumentFormatName->setText(m_documentFormat->documentFormatName());
     m_editDocumentFormatDefinition->setText(m_documentFormat->documentFormatDefinition());
@@ -203,6 +225,47 @@ void DocumentFormatTypeForm::technicalAttributesFormClosed(StackableWidget::Oper
     if (op == Add)
         m_documentFormat->setTechnicalAttributes(technicalAttributes);
     m_editTechnicalAttributes->setText(technicalAttributes->toString());
+}
+
+bool DocumentFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_formatTypeGroup->editFormatDefinition())
+            m_textDocumentation->setText(tr("Free text for an optional definition."));
+        else if ( obj == (QObject*) m_formatTypeGroup->editFormatLabel() )
+            m_textDocumentation->setText(tr("Free text."));
+        else if  (obj == (QObject*) m_formatTypeGroup->editFormatLink())
+            m_textDocumentation->setText(tr("Link to a classification scheme."));
+        else if  (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("Free text."));
+        else if  (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text."));
+        else if  (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("Link to a Classification Scheme,"));
+        else if  (obj == (QObject*) m_editDocumentFormatId)
+            m_textDocumentation->setText(tr("An identifier associated to the document format"));
+        else if  (obj == (QObject*) m_editDocumentFormatDefinition)
+            m_textDocumentation->setText(tr("A definition associated to the signing format"));
+        else if  (obj == (QObject*) m_editDocumentFormatName)
+            m_textDocumentation->setText(tr("An name associated to the document format"));
+        else if  (obj == (QObject*) m_editTechnicalAttributes)
+            m_textDocumentation->setText(tr("To provide a user defined technical attribute. See Technical Attributes below."));
+        else if  (obj == (QObject*) m_spinWordCount)
+            m_textDocumentation->setText(tr("To provide a word count for the document"));
+        else if  (obj == (QObject*) m_spinRegionDelimX)
+            m_textDocumentation->setText(tr("The identification of a region in a document, an image or a video\nis done by defining the coordinates of the bottom left corner of the region\nThe region is defined from this point of reference using the width and\nheight properties. regionDelimX uses the same unit as width."));
+        else if  (obj == (QObject*) m_spinRegionDelimY)
+            m_textDocumentation->setText(tr("The identification of a region in a document, an image or a video\nis done by defining the coordinates of the bottom left corner of the region.\nThe region is defined from this point of reference using the width and\nheight properties. regionDelimY uses the same unit as\nheight."));
+        else if  (obj == (QObject*) m_editWidth->editUnit())
+            m_textDocumentation->setText(tr("The width of an image, video or document."));
+        else if  (obj == (QObject*) m_editWidth->editValue())
+            m_textDocumentation->setText(tr("The width of an image, video or document."));
+        else if  (obj == (QObject*) m_editHeight->editUnit())
+            m_textDocumentation->setText(tr("The height of an image, video or document."));
+        else if  (obj == (QObject*) m_editHeight->editValue())
+            m_textDocumentation->setText(tr("The height of an image, video or document."));
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 

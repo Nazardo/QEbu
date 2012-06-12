@@ -10,6 +10,9 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFormLayout>
+#include <QComboBox>
+#include <QTextEdit>
+#include <QEvent>
 
 DetailsTypeForm::DetailsTypeForm(DetailsType *details,
                                  QEbuMainWindow *mainWindow,
@@ -25,20 +28,28 @@ DetailsTypeForm::DetailsTypeForm(DetailsType *details,
     QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
-        m_editTypeGroup = new TypeGroupEditBox(details);
+        m_editTypeGroup = new TypeGroupEditBox(m_details);
+        m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+        m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+        m_editTypeGroup->editTypeLink()->installEventFilter(this);
         l->addWidget(m_editTypeGroup);
     }
     {
         QFormLayout *fl = new QFormLayout;
         m_editEmailAddress = new QLineEdit;
+        m_editEmailAddress->installEventFilter(this);
         fl->addRow(tr("Email"), m_editEmailAddress);
         m_editWebAddress = new QLineEdit;
+        m_editWebAddress->installEventFilter(this);
         fl->addRow(tr("Web Address"), m_editWebAddress);
         m_editTelephoneNumber = new QLineEdit;
+        m_editTelephoneNumber->installEventFilter(this);
         fl->addRow(tr("Telephone"), m_editTelephoneNumber);
         m_editMobileTelephoneNumber = new QLineEdit;
+        m_editMobileTelephoneNumber->installEventFilter(this);
         fl->addRow(tr("Mobile"), m_editMobileTelephoneNumber);
         m_buttonAddress = new QPushButton(">>");
+        m_buttonAddress->installEventFilter(this);
         fl->addRow(tr("Address"), m_buttonAddress);
         QObject::connect(m_buttonAddress, SIGNAL(toggled(bool)),
                          this, SLOT(addressChecked(bool)));
@@ -61,6 +72,7 @@ DetailsTypeForm::DetailsTypeForm(DetailsType *details,
     this->setLayout(mainHLayout);
 
     // Set data fields...
+    m_textDocumentation->setText(tr("The contact details of a contact/person or organisation"));
     m_editEmailAddress->setText(m_details->emailAddress());
     m_editWebAddress->setText(m_details->webAddress());
     m_editTelephoneNumber->setText(m_details->telephoneNumber());
@@ -145,4 +157,28 @@ void DetailsTypeForm::updateListAndButtons()
     title = tr("Address");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool DetailsTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("An optional definition."));
+        else if ( obj == (QObject*) m_editTypeGroup->editTypeLabel() )
+            m_textDocumentation->setText(tr("Free text to define the type."));
+        else if  (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme"));
+        else if  (obj == (QObject*) m_editEmailAddress)
+            m_textDocumentation->setText(tr("The email address of a contact or organisation"));
+        else if  (obj == (QObject*) m_editTelephoneNumber)
+            m_textDocumentation->setText(tr("The telephone number of a contact or organisation."));
+        else if  (obj == (QObject*) m_editWebAddress)
+            m_textDocumentation->setText(tr("The web address of a contact or organisation"));
+        else if  (obj == (QObject*) m_editMobileTelephoneNumber)
+            m_textDocumentation->setText(tr("The mobile telephone number of a contact or organisation."));
+        else if  (obj == (QObject*) m_buttonAddress)
+            m_textDocumentation->setText(tr("The address of a contact or organisation."));
+
+    }
+    return QObject::eventFilter(obj, event);
 }

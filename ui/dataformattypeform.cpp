@@ -12,6 +12,8 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFormLayout>
+#include <QTextEdit>
+#include <QEvent>
 
 DataFormatTypeForm::DataFormatTypeForm(DataFormatType *dataFormat,
                                        QEbuMainWindow *mainWindow,
@@ -72,9 +74,16 @@ DataFormatTypeForm::DataFormatTypeForm(DataFormatType *dataFormat,
     this->setLayout(mainHLayout);
 
     //Set data fields...
+    m_textDocumentation->setText(tr("To provide information on captioning and ancillary data formats optionally used in the resource"));
     m_editDataFormatId->setText(m_dataFormat->dataFormatId());
     m_editDataFormatName->setText(m_dataFormat->dataFormatName());
     m_editDataFormatDefinition->setText(m_dataFormat->dataFormatDefinition());
+    m_editDataFormatId->installEventFilter(this);
+    m_editDataFormatName->installEventFilter(this);
+    m_editDataFormatDefinition->installEventFilter(this);
+    m_buttonCaptioningFormat->installEventFilter(this);
+    m_buttonAncillaryDataFormat->installEventFilter(this);
+    m_buttonTechnicalAttributes->installEventFilter(this);
     m_buttonCaptioningFormat->setChecked(true);
 }
 
@@ -289,4 +298,23 @@ void DataFormatTypeForm::updateListAndButtons()
         title = tr("Technical attributes");
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool DataFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_editDataFormatId)
+            m_textDocumentation->setText(tr("An Identifier to identify a specific format in which the resource is available or has been published."));
+        else if ( obj == (QObject*) m_editDataFormatName )
+            m_textDocumentation->setText(tr("A name attributed to a particular format."));
+        else if  (obj == (QObject*) m_editDataFormatDefinition)
+            m_textDocumentation->setText(tr("A definition of the format information being provided either technical or editorial in nature."));
+        else if  (obj == (QObject*) m_buttonCaptioningFormat)
+            m_textDocumentation->setText(tr("Information on the captioning format used in the media resource."));
+        else if  (obj == (QObject*) m_buttonAncillaryDataFormat)
+            m_textDocumentation->setText(tr("Information on ancillary data available in the media resource."));
+        else if  (obj == (QObject*) m_buttonTechnicalAttributes)
+            m_textDocumentation->setText(tr("An extension element to allow users and implementers defining their own technical attributes."));
+    }
+    return QObject::eventFilter(obj, event);
 }

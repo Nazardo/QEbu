@@ -5,6 +5,7 @@
 
 class DateType;
 class ListView;
+class QPushButton;
 
 class DateTypeForm : public StackableWidget
 {
@@ -41,9 +42,15 @@ private:
         Alternative
     };
     void updateListTitle();
-
+    bool eventFilter(QObject *, QEvent *);
     EditMode m_currentEditMode;
     DateType *m_date;
+    QPushButton *m_buttonDate;
+    QPushButton *m_buttonCreated;
+    QPushButton *m_buttonIssued;
+    QPushButton *m_buttonModified;
+    QPushButton *m_buttonDigitised;
+    QPushButton *m_buttonAlternative;
     ListView *m_listView;
 };
 
