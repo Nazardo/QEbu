@@ -19,6 +19,7 @@ private:
     QLineEdit *m_editValue;
     QLineEdit *m_editLang;
     QLabel *m_label;
+    QLabel *m_labelLang;
 };
 
 #endif // ELEMENTTYPEEDITBOX_H
