@@ -28,6 +28,7 @@ StatusGroupEditBox::StatusGroupEditBox(StatusGroup *statusGroup, QWidget *parent
     m_editStatusLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
+    m_editStatusLink->setToolTip("Press Enter to save your custom value");
 
     if (!statusGroup)
         return;

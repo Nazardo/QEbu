@@ -30,6 +30,7 @@ FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup,
     m_editFormatLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
+    m_editFormatLink->setToolTip("Press Enter to save your custom value");
 
     if (!formatGroup) {
         m_editFormatLink->addItem("",""); //Add an empty item

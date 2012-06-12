@@ -29,6 +29,7 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     m_editTypeLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
+    m_editTypeLink->setToolTip("Press Enter to save your custom value");
 
     if (!typeGroup) {
         m_editTypeLink->addItem("",""); //Add an empty item
