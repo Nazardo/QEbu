@@ -27,6 +27,9 @@ FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup,
     m_editFormatLink->setEditable(true);
     m_editFormatLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editFormatLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
+    m_editFormatLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \
+                                  QComboBox::down-arrow {image: url(noimg); \
+                                  border-width: 0px;}");
 
     if (!formatGroup) {
         m_editFormatLink->addItem("",""); //Add an empty item
@@ -54,6 +57,8 @@ void FormatGroupEditBox::addLinksMap(QMap<QString, QString> *values)
 {
     int currentIndex = m_editFormatLink->currentIndex();
     QString selectedData = m_editFormatLink->itemData(currentIndex).toString();
+
+    m_editFormatLink->setStyleSheet(""); //Restore default style (show arrow)
 
     QList<QString> keys = values->keys();
     for (int i=0; i < keys.size(); ++i) {

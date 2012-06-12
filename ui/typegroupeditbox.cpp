@@ -26,6 +26,9 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     m_editTypeLink->setEditable(true);
     m_editTypeLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editTypeLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
+    m_editTypeLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \
+                                  QComboBox::down-arrow {image: url(noimg); \
+                                  border-width: 0px;}");
 
     if (!typeGroup) {
         m_editTypeLink->addItem("",""); //Add an empty item
@@ -34,7 +37,7 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     // Set text fields
     m_editTypeLabel->setText(typeGroup->typeLabel());
     m_editTypeDefinition->setText(typeGroup->typeDefinition());
-    m_editTypeLink->addItem("",typeGroup->typeLink());
+    m_editTypeLink->addItem(typeGroup->typeLink(),typeGroup->typeLink());
 }
 
 TypeGroup *TypeGroupEditBox::typeGroup()
@@ -54,6 +57,8 @@ void TypeGroupEditBox::addLinksMap(QMap<QString, QString> *values)
     int currentIndex = m_editTypeLink->currentIndex();
     QString selectedData = m_editTypeLink->itemData(currentIndex).toString();
 
+    m_editTypeLink->setStyleSheet("");
+
     QList<QString> keys = values->keys();
     for (int i=0; i < keys.size(); ++i) {
         QString key = keys.at(i);
@@ -62,6 +67,7 @@ void TypeGroupEditBox::addLinksMap(QMap<QString, QString> *values)
             m_editTypeLink->addItem(values->value(key),key);
             if (currentIndex == 0 && key == selectedData) { // This is the value previously stored
                 m_editTypeLink->setItemData(currentIndex,""); //This is the empty value
+                m_editTypeLink->setItemText(currentIndex,""); //This is the empty value
                 m_editTypeLink->setCurrentIndex(m_editTypeLink->count()-1); //Select this last item
             }
         }

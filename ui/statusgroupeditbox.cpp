@@ -25,6 +25,9 @@ StatusGroupEditBox::StatusGroupEditBox(StatusGroup *statusGroup, QWidget *parent
     m_editStatusLink->setEditable(true);
     m_editStatusLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editStatusLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
+    m_editStatusLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \
+                                  QComboBox::down-arrow {image: url(noimg); \
+                                  border-width: 0px;}");
 
     if (!statusGroup)
         return;
@@ -47,6 +50,7 @@ void StatusGroupEditBox::addLinksMap(QMap<QString, QString> *values)
     QString selectedText = m_editStatusLink->itemText(m_editStatusLink->currentIndex());
     m_editStatusLink->setItemData(m_editStatusLink->currentIndex(),"");
 
+    m_editStatusLink->setStyleSheet(""); //Restore default style (show arrow)
 
     QList<QString> keys = values->keys();
     for (int i=0; i < keys.size(); ++i) {

@@ -84,5 +84,7 @@ void LengthTypeForm::valueChanged()
 
 bool LengthTypeForm::eventFilter(QObject *obj, QEvent *event)
 {
+    Q_UNUSED(obj);
+    Q_UNUSED(event);
     return true;
 }
