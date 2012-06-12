@@ -1,5 +1,6 @@
 #include "ancillarydataformattypeform.h"
 #include "../model/ebucoremaintype.h"
+#include "../model/typeconverter.h"
 #include "../model/qebulimits.h"
 #include "listview.h"
 #include "qvarptr.h"
@@ -29,6 +30,7 @@ AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(
         QFormLayout *fl = new QFormLayout;
 
         m_editAncillaryDataFormatId = new QLineEdit;
+        m_editAncillaryDataFormatId->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Ancillary data format id"), m_editAncillaryDataFormatId);
 
         m_editAncillaryDataFormatName = new QLineEdit;

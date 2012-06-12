@@ -1,5 +1,7 @@
 #include "captioningformattypeform.h"
 #include "../model/formattype.h"
+#include "../model/typegroup.h"
+#include "../model/typeconverter.h"
 #include "typegroupeditbox.h"
 #include "formatgroupeditbox.h"
 #include "qvarptr.h"
@@ -27,6 +29,7 @@ CaptioningFormatTypeForm::CaptioningFormatTypeForm(
     {
         QFormLayout *fl = new QFormLayout;
         m_editTrackId = new QLineEdit;
+        m_editTrackId->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Track ID"), m_editTrackId);
         m_editTrackName = new QLineEdit;
         fl->addRow(tr("Track name"), m_editTrackName);

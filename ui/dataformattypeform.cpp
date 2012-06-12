@@ -1,5 +1,6 @@
 #include "dataformattypeform.h"
 #include "../model/formattype.h"
+#include "../model/typeconverter.h"
 #include "listview.h"
 #include "qvarptr.h"
 #include "listview.h"
@@ -31,6 +32,7 @@ DataFormatTypeForm::DataFormatTypeForm(DataFormatType *dataFormat,
     {
         QFormLayout *fl = new QFormLayout;
         m_editDataFormatId = new QLineEdit;
+        m_editDataFormatId->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Data format ID"), m_editDataFormatId);
         m_editDataFormatName = new QLineEdit;
         fl->addRow(tr("Data format name"), m_editDataFormatName);
