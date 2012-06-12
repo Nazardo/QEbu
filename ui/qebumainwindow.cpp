@@ -64,23 +64,24 @@ QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
                      this, SLOT(actionQuit()));
     fileMenu->addAction(quitAction);
     topMenuBar->addMenu(fileMenu);
-    QMenu *aboutMenu = new QMenu(tr("&About"), this);
+    QMenu *helpMenu = new QMenu(tr("&Help"), this);
+    QAction *wizardAction = new QAction(tr("&Getting started..."), this);
+    QObject::connect(wizardAction, SIGNAL(triggered()),
+                     this, SLOT(actionWizard()));
+    helpMenu->addAction(wizardAction);
+    helpMenu->addSeparator();
     QAction *aboutQtAction = new QAction(tr("About &Qt..."), this);
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     QObject::connect(aboutQtAction, SIGNAL(triggered()),
                      qApp, SLOT(aboutQt()));
-    aboutMenu->addAction(aboutQtAction);
+    helpMenu->addAction(aboutQtAction);
     QAction *aboutAction = new QAction(tr("&About QEbu..."), this);
     aboutQtAction->setMenuRole(QAction::AboutRole);
     QObject::connect(aboutAction, SIGNAL(triggered()),
                      this, SLOT(actionAbout()));
-    aboutMenu->addAction(aboutAction);
-    QAction *wizardAction = new QAction(tr("&Getting started..."), this);
-    QObject::connect(wizardAction, SIGNAL(triggered()),
-                     this, SLOT(actionWizard()));
-    aboutMenu->addAction(wizardAction);
+    helpMenu->addAction(aboutAction);
 
-    topMenuBar->addMenu(aboutMenu);
+    topMenuBar->addMenu(helpMenu);
     this->setMenuBar(topMenuBar);
 
     // Prepare main view
