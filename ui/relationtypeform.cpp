@@ -1,11 +1,12 @@
 #include "relationtypeform.h"
 #include "../model/coremetadatatype.h"
+#include "../model/qebulimits.h"
+#include "../model/typeconverter.h"
 #include "typegroupeditbox.h"
 #include "elementtypeeditbox.h"
 #include "qvarptr.h"
 #include "typegroupform.h"
 #include "identifiertypeform.h"
-#include "../model/qebulimits.h"
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
@@ -54,6 +55,7 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
     {
         QFormLayout *fl = new QFormLayout;
         m_editRelationLink = new QLineEdit;
+        m_editRelationLink->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Relation Link"), m_editRelationLink);
         vl->addLayout(fl);
     }

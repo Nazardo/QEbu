@@ -1,5 +1,6 @@
 #include "formatgroupeditbox.h"
 #include "../model/formatgroup.h"
+#include "../model/typeconverter.h"
 #include <QLineEdit>
 #include <QFormLayout>
 #include <QGroupBox>
@@ -31,6 +32,7 @@ FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup,
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
     m_editFormatLink->setToolTip("Press Enter to save your custom value");
+    m_editFormatLink->setValidator(TypeConverter::getUriValidator());
 
     if (!formatGroup) {
         m_editFormatLink->addItem("",""); //Add an empty item

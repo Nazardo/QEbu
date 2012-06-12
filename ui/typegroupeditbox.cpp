@@ -1,5 +1,6 @@
 #include "typegroupeditbox.h"
 #include "../model/typegroup.h"
+#include "../model/typeconverter.h"
 #include <QLineEdit>
 #include <QGroupBox>
 #include <QFormLayout>
@@ -30,6 +31,7 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
     m_editTypeLink->setToolTip("Press Enter to save your custom value");
+    m_editTypeLink->setValidator(TypeConverter::getUriValidator());
 
     if (!typeGroup) {
         m_editTypeLink->addItem("",""); //Add an empty item

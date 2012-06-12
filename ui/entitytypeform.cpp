@@ -1,5 +1,6 @@
 #include "entitytypeform.h"
 #include "../model/entitytype.h"
+#include "../model/typeconverter.h"
 #include "listview.h"
 #include "qvarptr.h"
 #include "organisationdetailstypeform.h"
@@ -30,6 +31,7 @@ EntityTypeForm::EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, Q
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Entity ID:")));
         m_editEntityId = new QLineEdit;
+        m_editEntityId->setValidator(TypeConverter::getUriValidator());
         hl->addWidget(m_editEntityId);
         l->addLayout(hl);
     }

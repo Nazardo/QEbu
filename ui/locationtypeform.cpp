@@ -1,5 +1,6 @@
 #include "locationtypeform.h"
 #include "../model/coremetadatatype.h"
+#include "../model/typeconverter.h"
 #include "typegroupeditbox.h"
 #include "coordinatestypeform.h"
 #include "qvarptr.h"
@@ -25,12 +26,14 @@ LocationTypeForm::LocationTypeForm(LocationType *location, QEbuMainWindow *mainW
     mainVLayout->addWidget(m_editTypeGroup);
     QFormLayout *fl = new QFormLayout;
     m_editLocationId = new QLineEdit;
+    m_editLocationId->setValidator(TypeConverter::getUriValidator());
     fl->addRow(tr("Location ID"), m_editLocationId);
     m_textNote = new QTextEdit;
     fl->addRow(tr("Note"), m_textNote);
     m_editName = new QLineEdit;
     fl->addRow(tr("Name"), m_editName);
     m_editCode = new QLineEdit;
+    m_editCode->setValidator(TypeConverter::getUriValidator());
     fl->addRow(tr("Code"), m_editCode);
     mainVLayout->addLayout(fl);
     {

@@ -1,5 +1,6 @@
 #include "statusgroupeditbox.h"
 #include "../model/statusgroup.h"
+#include "../model/typeconverter.h"
 #include <QLineEdit>
 #include <QFormLayout>
 #include <QGroupBox>
@@ -29,6 +30,7 @@ StatusGroupEditBox::StatusGroupEditBox(StatusGroup *statusGroup, QWidget *parent
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
     m_editStatusLink->setToolTip("Press Enter to save your custom value");
+    m_editStatusLink->setValidator(TypeConverter::getUriValidator());
 
     if (!statusGroup)
         return;

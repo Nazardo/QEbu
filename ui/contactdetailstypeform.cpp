@@ -1,5 +1,6 @@
 #include "contactdetailstypeform.h"
 #include "../model/contactdetailstype.h"
+#include "../model/typeconverter.h"
 #include "listview.h"
 #include "qvarptr.h"
 #include "organisationdetailstypeform.h"
@@ -36,6 +37,7 @@ ContactDetailsTypeForm::ContactDetailsTypeForm(
     {
         QFormLayout *fl = new QFormLayout;
         m_editContactId = new QLineEdit;
+        m_editContactId->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Contact ID"), m_editContactId);
         l->addLayout(fl);
     }

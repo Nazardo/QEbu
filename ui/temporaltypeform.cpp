@@ -1,5 +1,6 @@
 #include "temporaltypeform.h"
 #include "model/coremetadatatype.h"
+#include "../model/typeconverter.h"
 #include "typegroupeditbox.h"
 #include "dategroupeditbox.h"
 #include "qvarptr.h"
@@ -26,6 +27,7 @@ TemporalTypeForm::TemporalTypeForm(TemporalType *temporal,
         vl->addWidget(m_editTypeGroup);
         QFormLayout *fl = new QFormLayout;
         m_editPeriodId = new QLineEdit;
+        m_editPeriodId->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Period ID"), m_editPeriodId);
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);

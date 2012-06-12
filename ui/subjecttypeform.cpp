@@ -1,5 +1,6 @@
 #include "subjecttypeform.h"
 #include "../model/ebucoremaintype.h"
+#include "../model/typeconverter.h"
 #include "typegroupeditbox.h"
 #include "elementtypeeditbox.h"
 #include "entitytypeform.h"
@@ -37,6 +38,7 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
         m_editSubjectCode = new QComboBox;
         m_editSubjectCode->setEditable(true);
         m_editSubjectCode->setInsertPolicy(QComboBox::InsertAtTop);
+        m_editSubjectCode->setValidator(TypeConverter::getUriValidator());
         m_linkMap = mainWindow->getMap("ebu_SubjectCodeCS");
         QList<QString> keys = m_linkMap->keys();
         for (int i=0; i < keys.size(); ++i) {

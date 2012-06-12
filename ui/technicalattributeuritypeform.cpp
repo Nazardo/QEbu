@@ -1,5 +1,6 @@
 #include "technicalattributeuritypeform.h"
 #include "../model/technicalattributes.h"
+#include "../model/typeconverter.h"
 #include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include <QLineEdit>
@@ -23,6 +24,7 @@ TechicalAttributeUriTypeForm::TechicalAttributeUriTypeForm(TechnicalAttributeUri
     {
         QFormLayout *fl = new QFormLayout;
         m_editValue = new QLineEdit;
+        m_editValue->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Value"), m_editValue);
         l->addLayout(fl);
     }

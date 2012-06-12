@@ -1,5 +1,6 @@
 #include "organisationdepartmenttypeform.h"
 #include "../model/organisationdetailstype.h"
+#include "../model/typeconverter.h"
 #include "elementtypeeditbox.h"
 #include "qvarptr.h"
 #include <QFormLayout>
@@ -21,6 +22,7 @@ OrganisationDepartmentTypeForm::OrganisationDepartmentTypeForm(
     QVBoxLayout *vl = new QVBoxLayout;
     {
         m_editDepartmentId = new QLineEdit(this);
+        m_editDepartmentId->setValidator(TypeConverter::getUriValidator());
         QFormLayout *formL = new QFormLayout;
         formL->addRow(tr("Department ID"), m_editDepartmentId);
         vl->addLayout(formL);

@@ -3,6 +3,7 @@
 #include "listview.h"
 #include "../model/coremetadatatype.h"
 #include "../model/ebucoremaintype.h"
+#include "../model/typeconverter.h"
 #include "qvarptr.h"
 #include "elementtypeform.h"
 #include "entitytypeform.h"
@@ -37,6 +38,7 @@ RightsTypeForm::RightsTypeForm(RightsType *rights, QEbuMainWindow *mainWindow, Q
         l->addWidget(m_editTypeGroup);
         QFormLayout *fl = new QFormLayout;
         m_editRightsLink = new QLineEdit;
+        m_editRightsLink->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Rights link"), m_editRightsLink);
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);

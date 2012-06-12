@@ -1,5 +1,6 @@
 #include "organisationdetailstypeform.h"
 #include "../model/organisationdetailstype.h"
+#include "../model/typeconverter.h"
 #include "listview.h"
 #include "elementtypeeditbox.h"
 #include "elementtypeform.h"
@@ -34,6 +35,7 @@ OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(
         QHBoxLayout *hl = new QHBoxLayout;
         hl->addWidget(new QLabel(tr("Organisation ID:")));
         m_editOrganisationId = new QLineEdit;
+        m_editOrganisationId->setValidator(TypeConverter::getUriValidator());
         hl->addWidget(m_editOrganisationId);
         l->addLayout(hl);
     }

@@ -1,5 +1,6 @@
 #include "signingformattypeform.h"
 #include "../model/ebucoremaintype.h"
+#include "../model/typeconverter.h"
 #include "typegroupeditbox.h"
 #include "formatgroupeditbox.h"
 #include "qvarptr.h"
@@ -41,6 +42,7 @@ SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, Q
         QFormLayout *fl = new QFormLayout;
 
         m_editSigningSourceUri = new QLineEdit;
+        m_editSigningSourceUri->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Source uri"),m_editSigningSourceUri);
 
         m_editSigningFormatId = new QLineEdit;
