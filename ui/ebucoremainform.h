@@ -30,6 +30,7 @@ private slots:
     void documentIdChanged(QString documentId);
     void langChanged(QString lang);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
 
     QLineEdit *m_editSchema;
     QLineEdit *m_editVersion;

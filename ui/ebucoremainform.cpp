@@ -10,6 +10,8 @@
 #include <QLabel>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QEvent>
+#include <QTextEdit>
 
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
                                  QEbuMainWindow *mainWindow,
@@ -86,6 +88,17 @@ EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
     }
 
     this->setLayout(vl);
+
+    // Install Events filters
+    m_textDocumentation->setText(tr("EbuCoreMain is the root of a document using the EBU Core metadata set."));
+    m_editSchema->installEventFilter(this);
+    m_editVersion->installEventFilter(this);
+    m_editDateLastModified->installEventFilter(this);
+    m_editDocumentId->installEventFilter(this);
+    m_editLang->installEventFilter(this);
+    m_editCoreMetadata->installEventFilter(this);
+    m_editMetadataProvider->installEventFilter(this);
+
     // Set text fields...
     m_editSchema->setText(m_ebuCoreMain->schema());
     m_editVersion->setText(m_ebuCoreMain->version());
@@ -160,6 +173,32 @@ void EbuCoreMainForm::documentIdChanged(QString documentId)
 void EbuCoreMainForm::langChanged(QString lang)
 {
     m_ebuCoreMain->setLang(lang);
+}
+
+bool EbuCoreMainForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editSchema)
+            m_textDocumentation->setText(tr("The name of the schema."));
+        else if (obj == (QObject*) m_editVersion)
+            m_textDocumentation->setText(tr("The version of the schema."));
+        else if (obj == (QObject*) m_editDateLastModified)
+            m_textDocumentation->setText(tr("The date of edition of the metadata instance."));
+        else if (obj == (QObject*) m_editDocumentId)
+            m_textDocumentation->setText(tr("The unique Identifier of the metadata instance."));
+        else if (obj == (QObject*) m_editLang)
+            m_textDocumentation->setText(tr("An attribute to specify the dominant language used to express"
+                                            "metadata information in the document, which can be superceded each time an"
+                                            "language attribute or element is available at a different level of description"
+                                            "granularity."));
+        else if (obj == (QObject*) m_editCoreMetadata)
+            m_textDocumentation->setText(tr("The body of ebucore descriptive metadata."));
+        else if (obj == (QObject*) m_editMetadataProvider)
+            m_textDocumentation->setText(tr("Identifies the metadata provider, e.g. the contributing archive."
+                                            "The organisation Id or name provide the archive ID or name required for e.g."
+                                            "OAI metadata harvesting operation."));
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 void EbuCoreMainForm::metadataProviderRemoveClicked()
