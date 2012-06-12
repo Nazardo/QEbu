@@ -35,6 +35,7 @@ private slots:
     void objectTypeFormClosed(Operation op, QVariant value);
     void targetAudienceFormClosed(Operation op, QVariant value);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
     enum EditMode { Type, Genre, ObjectType, TargetAudience };
     void updateListAndButtons();
 

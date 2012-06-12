@@ -31,6 +31,8 @@ private slots:
     void attributorClosed(Operation op, QVariant value);
     void onChange(int index);
 private:
+    bool eventFilter(QObject *obj, QEvent *event);
+
     TypeGroupEditBox *m_editTypeGroup;
     QTextEdit *m_textNote;
     ElementTypeEditBox *m_editElementSubject;

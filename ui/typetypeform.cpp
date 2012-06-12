@@ -12,6 +12,7 @@
 #include <QTextEdit>
 #include <QFormLayout>
 #include <QDebug>
+#include <QEvent>
 
 TypeTypeForm::TypeTypeForm(TypeType *type,
                            QEbuMainWindow *mainWindow,
@@ -73,6 +74,14 @@ TypeTypeForm::TypeTypeForm(TypeType *type,
                      this, SLOT(removeClicked()));
     mainHLayout->addWidget(m_listView);
     this->setLayout(mainHLayout);
+
+    //Event filter
+    m_textDocumentation->setText(tr("The nature or genre or target audience of the resource. Type includes terms describing general categories, functions, genres, or aggregation levels for content. Recommended best practice is to select a value from a controlled vocabulary or classification scheme. To describe the physical or digital manifestation of the resource, use the Format element."));
+    m_textNote->installEventFilter(this);
+    m_buttonType->installEventFilter(this);
+    m_buttonGenre->installEventFilter(this);
+    m_buttonObjectType->installEventFilter(this);
+    m_buttonTargetAudience->installEventFilter(this);
 
     // Set data fields...
     m_textNote->setText(m_type->note());
@@ -349,6 +358,23 @@ void TypeTypeForm::targetAudienceFormClosed(Operation op, QVariant value)
         int row = m_type->targetAudience().indexOf(typeGroup);
         m_listView->setItem(row, typeGroup->toString());
     }
+}
+
+bool TypeTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_textNote )
+            m_textDocumentation->setText(tr("A note element to provide additional contextual information."));
+        else if  (obj == (QObject*) m_buttonType )
+            m_textDocumentation->setText(tr("Free text to provide ‘type’ information other than ‘genre’ or ‘objectType’, possibly in different languages."));
+        else if  (obj == (QObject*) m_buttonGenre )
+            m_textDocumentation->setText(tr("To define the ‘genre’ categorising the resource. Content genre is often described through more than one single term."));
+        else if (obj == (QObject*) m_buttonObjectType )
+            m_textDocumentation->setText(tr("To define the type of real or abstract media object that the resource consists of or relates to (e.g. a programme, an item, shot, clip, scene)."));
+        else if (obj == (QObject*) m_buttonTargetAudience )
+            m_textDocumentation->setText(tr("To define the ‘target audience’ categorising the resource."));
+    }
+    return QObject::eventFilter(obj, event);
 }
 
 void TypeTypeForm::updateListAndButtons()

@@ -13,6 +13,7 @@
 #include <QMessageBox>
 #include <QString>
 #include <QComboBox>
+#include <QEvent>
 #include <QDebug>
 
 SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -81,6 +82,19 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
         vl->addLayout(fl);
     }
     this->setLayout(vl);
+
+    //Event filter
+    m_textDocumentation->setText(tr("The generalised topic that represents the intellectual content of the resource. Typically, a subject is expressed by keywords, key phrases. Free text, controlled vocabularies, authorities, or formal classification schemes (codes) may be employed when selecting descriptive subject terms. Persons as subjects are also placed here."));
+    m_editElementSubject->editValue()->installEventFilter(this);
+    m_editElementSubject->editLang()->installEventFilter(this);
+    m_editSubjectCode->installEventFilter(this);
+    m_editSubjectDefinition->installEventFilter(this);
+    m_editAttributor->installEventFilter(this);
+    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
+    m_textNote->installEventFilter(this);
+
     // Set text fields...
     m_textNote->setText(m_subject->note());
     if (m_subject->subject()) {
@@ -178,4 +192,29 @@ void SubjectTypeForm::onChange(int index) {
         //Add it to the autocompletion map
         m_linkMap->insert(linkText,linkText);
     }
+}
+
+bool SubjectTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_textNote )
+            m_textDocumentation->setText(tr("A note element to provide additional contextual information."));
+        else if  (obj == (QObject*) m_editElementSubject->editValue() )
+            m_textDocumentation->setText(tr("Free text to provide subject.\nExample: ‘Tennis’."));
+        else if  (obj == (QObject*) m_editElementSubject->editLang() )
+            m_textDocumentation->setText(tr("The language in which the subject is provided."));
+        else if  (obj == (QObject*) m_editSubjectCode )
+            m_textDocumentation->setText(tr("A link or code to/within a classification scheme."));
+        else if (obj == (QObject*) m_editSubjectDefinition )
+            m_textDocumentation->setText(tr("An optional definition.\nExample: ‘the subject is about tennis (sport, game)’."));
+        else if (obj == (QObject*) m_editAttributor )
+            m_textDocumentation->setText(tr("A person or organisation having defined/attributed the subject (e.g. a user tag)."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("An optional definition for the source of reference for subject.\nExample: the IPTC subject codes formatted using the EBU classification Scheme schema."));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("A link to a classification scheme.\nExample: http://cv.iptc.org/newscodes/subjectcode/"));
+        else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text to define the type of the source of reference for subject.\nExample: ‘IPTC Subject Code Classification Scheme’ (EBU subset)."));
+    }
+    return QObject::eventFilter(obj, event);
 }
