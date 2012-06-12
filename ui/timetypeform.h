@@ -49,7 +49,7 @@ private:
     QCheckBox *m_checkFactorNumerator;
     QCheckBox *m_checkFactorDenominator;
     QLabel *m_labelUnitNumberValue;
-    QWidget *m_labelTime;
+    QLineEdit *m_editTimeValue;
     FormatGroupEditBox *m_editFormatGroup;
     QRadioButton *m_radioTimecode;
     QRadioButton *m_radioNormalPlaytime;

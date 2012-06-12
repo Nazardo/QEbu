@@ -132,10 +132,13 @@ DurationTypeForm::DurationTypeForm( DurationType *duration,
         }
     }
     {
-        m_labelTime = new QLabel(tr("Time"));
-        m_radioTime = new QRadioButton(m_labelTime->text());
+        m_radioTime = new QRadioButton(tr("Time"));
         m_radioTime->setCheckable(true);
         l->addWidget(m_radioTime);
+
+        m_editTimeValue = new QLineEdit(m_duration->timeValue());
+        m_editTimeValue->installEventFilter(this);
+        l->addWidget(m_editTimeValue);
         m_editFormatGroup = new FormatGroupEditBox(m_duration->time());
         m_editFormatGroup->editFormatDefinition()->installEventFilter(this);
         m_editFormatGroup->editFormatLabel()->installEventFilter(this);
@@ -243,6 +246,7 @@ void DurationTypeForm::applyClicked()
                                                    m_spinNormalPlaytimeMSecond->value()));
 
     } else if (m_radioTime->isChecked()) {
+        m_duration->setTimeValue(m_editTimeValue->text());
         FormatGroup *fg = m_editFormatGroup->formatGroup();
         m_duration->setTime(fg);
 
@@ -272,7 +276,7 @@ void DurationTypeForm::timeChecked(bool checked)
     if (!checked)
         return;
 
-    m_labelTime->setEnabled(true);
+    m_editTimeValue->setEnabled(true);
     m_editFormatGroup->setEnabled(true);
     m_spinUnitNumberValue->setEnabled(false);
     m_spinRate->setEnabled(false);
@@ -299,7 +303,7 @@ void DurationTypeForm::timecodeChecked(bool checked)
     if (!checked)
         return;
 
-    m_labelTime->setEnabled(false);
+    m_editTimeValue->setEnabled(false);
     m_editFormatGroup->setEnabled(false);
     m_spinUnitNumberValue->setEnabled(false);
     m_spinRate->setEnabled(false);
@@ -326,7 +330,7 @@ void DurationTypeForm::normalPlaytimeChecked(bool checked)
     if (!checked)
         return;
 
-    m_labelTime->setEnabled(false);
+    m_editTimeValue->setEnabled(false);
     m_editFormatGroup->setEnabled(false);
     m_spinUnitNumberValue->setEnabled(false);
     m_spinRate->setEnabled(false);
@@ -353,7 +357,7 @@ void DurationTypeForm::editUnitNumberChecked(bool checked)
     if (!checked)
         return;
 
-    m_labelTime->setEnabled(false);
+    m_editTimeValue->setEnabled(false);
     m_editFormatGroup->setEnabled(false);
     m_spinUnitNumberValue->setEnabled(true);
     m_spinRate->setEnabled(true);
@@ -396,13 +400,13 @@ bool DurationTypeForm::eventFilter(QObject *obj, QEvent *event)
         if ( obj == (QObject*) m_editTimecode)
             m_textDocumentation->setText(tr("To express the duration using timecode compliant with SMPTE ST\n2021-1:2009"));
         else if ( obj == (QObject*) m_spinNormalPlaytimeHour )
-            m_textDocumentation->setText(tr("To express the duration in the format HH:MM:SS.S"));
+            m_textDocumentation->setText(tr("The express the duration in the extended format PnYnMnDTnHnMnS"));
         else if  (obj == (QObject*) m_spinNormalPlaytimeMinute)
-            m_textDocumentation->setText(tr("To express the duration in the format HH:MM:SS.S"));
+            m_textDocumentation->setText(tr("The express the duration in the extended format PnYnMnDTnHnMnS"));
         else if  (obj == (QObject*) m_spinNormalPlaytimeSecond)
-            m_textDocumentation->setText(tr("To express the duration in the format HH:MM:SS.S"));
+            m_textDocumentation->setText(tr("The express the duration in the extended format PnYnMnDTnHnMnS"));
         else if  (obj == (QObject*) m_spinNormalPlaytimeMSecond)
-            m_textDocumentation->setText(tr("To express the duration in the format HH:MM:SS.S"));
+            m_textDocumentation->setText(tr("The express the duration in the extended format PnYnMnDTnHnMnS"));
         else if  (obj == (QObject*) m_spinUnitNumberValue)
             m_textDocumentation->setText(tr("The express the duration as a number of edit Units"));
         else if  (obj == (QObject*) m_spinRate)
@@ -411,6 +415,8 @@ bool DurationTypeForm::eventFilter(QObject *obj, QEvent *event)
             m_textDocumentation->setText(tr("The numerator of the correction factor if applicable, Value is '1' by default."));
         else if  (obj == (QObject*) m_spinFactorDenominator)
             m_textDocumentation->setText(tr("The denominator of the correction factor if applicable Value is '1' by default."));
+        else if  (obj == (QObject*) m_editTimeValue)
+            m_textDocumentation->setText(tr("To express the duration in a user defined time format."));
         else if  (obj == (QObject*) m_editFormatGroup->editFormatDefinition())
             m_textDocumentation->setText(tr("An optional definition."));
         else if  (obj == (QObject*) m_editFormatGroup->editFormatLabel())

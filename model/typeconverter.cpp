@@ -400,10 +400,11 @@ QString TypeConverter::timeToString(const QDateTime &time)
     return timeString;
 }
 
-QDateTime TypeConverter::timeToDateTime(const QTime &time)
+QDateTime TypeConverter::timeToDateTime(const QTime &time, Qt::TimeSpec timeSpec, int minutesUTCOffset)
 {
-    QDateTime dt = QDateTime(QDate(-1,1,1), time);  //This QDate means "no UTC offset"
-    dt.setTimeSpec(Qt::LocalTime);
+    QDateTime dt = QDateTime(QDate(1,1,1), time);
+    dt.setUtcOffset(minutesUTCOffset*60);
+    dt.setTimeSpec(timeSpec);
     return dt;
 }
 

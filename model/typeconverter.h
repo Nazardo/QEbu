@@ -18,7 +18,7 @@ public:
 
     static QDateTime stringToTime(const QString &time);
     static QString timeToString(const QDateTime &time);
-    static QDateTime timeToDateTime(const QTime &time);
+    static QDateTime timeToDateTime(const QTime &time, Qt::TimeSpec timeSpec = Qt::LocalTime, int minutesUTCOffset=0);
 
     static QValidator *getUriValidator();
 

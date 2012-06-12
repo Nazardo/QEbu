@@ -1258,9 +1258,9 @@ QString PublicationType::toString() const
         output.append(m_channel->toString());
     }
     if (m_date.isValid())
-        output.append(m_date.toString());
+        output.append(m_date.date().toString());
     if (m_time.isValid())
-        output.append(m_date.toString());
+        output.append(m_time.time().toString());
     if (output.isEmpty()) {
         return QObject::tr("Undefined publication");
     } else {

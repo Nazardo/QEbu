@@ -181,7 +181,7 @@ QString TimeType::toString() const
         case DurationType::enumEditUnitNumber:
             return QString::number(*m_editUnitNumberValue, 10);
         case DurationType::enumNormalPlayTime:
-            return TypeConverter::dateToString(m_normalPlayTime);
+            return m_normalPlayTime.time().toString();
         case DurationType::enumTime:
             return m_timeValue;
         case DurationType::enumTimecode:
