@@ -18,6 +18,8 @@
 #include <QCheckBox>
 #include <QFormLayout>
 #include <QLabel>
+#include <QEvent>
+#include <QTextEdit>
 #include "qextendedspinbox.h"
 
 TimeTypeForm::TimeTypeForm(TimeType *time,
@@ -40,6 +42,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
 
         m_labelTimecode = new QLabel(tr("Start time"));
         m_editTimecode = new QLineEdit();
+        m_editTimecode->installEventFilter(this);
         QRegExp SMPTE_ST_12_1_2008("(([0-1][0-9])|([2][0-3])):[0-5][0-9]:[0-5][0-9](([.,])|([:;]))[0-2][0-9]");
         m_editTimecode->setValidator(new QRegExpValidator(SMPTE_ST_12_1_2008));
         m_editTimecode->setPlaceholderText("hh:mm:ss:ff");
@@ -55,6 +58,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
 
         m_labelNormalPlaytime = new QLabel(tr("Start time"));
         m_editNormalPlaytime = new QTimeEdit;
+        m_editNormalPlaytime->installEventFilter(this);
         fl->addRow(m_labelNormalPlaytime, m_editNormalPlaytime);
         l->addLayout(fl);
     }
@@ -66,12 +70,14 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
             QGridLayout *gl = new QGridLayout;
 
             m_spinUnitNumberValue = new QSignedSpinBox;
+            m_spinUnitNumberValue->installEventFilter(this);
             m_spinUnitNumberValue->setRange(qEbuLimits::getMinInt64(), qEbuLimits::getMaxInt64());
             m_labelUnitNumberValue = new QLabel(tr("Unit value"));
             gl->addWidget(m_labelUnitNumberValue, 0, 0);
             gl->addWidget(m_spinUnitNumberValue, 0, 1);
 
             m_spinRate = new QUnsignedSpinBox;
+            m_spinRate->installEventFilter(this);
             m_spinRate->setRange(1, qEbuLimits::getMaxUInt());
             m_spinRate->setValue(1);
             m_checkRate = new QCheckBox(tr("Rate"));
@@ -82,6 +88,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
 
             m_spinFactorNumerator = new QUnsignedSpinBox;
             m_spinFactorNumerator->setRange(1, qEbuLimits::getMaxUInt());
+            m_spinFactorNumerator->installEventFilter(this);
             m_checkFactorNumerator = new QCheckBox(tr("Factor numerator"));
             QObject::connect(m_spinFactorNumerator, SIGNAL(valueChanged()),
                              this, SLOT(factorNumeratorChanged()));
@@ -90,6 +97,7 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
 
             m_spinFactorDenominator = new QUnsignedSpinBox;
             m_spinFactorDenominator->setRange(1, qEbuLimits::getMaxUInt());
+            m_spinFactorDenominator->installEventFilter(this);
             m_checkFactorDenominator = new QCheckBox(tr("Factor denominator"));
             QObject::connect(m_spinFactorDenominator, SIGNAL(valueChanged()),
                              this, SLOT(factorDenominatorChanged()));
@@ -107,12 +115,16 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
         l->addWidget(m_radioTime);
 
         m_editTimeValue = new QLineEdit(m_time->timeValue());
+        m_editTimeValue->installEventFilter(this);
         l->addWidget(m_editTimeValue);
         m_editFormatGroup = new FormatGroupEditBox(m_time->time());
+        m_editFormatGroup->editFormatDefinition()->installEventFilter(this);
+        m_editFormatGroup->editFormatLabel()->installEventFilter(this);
+        m_editFormatGroup->editFormatLink()->installEventFilter(this);
         m_editFormatGroup->setLabel("Time");
         l->addWidget(m_editFormatGroup);
     }
-
+    m_textDocumentation->setText(tr("To express a time reference"));
     QButtonGroup *radio = new QButtonGroup;
     radio->addButton(m_radioTimecode);
     radio->addButton(m_radioNormalPlaytime);
@@ -323,4 +335,31 @@ void TimeTypeForm::factorNumeratorChanged()
 void TimeTypeForm::factorDenominatorChanged()
 {
     m_checkFactorDenominator->setChecked(true);
+}
+
+bool TimeTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+     if (event->type() == QEvent::FocusIn) {
+         if ( obj == (QObject*) m_editTimecode)
+             m_textDocumentation->setText(tr("A time reference expressed in timecode using the ST 12-1:2008 (Timecode) format."));
+         if ( obj == (QObject*) m_editNormalPlaytime)
+             m_textDocumentation->setText(tr("A time reference expressed using usual time representation: RFC 2326, ISO 8601."));
+         if ( obj == (QObject*) m_spinUnitNumberValue)
+             m_textDocumentation->setText(tr("To express the start time as a number of edit Units."));
+         if ( obj == (QObject*) m_spinRate)
+             m_textDocumentation->setText(tr("The base reference for the material"));
+         if ( obj == (QObject*) m_spinFactorNumerator)
+             m_textDocumentation->setText(tr("The numerator of the correction factor if applicable, Value is '1' by default."));
+         if ( obj == (QObject*) m_spinFactorDenominator)
+             m_textDocumentation->setText(tr("The denominator of the correction factor if applicable Value is '1' by default."));
+         if ( obj == (QObject*) m_editFormatGroup->editFormatDefinition())
+             m_textDocumentation->setText(tr("Free text to describe the user defined format."));
+         if ( obj == (QObject*) m_editFormatGroup->editFormatLabel())
+             m_textDocumentation->setText(tr("Free text."));
+         if ( obj == (QObject*) m_editFormatGroup->editFormatLink())
+             m_textDocumentation->setText(tr("A link to a scheme definition."));
+         if ( obj == (QObject*) m_editTimeValue)
+             m_textDocumentation->setText(tr("To express the start time in a user defined time format."));
+     }
+     return QObject::eventFilter(obj, event);
 }
