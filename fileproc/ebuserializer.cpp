@@ -1371,7 +1371,7 @@ QDomElement EbuSerializer::serializePublicationHistory(PublicationHistoryType *p
         if(first->channel() || !first->channelString().isEmpty()) {
             QDomElement e = m_doc.createElement(" ");
             e.setTagName("ebucore:firstPublicationChannel");
-            if (!first->channel()->formatId().isEmpty()) {
+            if (first->channel() && !first->channel()->formatId().isEmpty()) {
                 e.setAttribute("formatIdRef", first->channel()->formatId());
             }
             if (!first->channelString().isEmpty()) {
@@ -1402,7 +1402,7 @@ QDomElement EbuSerializer::serializePublicationHistory(PublicationHistoryType *p
             if(rep->channel() || !rep->channelString().isEmpty()) {
                 QDomElement e = m_doc.createElement(" ");
                 e.setTagName("ebucore:repeatChannel");
-                if (!rep->channel()->formatId().isEmpty()) {
+                if (rep->channel() && !rep->channel()->formatId().isEmpty()) {
                     e.setAttribute("formatIdRef", rep->channel()->formatId());
                 }
                 if (!rep->channelString().isEmpty()) {

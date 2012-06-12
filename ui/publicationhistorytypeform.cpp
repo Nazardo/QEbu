@@ -133,6 +133,9 @@ void PublicationHistoryTypeForm::applyClicked()
     if (m_checkFirstPublicationChannel->isChecked()) {
         QString formatIdRef = m_editFirstPublicationChannel->currentText();
         const FormatType *format = mainWindow()->ebuCoreMain()->formatById(formatIdRef, pt);
+        if (pt->channel()) {
+            mainWindow()->ebuCoreMain()->unlinkListener(pt->channel()->formatId(), pt);
+        }
         if (format) {
             pt->setChannel(format);
         } else {
