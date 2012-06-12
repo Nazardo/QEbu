@@ -69,9 +69,9 @@ void AudioTrackTypeForm::cancelClicked()
 
 void AudioTrackTypeForm::applyClicked()
 {
-    m_editTrackId->setText(m_editTrackId->text());
-    m_editTrackName->setText(m_editTrackName->text());
-    m_editTrackLanguage->setText(m_editTrackLanguage->text());
+    m_audioTrack->setTrackId(m_editTrackId->text());
+    m_audioTrack->setTrackName(m_editTrackName->text());
+    m_audioTrack->setTrackLanguage(m_editTrackLanguage->text());
     m_editTypeGroup->updateExistingTypeGroup(m_audioTrack);
     emit closed(m_op, QVarPtr<AudioTrackType>::asQVariant(m_audioTrack));
 }
