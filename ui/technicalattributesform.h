@@ -54,7 +54,7 @@ private slots:
 private:
     enum EditMode { StringMode, Byte, Short, Integer, Long, UnsignedByte, UnsignedShort, UnsignedInteger, UnsignedLong, BooleanMode, FloatMode, Rational, Uri };
     void updateListAndButtons();
-
+    bool eventFilter(QObject *, QEvent *);
     ListView *m_listView;
     QPushButton *m_buttonString;
     QPushButton *m_buttonByte;

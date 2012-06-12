@@ -24,7 +24,12 @@ OTHER_FILES += \
     images/page2.png \
     images/page1.png \
     images/page0.png \
-    images/banner.png
+    images/banner.png \
+    images/qebu-icon_256.png \
+    images/qebu-icon_128.png \
+    images/qebu-icon_64.png \
+    images/qebu-icon_32.png \
+    images/qebu-icon_16.png
 
 RESOURCES += \
     qResources.qrc

@@ -19,6 +19,8 @@
 #include <QButtonGroup>
 #include <QLabel>
 #include <QLayout>
+#include <QEvent>
+#include <QTextEdit>
 
 TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalAttributes,
                                                  QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -37,6 +39,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("String", this));
         m_buttonString = new QPushButton(">>");
+        m_buttonString->installEventFilter(this);
         hL->addWidget(m_buttonString);
         l->addLayout(hL);
         m_buttonString->setCheckable(true);
@@ -46,6 +49,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("Byte", this));
         m_buttonByte = new QPushButton(">>");
+        m_buttonByte->installEventFilter(this);
         hL->addWidget(m_buttonByte);
         l->addLayout(hL);
         m_buttonByte->setCheckable(true);
@@ -55,6 +59,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("Short", this));
         m_buttonShort = new QPushButton(">>");
+        m_buttonShort->installEventFilter(this);
         hL->addWidget(m_buttonShort);
         l->addLayout(hL);
         m_buttonShort->setCheckable(true);
@@ -64,6 +69,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("Integer", this));
         m_buttonInteger = new QPushButton(">>");
+        m_buttonInteger->installEventFilter(this);
         hL->addWidget(m_buttonInteger);
         l->addLayout(hL);
         m_buttonInteger->setCheckable(true);
@@ -73,6 +79,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("Long", this));
         m_buttonLong = new QPushButton(">>");
+        m_buttonLong->installEventFilter(this);
         hL->addWidget(m_buttonLong);
         l->addLayout(hL);
         m_buttonLong->setCheckable(true);
@@ -82,6 +89,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("UnsignedByte", this));
         m_buttonUnsignedByte = new QPushButton(">>");
+        m_buttonUnsignedByte->installEventFilter(this);
         hL->addWidget(m_buttonUnsignedByte);
         l->addLayout(hL);
         m_buttonUnsignedByte->setCheckable(true);
@@ -91,6 +99,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("UnsignedShort", this));
         m_buttonUnsignedShort = new QPushButton(">>");
+        m_buttonUnsignedShort->installEventFilter(this);
         hL->addWidget(m_buttonUnsignedShort);
         l->addLayout(hL);
         m_buttonUnsignedShort->setCheckable(true);
@@ -100,6 +109,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("UnsignedInteger", this));
         m_buttonUnsignedInteger = new QPushButton(">>");
+        m_buttonUnsignedInteger->installEventFilter(this);
         hL->addWidget(m_buttonUnsignedInteger);
         l->addLayout(hL);
         m_buttonUnsignedInteger->setCheckable(true);
@@ -109,6 +119,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("UnsignedLong", this));
         m_buttonUnsignedLong = new QPushButton(">>");
+        m_buttonUnsignedLong->installEventFilter(this);
         hL->addWidget(m_buttonUnsignedLong);
         l->addLayout(hL);
         m_buttonUnsignedLong->setCheckable(true);
@@ -118,6 +129,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("Boolean", this));
         m_buttonBoolean = new QPushButton(">>");
+        m_buttonBoolean->installEventFilter(this);
         hL->addWidget(m_buttonBoolean);
         l->addLayout(hL);
         m_buttonBoolean->setCheckable(true);
@@ -127,6 +139,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("Float", this));
         m_buttonFloat = new QPushButton(">>");
+        m_buttonFloat->installEventFilter(this);
         hL->addWidget(m_buttonFloat);
         l->addLayout(hL);
         m_buttonFloat->setCheckable(true);
@@ -136,6 +149,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("Rational", this));
         m_buttonRational = new QPushButton(">>");
+        m_buttonRational->installEventFilter(this);
         hL->addWidget(m_buttonRational);
         l->addLayout(hL);
         m_buttonRational->setCheckable(true);
@@ -145,6 +159,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         QHBoxLayout *hL = new QHBoxLayout;
         hL->addWidget(new QLabel("Uri", this));
         m_buttonUri = new QPushButton(">>");
+        m_buttonUri->installEventFilter(this);
         hL->addWidget(m_buttonUri);
         l->addLayout(hL);
         m_buttonUri->setCheckable(true);
@@ -167,6 +182,7 @@ TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalA
         group->addButton(m_buttonUri);
     }
     mainHLayout->addLayout(l);
+    m_textDocumentation->setText(tr("Allows users / implementers to define their own technical parameters."));
     // Add list view on the right
     m_listView = new ListView();
     QObject::connect(m_listView->buttonAdd(), SIGNAL(clicked()),
@@ -957,4 +973,37 @@ void TechnicalAttributesForm::updateListAndButtons()
 
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool TechnicalAttributesForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_buttonString)
+            m_textDocumentation->setText(tr("A technical attribute of type string."));
+        if ( obj == (QObject*) m_buttonByte)
+            m_textDocumentation->setText(tr("A technical attribute of type 'byte' also called int8."));
+        if ( obj == (QObject*) m_buttonShort)
+            m_textDocumentation->setText(tr("A technical attribute of type 'short' also called int16."));
+        if ( obj == (QObject*) m_buttonInteger)
+            m_textDocumentation->setText(tr("A technical attribute of type 'integer' also called int32."));
+        if ( obj == (QObject*) m_buttonLong)
+            m_textDocumentation->setText(tr("A technical attribute of type 'long' also called int64."));
+        if ( obj == (QObject*) m_buttonUnsignedByte)
+            m_textDocumentation->setText(tr("A technical attribute of type 'byte' also called UInt8."));
+        if ( obj == (QObject*) m_buttonUnsignedShort)
+            m_textDocumentation->setText(tr("A technical attribute of type 'short' also called UInt16."));
+        if ( obj == (QObject*) m_buttonUnsignedInteger)
+            m_textDocumentation->setText(tr("A technical attribute of type 'integer' also called UInt32."));
+        if ( obj == (QObject*) m_buttonUnsignedLong)
+            m_textDocumentation->setText(tr("A technical attribute of type 'long' also called UInt64."));
+        if ( obj == (QObject*) m_buttonBoolean)
+            m_textDocumentation->setText(tr("A technical attribute of type 'boolean'."));
+        if ( obj == (QObject*) m_buttonFloat)
+            m_textDocumentation->setText(tr("A technical attribute of type 'float' or 'double'."));
+        if ( obj == (QObject*) m_buttonRational)
+            m_textDocumentation->setText(tr("A technical attribute of type 'rational'."));
+        if ( obj == (QObject*) m_buttonUri)
+            m_textDocumentation->setText(tr("A technical attribute of type 'URI'."));
+    }
+    return QObject::eventFilter(obj, event);
 }

@@ -7,6 +7,9 @@
 #include <QSpinBox>
 #include <QLayout>
 #include "qextendedspinbox.h"
+#include <QEvent>
+#include <QTextEdit>
+#include <QComboBox>
 
 TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         TechnicalAttributeRationalType *rational,
@@ -25,6 +28,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         QGridLayout *gl = new QGridLayout;
 
         m_spinValue = new QSignedSpinBox;
+        m_spinValue->installEventFilter(this);
         m_spinValue->setRange(qEbuLimits::getMinInt64(), qEbuLimits::getMaxInt64());
         m_checkValue = new QCheckBox(tr("Value"));
         QObject::connect(m_spinValue, SIGNAL(valueChanged()),
@@ -33,6 +37,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         gl->addWidget(m_spinValue, 0, 1);
 
         m_spinFactorNumerator = new QSpinBox;
+        m_spinFactorNumerator->installEventFilter(this);
         m_spinFactorNumerator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
         m_checkNumerator = new QCheckBox(tr("Factor numerator"));
         QObject::connect(m_spinFactorNumerator, SIGNAL(valueChanged(int)),
@@ -41,6 +46,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         gl->addWidget(m_spinFactorNumerator, 1, 1);
 
         m_spinFactorDenominator = new QSpinBox;
+        m_spinFactorDenominator->installEventFilter(this);
         m_spinFactorDenominator->setRange(qEbuLimits::getMinInt(), qEbuLimits::getMaxInt());
         m_checkDenominator = new QCheckBox(tr("Factor denominator"));
         QObject::connect(m_spinFactorDenominator, SIGNAL(valueChanged(int)),
@@ -52,10 +58,13 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(rational);
+        m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+        m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+        m_editTypeGroup->editTypeLink()->installEventFilter(this);
         l->addWidget(m_editTypeGroup);
     }
     this->setLayout(l);
-
+    m_textDocumentation->setText(tr("Allows users / implementers to define their own technical parameters as ‘rational’."));
     // Set data fields...
     if (m_rational->value()) {
         m_spinValue->setValue(*(m_rational->value()));
@@ -120,4 +129,24 @@ void TechnicalAttributeRationalTypeForm::numeratorChanged()
 void TechnicalAttributeRationalTypeForm::denominatorChanged()
 {
     m_checkDenominator->setChecked(true);
+}
+
+bool TechnicalAttributeRationalTypeForm::eventFilter(QObject *, QEvent *)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("To define the attribute"));
+        if ( obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text"));
+        if ( obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setText(tr("A link to a classification scheme"));
+        if ( obj == (QObject*) m_spinValue)
+            m_textDocumentation->setText(tr("A rational expressed by it numerator and denominator"));
+        if ( obj == (QObject*) m_spinFactorNumerator)
+            m_textDocumentation->setText(tr("The rational numerator"));
+        if ( obj == (QObject*) m_spinFactorDenominator)
+            m_textDocumentation->setText(tr("The rational denominator"));
+
+    }
+    return QObject::eventFilter(obj, event);
 }
