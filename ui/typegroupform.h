@@ -17,6 +17,10 @@ public:
                            QWidget *parent = 0);
     QString toString();
     void setTitle(const QString &title);
+    void setDefinitionDoc(const QString &doc);
+    void setLabelDoc(const QString &doc);
+    void setLinkDoc(const QString &doc);
+    void setGeneralDoc(const QString &doc);
     void addLinksMap(QMap<QString,QString> *values);
 private slots:
     void cancelClicked();
@@ -25,6 +29,10 @@ private:
     bool eventFilter(QObject *, QEvent *);
     TypeGroupEditBox *m_editTypeGroup;
     QString m_title;
+    QString m_definitionDoc;
+    QString m_labelDoc;
+    QString m_linkDoc;
+    QString m_generalDoc;
     TypeGroup *m_typeGroup;
 };
 

@@ -56,11 +56,11 @@ bool TypeGroupForm::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::FocusIn) {
         if ( obj == (QObject*) m_editTypeGroup->editTypeDefinition())
-            m_textDocumentation->setText("Aliquam dictum ante egestas purus euismod nec molestie velit pretium. Phasellus bibendum porttitor tortor ac suscipit. Proin vehicula tellus sit amet urna fringilla sodales. Integer eget suscipit tellus. Maecenas id justo condimentum magna mattis consectetur. Aenean suscipit, augue eget egestas tincidunt, tortor ante cursus augue, eu fermentum leo risus ut nisl. Vivamus luctus, lectus vitae molestie condimentum, augue enim ultricies ante, eu accumsan enim urna ornare leo. Sed auctor lobortis magna, sed tristique justo ornare vitae. Nam lobortis ultricies luctus. Donec ac lorem non tellus consectetur faucibus vitae quis tellus. Phasellus lacinia est vitae mauris bibendum id ultricies mauris tristique. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Duis luctus luctus dui, id vehicula mauris faucibus vulputate. Vestibulum sagittis, tortor ut dignissim eleifend, neque est rutrum justo, a pellentesque tortor dui in enim...");
+            m_textDocumentation->setText(m_definitionDoc);
         else if ( obj ==(QObject*) m_editTypeGroup->editTypeLabel())
-            m_textDocumentation->setText("Label...");
+            m_textDocumentation->setText(m_labelDoc);
         else if ( obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText("Link...");
+            m_textDocumentation->setText(m_linkDoc);
     }
     return QObject::eventFilter(obj, event);
 }
@@ -68,4 +68,25 @@ bool TypeGroupForm::eventFilter(QObject *obj, QEvent *event)
 void TypeGroupForm::cancelClicked()
 {
     emit closed(m_op, QVarPtr<TypeGroup>::asQVariant(0));
+}
+
+void TypeGroupForm::setLabelDoc(const QString &doc)
+{
+    m_labelDoc = doc;
+}
+
+void TypeGroupForm::setLinkDoc(const QString &doc)
+{
+    m_linkDoc = doc;
+}
+
+void TypeGroupForm::setGeneralDoc(const QString &doc)
+{
+    m_generalDoc = doc;
+    m_textDocumentation->setText(doc);
+}
+
+void TypeGroupForm::setDefinitionDoc(const QString &doc)
+{
+    m_definitionDoc = doc;
 }
