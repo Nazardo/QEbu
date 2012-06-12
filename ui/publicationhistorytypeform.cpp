@@ -81,8 +81,14 @@ PublicationHistoryTypeForm::PublicationHistoryTypeForm(
 
     // Set data fields...
     if (m_publicationHistory->firstPublication()) {
-        m_editFirstPublicationDate->setDate(m_publicationHistory->firstPublication()->date().date());
-        m_editFirstPublicationTime->setTime(m_publicationHistory->firstPublication()->time().time());
+        if (m_publicationHistory->firstPublication()->date().isValid()) {
+            m_editFirstPublicationDate->setDate(m_publicationHistory->firstPublication()->date().date());
+            m_checkFirstPublicationDate->setChecked(true);
+        }
+        if (m_publicationHistory->firstPublication()->time().isValid()) {
+            m_editFirstPublicationTime->setTime(m_publicationHistory->firstPublication()->time().time());
+            m_checkFirstPublicationTime->setChecked(true);
+        }
         m_editFirstPublicationChannelString->setText(m_publicationHistory->firstPublication()->channelString());
         if (m_publicationHistory->firstPublication()->channel()) {
             m_checkFirstPublicationChannel->setChecked(true);

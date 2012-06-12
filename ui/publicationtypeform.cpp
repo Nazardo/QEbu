@@ -67,8 +67,14 @@ PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
 
     // Set data fields...
     if (m_publication) {
-        m_editPublicationDate->setDate(m_publication->date().date());
-        m_editPublicationTime->setTime(m_publication->time().time());
+        if (m_publication->date().isValid()) {
+            m_editPublicationDate->setDate(m_publication->date().date());
+            m_checkPublicationDate->setChecked(true);
+        }
+        if (m_publication->time().isValid()) {
+            m_editPublicationTime->setTime(m_publication->time().time());
+            m_checkPublicationTime->setChecked(true);
+        }
         if (m_publication->channel()) {
             m_checkPublicationChannel->setChecked(true);
             int index = m_editPublicationChannel->findText(m_publication->channel()->formatId());
