@@ -28,7 +28,7 @@ QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
 
     m_labelNavigation = new QLabel;
     m_stackedWidget = new QStackedWidget;
-    m_stackedWidget->setMinimumSize(800,600);
+    m_stackedWidget->setMinimumSize(640,400);
     m_mainCentralLayout->addWidget(m_labelNavigation);
     m_mainCentralLayout->setAlignment(m_labelNavigation,
                                       Qt::AlignTop | Qt::AlignLeft);

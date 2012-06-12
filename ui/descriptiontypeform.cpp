@@ -48,6 +48,8 @@ DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description,
         fl->addRow(tr("Note"), m_textNote);
         vl->addLayout(fl);
     }
+    this->setLayout(vl);
+
     // Set text fields...
     m_textDocumentation->setText(tr("Free-form text or a narrative to report general notes, abstracts, or summaries about the intellectual content of a resource. The information may be in the form of a paragraph giving an individual program description, anecdotal interpretations, or brief content reviews. The description may also consist of outlines, lists, bullet points, edit decision lists, indexes, or tables of content, a reference to a graphical representation of content or even a pointer (URI, URL) to an external resource.\nA running order can also be provided as a description.\nFor a Radio or television programme a running order can be used as description.\nA description can be provided in different languages."));
     m_textNote->setText(m_description->note());

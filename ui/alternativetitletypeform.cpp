@@ -108,7 +108,7 @@ bool AlternativeTitleTypeForm::checkCompliance()
 void AlternativeTitleTypeForm::applyClicked()
 {
     if (!checkCompliance())
-            return
+            return;
     m_alternativeTitle->setNote(m_textNote->toPlainText());
     m_editTypeGroup->updateExistingTypeGroup(m_alternativeTitle);
     m_editStatusGroup->updateExistingStatusGroup(m_alternativeTitle);
