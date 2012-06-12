@@ -91,7 +91,7 @@ private:
     enum EditMode { Medium, MimeType, ContainerFormat, SigningFormat,
                     ImageFormat, VideoFormat, AudioFormat, DataFormat};
     void updateListAndButtons();
-
+    bool eventFilter(QObject *, QEvent *);
     ListView *m_listView;
     QTabWidget *m_tabFormat;
     FormatType *m_format;

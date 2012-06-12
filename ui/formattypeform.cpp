@@ -32,6 +32,8 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QMessageBox>
+#include <QEvent>
+#include <QTextEdit>
 #include "qextendedspinbox.h"
 
 FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -52,19 +54,25 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
         QFormLayout *fl = new QFormLayout;
         m_editFormatId = new QLineEdit;
+        m_editFormatId->installEventFilter(this);
         m_editFormatName = new QLineEdit;
+        m_editFormatName->installEventFilter(this);
         m_editFormatDefinition = new QLineEdit;
+        m_editFormatDefinition->installEventFilter(this);
         fl->addRow(tr("Format Id"), m_editFormatId);
         fl->addRow(tr("Format Name"), m_editFormatName);
         fl->addRow(tr("Format Definition"), m_editFormatDefinition);
         m_vTab->addLayout(fl);
 
         m_editElementFormat = new ElementTypeEditBox;
+        m_editElementFormat->editLang()->installEventFilter(this);
+        m_editElementFormat->editValue()->installEventFilter(this);
         m_editElementFormat->setLabel(tr("Format"));
         m_vTab->addWidget(m_editElementFormat);
 
         QGridLayout *gl = new QGridLayout;
         m_spinFileSize = new QSignedSpinBox;
+        m_spinFileSize->installEventFilter(this);
         m_spinFileSize->setRange(0, qEbuLimits::getMaxInt64());
         m_checkFileSize = new QCheckBox(tr("File Size"));
         gl->addWidget(m_checkFileSize, 0, 0, 1, 1);
@@ -74,12 +82,14 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
 
         m_editFileName = new QLineEdit;
+        m_editFileName->installEventFilter(this);
         gl->addWidget(new QLabel(tr("File Name")), 1, 0, 1, 1);
         gl->addWidget(m_editFileName, 1, 1, 1, 3);
 
 
         gl->addWidget(new QLabel(tr("Document Format")),2,0);
         m_editDocumentFormat = new QLineEdit;
+        m_editDocumentFormat->installEventFilter(this);
         m_editDocumentFormat->setReadOnly(true);
         gl->addWidget(m_editDocumentFormat,2,1);
         QPushButton *buttonDocumentFormat = new QPushButton(tr("Add/Edit"));
@@ -94,6 +104,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
         gl->addWidget(new QLabel(tr("Locator")),3,0);
         m_editLocator = new QLineEdit;
+        m_editLocator->installEventFilter(this);
         m_editLocator->setReadOnly(true);
         gl->addWidget(m_editLocator,3,1);
         QPushButton *buttonLocator = new QPushButton(tr("Add/Edit"));
@@ -108,6 +119,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
         gl->addWidget(new QLabel(tr("Date Created")),4,0);
         m_editDateCreated = new QLineEdit;
+        m_editDateCreated->installEventFilter(this);
         m_editDateCreated->setReadOnly(true);
         gl->addWidget(m_editDateCreated,4,1);
         QPushButton *buttonDateCreated = new QPushButton(tr("Add/Edit"));
@@ -122,6 +134,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
         gl->addWidget(new QLabel(tr("Date Modified")),5,0);
         m_editDateModified = new QLineEdit;
+        m_editDateModified->installEventFilter(this);
         m_editDateModified->setReadOnly(true);
         gl->addWidget(m_editDateModified,5,1);
         QPushButton *buttonDateModified = new QPushButton(tr("Add/Edit"));
@@ -147,6 +160,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
         QHBoxLayout *hlTechnicalAttributes = new QHBoxLayout;
         hlTechnicalAttributes->addWidget(new QLabel(tr("Technical Attributes")));
         m_editTechnicalAttributes = new QLineEdit;
+        m_editTechnicalAttributes->installEventFilter(this);
         m_editTechnicalAttributes->setReadOnly(true);
         hlTechnicalAttributes->addWidget(m_editTechnicalAttributes);
         QPushButton *buttonTechnicalAttributes = new QPushButton(tr("Add/Edit"));
@@ -162,6 +176,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
         QGridLayout *gl = new QGridLayout;
         m_spinRegionDelimX = new QUnsignedSpinBox;
+        m_spinRegionDelimX->installEventFilter(this);
         m_spinRegionDelimX->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         m_checkRegionDelimX = new QCheckBox(tr("Region Delim X"));
         gl->addWidget(m_checkRegionDelimX, 0, 0, 1, 2);
@@ -169,6 +184,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
         QObject::connect(m_spinRegionDelimX, SIGNAL(valueChanged()),
                          this, SLOT(regionDelimXChanged()));
         m_spinRegionDelimY = new QUnsignedSpinBox;
+        m_spinRegionDelimY->installEventFilter(this);
         m_spinRegionDelimY->setRange(qEbuLimits::getMinUInt(), qEbuLimits::getMaxUInt());
         m_checkRegionDelimY = new QCheckBox(tr("Region Delim Y"));
         gl->addWidget(m_checkRegionDelimY, 1, 0, 1, 2);
@@ -178,15 +194,20 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
         m_vTab->addLayout(gl);
 
         m_editLengthWidth = new LengthTypeEditBox(m_format->width());
+        m_editLengthWidth->editUnit()->installEventFilter(this);
+        m_editLengthWidth->editValue()->installEventFilter(this);
         m_editLengthWidth->setLabel(tr("Width"));
         m_vTab->addWidget(m_editLengthWidth);
         m_editLengthHeight = new LengthTypeEditBox(m_format->height());
+        m_editLengthHeight->editUnit()->installEventFilter(this);
+        m_editLengthHeight->editValue()->installEventFilter(this);
         m_editLengthHeight->setLabel(tr("Height"));
         m_vTab->addWidget(m_editLengthHeight);
 
         QGridLayout *glTime = new QGridLayout;
         glTime->addWidget(new QLabel(tr("Start")),0,0);
         m_editStart = new QLineEdit;
+        m_editStart->installEventFilter(this);
         m_editStart->setReadOnly(true);
         glTime->addWidget(m_editStart,0,1);
         QPushButton *buttonStart = new QPushButton(tr("Add/Edit"));
@@ -200,6 +221,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
         glTime->addWidget(new QLabel(tr("End")),1,0);
         m_editEnd = new QLineEdit;
+        m_editEnd->installEventFilter(this);
         m_editEnd->setReadOnly(true);
         glTime->addWidget(m_editEnd,1,1);
         QPushButton *buttonEnd = new QPushButton(tr("Add/Edit"));
@@ -213,6 +235,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
         glTime->addWidget(new QLabel(tr("Duration")),2,0);
         m_editDuration = new QLineEdit;
+        m_editDuration->installEventFilter(this);
         m_editDuration->setReadOnly(true);
         glTime->addWidget(m_editDuration,2,1);
         QPushButton *buttonDuration = new QPushButton(tr("Add/Edit"));
@@ -238,48 +261,56 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
 
         gl->addWidget(new QLabel("Medium", this),0,0);
         m_buttonMedium = new QPushButton(">>");
+        m_buttonMedium->installEventFilter(this);
         gl->addWidget(m_buttonMedium,0,1);
         m_buttonMedium->setCheckable(true);
         QObject::connect(m_buttonMedium, SIGNAL(toggled(bool)), this, SLOT(mediumFormChecked(bool)));
 
         gl->addWidget(new QLabel("Mime Type", this),1,0);
         m_buttonMimeType = new QPushButton(">>");
+        m_buttonMimeType->installEventFilter(this);
         gl->addWidget(m_buttonMimeType,1,1);
         m_buttonMimeType->setCheckable(true);
         QObject::connect(m_buttonMimeType, SIGNAL(toggled(bool)), this, SLOT(mimeTypeFormChecked(bool)));
 
         gl->addWidget(new QLabel("Containter Format", this),2,0);
         m_buttonContainerFormat = new QPushButton(">>");
+        m_buttonContainerFormat->installEventFilter(this);
         gl->addWidget(m_buttonContainerFormat,2,1);
         m_buttonContainerFormat->setCheckable(true);
         QObject::connect(m_buttonContainerFormat, SIGNAL(toggled(bool)), this, SLOT(containerFormatFormChecked(bool)));
 
         gl->addWidget(new QLabel("Signing Format", this),3,0);
         m_buttonSigningFormat = new QPushButton(">>");
+        m_buttonSigningFormat->installEventFilter(this);
         gl->addWidget(m_buttonSigningFormat,3,1);
         m_buttonSigningFormat->setCheckable(true);
         QObject::connect(m_buttonSigningFormat, SIGNAL(toggled(bool)), this, SLOT(signingFormatFormChecked(bool)));
 
         gl->addWidget(new QLabel("Image Format", this),4,0);
         m_buttonImageFormat = new QPushButton(">>");
+        m_buttonImageFormat->installEventFilter(this);
         gl->addWidget(m_buttonImageFormat,4,1);
         m_buttonImageFormat->setCheckable(true);
         QObject::connect(m_buttonImageFormat, SIGNAL(toggled(bool)), this, SLOT(imageFormatFormChecked(bool)));
 
         gl->addWidget(new QLabel("Video Format", this),5,0);
         m_buttonVideoFormat = new QPushButton(">>");
+        m_buttonVideoFormat->installEventFilter(this);
         gl->addWidget(m_buttonVideoFormat,5,1);
         m_buttonVideoFormat->setCheckable(true);
         QObject::connect(m_buttonVideoFormat, SIGNAL(toggled(bool)), this, SLOT(videoFormatFormChecked(bool)));
 
         gl->addWidget(new QLabel("Audio Format", this),6,0);
         m_buttonAudioFormat = new QPushButton(">>");
+        m_buttonAudioFormat->installEventFilter(this);
         gl->addWidget(m_buttonAudioFormat,6,1);
         m_buttonAudioFormat->setCheckable(true);
         QObject::connect(m_buttonAudioFormat, SIGNAL(toggled(bool)), this, SLOT(audioFormatFormChecked(bool)));
 
         gl->addWidget(new QLabel("Data Format", this),7,0);
         m_buttonDataFormat = new QPushButton(">>");
+        m_buttonDataFormat->installEventFilter(this);
         gl->addWidget(m_buttonDataFormat,7,1);
         m_buttonDataFormat->setCheckable(true);
         QObject::connect(m_buttonDataFormat, SIGNAL(toggled(bool)), this, SLOT(dataFormatFormChecked(bool)));
@@ -310,6 +341,7 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
     this->setLayout(mainHLayout);
 
     //Set Data Fields..
+    m_textDocumentation->setText(tr("Technical metadata information on the physical or digital manifestation / instance of the resource. Use the descriptor Format to identify the format of a particular resource as it exists in its physical or digital form. Physical form = an actual physical form that occupies physical space, e.g. a tape. Digital form = a digital file residing on a server or hard drive.\nFormat may be used to determine the software, hardware or other equipment needed to display or operate the resource.\nFormat gathers all technical metadata about a content instance on video, audio, data, etc. It can be flexibility augmented at will by users using the technicalAttribute constructs.\nCombining the flexibility of the 'Format' and 'Part' elements allows the description of a large range of technical metadata that is optionally associated to timelines.\nThe 'format' element is optional, which means a valid EBUCore description may only contain descriptive information."));
     m_editFormatId->setText(m_format->formatId());
     m_editFormatName->setText(m_format->formatName());
     m_editFormatDefinition->setText(m_format->formatDefinition());
@@ -1116,4 +1148,70 @@ void FormatTypeForm::updateListAndButtons()
     }
     m_listView->setTitle(title);
     m_listView->clear();
+}
+
+bool FormatTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_editFormatId)
+            m_textDocumentation->setText(tr("An Identifier to identify a specific format in which the resource is available or has been published."));
+        if ( obj == (QObject*) m_editFormatName)
+            m_textDocumentation->setText(tr("A name attributed to a particular format."));
+        if ( obj == (QObject*) m_editFormatDefinition)
+            m_textDocumentation->setText(tr("A definition of the format information being provided either technical or editorial in nature."));
+        if ( obj == (QObject*) m_editElementFormat->editLang())
+            m_textDocumentation->setText(tr("The language in which the format is provided."));
+        if ( obj == (QObject*) m_editElementFormat->editValue())
+            m_textDocumentation->setText(tr("Free text to provide information on the format"));
+        if ( obj == (QObject*) m_spinFileSize)
+            m_textDocumentation->setText(tr("To indicate the storage requirements or file size of a digital resource. The file size is expressed in bytes."));
+        if ( obj == (QObject*) m_editFileName)
+            m_textDocumentation->setText(tr("To indicate the name of the file containing the resource."));
+        if ( obj == (QObject*) m_editDocumentFormat)
+            m_textDocumentation->setText(tr("To provide information on the document format."));
+        if ( obj == (QObject*) m_editLocator)
+            m_textDocumentation->setText(tr("An 'address for a resource'. For an organisation or producer acting as caretaker for a media resource, Format Location may contain information about a specific e.g. tape name, shelf location for an asset, including an organisation's name, departmental name, shelf id. And contact information. The Format Location for a data file or web page may include a complete URI with a domain, path, filename or html URL."));
+        if ( obj == (QObject*) m_editDateCreated)
+            m_textDocumentation->setText(tr("A date to indicate when the content instance was created / generated in this format."));
+        if ( obj == (QObject*) m_editDateModified)
+            m_textDocumentation->setText(tr("A date to indicate when the content instance format was modified."));
+        if ( obj == (QObject*) m_editTechnicalAttributes)
+            m_textDocumentation->setText(tr("An extension element to allow users and implementers to define their own technical attributes."));
+        if ( obj == (QObject*) m_spinRegionDelimX)
+            m_textDocumentation->setText(tr("The identification of a region in a document, an image or a video is done by defining the coordinates of the bottom left corner of the region. The region is defined from this point of reference using the width and height properties. regionDelimX is the coordinate on the horizontal axis and uses the same unit as the width attribute."));
+        if ( obj == (QObject*) m_spinRegionDelimY)
+            m_textDocumentation->setText(tr("The identification of a region in a document, an image or a video is done by defining the coordinates of the bottom left corner of the region. The region is defined from this point of reference using the width and height properties. regionDelimY is the coordinate on the vertical axis uses the same unit as the height attribute."));
+        if ( obj == (QObject*) m_editLengthWidth->editUnit())
+            m_textDocumentation->setText(tr("The width of the image or picture. Used as numerator to define the aspect ratio for video content."));
+        if ( obj == (QObject*) m_editLengthWidth->editValue())
+            m_textDocumentation->setText(tr("The width of the image or picture. Used as numerator to define the aspect ratio for video content."));
+        if ( obj == (QObject*) m_editLengthHeight->editUnit())
+            m_textDocumentation->setText(tr("The height of the image or picture. Used as denominator to define the aspect ratio for video content."));
+        if ( obj == (QObject*) m_editLengthHeight->editValue())
+            m_textDocumentation->setText(tr("The height of the image or picture. Used as denominator to define the aspect ratio for video content."));
+        if ( obj == (QObject*) m_editStart)
+            m_textDocumentation->setText(tr("The beginning point for playback of a time-based media item, such as digital video or audio. Use in combination with Format Duration to identify a sequence or segment of a media item that has a fixed start time and end time."));
+        if ( obj == (QObject*) m_editEnd)
+            m_textDocumentation->setText(tr("The ending point for playback of a time-based media item, such as digital video or audio. Use in combination with Format Start to identify a sequence or segment of a media item."));
+        if ( obj == (QObject*) m_editDuration)
+            m_textDocumentation->setText(tr("The time duration/extent of the resource. Format Duration is an alternative to Format End for identifying the extent of a sequence or segment."));
+        if ( obj == (QObject*) m_buttonMedium)
+            m_textDocumentation->setText(tr("To define the type of medium in which the resource is available."));
+        if ( obj == (QObject*) m_buttonMimeType)
+            m_textDocumentation->setText(tr("To define the type of mime type in which the resource is available."));
+        if ( obj == (QObject*) m_buttonContainerFormat)
+            m_textDocumentation->setText(tr("To provide information on the Container Format in complement to stream encoding information"));
+        if ( obj == (QObject*) m_buttonSigningFormat)
+            m_textDocumentation->setText(tr("To provide information on the signing format, if used."));
+        if ( obj == (QObject*) m_buttonImageFormat)
+            m_textDocumentation->setText(tr("To provide information on the image format."));
+        if ( obj == (QObject*) m_buttonVideoFormat)
+            m_textDocumentation->setText(tr("To provide information on the video format."));
+        if ( obj == (QObject*) m_buttonAudioFormat)
+            m_textDocumentation->setText(tr("To provide information on the audio format."));
+        if ( obj == (QObject*) m_buttonDataFormat)
+            m_textDocumentation->setText(tr("To provide information on the captioning and ancillary data formats."));
+
+    }
+    return QObject::eventFilter(obj, event);
 }
