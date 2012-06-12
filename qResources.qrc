@@ -6,5 +6,8 @@
         <file>images/page2.png</file>
         <file>images/page3.png</file>
         <file>images/watermark.png</file>
+        <file>images/qebu-icon_32.png</file>
+        <file>images/qebu-icon_64.png</file>
+        <file>images/qebu-icon_256.png</file>
     </qresource>
 </RCC>

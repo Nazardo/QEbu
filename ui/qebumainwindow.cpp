@@ -15,12 +15,20 @@
 #include <QXmlStreamReader>
 #include <QDebug>
 #include <QWizard>
+#include <QPixmap>
+#include <QDialogButtonBox>
+#include <QPushButton>
 
 
 QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
     QMainWindow(parent)
 {
     m_ebuCoreMain = 0;
+
+    m_icon.addFile(":/images/qebu-icon_32.png");
+    m_icon.addFile(":/images/qebu-icon_64.png");
+    this->setWindowIcon(m_icon);
+    qApp->setWindowIcon(m_icon);
 
     // Central Widget
     QWidget *cw = new QWidget;
@@ -293,12 +301,35 @@ void QEbuMainWindow::actionQuit()
 
 void QEbuMainWindow::actionAbout()
 {
-    QMessageBox::about(this, tr("About QEbu"),
-                       tr("<h2>About QEbu</h2><br/>QEbu is a full-fledged graphical editor that supports creation and editing of documents following the EbuCore metadata specification."
-                          "<br/><br/>More information on EBU metadata activities is provided on the <a href=\"http://tech.ebu.ch/metadata\">EBU TECHNICAL website</a>."
-                                                    "<br/><br/>This program is licensed to you under terms of the GNU General Public License Version 3 as published by Free Software Foundation."
-                          "<br/><br/>The program is provided AS IS with NO WARRANTY OF ANY KIND."
-                          ));
+    QDialog *aboutDialog = new QDialog(this);
+    aboutDialog->setWindowTitle(tr("About QEbu"));
+
+    QHBoxLayout *hLayout = new QHBoxLayout;
+
+    QPixmap logo(":/images/qebu-icon_256.png");
+    QLabel *imageLabel = new QLabel;
+    imageLabel->setPixmap(logo);
+    hLayout->addWidget(imageLabel, Qt::AlignTop);
+
+    QLabel *text = new QLabel(tr("<h2>About QEbu</h2><br>QEbu is a full-fledged graphical editor that supports creation and editing of documents following the EbuCore metadata specification."
+                                 "<br><br>More information on EBU metadata activities is provided on the <a href=\"http://tech.ebu.ch/metadata\">EBU TECHNICAL website</a>."
+                                 "<br><br>This program is licensed to you under terms of the GNU General Public License Version 3 as published by Free Software Foundation."
+                                 "<br><br>The program is provided AS IS with NO WARRANTY OF ANY KIND."
+                                 ));
+    text->setWordWrap(true);
+    text->setAlignment(Qt::AlignJustify);
+    QVBoxLayout *vLayout = new QVBoxLayout;
+    vLayout->addWidget(text);
+    QDialogButtonBox *dialogButtonBox = new QDialogButtonBox(
+                QDialogButtonBox::Ok,
+                Qt::Horizontal);
+    vLayout->addWidget(dialogButtonBox, Qt::AlignRight);
+    hLayout->addLayout(vLayout);
+    aboutDialog->setLayout(hLayout);
+    dialogButtonBox->button(QDialogButtonBox::Ok)->setDefault(true);
+    QObject::connect(dialogButtonBox->button(QDialogButtonBox::Ok), SIGNAL(clicked()),
+                     aboutDialog, SLOT(close()));
+    aboutDialog->exec();
 }
 
 void QEbuMainWindow::actionWizard()
@@ -478,4 +509,9 @@ QMap<QString, QString> *QEbuMainWindow::getMap(QString name)
         m_maps.insert(name,map);
         return map;
     }
+}
+
+QIcon QEbuMainWindow::ebuIcon() const
+{
+    return m_icon;
 }

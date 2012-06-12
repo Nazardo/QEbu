@@ -20,6 +20,7 @@ public:
     void pushWidget(StackableWidget *widget);
     EbuCoreMainType *ebuCoreMain();
     QMap<QString,QString> *getMap(QString name);
+    QIcon ebuIcon() const;
 private slots:
     void childClosed();
 
@@ -38,6 +39,7 @@ private:
     bool doSave();
     bool doClose();
 
+    QIcon m_icon;
     QLayout *m_mainCentralLayout;
     EbuCoreMainType *m_ebuCoreMain;
     QStackedWidget *m_stackedWidget;
