@@ -3,6 +3,8 @@
 #include "elementtypeeditbox.h"
 #include "qvarptr.h"
 #include <QLineEdit>
+#include <QTextEdit>
+#include <QEvent>
 #include <QVBoxLayout>
 
 ElementTypeForm::ElementTypeForm(ElementType *element,
@@ -19,6 +21,12 @@ ElementTypeForm::ElementTypeForm(ElementType *element,
     m_editElementType = new ElementTypeEditBox;
     vl->addWidget(m_editElementType);
     this->setLayout(vl);
+
+    // Event Filter
+    m_textDocumentation->setText(m_docGeneral);
+    m_editElementType->editLang()->installEventFilter(this);
+    m_editElementType->editValue()->installEventFilter(this);
+
     // Set values in text fields
     m_editElementType->editValue()->setText(m_element->value());
     m_editElementType->editLang()->setText(m_element->lang());
@@ -36,6 +44,22 @@ void ElementTypeForm::setTitle(const QString &title)
     m_title = title;
 }
 
+void ElementTypeForm::setGenericTextDocumentation(const QString &doc)
+{
+    m_docGeneral = doc;
+    m_textDocumentation->setText(doc);
+}
+
+void ElementTypeForm::setValueDocumentation(const QString &value)
+{
+    m_docValue = value;
+}
+
+void ElementTypeForm::setLangDocumentation(const QString &lang)
+{
+    m_docLang = lang;
+}
+
 void ElementTypeForm::applyClicked()
 {
     m_element->setValue(m_editElementType->editValue()->text());
@@ -50,4 +74,15 @@ void ElementTypeForm::cancelClicked()
         m_element = 0;
     }
     emit closed(m_op, QVarPtr<ElementType>::asQVariant(m_element));
+}
+
+bool ElementTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if (obj == (QObject*) m_editElementType->editLang())
+            m_textDocumentation->setText(m_docLang);
+        else if (obj == (QObject*) m_editElementType->editValue())
+            m_textDocumentation->setText(m_docValue);
+    }
+    return QObject::eventFilter(obj, event);
 }

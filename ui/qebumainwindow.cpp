@@ -293,9 +293,12 @@ void QEbuMainWindow::actionQuit()
 
 void QEbuMainWindow::actionAbout()
 {
-    /// @todo Real about dialog, maybe using the designer this time.
     QMessageBox::about(this, tr("About QEbu"),
-                       tr("QEbu about text goes here."));
+                       tr("<h2>About QEbu</h2><br/>QEbu is a full-fledged graphical editor that supports creation and editing of documents following the EbuCore metadata specification."
+                          "<br/><br/>More information on EBU metadata activities is provided on the <a href=\"http://tech.ebu.ch/metadata\">EBU TECHNICAL website</a>."
+                                                    "<br/><br/>This program is licensed to you under terms of the GNU General Public License Version 3 as published by Free Software Foundation."
+                          "<br/><br/>The program is provided AS IS with NO WARRANTY OF ANY KIND."
+                          ));
 }
 
 void QEbuMainWindow::actionWizard()

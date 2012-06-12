@@ -122,6 +122,7 @@ ImageFormatTypeForm::ImageFormatTypeForm(ImageFormatType *imageFormat,
     m_editHeight->editUnit()->installEventFilter(this);
     m_editHeight->editValue()->installEventFilter(this);
     m_comboOrientation->installEventFilter(this);
+    m_listView->buttonAdd()->installEventFilter(this);
 
     // Set fields...
     if (m_op == Add)
@@ -309,10 +310,12 @@ bool ImageFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
             m_textDocumentation->setText(tr("An attribute to specify the unit in which the height is expressed."));
         else if (obj == (QObject*) m_editHeight->editValue())
             m_textDocumentation->setText(tr("The height of the image or picture. Used as denominator to define the aspect ratio for video content."));
-        else if  (obj == (QObject*) m_editTechnicalAttributes)
+        else if (obj == (QObject*) m_editTechnicalAttributes)
             m_textDocumentation->setText(tr("An extension element to allowusers and implementers defining their own technical attributes."));
-        else if  (obj == (QObject*) m_comboOrientation)
+        else if (obj == (QObject*) m_comboOrientation)
             m_textDocumentation->setText(tr("To express the orientation of the image, i.e. 'portrait' or 'landscape'."));
+        else if (obj == (QObject*) m_listView->buttonAdd())
+            m_textDocumentation->setText(tr("Used to express the encoding parameters of the resource.\nExample: jpeg, tiff, H264 frame."));
     }
     return QObject::eventFilter(obj, event);
 }

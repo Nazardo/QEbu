@@ -52,7 +52,6 @@ private:
     QComboBox *m_comboOrientation;
     ListView *m_listView;
     QLineEdit *m_editTechnicalAttributes;
-    ///@todo: here misses imageEncoding!
     QPushButton *m_buttonTechnicalAttributes;
 };
 

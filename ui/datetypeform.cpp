@@ -117,6 +117,9 @@ void DateTypeForm::addClicked()
     {
         ElementTypeForm *form = new ElementTypeForm(0, mainWindow());
         form->setTitle(tr("Date"));
+        form->setGenericTextDocumentation(tr("An element to provide a date in the xml:date format (NOTE: for Dublin Core compatibility purpose, dc:date is of elementType extending a string)."));
+        form->setValueDocumentation(tr("Date value for this element"));
+        form->setLangDocumentation(tr("Language the data is provided in"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(elementTypeFormClosed(Operation,QVariant)));
         mainWindow()->pushWidget(form);
@@ -180,6 +183,9 @@ void DateTypeForm::editClicked()
         ElementTypeForm *form = new ElementTypeForm(
                     m_date->date().at(index), mainWindow());
         form->setTitle(tr("Date"));
+        form->setGenericTextDocumentation(tr("An element to provide a date in the xml:date format (NOTE: for Dublin Core compatibility purpose, dc:date is of elementType extending a string)."));
+        form->setValueDocumentation(tr("Date value for this element"));
+        form->setLangDocumentation(tr("Language the data is provided in"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(elementTypeFormClosed(Operation,QVariant)));
         mainWindow()->pushWidget(form);
