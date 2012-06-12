@@ -1,95 +1,115 @@
 #include "validator.h"
-
-QString Validator::m_statusMsg;
-QString Validator::m_errorMsg;
-int Validator::m_errorRow;
+#include <QtCore/QCoreApplication>
+#include <QtGui/QApplication>
+#include <QFile>
+#include <QRegExp>
+#include <QString>
+#include <QDebug>
+#include <QFile>
+#include <QProcess>
+#include <QStringList>
 
 Validator::Validator()
 {
+    m_error = Unknown;
+    m_errorRow = -1;
 }
 
-bool Validator::isValid(const QString &file)
+bool Validator::validate(const QString &file, const QString &schema)
 {
-    m_statusMsg = "";
-    m_errorMsg = "";
+    m_stderrOutput = QString();
+    m_validationErrorMessage = QString();
+    m_returnMessage = QString();
+    m_error = Unknown;
     m_errorRow = -1;
 
-    QString path = QApplication::applicationDirPath().replace(QString("/"),QString("\\"));
-
     QStringList args;
-    args <<"--noout"; // Don't print the xml tree
-    args <<"--schema" <<QString(path+"\\validator\\EBU_CORE_20110915.xsd");
-    args <<file;
+    args << "--noout"; // Don't print the xml tree
+    args << "--schema" << schema;
+    args << file;
 
     QProcess p;
-    p.start("validator\\xmllint.exe", args);
+    p.start("xmllint", args);
 
     int result=0;
     if (p.waitForStarted(200)) {
         p.waitForFinished(400);
-        m_statusMsg = QString(p.readAllStandardError());
-        result=p.exitCode();
+        m_stderrOutput = QString(p.readAllStandardError());
+        result = p.exitCode();
     } else {
-        m_statusMsg = "Process not started ";
-        result=-1;
+        m_error = ValidatorNotFound;
+        return false;
     }
-
 
     switch (result) {
     case 0: // No error
-        m_errorMsg = "";
+        m_returnMessage = QObject::tr("Success");
+        m_error = DocumentValid;
         return true;
         break;
     case 1: // Unclassified
-        m_errorMsg = "Unclassified";
+        m_returnMessage = QObject::tr("Unclassified");
+        m_error = DocumentValid;
         break;
     case 2: // Error in DTD
-        m_errorMsg = "error in DTD";
+        m_returnMessage = QObject::tr("error in DTD");
         break;
     case 3: // Validation error
-        m_errorMsg = "validation error 1";
-        break;
-    case 4: // Validation error
-        m_errorMsg = "validation error 2";
-        break;
+    case 4: // idem
+        m_returnMessage = QObject::tr("Validation error");
+        m_error = DocumentNotValid;
+        parseOutput();
+        return false;
     case 5: // Error in schema compilation
-        m_errorMsg = "error in schema compilation";
+        m_returnMessage = QObject::tr("Error in schema compilation");
         break;
     case 6: // Error writing output
-        m_errorMsg = "error writing output";
+        m_returnMessage = QObject::tr("Error writing output");
         break;
     case 7: // Error in pattern (generated when [--pattern] option is used)
-        m_errorMsg = "error in pattern";
+        m_returnMessage = QObject::tr("Error in pattern");
         break;
     case 8: // Error in Reader registration (generated when [--chkregister] option is used)
-        m_errorMsg = "error in Reader registration";
+        m_returnMessage = QObject::tr("Error in Reader registration");
         break;
     case 9: // Out of memory error
-        m_errorMsg = "out of memory error";
+        m_returnMessage = QObject::tr("Out of memory error");
         break;
 
     case -1: // Starting error
-        m_errorMsg = "Starting error - no validation performed";
+        m_returnMessage = QObject::tr("Starting error - no validation performed");
         break;
 
     default:
-        m_errorMsg = "Undocumented error code!";
+        m_returnMessage = QObject::tr("Undocumented error code");
     }
 
     return false;
 }
 
-QString Validator::statusMsg()
+Validator::ValidatorError Validator::error() const
 {
-    return m_statusMsg;
+    return m_error;
 }
 
-QString Validator::parsedStatusMsg()
+QString Validator::returnMessage() const
 {
-    if(m_statusMsg.isEmpty())
-        return QString();
+    return m_returnMessage;
+}
 
-    QString msg(m_statusMsg);
+QString Validator::validationErrorMessage() const
+{
+    return m_validationErrorMessage;
+}
+
+int Validator::errorRow() const
+{
+    return m_errorRow;
+}
+
+void Validator::parseOutput()
+{
+    QString msg(m_stderrOutput);
     msg.chop(2);
 
 
@@ -101,46 +121,31 @@ QString Validator::parsedStatusMsg()
         QString path = QApplication::applicationDirPath().replace(QString("/"),QString("\\"));
 
         int n = msg.indexOf("file:///"+path+"/") + (10 + path.length());
-        if (n == -1)
-            return QString("Error while parsing output: path not found at start");
+        if (n == -1) {
+            m_validationErrorMessage = QObject::tr("Error while parsing output: path not found at start");
+            return;
+        }
 
         msg = msg.remove(0,n);
 
         n = msg.indexOf(QRegExp(":[0-9]+:")) + 1;
         int n2 = msg.indexOf(':',n);
-        if (n == -1 || n2 == -1)
-            return QString("Error while parsing output: error row not found");
+        if (n == -1 || n2 == -1) {
+            m_validationErrorMessage = QObject::tr("Error while parsing output: error row not found");
+            return;
+        }
 
         m_errorRow = msg.mid(n,n2-n).toInt();
         msg.remove(0,n2+2);
 
         n = msg.indexOf(path);
         if (n == -1)
-            msg = "Error while parsing output: path not found at end";
+            msg = QObject::tr("Error while parsing output: path not found at end");
         msg.truncate(n - 2);
 
     } else {
-        msg = "Error while parsing output: unexpected ending";
+        msg = QObject::tr("Error while parsing output: unexpected ending");
     }
 
-    return msg;
-}
-
-QString Validator::errorMsg()
-{
-    return m_errorMsg;
-}
-
-int Validator::errorRow()
-{
-    if (m_errorRow == -1) {
-        if (!m_statusMsg.isEmpty()) {
-            // Parse the message to find the row
-            int n = m_statusMsg.indexOf(QRegExp(":[0-9]+:")) + 1;
-            int n2 = m_statusMsg.indexOf(':',n);
-            if (n != -1 && n2 != -1)
-                m_errorRow = m_statusMsg.mid(n,n2-n).toInt();
-        }
-    }
-    return m_errorRow;
+    m_validationErrorMessage = msg;
 }

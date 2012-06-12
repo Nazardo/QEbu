@@ -2,6 +2,7 @@
 #include "../model/ebucoremaintype.h"
 #include "../fileproc/ebuparser.h"
 #include "../fileproc/ebuserializer.h"
+#include "../fileproc/validator.h"
 #include "ebucoremainform.h"
 #include <QLabel>
 #include <QLayout>
@@ -197,6 +198,51 @@ bool QEbuMainWindow::doOpen()
         return false;
     }
 
+    // Validation
+    QString schema = qApp->applicationDirPath() + "/data/EBU_CORE_20110915.xsd";
+    Validator validator;
+    if (!validator.validate(filename, schema)) {
+        Validator::ValidatorError error = validator.error();
+        switch (error) {
+        case Validator::ValidatorNotFound:
+            QMessageBox::warning(this, tr("Validator"),
+                                 tr("xmllint was not found in the application's PATH,"
+                                    "thus no validation has been performed.\n"
+                                    "The parsing can bring to unpredictable results."));
+            break;
+        case Validator::DocumentNotValid:
+        {
+            QMessageBox validatorWarning(this);
+            validatorWarning.setIcon(QMessageBox::Warning);
+            validatorWarning.setWindowTitle(tr("Validator"));
+            validatorWarning.setText(tr("Invalid input file"));
+            validatorWarning.setDetailedText(validator.validationErrorMessage());
+            validatorWarning.setStandardButtons(QMessageBox::Ok);
+            validatorWarning.setDefaultButton(QMessageBox::Ok);
+            validatorWarning.exec();
+            return false;
+        }
+        case Validator::DocumentValid:
+            break;
+        case Validator::Unknown:
+        default:
+        {
+            QMessageBox validatorWarning(this);
+            validatorWarning.setIcon(QMessageBox::Warning);
+            validatorWarning.setWindowTitle(tr("Validator"));
+            validatorWarning.setText(tr("Unexpected error from validator"));
+            validatorWarning.setDetailedText(validator.returnMessage());
+            validatorWarning.setStandardButtons(QMessageBox::Ignore |
+                                                QMessageBox::Abort);
+            validatorWarning.setDefaultButton(QMessageBox::Abort);
+            int ret = validatorWarning.exec();
+            if (ret == QMessageBox::Abort)
+                return false;
+        }
+        }
+    }
+
+     // Parsing
     EbuParser parser;
     if (!parser.parseFromFile(inputFile)) {
         QMessageBox parserWarning(this);

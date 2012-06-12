@@ -16,11 +16,8 @@ bool EbuParser::parseFromFile(QFile &file)
         return false;
     }
 
-    if (!Validator::isValid(file.fileName())) {
-        m_errorMsg = QObject::tr("error found at row: ") + Validator::errorRow();
-        m_errorMsg += "\n" + Validator::parsedStatusMsg();
-        return false;
-    }
+    // Validation is done outside, becouse it requires heavy
+    // interaction with the UI.
 
     /*
      * Check for root correctness
