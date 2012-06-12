@@ -377,6 +377,13 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
     if(m_format->end()){
         m_editEnd->setText(m_format->end()->toString());
     }
+    if(m_format->documentFormat()) {
+        m_editDocumentFormat->setText(m_format->documentFormat()->toString());
+    }
+    if(m_format->technicalAttributes()) {
+        m_editTechnicalAttributes->setText(m_format->technicalAttributes()->toString());
+    }
+
     m_buttonMedium->setChecked(true);
 
 }

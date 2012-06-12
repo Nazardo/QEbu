@@ -2766,9 +2766,12 @@ TimeType *EbuParser::parseTimeType(const QDomElement &element)
             time->setFactorDenominator(factorDenominator);
     }
     QDomElement timeEl = element.elementsByTagName("time").at(0).toElement();
-    FormatGroup *t = new FormatGroup();
-    parseFormatGroup(timeEl, t);
-    time->setTime(t);
+    if(!timeEl.isNull()) {
+        FormatGroup *t = new FormatGroup();
+        parseFormatGroup(timeEl, t);
+        time->setTimeValue(timeEl.text());
+        time->setTime(t);
+    }
 
     return time;
 }
@@ -2803,9 +2806,12 @@ DurationType *EbuParser::parseDurationType(const QDomElement &element)
             duration->setFactorDenominator(factorDenominator);
     }
     QDomElement timeEl = element.elementsByTagName("time").at(0).toElement();
-    FormatGroup *t = new FormatGroup();
-    parseFormatGroup(timeEl, t);
-    duration->setTime(t);
+    if(!timeEl.isNull()) {
+        FormatGroup *t = new FormatGroup();
+        parseFormatGroup(timeEl, t);
+        duration->setTimeValue(timeEl.text());
+        duration->setTime(t);
+    }
 
     return duration;
 }
