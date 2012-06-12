@@ -124,6 +124,10 @@ void TypeTypeForm::addClicked()
     {
         TypeGroupForm *genreForm = new TypeGroupForm(0, this->mainWindow());
         genreForm->setTitle(tr("Genre"));
+        genreForm->setGeneralDoc(tr("A group of attributes to describe the genre."));
+        genreForm->setDefinitionDoc(tr("Free text for an optional definition."));
+        genreForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        genreForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: ‘non-fiction/information’."));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentAlertSchemeCodeCS"));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentGenreCS"));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_EditorialFormatCodeCS"));
@@ -139,6 +143,10 @@ void TypeTypeForm::addClicked()
     {
         TypeGroupForm *objectTypeForm = new TypeGroupForm(0, this->mainWindow());
         objectTypeForm->setTitle(tr("Object Type"));
+        objectTypeForm->setGeneralDoc(tr("A group of attributes to describe the objectType."));
+        objectTypeForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘A short description of the resource’."));
+        objectTypeForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        objectTypeForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink."));
         objectTypeForm->addLinksMap(mainWindow()->getMap("ebu_ObjectTypeCS"));
         QObject::connect(objectTypeForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(objectTypeFormClosed(Operation,QVariant)));
@@ -149,6 +157,10 @@ void TypeTypeForm::addClicked()
     {
         TypeGroupForm *targetAudienceForm = new TypeGroupForm(0, this->mainWindow());
         targetAudienceForm->setTitle(tr("Target Audience"));
+        targetAudienceForm->setGeneralDoc(tr("A group of attributes to describe the target audience (parental guidance, geographical or occupantional groups, etc.)."));
+        targetAudienceForm->setDefinitionDoc(tr("An optional definition.\nExample: code for MPAA 'general' rating."));
+        targetAudienceForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        targetAudienceForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: ‘General’."));
         targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_IntendedAudienceCodeCS"));
         targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_ParentalGuidanceCodeCS"));
         QObject::connect(targetAudienceForm, SIGNAL(closed(Operation,QVariant)),
@@ -179,6 +191,10 @@ void TypeTypeForm::editClicked()
     {
         TypeGroupForm *genreForm = new TypeGroupForm(m_type->genre().at(index), this->mainWindow());
         genreForm->setTitle(tr("Genre"));
+        genreForm->setGeneralDoc(tr("A group of attributes to describe the genre."));
+        genreForm->setDefinitionDoc(tr("Free text for an optional definition."));
+        genreForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        genreForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: ‘non-fiction/information’."));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentAlertSchemeCodeCS"));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentGenreCS"));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_EditorialFormatCodeCS"));
@@ -194,6 +210,10 @@ void TypeTypeForm::editClicked()
     {
         TypeGroupForm *objectTypeForm = new TypeGroupForm(m_type->objectType().at(index), this->mainWindow());
         objectTypeForm->setTitle(tr("Object Type"));
+        objectTypeForm->setGeneralDoc(tr("A group of attributes to describe the objectType."));
+        objectTypeForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘A short description of the resource’."));
+        objectTypeForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        objectTypeForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink."));
         objectTypeForm->addLinksMap(mainWindow()->getMap("ebu_ObjectTypeCS"));
         QObject::connect(objectTypeForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(objectTypeFormClosed(Operation,QVariant)));
@@ -204,6 +224,10 @@ void TypeTypeForm::editClicked()
     {
         TypeGroupForm *targetAudienceForm = new TypeGroupForm(m_type->targetAudience().at(index), this->mainWindow());
         targetAudienceForm->setTitle(tr("Target Audience"));
+        targetAudienceForm->setGeneralDoc(tr("A group of attributes to describe the target audience (parental guidance, geographical or occupantional groups, etc.)."));
+        targetAudienceForm->setDefinitionDoc(tr("An optional definition.\nExample: code for MPAA 'general' rating."));
+        targetAudienceForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        targetAudienceForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: ‘General’."));
         targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_IntendedAudienceCodeCS"));
         targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_ParentalGuidanceCodeCS"));
         QObject::connect(targetAudienceForm, SIGNAL(closed(Operation,QVariant)),

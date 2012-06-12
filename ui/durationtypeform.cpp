@@ -6,7 +6,6 @@
 #include "organisationdetailstypeform.h"
 #include "detailstypeform.h"
 #include "entitytypeform.h"
-#include "typegroupform.h"
 #include "timezoneeditbox.h"
 #include "../model/typeconverter.h"
 #include "../model/qebulimits.h"

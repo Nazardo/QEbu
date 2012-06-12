@@ -5,7 +5,6 @@
 #include "typegroupeditbox.h"
 #include "elementtypeeditbox.h"
 #include "qvarptr.h"
-#include "typegroupform.h"
 #include "identifiertypeform.h"
 #include <QPushButton>
 #include <QLabel>

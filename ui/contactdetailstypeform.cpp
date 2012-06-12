@@ -7,7 +7,6 @@
 #include "contactdetailstypeform.h"
 #include "detailstypeform.h"
 #include "entitytypeform.h"
-#include "typegroupform.h"
 #include <QPushButton>
 #include <QRadioButton>
 #include <QLineEdit>

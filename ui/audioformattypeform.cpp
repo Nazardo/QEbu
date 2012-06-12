@@ -125,6 +125,10 @@ void AudioFormatTypeForm::addClicked()
         TypeGroupForm *audioEncodingForm = new TypeGroupForm(0, this->mainWindow());
         audioEncodingForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioCompressionCodeCS")); //Autocompletion values
         audioEncodingForm->setTitle(tr("Audio Encoding"));
+        audioEncodingForm->setGeneralDoc(tr("A group of attributes to describe the audio compression format."));
+        audioEncodingForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘the audio compression scheme MPEG4, AAC profile, level1 as specified by ISO/IEC’."));
+        audioEncodingForm->setLabelDoc(tr("Free text.\nExample: ‘MPEG-4 AAC Profile @ Level 1’."));
+        audioEncodingForm->setLinkDoc(tr("Link to a classification scheme."));
         QObject::connect(audioEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioEncodingFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(audioEncodingForm);
@@ -135,6 +139,10 @@ void AudioFormatTypeForm::addClicked()
         TypeGroupForm *audioTrackConfigurationForm = new TypeGroupForm(0, this->mainWindow());
         audioTrackConfigurationForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioFormatCodeCS")); //Autocompletion values
         audioTrackConfigurationForm->setTitle(tr("Audio Track Configuration"));
+        audioTrackConfigurationForm->setGeneralDoc(tr("A group of attributes to describe the audio track configuration."));
+        audioTrackConfigurationForm->setDefinitionDoc(tr("Free text for an optional definition."));
+        audioTrackConfigurationForm->setLabelDoc(tr("Free text.\nExample: ‘surround’."));
+        audioTrackConfigurationForm->setLinkDoc(tr("Link to a classification scheme."));
         QObject::connect(audioTrackConfigurationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioTrackConfigurationFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(audioTrackConfigurationForm);
@@ -171,6 +179,10 @@ void AudioFormatTypeForm::editClicked()
                     m_audioFormat->audioEncoding().at(index), this->mainWindow());
         audioEncodingForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioCompressionCodeCS")); //Autocompletion values
         audioEncodingForm->setTitle(tr("Audio Encoding"));
+        audioEncodingForm->setGeneralDoc(tr("A group of attributes to describe the audio compression format."));
+        audioEncodingForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘the audio compression scheme MPEG4, AAC profile, level1 as specified by ISO/IEC’."));
+        audioEncodingForm->setLabelDoc(tr("Free text.\nExample: ‘MPEG-4 AAC Profile @ Level 1’."));
+        audioEncodingForm->setLinkDoc(tr("Link to a classification scheme."));
         QObject::connect(audioEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioEncodingFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(audioEncodingForm);
@@ -182,6 +194,10 @@ void AudioFormatTypeForm::editClicked()
                     m_audioFormat->audioTrackConfiguration(), this->mainWindow());
         audioTrackConfigurationForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioFormatCodeCS")); //Autocompletion values
         audioTrackConfigurationForm->setTitle(tr("Audio Track Configuration"));
+        audioTrackConfigurationForm->setGeneralDoc(tr("A group of attributes to describe the audio track configuration."));
+        audioTrackConfigurationForm->setDefinitionDoc(tr("Free text for an optional definition."));
+        audioTrackConfigurationForm->setLabelDoc(tr("Free text.\nExample: ‘surround’."));
+        audioTrackConfigurationForm->setLinkDoc(tr("Link to a classification scheme."));
         QObject::connect(audioTrackConfigurationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioTrackConfigurationFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(audioTrackConfigurationForm);

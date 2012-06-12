@@ -6,7 +6,6 @@
 #include "contactdetailstypeform.h"
 #include "publicationtypeform.h"
 #include "../model/typeconverter.h"
-#include "typegroupform.h"
 #include <QPushButton>
 #include <QLineEdit>
 #include <QTimeEdit>

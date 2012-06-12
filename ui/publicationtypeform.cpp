@@ -5,7 +5,6 @@
 #include "organisationdetailstypeform.h"
 #include "contactdetailstypeform.h"
 #include "../model/typeconverter.h"
-#include "typegroupform.h"
 #include <QTimeEdit>
 #include <QDateEdit>
 #include <QLineEdit>

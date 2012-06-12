@@ -5,7 +5,6 @@
 #include "qvarptr.h"
 #include "organisationdetailstypeform.h"
 #include "contactdetailstypeform.h"
-#include "typegroupform.h"
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QGroupBox>

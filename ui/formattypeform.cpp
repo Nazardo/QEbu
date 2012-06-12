@@ -914,6 +914,10 @@ void FormatTypeForm::addClicked()
         TypeGroupForm *form = new TypeGroupForm(0, this->mainWindow());
         form->addLinksMap(mainWindow()->getMap("ebu_MediaTypeCS"));
         form->setTitle(tr("Mime Type"));
+        form->setGeneralDoc(tr("To define the type of medium in which the resource is available."));
+        form->setDefinitionDoc(tr("An optional definition.\nExample: ‘the resource contains only video footage’."));
+        form->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        form->setLabelDoc(tr("Free text field.\nExample: video only."));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mimeTypeFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -924,6 +928,10 @@ void FormatTypeForm::addClicked()
         TypeGroupForm *form = new TypeGroupForm(0, this->mainWindow());
         form->addLinksMap(mainWindow()->getMap("ebu_StorageMediaTypeCodeCS"));
         form->setTitle(tr("Medium"));
+        form->setGeneralDoc(tr("To define the type of medium in which the resource is available."));
+        form->setDefinitionDoc(tr("An optional definition."));
+        form->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        form->setLabelDoc(tr("Free text field.\nExample: D5 format HDTV digital television tape."));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mediumFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -934,6 +942,10 @@ void FormatTypeForm::addClicked()
         FormatGroupForm *form = new FormatGroupForm(0, this->mainWindow());
         form->addLinksMap(mainWindow()->getMap("ebu_FileFormatCS"));
         form->setTitle("Container Format");
+        form->setGeneralDoc(tr("To define the file format of the resource."));
+        form->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        form->setLabelDoc(tr("Free text field\nExample: mpeg TS."));
+        form->setDefinitionDoc(tr("An optional definition.\nExample: ‘The file format or wrapper defined by ISO/IEC (so called MPEG Transport Stream)’."));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(containerFormatFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
@@ -992,6 +1004,10 @@ void FormatTypeForm::editClicked()
     {
         TypeGroupForm *form = new TypeGroupForm(m_format->mimeType().at(index), this->mainWindow());
         form->setTitle(tr("Mime Type"));
+        form->setGeneralDoc(tr("To define the type of medium in which the resource is available."));
+        form->setDefinitionDoc(tr("An optional definition.\nExample: ‘the resource contains only video footage’."));
+        form->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        form->setLabelDoc(tr("Free text field.\nExample: video only."));
         form->addLinksMap(mainWindow()->getMap("ebu_MediaTypeCS"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mimeTypeFormClosed(Operation,QVariant)));
@@ -1002,6 +1018,10 @@ void FormatTypeForm::editClicked()
     {
         TypeGroupForm *form = new TypeGroupForm(m_format->medium().at(index), this->mainWindow());
         form->setTitle(tr("Medium"));
+        form->setGeneralDoc(tr("To define the type of medium in which the resource is available."));
+        form->setDefinitionDoc(tr("An optional definition."));
+        form->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        form->setLabelDoc(tr("Free text field.\nExample: D5 format HDTV digital television tape."));
         form->addLinksMap(mainWindow()->getMap("ebu_StorageMediaTypeCodeCS"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(mediumFormClosed(Operation,QVariant)));
@@ -1012,6 +1032,10 @@ void FormatTypeForm::editClicked()
     {
         FormatGroupForm *form = new FormatGroupForm(m_format->containerFormat().at(index), this->mainWindow());
         form->setTitle(tr("Container Format"));
+        form->setGeneralDoc(tr("To define the file format of the resource."));
+        form->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        form->setLabelDoc(tr("Free text field\nExample: mpeg TS."));
+        form->setDefinitionDoc(tr("An optional definition.\nExample: ‘The file format or wrapper defined by ISO/IEC (so called MPEG Transport Stream)’."));
         form->addLinksMap(mainWindow()->getMap("ebu_FileFormatCS"));
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(containerFormatFormClosed(Operation,QVariant)));

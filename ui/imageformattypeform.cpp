@@ -205,6 +205,10 @@ void ImageFormatTypeForm::addClicked()
     TypeGroupForm *form = new TypeGroupForm(0, mainWindow());
     form->addLinksMap(this->mainWindow()->getMap("ebu_VideoCompressionCodeCS")); //Autocompletion values
     form->setTitle(tr("Image Encoding"));
+    form->setGeneralDoc(tr("The type group attributes provide the information on the encoding format"));
+    form->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘standard file format for compressing pictures so they can be stored or sent by e-mail more easily. JPEG is an abbreviation for `Joint Photographic Experts Group'."));
+    form->setLinkDoc(tr("A link to a classification scheme."));
+    form->setLabelDoc(tr("Free text field.\nExample: JPEG."));
     QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(typeGroupFormClosed(Operation,QVariant)));
     mainWindow()->pushWidget(form);
@@ -218,6 +222,11 @@ void ImageFormatTypeForm::editClicked()
     TypeGroupForm *form = new TypeGroupForm(
                 m_imageFormat->imageEncoding().at(index),
                 mainWindow());
+    form->setTitle(tr("Image Encoding"));
+    form->setGeneralDoc(tr("The type group attributes provide the information on the encoding format"));
+    form->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘standard file format for compressing pictures so they can be stored or sent by e-mail more easily. JPEG is an abbreviation for `Joint Photographic Experts Group'."));
+    form->setLinkDoc(tr("A link to a classification scheme."));
+    form->setLabelDoc(tr("Free text field.\nExample: JPEG."));
     form->addLinksMap(this->mainWindow()->getMap("ebu_VideoCompressionCodeCS")); //Autocompletion values
     QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(typeGroupFormClosed(Operation,QVariant)));

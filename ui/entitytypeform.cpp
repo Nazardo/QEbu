@@ -132,6 +132,10 @@ void EntityTypeForm::addClicked()
         TypeGroupForm *rolesForm = new TypeGroupForm(0, this->mainWindow());
         rolesForm->addLinksMap(mainWindow()->getMap("ebu_RoleCodeCS"));
         rolesForm->setTitle(tr("Role"));
+        rolesForm->setGeneralDoc(tr("Used to define the type of role."));
+        rolesForm->setDefinitionDoc(tr("An optional definition of the type.\nExample: ‘the terms and conditions under which the resource can be used’."));
+        rolesForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        rolesForm->setLabelDoc(tr("Free text definition of the type or rights expressed in dc:rights.\nExample: ‘Director’."));
         QObject::connect(rolesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(roleFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rolesForm);
@@ -170,6 +174,10 @@ void EntityTypeForm::editClicked()
                     m_entity->roles().at(index), this->mainWindow());
         rolesForm->addLinksMap(mainWindow()->getMap("ebu_RoleCodeCS"));
         rolesForm->setTitle(tr("Role"));
+        rolesForm->setGeneralDoc(tr("Used to define the type of role."));
+        rolesForm->setDefinitionDoc(tr("An optional definition of the type.\nExample: ‘the terms and conditions under which the resource can be used’."));
+        rolesForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
+        rolesForm->setLabelDoc(tr("Free text definition of the type or rights expressed in dc:rights.\nExample: ‘Director’."));
         QObject::connect(rolesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(roleFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rolesForm);
