@@ -102,10 +102,12 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
         }
     }
     {
-        m_labelTime = new QLabel(tr("Time"));
-        m_radioTime = new QRadioButton(m_labelTime);
+        m_radioTime = new QRadioButton(tr("Time"));
         m_radioTime->setCheckable(true);
         l->addWidget(m_radioTime);
+
+        m_editTimeValue = new QLineEdit(m_time->timeValue());
+        l->addWidget(m_editTimeValue);
         m_editFormatGroup = new FormatGroupEditBox(m_time->time());
         m_editFormatGroup->setLabel("Time");
         l->addWidget(m_editFormatGroup);
@@ -200,6 +202,7 @@ void TimeTypeForm::applyClicked()
 
     } else if (m_radioTime->isChecked()) {
         FormatGroup *fg = m_editFormatGroup->formatGroup();
+        m_time->setTimeValue(m_editTimeValue->text());
         m_time->setTime(fg);
 
     } else if (m_radioEditUnitNumber->isChecked()) {
@@ -228,7 +231,7 @@ void TimeTypeForm::timeChecked(bool checked)
     if (!checked)
         return;
 
-    m_labelTime->setEnabled(true);
+    m_editTimeValue->setEnabled(true);
     m_editFormatGroup->setEnabled(true);
     m_spinUnitNumberValue->setEnabled(false);
     m_spinRate->setEnabled(false);
@@ -249,7 +252,7 @@ void TimeTypeForm::timecodeChecked(bool checked)
     if (!checked)
         return;
 
-    m_labelTime->setEnabled(false);
+    m_editTimeValue->setEnabled(false);
     m_editFormatGroup->setEnabled(false);
     m_spinUnitNumberValue->setEnabled(false);
     m_spinRate->setEnabled(false);
@@ -270,7 +273,7 @@ void TimeTypeForm::normalPlaytimeChecked(bool checked)
     if (!checked)
         return;
 
-    m_labelTime->setEnabled(false);
+    m_editTimeValue->setEnabled(false);
     m_editFormatGroup->setEnabled(false);
     m_spinUnitNumberValue->setEnabled(false);
     m_spinRate->setEnabled(false);
@@ -291,7 +294,7 @@ void TimeTypeForm::editUnitNumberChecked(bool checked)
     if (!checked)
         return;
 
-    m_labelTime->setEnabled(false);
+    m_editTimeValue->setEnabled(false);
     m_editFormatGroup->setEnabled(false);
     m_spinUnitNumberValue->setEnabled(true);
     m_spinRate->setEnabled(true);
