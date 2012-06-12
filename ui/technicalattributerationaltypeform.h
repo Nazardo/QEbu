@@ -27,6 +27,7 @@ private slots:
     void numeratorChanged();
     void denominatorChanged();
 private:
+    bool eventFilter(QObject *, QEvent *);
     QSignedSpinBox *m_spinValue;
     QSpinBox *m_spinFactorNumerator;
     QSpinBox *m_spinFactorDenominator;
