@@ -256,7 +256,7 @@ void TechnicalAttributesForm::addClicked()
     {
         Uint16Form *form = new Uint16Form(0, this->mainWindow());
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
-                         this, SLOT(unsignedIntegerFormClosed(Operation,QVariant)));
+                         this, SLOT(unsignedShortFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
     }
         break;
@@ -371,7 +371,7 @@ void TechnicalAttributesForm::editClicked()
     {
         Uint16Form *form = new Uint16Form(m_technicalAttributes->technicalAttributeUnsignedShort().at(index), this->mainWindow());
         QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
-                         this, SLOT(unsignedIntegerFormClosed(Operation,QVariant)));
+                         this, SLOT(unsignedShortFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(form);
     }
         break;

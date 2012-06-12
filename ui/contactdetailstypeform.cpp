@@ -228,7 +228,8 @@ void ContactDetailsTypeForm::editClicked()
                                               tr("Stage Name"), QLineEdit::Normal,
                                              m_contactDetails->stageNames().at(index), &ok);
         if (ok && !text.isEmpty()) {
-            m_listView->addItem(text);
+            m_listView->setItem(index, text);
+            m_contactDetails->stageNames().replace(index, text);
         }
     }
         break;
