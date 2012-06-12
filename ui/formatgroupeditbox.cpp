@@ -41,7 +41,7 @@ FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup,
     // Set text fields
     m_editFormatLabel->setText(formatGroup->formatLabel());
     m_editFormatDefinition->setText(formatGroup->formatDefinition());
-    m_editFormatLink->addItem("",formatGroup->formatLink());
+    m_editFormatLink->addItem(formatGroup->formatLink(),formatGroup->formatLink());
 }
 
 FormatGroup *FormatGroupEditBox::formatGroup()
@@ -71,6 +71,7 @@ void FormatGroupEditBox::addLinksMap(QMap<QString, QString> *values)
             m_editFormatLink->addItem(values->value(key),key);
             if (currentIndex == 0 && key == selectedData) { // This is the value previously stored
                 m_editFormatLink->setItemData(currentIndex,""); //This is the empty value
+                m_editFormatLink->setItemText(currentIndex,""); //This is the empty value
                 m_editFormatLink->setCurrentIndex(m_editFormatLink->count()-1); //Select this last item
             }
         }

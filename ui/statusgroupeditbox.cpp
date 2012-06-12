@@ -37,7 +37,7 @@ StatusGroupEditBox::StatusGroupEditBox(StatusGroup *statusGroup, QWidget *parent
     // Set text fields
     m_editStatusLabel->setText(statusGroup->statusLabel());
     m_editStatusDefinition->setText(statusGroup->statusDefinition());
-    m_editStatusLink->addItem("",statusGroup->statusLink());
+    m_editStatusLink->addItem(statusGroup->statusLink(),statusGroup->statusLink());
 }
 
 StatusGroup *StatusGroupEditBox::statusGroup()
@@ -49,25 +49,24 @@ StatusGroup *StatusGroupEditBox::statusGroup()
 
 void StatusGroupEditBox::addLinksMap(QMap<QString, QString> *values)
 {
-    QString selectedData = m_editStatusLink->itemData(m_editStatusLink->currentIndex()).toString();
-    QString selectedText = m_editStatusLink->itemText(m_editStatusLink->currentIndex());
-    m_editStatusLink->setItemData(m_editStatusLink->currentIndex(),"");
+    int currentIndex = m_editStatusLink->currentIndex();
+    QString selectedData = m_editStatusLink->itemData(currentIndex).toString();
 
-    m_editStatusLink->setStyleSheet(""); //Restore default style (show arrow)
+    m_editStatusLink->setStyleSheet("");
 
     QList<QString> keys = values->keys();
     for (int i=0; i < keys.size(); ++i) {
         QString key = keys.at(i);
         if (m_editStatusLink->findText(values->value(key)) == -1) {
+            // Discart duplicates (new user-defined values are saved in every maps used)
             m_editStatusLink->addItem(values->value(key),key);
-            if (key == selectedData)
-                selectedText = values->value(key);
+            if (currentIndex == 0 && key == selectedData) { // This is the value previously stored
+                m_editStatusLink->setItemData(currentIndex,""); //This is the empty value
+                m_editStatusLink->setItemText(currentIndex,""); //This is the empty value
+                m_editStatusLink->setCurrentIndex(m_editStatusLink->count()-1); //Select this last item
+            }
         }
     }
-
-    m_editStatusLink->setCurrentIndex(m_editStatusLink->findText(selectedText));
-
-    m_linkMaps.append(values);
 }
 
 
