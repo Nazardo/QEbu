@@ -377,6 +377,9 @@ FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, Q
     if(m_format->end()){
         m_editEnd->setText(m_format->end()->toString());
     }
+    if(m_format->duration()){
+        m_editEnd->setText(m_format->duration()->toString());
+    }
     if(m_format->documentFormat()) {
         m_editDocumentFormat->setText(m_format->documentFormat()->toString());
     }
