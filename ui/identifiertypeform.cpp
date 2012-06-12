@@ -25,22 +25,16 @@ IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindo
 
     QVBoxLayout *vl = new QVBoxLayout;
     {
+        m_editElementIdentifier = new ElementTypeEditBox;
+        m_editElementIdentifier->setLabel(tr("Identifier"));
+        vl->addWidget(m_editElementIdentifier);
+    }
+    {
         m_editTypeGroup = new TypeGroupEditBox(identifier);
         vl->addWidget(m_editTypeGroup);
         m_editFormatGroup = new FormatGroupEditBox(identifier);
         m_editFormatGroup->addLinksMap(mainWindow->getMap("ebu_IdentifierTypeCodeCS"));
         vl->addWidget(m_editFormatGroup);
-    }
-    {
-        QFormLayout *fl = new QFormLayout;
-        m_textNote = new QTextEdit;
-        fl->addRow(tr("Note"), m_textNote);
-        vl->addLayout(fl);
-    }
-    {
-        m_editElementIdentifier = new ElementTypeEditBox;
-        m_editElementIdentifier->setLabel(tr("Identifier"));
-        vl->addWidget(m_editElementIdentifier);
     }
     {
         QHBoxLayout *hl = new QHBoxLayout;
@@ -57,6 +51,12 @@ IdentifierTypeForm::IdentifierTypeForm(IdentifierType *identifier, QEbuMainWindo
                          this, SLOT(attributorRemoveClicked()));
         hl->addWidget(buttonAttributorRemove);
         vl->addLayout(hl);
+    }
+    {
+        QFormLayout *fl = new QFormLayout;
+        m_textNote = new QTextEdit;
+        fl->addRow(tr("Note"), m_textNote);
+        vl->addLayout(fl);
     }
     this->setLayout(vl);
 
@@ -116,8 +116,6 @@ void IdentifierTypeForm::attributorRemoveClicked()
 
 void IdentifierTypeForm::attributorClicked()
 {
-    if (!checkCompliance())
-        return;
     EntityTypeForm *attributorForm = new EntityTypeForm(
                 m_identifier->attributor(),this->mainWindow());
     attributorForm->setTitle(tr("Attributor"));
@@ -147,6 +145,8 @@ void IdentifierTypeForm::cancelClicked()
 
 void IdentifierTypeForm::applyClicked()
 {
+    if (!checkCompliance())
+        return;
     m_identifier->setNote(m_textNote->toPlainText());
     m_editTypeGroup->updateExistingTypeGroup(m_identifier);
     m_editFormatGroup->updateExistingFormatGroup(m_identifier);

@@ -24,6 +24,11 @@ DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description,
         m_description = description;
     QVBoxLayout *vl = new QVBoxLayout;
     {
+        m_editElementDescription = new ElementTypeEditBox;
+        m_editElementDescription->setLabel(tr("Description"));
+        vl->addWidget(m_editElementDescription);
+    }
+    {
         m_editTypeGroup = new TypeGroupEditBox(description);
         m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_DescriptionTypeCodeCS")); //Autocompletion values
         vl->addWidget(m_editTypeGroup);
@@ -33,11 +38,6 @@ DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description,
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);
         vl->addLayout(fl);
-    }
-    {
-        m_editElementDescription = new ElementTypeEditBox;
-        m_editElementDescription->setLabel(tr("Description"));
-        vl->addWidget(m_editElementDescription);
     }
     this->setLayout(vl);
     // Set text fields...

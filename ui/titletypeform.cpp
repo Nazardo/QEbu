@@ -22,6 +22,10 @@ TitleTypeForm::TitleTypeForm(TitleType *title,
         m_title = title;
     // Layout
     QVBoxLayout *l = new QVBoxLayout;
+    m_editTitle = new ElementTypeEditBox;
+    m_editTitle->setLabel(tr("Title"));
+    l->addWidget(m_editTitle);
+
     m_editAttributionDate = new QDateEdit;
     m_editAttributionDate->setCalendarPopup(true);
     m_checkAttributionDate = new QCheckBox(tr("Attribution date"));
@@ -38,9 +42,6 @@ TitleTypeForm::TitleTypeForm(TitleType *title,
     QFormLayout *formL = new QFormLayout;
     formL->addRow(tr("Note"), m_textNote);
     l->addLayout(formL);
-    m_editTitle = new ElementTypeEditBox;
-    m_editTitle->setLabel(tr("Title"));
-    l->addWidget(m_editTitle);
     this->setLayout(l);
 
     // Doc filter

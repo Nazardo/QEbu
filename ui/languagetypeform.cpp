@@ -23,6 +23,11 @@ LanguageTypeForm::LanguageTypeForm(LanguageType *language,
 
     QVBoxLayout *vl = new QVBoxLayout;
     {
+        m_editElementLanguage = new ElementTypeEditBox;
+        m_editElementLanguage->setLabel(tr("Language"));
+        vl->addWidget(m_editElementLanguage);
+    }
+    {
         m_editTypeGroup = new TypeGroupEditBox(language);
         m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_LanguagePurposeCodeCS"));
         vl->addWidget(m_editTypeGroup);
@@ -32,11 +37,6 @@ LanguageTypeForm::LanguageTypeForm(LanguageType *language,
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);
         vl->addLayout(fl);
-    }
-    {
-        m_editElementLanguage = new ElementTypeEditBox;
-        m_editElementLanguage->setLabel(tr("Language"));
-        vl->addWidget(m_editElementLanguage);
     }
     this->setLayout(vl);
     // Set text fields...

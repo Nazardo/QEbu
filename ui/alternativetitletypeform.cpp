@@ -29,26 +29,26 @@ AlternativeTitleTypeForm::AlternativeTitleTypeForm(
 
     QHBoxLayout *hLayout = new QHBoxLayout;
     QVBoxLayout *leftVLayout = new QVBoxLayout;
+    m_editTitle = new ElementTypeEditBox;
+    m_editTitle->setLabel(tr("Title"));
+    leftVLayout->addWidget(m_editTitle);
     m_editTypeGroup = new TypeGroupEditBox(m_alternativeTitle);
     m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_ObjectTypeCodeCS")); //Autocompletion values
     leftVLayout->addWidget(m_editTypeGroup);
     m_editStatusGroup = new StatusGroupEditBox(m_alternativeTitle);
     m_editStatusGroup->addLinksMap(mainWindow->getMap("ebu_TitleStatusCodeCS")); //Autocompletion values
     leftVLayout->addWidget(m_editStatusGroup);
-    m_editTitle = new ElementTypeEditBox;
-    m_editTitle->setLabel(tr("Title"));
-    leftVLayout->addWidget(m_editTitle);
 
     hLayout->addLayout(leftVLayout);
     QVBoxLayout *rightVLayout = new QVBoxLayout;
+    m_editDateGroup = new DateGroupEditBox(m_alternativeTitle);
+    rightVLayout->addWidget(m_editDateGroup);
     {
         QFormLayout *form = new QFormLayout;
         m_textNote = new QTextEdit;
         form->addRow(tr("Note"), m_textNote);
         rightVLayout->addLayout(form);
     }
-    m_editDateGroup = new DateGroupEditBox(m_alternativeTitle);
-    rightVLayout->addWidget(m_editDateGroup);
     hLayout->addLayout(rightVLayout);
     hLayout->setAlignment(leftVLayout, Qt::AlignTop);
     hLayout->setAlignment(rightVLayout, Qt::AlignTop);

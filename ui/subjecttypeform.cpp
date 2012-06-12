@@ -24,21 +24,13 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
         m_subject = subject;
 
     QVBoxLayout *vl = new QVBoxLayout;
+    m_editElementSubject = new ElementTypeEditBox;
+    m_editElementSubject->setLabel(tr("Subject"));
+    vl->addWidget(m_editElementSubject);
     {
         m_editTypeGroup = new TypeGroupEditBox(subject);
         vl->addWidget(m_editTypeGroup);
     }
-    {
-        QFormLayout *fl = new QFormLayout;
-
-        m_textNote = new QTextEdit;
-        fl->addRow(tr("Note"), m_textNote);
-
-        vl->addLayout(fl);
-    }
-    m_editElementSubject = new ElementTypeEditBox;
-    m_editElementSubject->setLabel(tr("Subject"));
-    vl->addWidget(m_editElementSubject);
     {
         QFormLayout *fl = new QFormLayout;
 
@@ -77,6 +69,14 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
                          this, SLOT(attributorRemoveClicked()));
         hl->addWidget(buttonAttributorRemove);
         vl->addLayout(hl);
+    }
+    {
+        QFormLayout *fl = new QFormLayout;
+
+        m_textNote = new QTextEdit;
+        fl->addRow(tr("Note"), m_textNote);
+
+        vl->addLayout(fl);
     }
     this->setLayout(vl);
     // Set text fields...

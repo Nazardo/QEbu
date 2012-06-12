@@ -30,6 +30,11 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
 		
     QVBoxLayout *vl = new QVBoxLayout;
     {
+        m_editElementRelation = new ElementTypeEditBox;
+        m_editElementRelation->setLabel(tr("Relation"));
+        vl->addWidget(m_editElementRelation);
+    }
+    {
         m_editTypeGroup = new TypeGroupEditBox(relation);
         m_editTypeGroup->addLinksMap(mainWindow->getMap("tva_HowRelatedCS"));
         m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_HowrelatedCS"));
@@ -45,17 +50,6 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
         gl->addWidget(m_checkRunningOrderNumber, 0, 0);
         gl->addWidget(m_spinRunningOrderNumber, 0, 1);
         vl->addLayout(gl);
-    }
-    {
-        QFormLayout *fl = new QFormLayout;
-        m_textNote = new QTextEdit;
-        fl->addRow(tr("Note"), m_textNote);
-        vl->addLayout(fl);
-    }
-    {
-        m_editElementRelation = new ElementTypeEditBox;
-        m_editElementRelation->setLabel(tr("Relation"));
-        vl->addWidget(m_editElementRelation);
     }
     {
         QFormLayout *fl = new QFormLayout;
@@ -78,6 +72,12 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
                          this, SLOT(relationIdentifierRemoveClicked()));
         hl->addWidget(buttonRelationIdentifierRemove);
         vl->addLayout(hl);
+    }
+    {
+        QFormLayout *fl = new QFormLayout;
+        m_textNote = new QTextEdit;
+        fl->addRow(tr("Note"), m_textNote);
+        vl->addLayout(fl);
     }
     this->setLayout(vl);
 

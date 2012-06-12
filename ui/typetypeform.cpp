@@ -27,13 +27,6 @@ TypeTypeForm::TypeTypeForm(TypeType *type,
     QHBoxLayout *mainHLayout = new QHBoxLayout;
     QVBoxLayout *l = new QVBoxLayout;
     {
-        QHBoxLayout *hl = new QHBoxLayout;
-        hl->addWidget(new QLabel(tr("Note")));
-        m_textNote = new QTextEdit;
-        hl->addWidget(m_textNote);
-        l->addLayout(hl);
-    }
-    {
         QFormLayout *fl = new QFormLayout;
         m_buttonType = new QPushButton(">>");
         fl->addRow(tr("Type"), m_buttonType);
@@ -61,6 +54,13 @@ TypeTypeForm::TypeTypeForm(TypeType *type,
         group->addButton(m_buttonObjectType);
         m_buttonTargetAudience->setCheckable(true);
         group->addButton(m_buttonTargetAudience);
+    }
+    {
+        QHBoxLayout *hl = new QHBoxLayout;
+        hl->addWidget(new QLabel(tr("Note")));
+        m_textNote = new QTextEdit;
+        hl->addWidget(m_textNote);
+        l->addLayout(hl);
     }
     mainHLayout->addLayout(l);
     // Add list view on the right
