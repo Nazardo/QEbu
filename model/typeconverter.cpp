@@ -1,7 +1,10 @@
 #include "typeconverter.h"
+#include <QRegExp>
+#include <QRegExpValidator>
 #include <QDebug>
 
 QString TypeConverter::m_errorMsg = "-no errors-";
+QValidator *TypeConverter::m_uriValidator = 0;
 
 TypeConverter::TypeConverter()
 {
@@ -404,9 +407,14 @@ QDateTime TypeConverter::timeToDateTime(const QTime &time)
     return dt;
 }
 
-bool TypeConverter::validateUri(const QString &uri)
+QValidator *TypeConverter::getUriValidator()
 {
-    return QUrl(uri, QUrl::StrictMode).isValid();
+    if (m_uriValidator!=0)
+        return m_uriValidator;
+    else {
+        m_uriValidator = new QRegExpValidator(QRegExp("(\\S ?[\\t\\r\\n]{0}((( ){2,}){0}))*",Qt::CaseInsensitive));
+        return m_uriValidator;
+    }
 }
 
 QString TypeConverter::errorMsg()

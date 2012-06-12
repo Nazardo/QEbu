@@ -5,6 +5,8 @@
 #include <QUrl>
 #include "model/duration.h"
 
+class QValidator;
+
 class TypeConverter
 {
 public:
@@ -18,7 +20,7 @@ public:
     static QString timeToString(const QDateTime &time);
     static QDateTime timeToDateTime(const QTime &time);
 
-    static bool validateUri(const QString &uri);
+    static QValidator *getUriValidator();
 
     static QString errorMsg();
 
@@ -26,6 +28,7 @@ private:
     TypeConverter();
 
     static QString m_errorMsg;
+    static QValidator *m_uriValidator;
 };
 
 #endif // TYPECONVERTER_H
