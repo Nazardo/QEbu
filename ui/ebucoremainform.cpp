@@ -14,7 +14,7 @@
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
                                  QEbuMainWindow *mainWindow,
                                  QWidget *parent) :
-    StackableWidget(mainWindow, parent, None)
+    StackableWidget(mainWindow, parent, DocText)
 {
     m_ebuCoreMain = ebuCoreMain;
     QVBoxLayout *vl = new QVBoxLayout;

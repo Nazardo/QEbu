@@ -16,6 +16,7 @@ protected:
     enum Operation { Add, Edit };
     enum WidgetItem {
         None        = 0x00000000,
+        DocText     = 0x00000002,
         ApplyCancel = 0x00000400
     };
     Q_DECLARE_FLAGS(WidgetItems, WidgetItem)
@@ -27,7 +28,7 @@ protected:
 public:
     StackableWidget(QEbuMainWindow *mainWindow,
                     QWidget *parent = 0,
-                    WidgetItems items = ApplyCancel);
+                    WidgetItems items = WidgetItems(DocText | ApplyCancel));
     virtual QString toString() = 0;
 signals:
     void closed(enum Operation op, QVariant value);

@@ -25,10 +25,16 @@ QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
     // Central Widget
     QWidget *cw = new QWidget;
     m_mainCentralLayout = new QVBoxLayout;
+
     m_labelNavigation = new QLabel;
     m_stackedWidget = new QStackedWidget;
+    m_stackedWidget->setMinimumSize(800,600);
     m_mainCentralLayout->addWidget(m_labelNavigation);
+    m_mainCentralLayout->setAlignment(m_labelNavigation,
+                                      Qt::AlignTop | Qt::AlignLeft);
     m_mainCentralLayout->addWidget(m_stackedWidget);
+    m_mainCentralLayout->setAlignment(m_stackedWidget,
+                                      Qt::AlignVCenter | Qt::AlignCenter);
     cw->setLayout(m_mainCentralLayout);
     this->setCentralWidget(cw);
 
