@@ -131,7 +131,7 @@ void TechnicalAttributeRationalTypeForm::denominatorChanged()
     m_checkDenominator->setChecked(true);
 }
 
-bool TechnicalAttributeRationalTypeForm::eventFilter(QObject *, QEvent *)
+bool TechnicalAttributeRationalTypeForm::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::FocusIn) {
         if ( obj == (QObject*) m_editTypeGroup->editTypeDefinition())
