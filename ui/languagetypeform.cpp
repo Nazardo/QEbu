@@ -85,7 +85,7 @@ bool LanguageTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if  (obj == (QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(tr("Free text.\nExample: ‘main original language’."));
         else if  (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("A link to a classification scheme."));
+            m_textDocumentation->setHtml(tr("A link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_LanguagePurposeCodeCS_p.xml.htm\">ebu_LanguagePurposeCodeCS</a>"));
     }
     return QObject::eventFilter(obj, event);
 }

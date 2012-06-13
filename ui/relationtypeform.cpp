@@ -225,7 +225,7 @@ bool RelationTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
             m_textDocumentation->setText(tr("An optional definition."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("A link to a classification scheme."));
+            m_textDocumentation->setHtml(tr("A link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/tva_HowRelatedCS_p.xml.htm\">tva_HowRelatedCS</a><br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_HowRelatedCS_p.xml.htm\">ebu_HowrelatedCS</a>"));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(tr("Free text to show the type of relation to another resource, i.e. identifies ways in which the resource is related by intellectual content to some other resource."));
     }

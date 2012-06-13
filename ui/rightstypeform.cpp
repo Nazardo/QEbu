@@ -650,7 +650,7 @@ bool RightsTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
             m_textDocumentation->setText(tr("An optional definition."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("A link to a classification scheme."));
+            m_textDocumentation->setHtml(tr("A link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/ebu_RightTypeCodeCS.xml\">ebu_RightsTypeCodeCS</a>"));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(tr("Free text to define the type of rights information provided."));
         else if (obj == (QObject*) m_buttonExploitationIssues)

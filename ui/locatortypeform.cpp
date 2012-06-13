@@ -7,6 +7,7 @@
 #include <QComboBox>
 #include <QEvent>
 #include <QTextEdit>
+#include <QTextBrowser>
 
 LocatorTypeForm::LocatorTypeForm(LocatorType *locator,
                                  QEbuMainWindow *mainWindow,
@@ -31,8 +32,7 @@ LocatorTypeForm::LocatorTypeForm(LocatorType *locator,
     this->setLayout(vl);
 
     // Install Events filter
-    m_textDocumentation->setText(tr("An \"address for a resource\".\n"
-                                    "For an organisation or producer acting as caretaker for a media resource, Format Location may contain information about a specific e.g. tape name, shelf location for an asset, including an organisation's name, departmental name, shelf id. And contact information. The Format Location for a data file or web page may include a complete URI with a domain, path, filename or html URL."));
+    m_textDocumentation->setText(tr("An \"address for a resource\".\nFor an organisation or producer acting as caretaker for a media resource, Format Location may contain information about a specific e.g. tape name, shelf location for an asset, including an organisation's name, departmental name, shelf id. And contact information. The Format Location for a data file or web page may include a complete URI with a domain, path, filename or html URL."));
     m_editTypeGroup->editTypeLabel()->installEventFilter(this);
     m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
     m_editTypeGroup->editTypeLink()->installEventFilter(this);
