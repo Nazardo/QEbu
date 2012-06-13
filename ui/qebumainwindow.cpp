@@ -63,6 +63,11 @@ QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
     //m_stackedWidget->setMinimumSize(640,400);
     m_mainCentralLayout->addWidget(m_labelNavigation);
     m_mainCentralLayout->addWidget(m_stackedWidget);
+
+
+    // Bottom label -> currentDocument
+    m_currentDocument = new QLabel;
+    m_mainCentralLayout->addWidget(m_currentDocument);
     cw->setLayout(m_mainCentralLayout);
     this->setCentralWidget(cw);
 
@@ -150,8 +155,10 @@ void QEbuMainWindow::resetView()
     while (removeWidgetFromTop());
 
     // If there is no opened document, create an empty one.
-    if (!m_ebuCoreMain)
+    if (!m_ebuCoreMain) {
+        m_currentDocument->setText(tr("New document created at %1").arg(QTime::currentTime().toString()));
         m_ebuCoreMain = new EbuCoreMainType;
+    }
 
     // Push first widget on screen
     this->pushWidget(new EbuCoreMainForm(m_ebuCoreMain, this));
@@ -261,7 +268,7 @@ bool QEbuMainWindow::doOpen()
         }
     }
 
-     // Parsing
+    // Parsing
     EbuParser parser;
     if (!parser.parseFromFile(inputFile)) {
         QMessageBox parserWarning(this);
@@ -282,6 +289,9 @@ bool QEbuMainWindow::doOpen()
         delete m_ebuCoreMain;
     m_ebuCoreMain = parser.root();
     resetView();
+    // QFileInfo is used to remove the pathname and extract only the true filename.
+    QFileInfo fi(filename);
+    m_currentDocument->setText(tr("%1 opened at %2").arg(fi.fileName()).arg(QTime::currentTime().toString()));
     return true;
 }
 
@@ -325,6 +335,9 @@ bool QEbuMainWindow::doSave()
     // All has gone well (we hope).
     QMessageBox::information(this, tr("QEbu Serializer"),
                              tr("Metadata saved successfully."));
+    // QFileInfo is used to remove the pathname and extract only the true filename.
+    QFileInfo fi(filename);
+    m_currentDocument->setText(tr("Document saved as %1 at %2").arg(fi.fileName()).arg(QTime::currentTime().toString()));
     return true;
 }
 

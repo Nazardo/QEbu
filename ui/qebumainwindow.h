@@ -66,6 +66,7 @@ private:
     EbuCoreMainType *m_ebuCoreMain;
     QStackedWidget *m_stackedWidget;
     QLabel *m_labelNavigation;
+    QLabel *m_currentDocument;
     QList<QString> m_listLabel;
     QMap<QString, QMap<QString,QString> * > m_maps;
 };
