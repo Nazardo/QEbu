@@ -1922,6 +1922,8 @@ QDomElement EbuSerializer::serializeAddress(AddressType *address)
 
 void EbuSerializer::serializeTechnicalAttributes(TechnicalAttributes *tech, QDomElement *t)
 {
+    if(!tech)
+        return;
     if(t->isNull())
         t = new QDomElement;
     QList<String *> strings = tech->technicalAttributeString();
