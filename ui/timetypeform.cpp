@@ -146,11 +146,6 @@ TimeTypeForm::TimeTypeForm(TimeType *time,
         l->addWidget(m_editFormatGroup);
     }
     m_textDocumentation->setText(tr("To express a time reference"));
-    QButtonGroup *radio = new QButtonGroup;
-    radio->addButton(m_radioTimecode);
-    radio->addButton(m_radioNormalPlaytime);
-    radio->addButton(m_radioEditUnitNumber);
-    radio->addButton(m_radioTime);
 
     QObject::connect(m_radioTimecode, SIGNAL(toggled(bool)),
                      this, SLOT(timecodeChecked(bool)));
