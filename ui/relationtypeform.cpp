@@ -38,6 +38,7 @@
 #include <QMessageBox>
 #include <QEvent>
 #include <QComboBox>
+#include <QRadioButton>
 
 RelationTypeForm::RelationTypeForm(RelationType *relation,
                                    QEbuMainWindow *mainWindow,
@@ -52,9 +53,47 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
 		
     QVBoxLayout *vl = new QVBoxLayout;
     {
+
+        m_radioRelation = new QRadioButton(tr("Relation"));
+        m_radioRelation->setCheckable(true);
+        vl->addWidget(m_radioRelation);
+
         m_editElementRelation = new ElementTypeEditBox;
         m_editElementRelation->setLabel(tr("Relation"));
         vl->addWidget(m_editElementRelation);
+    }
+    {
+        m_radioRelationLink = new QRadioButton(tr("Relation Link"));
+        m_radioRelationLink->setCheckable(true);
+        vl->addWidget(m_radioRelationLink);
+
+        QFormLayout *fl = new QFormLayout;
+        m_editRelationLink = new QLineEdit;
+        m_editRelationLink->setValidator(TypeConverter::getUriValidator());
+        m_labelRelationLink = new QLabel(tr("Relation Link"));
+        fl->addRow(m_labelRelationLink, m_editRelationLink);
+        vl->addLayout(fl);
+    }
+    {
+        m_radioRelationIdentifier = new QRadioButton(tr("Relation Identifier"));
+        m_radioRelationIdentifier->setCheckable(true);
+        vl->addWidget(m_radioRelationIdentifier);
+
+        QHBoxLayout *hl = new QHBoxLayout;
+        m_labelRelationIdentifier = new QLabel(tr("Relation Link"));
+        hl->addWidget(m_labelRelationIdentifier);
+        m_editRelationIdentifier = new QLineEdit;
+        m_editRelationIdentifier->setReadOnly(true);
+        hl->addWidget(m_editRelationIdentifier);
+        m_buttonRelationIdentifierAdd = new QPushButton(tr("Add/Edit"));
+        QObject::connect(m_buttonRelationIdentifierAdd, SIGNAL(clicked()),
+                         this, SLOT(relationIdentifierClicked()));
+        hl->addWidget(m_buttonRelationIdentifierAdd);
+        m_buttonRelationIdentifierRemove = new QPushButton(tr("Remove"));
+        QObject::connect(m_buttonRelationIdentifierRemove, SIGNAL(clicked()),
+                         this, SLOT(relationIdentifierRemoveClicked()));
+        hl->addWidget(m_buttonRelationIdentifierRemove);
+        vl->addLayout(hl);
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(relation);
@@ -75,34 +114,18 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
     }
     {
         QFormLayout *fl = new QFormLayout;
-        m_editRelationLink = new QLineEdit;
-        m_editRelationLink->setValidator(TypeConverter::getUriValidator());
-        fl->addRow(tr("Relation Link"), m_editRelationLink);
-        vl->addLayout(fl);
-    }
-    {
-        QHBoxLayout *hl = new QHBoxLayout;
-        hl->addWidget(new QLabel(tr("Relation Identifier")));
-        m_editRelationIdentifier = new QLineEdit;
-        m_editRelationIdentifier->setReadOnly(true);
-        hl->addWidget(m_editRelationIdentifier);
-        QPushButton *buttonRelationIdentifierAdd = new QPushButton(tr("Add/Edit"));
-        QObject::connect(buttonRelationIdentifierAdd, SIGNAL(clicked()),
-                         this, SLOT(relationIdentifierClicked()));
-        hl->addWidget(buttonRelationIdentifierAdd);
-        QPushButton *buttonRelationIdentifierRemove = new QPushButton(tr("Remove"));
-        QObject::connect(buttonRelationIdentifierRemove, SIGNAL(clicked()),
-                         this, SLOT(relationIdentifierRemoveClicked()));
-        hl->addWidget(buttonRelationIdentifierRemove);
-        vl->addLayout(hl);
-    }
-    {
-        QFormLayout *fl = new QFormLayout;
         m_textNote = new QTextEdit;
         fl->addRow(tr("Note"), m_textNote);
         vl->addLayout(fl);
     }
     this->setLayout(vl);
+
+    QObject::connect(m_radioRelation, SIGNAL(toggled(bool)),
+                     this, SLOT(radioRelationChecked(bool)));
+    QObject::connect(m_radioRelationLink, SIGNAL(toggled(bool)),
+                     this, SLOT(radioRelationLinkChecked(bool)));
+    QObject::connect(m_radioRelationIdentifier, SIGNAL(toggled(bool)),
+                     this, SLOT(radioRelationIdentifierChecked(bool)));
 
     //Event filter
     m_textDocumentation->setText(tr("Relation is used to show the relation in content to another resource."));
@@ -115,6 +138,42 @@ RelationTypeForm::RelationTypeForm(RelationType *relation,
     m_editTypeGroup->editTypeLabel()->installEventFilter(this);
     m_editTypeGroup->editTypeLink()->installEventFilter(this);
     m_spinRunningOrderNumber->installEventFilter(this);
+
+    switch(m_relation->relationTypeRepresentation()) {
+    case RelationType::enumRelation:
+        m_radioRelation->setChecked(true);
+        m_editElementRelation->setEnabled(true);
+        m_labelRelationLink->setEnabled(false);
+        m_editRelationLink->setEnabled(false);
+        m_labelRelationIdentifier->setEnabled(false);
+        m_editRelationIdentifier->setEnabled(false);
+        m_buttonRelationIdentifierAdd->setEnabled(false);
+        m_buttonRelationIdentifierRemove->setEnabled(false);
+
+        break;
+    case RelationType::enumRelationLink:
+        m_radioRelationLink->setChecked(true);
+        m_editElementRelation->setEnabled(false);
+        m_labelRelationLink->setEnabled(true);
+        m_editRelationLink->setEnabled(true);
+        m_labelRelationIdentifier->setEnabled(false);
+        m_editRelationIdentifier->setEnabled(false);
+        m_buttonRelationIdentifierAdd->setEnabled(false);
+        m_buttonRelationIdentifierRemove->setEnabled(false);
+
+        break;
+    case RelationType::enumRelationIdentifier:
+        m_radioRelationIdentifier->setChecked(true);
+        m_editElementRelation->setEnabled(false);
+        m_labelRelationLink->setEnabled(false);
+        m_editRelationLink->setEnabled(false);
+        m_labelRelationIdentifier->setEnabled(true);
+        m_editRelationIdentifier->setEnabled(true);
+        m_buttonRelationIdentifierAdd->setEnabled(true);
+        m_buttonRelationIdentifierRemove->setEnabled(true);
+
+        break;
+    }
 
     // Set text fields...
     if (m_relation->runningOrderNumber()) {
@@ -147,23 +206,23 @@ bool RelationTypeForm::checkCompliance()
 {
     bool ok = true;
     QStringList fields;
-    if (m_editElementRelation->editValue()->text().isEmpty()) {
+    if (m_radioRelation->isChecked() && m_editElementRelation->editValue()->text().isEmpty()) {
         ok = false;
         fields += tr("Relation");
     }
-    if (m_editRelationLink->text().isEmpty())
+    if (m_radioRelationLink->isChecked() && m_editRelationLink->text().isEmpty())
     {
         ok = false;
         fields += tr("Relation Link");
     }
-    if (m_editRelationIdentifier->text().isEmpty())
+    if (m_radioRelationIdentifier->isChecked() && m_editRelationIdentifier->text().isEmpty())
     {
         ok = false;
         fields += tr("Relation Identifier");
     }
     if(!ok) {
         QMessageBox::warning(this, this->toString(),
-                             tr("<b>Required fields:</b><br>")
+                             tr("<b>Required field:</b><br>")
                              +fields.join(",<br>"),
                              QMessageBox::Ok, QMessageBox::Ok);
     }
@@ -212,21 +271,71 @@ void RelationTypeForm::applyClicked()
         return;
     m_relation->setNote(m_textNote->toPlainText());
 
-    m_editTypeGroup->updateExistingTypeGroup(m_relation);
+
     if (m_checkRunningOrderNumber->isChecked())
         m_relation->setRunningOrderNumber(m_spinRunningOrderNumber->value());
     else
         m_relation->clearRunningOrderNumber();
-    m_relation->setRelation(new ElementType(
-                                m_editElementRelation->editValue()->text(),
-                                m_editElementRelation->editLang()->text()));
-    m_relation->setRelationLink(m_editRelationLink->text());
+
+    if (m_radioRelation->isChecked()) {
+        m_relation->setRelation(new ElementType(
+                                    m_editElementRelation->editValue()->text(),
+                                    m_editElementRelation->editLang()->text()));
+    }
+    if (m_radioRelationLink->isChecked()) {
+        m_relation->setRelationLink(m_editRelationLink->text());
+    }
+    if (m_radioRelationIdentifier->isChecked()) {
+        m_editTypeGroup->updateExistingTypeGroup(m_relation);
+    }
     emit closed(m_op, QVarPtr<RelationType>::asQVariant(m_relation));
 }
 
 void RelationTypeForm::runningOrderNumberChanged()
 {
     m_checkRunningOrderNumber->setChecked(true);
+}
+
+void RelationTypeForm::radioRelationChecked(bool checked)
+{
+    if (!checked)
+        return;
+
+    m_editElementRelation->setEnabled(true);
+    m_labelRelationLink->setEnabled(false);
+    m_editRelationLink->setEnabled(false);
+    m_labelRelationIdentifier->setEnabled(false);
+    m_editRelationIdentifier->setEnabled(false);
+    m_buttonRelationIdentifierAdd->setEnabled(false);
+    m_buttonRelationIdentifierRemove->setEnabled(false);
+}
+
+void RelationTypeForm::radioRelationLinkChecked(bool checked)
+{
+    if (!checked)
+        return;
+
+    m_editElementRelation->setEnabled(false);
+    m_labelRelationLink->setEnabled(true);
+    m_editRelationLink->setEnabled(true);
+    m_labelRelationIdentifier->setEnabled(false);
+    m_editRelationIdentifier->setEnabled(false);
+    m_buttonRelationIdentifierAdd->setEnabled(false);
+    m_buttonRelationIdentifierRemove->setEnabled(false);
+}
+
+void RelationTypeForm::radioRelationIdentifierChecked(bool checked)
+{
+    if (!checked)
+        return;
+
+    m_editElementRelation->setEnabled(false);
+    m_labelRelationLink->setEnabled(false);
+    m_editRelationLink->setEnabled(false);
+    m_labelRelationIdentifier->setEnabled(true);
+    m_editRelationIdentifier->setEnabled(true);
+    m_buttonRelationIdentifierAdd->setEnabled(true);
+    m_buttonRelationIdentifierRemove->setEnabled(true);
 }
 
 bool RelationTypeForm::eventFilter(QObject *obj, QEvent *event)

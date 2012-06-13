@@ -689,6 +689,7 @@ void RelationType::setRelation(ElementType *relation)
     if (relation != m_relation)
         delete m_relation;
     m_relation = relation;
+    m_relationTypeRepresentation = RelationType::enumRelation;
 }
 
 IdentifierType *RelationType::relationIdentifier() const
@@ -701,6 +702,7 @@ void RelationType::setRelationIdentifier(IdentifierType *relationIdentifier)
     if (relationIdentifier != m_relationIdentifier)
         delete m_relationIdentifier;
     m_relationIdentifier = relationIdentifier;
+    m_relationTypeRepresentation = RelationType::enumRelationIdentifier;
 }
 
 QString RelationType::relationLink() const
@@ -711,12 +713,16 @@ QString RelationType::relationLink() const
 void RelationType::setRelationLink(const QString &relationLink)
 {
     m_relationLink = relationLink;
+    m_relationTypeRepresentation = RelationType::enumRelationLink;
 }
 
 QString RelationType::toString() const
 {
-    if (m_relation)
-        return m_relation->toString();
+    switch (m_relationTypeRepresentation) {
+    case RelationType::enumRelation:            if (m_relation)             return m_relation->toString();
+    case RelationType::enumRelationLink:        return m_relationLink;
+    case RelationType::enumRelationIdentifier:  if (m_relationIdentifier)   return m_relationIdentifier->toString();
+    }
     return QObject::tr("Unnamed relation");
 }
 
@@ -807,7 +813,8 @@ QString HasTrackPartType::toString() const
 
 RelationType::RelationType()
 {
-    m_relation = 0;
+    m_relationTypeRepresentation = RelationType::enumRelation;
+    m_relation = new ElementType();
     m_relationIdentifier = 0;
     m_runningOrderNumber = 0;
 }
@@ -817,6 +824,11 @@ RelationType::~RelationType()
     delete m_relation;
     delete m_relationIdentifier;
     delete m_runningOrderNumber;
+}
+
+RelationType::RelationTypeRepresentation RelationType::relationTypeRepresentation()
+{
+    return m_relationTypeRepresentation;
 }
 
 int *RelationType::runningOrderNumber() const

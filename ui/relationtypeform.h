@@ -32,6 +32,9 @@ class QTextEdit;
 class QLineEdit;
 class TypeGroupEditBox;
 class ElementTypeEditBox;
+class QRadioButton;
+class QPushButton;
+class QLabel;
 
 class RelationTypeForm : public StackableWidget
 {
@@ -53,6 +56,10 @@ private slots:
     void relationIdentifierClosed(Operation op, QVariant value);
     // -
     void runningOrderNumberChanged();
+    // -
+    void radioRelationChecked(bool checked);
+    void radioRelationLinkChecked(bool checked);
+    void radioRelationIdentifierChecked(bool checked);
 private:
     bool eventFilter(QObject *obj, QEvent *event);
 
@@ -60,11 +67,18 @@ private:
     QSpinBox *m_spinRunningOrderNumber;
     QCheckBox *m_checkRunningOrderNumber;
     QTextEdit *m_textNote;
+    QLabel *m_labelRelationLink;
     QLineEdit *m_editRelationLink;
     ElementTypeEditBox *m_editElementRelation;
+    QLabel *m_labelRelationIdentifier;
     QLineEdit *m_editRelationIdentifier;
+    QPushButton *m_buttonRelationIdentifierAdd;
+    QPushButton *m_buttonRelationIdentifierRemove;
     RelationType *m_relation;
     QString m_title;
+    QRadioButton *m_radioRelation;
+    QRadioButton *m_radioRelationLink;
+    QRadioButton *m_radioRelationIdentifier;
 };
 
 #endif // RELATIONTYPEFORM_H

@@ -295,8 +295,15 @@ private:
 class RelationType : public TypeGroup
 {
 public:
+    enum RelationTypeRepresentation {
+        enumRelation,
+        enumRelationLink,
+        enumRelationIdentifier
+    };
+
     RelationType();
     ~RelationType();
+    enum RelationTypeRepresentation relationTypeRepresentation();
     int *runningOrderNumber() const;
     void setRunningOrderNumber(int runningOrderNumber);
     void clearRunningOrderNumber();
@@ -310,11 +317,14 @@ public:
     void setRelationLink(const QString &relationLink);
     QString toString() const;
 private:
+    enum RelationTypeRepresentation m_relationTypeRepresentation;
+
+    ElementType *m_relation;
+    QString m_relationLink;
+    IdentifierType *m_relationIdentifier;
+
     int *m_runningOrderNumber;
     QString m_note;
-    ElementType *m_relation;
-    IdentifierType *m_relationIdentifier;
-    QString m_relationLink; // anyURI
 };
 
 class HasTrackPartType : public RelationType
