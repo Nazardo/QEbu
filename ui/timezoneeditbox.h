@@ -34,10 +34,6 @@ public:
     void setUTCOffset(int minutes);
     bool isLocal() const;
     void setLocal();
-
-public slots:
-    void timezoneSelected(int index);
-
 };
 
 #endif // TIMEZONEEDITBOX_H

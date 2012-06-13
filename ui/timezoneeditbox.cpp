@@ -1,5 +1,26 @@
+/****************************************************************************
+** Copyright (C) 2012 by
+**  Mauro Levra  (nazardo)     mauro@nazardo.it
+**  Paolo Pasini (cosmos3900)  paolo.pasini@studenti.polito.it
+**  Denis Patti  (dextp3)      denis.patti@studenti.polito.it
+**  Giovanni Pessiva           giovanni.pessiva@gmail.com
+**  Stefano Ricossa            stefano.ricossa@studenti.polito.it
+**
+** This file is part of QEbu.
+** QEbu is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, in the version 3 of the License.
+**
+** QEbu is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with QEbu.  If not, see <http://www.gnu.org/licenses/>.
+****************************************************************************/
+
 #include "timezoneeditbox.h"
-#include <QDebug>
 
 TimezoneEditBox::TimezoneEditBox(QWidget *parent) :
     QComboBox(parent)
@@ -45,9 +66,6 @@ TimezoneEditBox::TimezoneEditBox(QWidget *parent) :
 
     setLocal(); //default: local time
     //setCurrentIndex(15);  //default: UTC+1
-
-    QObject::connect(this, SIGNAL(currentIndexChanged(int)),
-                     this, SLOT(timezoneSelected(int)));
 }
 
 int TimezoneEditBox::getUTCOffset() const
@@ -88,9 +106,8 @@ int TimezoneEditBox::getUTCOffset() const
     case 32: return 12 * 60;
     case 33: return 13 * 60;
     case 34: return 0;
-    default: qDebug() <<"Error in TimezoneEditBox: unexpected code: "+currentIndex();
+    default: return 0;
     }
-    return 0;
 }
 
 void TimezoneEditBox::setUTCOffset(int minutes)
@@ -108,14 +125,14 @@ void TimezoneEditBox::setUTCOffset(int minutes)
         switch (minutes%60) {
         case -30: setCurrentIndex(8); break;
         case 0: setCurrentIndex(9); break;
-        default: qDebug() <<"Error in TimezoneEditBox: unexpected UTC offset: " <<minutes/60 <<":" <<minutes%60;
+        default: break;
         }
         break;
     case -3:
         switch (minutes%60) {
         case -30: setCurrentIndex(10); break;
         case 0: setCurrentIndex(11); break;
-        default: qDebug() <<"Error in TimezoneEditBox: unexpected UTC offset: " <<minutes/60 <<":" <<minutes%60;
+        default: break;
         }
         break;
     case -2: setCurrentIndex(12); break;
@@ -127,14 +144,14 @@ void TimezoneEditBox::setUTCOffset(int minutes)
         switch (minutes%60) {
         case 0: setCurrentIndex(17); break;
         case 30: setCurrentIndex(18); break;
-        default: qDebug() <<"Error in TimezoneEditBox: unexpected UTC offset: " <<minutes/60 <<":" <<minutes%60;
+        default: break;
         }
         break;
     case 4:
         switch (minutes%60) {
         case 0: setCurrentIndex(19); break;
         case 30: setCurrentIndex(20); break;
-        default: qDebug() <<"Error in TimezoneEditBox: unexpected UTC offset: " <<minutes/60 <<":" <<minutes%60;
+        default: break;
         }
         break;
     case 5:
@@ -142,14 +159,14 @@ void TimezoneEditBox::setUTCOffset(int minutes)
         case 0: setCurrentIndex(21); break;
         case 30: setCurrentIndex(22); break;
         case 45: setCurrentIndex(23); break;
-        default: qDebug() <<"Error in TimezoneEditBox: unexpected UTC offset: " <<minutes/60 <<":" <<minutes%60;
+        default: break;
         }
         break;
     case 6:
         switch (minutes%60) {
         case 0: setCurrentIndex(24); break;
         case 30: setCurrentIndex(25); break;
-        default: qDebug() <<"Error in TimezoneEditBox: unexpected UTC offset: " <<minutes/60 <<":" <<minutes%60;
+        default: break;
         }
         break;
     case 7: setCurrentIndex(26); break;
@@ -158,14 +175,14 @@ void TimezoneEditBox::setUTCOffset(int minutes)
         switch (minutes%60) {
         case 0: setCurrentIndex(28); break;
         case 30: setCurrentIndex(29); break;
-        default: qDebug() <<"Error in TimezoneEditBox: unexpected UTC offset: " <<minutes/60 <<":" <<minutes%60;
+        default: break;
         }
         break;
     case 10: setCurrentIndex(30); break;
     case 11: setCurrentIndex(31); break;
     case 12: setCurrentIndex(32); break;
     case 13: setCurrentIndex(33); break;
-    default: qDebug() <<"Error in TimezoneEditBox: unexpected UTC offset: " <<minutes/60 <<":" <<minutes%60;
+    default: break;
     }
 }
 
@@ -178,13 +195,3 @@ void TimezoneEditBox::setLocal()
 {
     setCurrentIndex(34);
 }
-
-void TimezoneEditBox::timezoneSelected(int index)
-{
-    Q_UNUSED(index)
-    if (isLocal())
-        qDebug() <<"Timezone selected: local";
-    else
-        qDebug() <<"Timezone selected: UTC" <<(int)getUTCOffset()/60 <<":" <<getUTCOffset()%60;
-}
-

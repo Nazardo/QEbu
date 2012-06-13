@@ -1,3 +1,25 @@
+/****************************************************************************
+** Copyright (C) 2012 by
+**  Mauro Levra  (nazardo)     mauro@nazardo.it
+**  Paolo Pasini (cosmos3900)  paolo.pasini@studenti.polito.it
+**  Denis Patti  (dextp3)      denis.patti@studenti.polito.it
+**  Giovanni Pessiva           giovanni.pessiva@gmail.com
+**  Stefano Ricossa            stefano.ricossa@studenti.polito.it
+**
+** This file is part of QEbu.
+** QEbu is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, in the version 3 of the License.
+**
+** QEbu is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with QEbu.  If not, see <http://www.gnu.org/licenses/>.
+****************************************************************************/
+
 #include "statusgroupeditbox.h"
 #include "../model/statusgroup.h"
 #include "../model/typeconverter.h"
@@ -5,7 +27,6 @@
 #include <QFormLayout>
 #include <QGroupBox>
 #include <QComboBox>
-#include <QDebug>
 
 StatusGroupEditBox::StatusGroupEditBox(StatusGroup *statusGroup, QWidget *parent) :
     QWidget(parent)
@@ -77,17 +98,10 @@ void StatusGroupEditBox::updateExistingStatusGroup(StatusGroup *statusGroup)
     statusGroup->setStatusDefinition(m_editStatusDefinition->text());
     statusGroup->setStatusLabel(m_editStatusLabel->text());
     statusGroup->setStatusLink(m_editStatusLink->itemData(m_editStatusLink->currentIndex()).toString());
-
-    qDebug() <<"setStatusLink index------" <<m_editStatusLink->currentIndex() <<"--------";
-    qDebug() <<"setStatusLink data ------" <<m_editStatusLink->itemData(m_editStatusLink->currentIndex()).toString() <<"--------";
 }
 
 void StatusGroupEditBox::onChange(int index) {
-    if(m_editStatusLink->itemData(index).isValid()) {
-        qDebug() << m_editStatusLink->itemData(index).toString();
-    } else {
-        qDebug() << m_editStatusLink->currentText();
-
+    if(!m_editStatusLink->itemData(index).isValid()) {
         //If its is a new value, add it to the autocompletion maps
         QString linkData = m_editStatusLink->itemData(index).toString();
         QString linkText = m_editStatusLink->itemText(index);

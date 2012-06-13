@@ -1,3 +1,25 @@
+/****************************************************************************
+** Copyright (C) 2012 by
+**  Mauro Levra  (nazardo)     mauro@nazardo.it
+**  Paolo Pasini (cosmos3900)  paolo.pasini@studenti.polito.it
+**  Denis Patti  (dextp3)      denis.patti@studenti.polito.it
+**  Giovanni Pessiva           giovanni.pessiva@gmail.com
+**  Stefano Ricossa            stefano.ricossa@studenti.polito.it
+**
+** This file is part of QEbu.
+** QEbu is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, in the version 3 of the License.
+**
+** QEbu is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with QEbu.  If not, see <http://www.gnu.org/licenses/>.
+****************************************************************************/
+
 #include "formatgroupeditbox.h"
 #include "../model/formatgroup.h"
 #include "../model/typeconverter.h"
@@ -6,7 +28,6 @@
 #include <QGroupBox>
 #include <QString>
 #include <QComboBox>
-#include <QDebug>
 
 FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup,
                                        QWidget *parent) :
@@ -104,12 +125,10 @@ void FormatGroupEditBox::updateExistingFormatGroup(FormatGroup *formatGroup)
 }
 
 void FormatGroupEditBox::onChange(int index) {
-    if(m_editFormatLink->itemData(index).isValid()) {
-        qDebug() << m_editFormatLink->itemData(index).toString();
-    } else {
+    if(!m_editFormatLink->itemData(index).isValid()) {
+        //New value
         QString linkText = m_editFormatLink->itemText(index);
         m_editFormatLink->setItemData(index, linkText);
-        qDebug() <<"New value:" << linkText;
 
         //Add it to the autocompletion maps
         for (int i=0;    i<m_linkMaps.size();    i++)

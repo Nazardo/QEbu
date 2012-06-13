@@ -1,3 +1,25 @@
+/****************************************************************************
+** Copyright (C) 2012 by
+**  Mauro Levra  (nazardo)     mauro@nazardo.it
+**  Paolo Pasini (cosmos3900)  paolo.pasini@studenti.polito.it
+**  Denis Patti  (dextp3)      denis.patti@studenti.polito.it
+**  Giovanni Pessiva           giovanni.pessiva@gmail.com
+**  Stefano Ricossa            stefano.ricossa@studenti.polito.it
+**
+** This file is part of QEbu.
+** QEbu is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, in the version 3 of the License.
+**
+** QEbu is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with QEbu.  If not, see <http://www.gnu.org/licenses/>.
+****************************************************************************/
+
 #include "qebumainwindow.h"
 #include "../model/ebucoremaintype.h"
 #include "../fileproc/ebuparser.h"
@@ -14,7 +36,6 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QXmlStreamReader>
-#include <QDebug>
 #include <QWizard>
 #include <QPixmap>
 #include <QDialogButtonBox>
@@ -412,7 +433,6 @@ void QEbuMainWindow::actionWizard()
         page1->setPixmap(QWizard::BannerPixmap, QPixmap(":/images/banner.png").scaled(560, 49, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         page1->setTitle(QObject::tr("Basic Layout I"));
         page1->setSubTitle(QObject::tr("Breadcrumb and grouping"));
-        qDebug() << page1->width() << page1->height();
         QVBoxLayout *layout = new QVBoxLayout;
         QLabel *image = new QLabel;
         image->setPixmap(QPixmap(":/images/page0.png"));
@@ -437,7 +457,6 @@ void QEbuMainWindow::actionWizard()
         page2->setPixmap(QWizard::BannerPixmap, QPixmap(":/images/banner.png").scaled(560, 49, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         page2->setTitle(QObject::tr("Basic Layout II"));
         page2->setSubTitle(QObject::tr("Simple elements and Tabs"));
-        qDebug() << page2->width() << page2->height();
         QVBoxLayout *layout = new QVBoxLayout;
         QLabel *image = new QLabel;
         image->setPixmap(QPixmap(":/images/page1.png"));
@@ -461,7 +480,6 @@ void QEbuMainWindow::actionWizard()
         page3->setPixmap(QWizard::BannerPixmap, QPixmap(":/images/banner.png").scaled(560, 49, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         page3->setTitle(QObject::tr("Basic Layout III"));
         page3->setSubTitle(QObject::tr("Listview"));
-        qDebug() << page3->width() << page3->height();
         QVBoxLayout *layout = new QVBoxLayout;
         QLabel *image = new QLabel;
         image->setPixmap(QPixmap(":/images/page2.png"));
@@ -486,7 +504,6 @@ void QEbuMainWindow::actionWizard()
         page4->setPixmap(QWizard::BannerPixmap, QPixmap(":/images/banner.png").scaled(560, 49, Qt::IgnoreAspectRatio, Qt::SmoothTransformation));
         page4->setTitle(QObject::tr("About data"));
         page4->setSubTitle(QObject::tr("Dates, numbers and validation"));
-        qDebug() << page4->width() << page4->height();
         QVBoxLayout *layout = new QVBoxLayout;
         QLabel *image = new QLabel;
         image->setPixmap(QPixmap(":/images/page3.png").scaledToWidth(500, Qt::SmoothTransformation));
@@ -526,7 +543,6 @@ QMap<QString, QString> *QEbuMainWindow::getMap(QString name)
 
         if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             // NO FILE FOUND, SKIP MAP COMPLETION
-            qDebug() <<"autocompletion file not found:" <<QString(".\\debug\\XML_autoComp\\"+name+".xml");
         } else {
             QXmlStreamReader *xml = new QXmlStreamReader(&file);
             while (!xml->atEnd() && !xml->hasError()) {
@@ -534,7 +550,6 @@ QMap<QString, QString> *QEbuMainWindow::getMap(QString name)
                     if (xml->name() == "ClassificationScheme") {
                         // Get the uri attribute to define base url
                         baseUrl = xml->attributes().value("uri").toString();
-                        qDebug() << baseUrl;
                         continue;
                     }
                     if (xml->name() == "Term") {
@@ -547,7 +562,6 @@ QMap<QString, QString> *QEbuMainWindow::getMap(QString name)
                         QString val = xml->readElementText();
                         //map->insert(currentTerm, val);
                         map->insert(baseUrl+"#"+currentTerm, val);
-                        qDebug() <<baseUrl+"#"+currentTerm << val;
                         continue;
                     }
                 }

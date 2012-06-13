@@ -89,7 +89,6 @@ HEADERS += \
     ui/imageformattypeform.h \
     ui/hastrackparttypeform.h \
     ui/timezoneeditbox.h \
-    ui/completereditbox.h \
     ui/documentformattypeform.h \
     ui/coremetadatatypeform.h \
     ui/parttypeform.h \
@@ -167,7 +166,6 @@ SOURCES += \
     ui/imageformattypeform.cpp \
     ui/hastrackparttypeform.cpp \
     ui/timezoneeditbox.cpp \
-    ui/completereditbox.cpp \
     ui/documentformattypeform.cpp \
     ui/coremetadatatypeform.cpp \
     ui/parttypeform.cpp \
