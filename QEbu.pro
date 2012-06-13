@@ -29,7 +29,11 @@ OTHER_FILES += \
     images/qebu-icon_128.png \
     images/qebu-icon_64.png \
     images/qebu-icon_32.png \
-    images/qebu-icon_16.png
+    images/qebu-icon_16.png \
+    icon.rc \
+    icon.ico
 
 RESOURCES += \
     qResources.qrc
+
+RC_FILE = icon.rc
