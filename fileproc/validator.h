@@ -45,6 +45,7 @@ public:
 private:
     void parseOutput();
     ValidatorError m_error;
+    QString m_inputFile;
     QString m_stderrOutput;
     QString m_returnMessage;
     QString m_validationErrorMessage;

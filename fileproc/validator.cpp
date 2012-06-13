@@ -41,13 +41,14 @@ bool Validator::validate(const QString &file, const QString &schema)
     m_stderrOutput = QString();
     m_validationErrorMessage = QString();
     m_returnMessage = QString();
+    m_inputFile = file;
     m_error = Unknown;
     m_errorRow = -1;
 
     QStringList args;
     args << "--noout"; // Don't print the xml tree
     args << "--schema" << schema;
-    args << file;
+    args << m_inputFile;
 
     QProcess p;
     p.start("xmllint", args);
@@ -139,9 +140,7 @@ void Validator::parseOutput()
 
     } else if (msg.endsWith("fails to validate")) {
 
-        QString path = QApplication::applicationDirPath().replace(QString("/"),QString("\\"));
-
-        int n = msg.indexOf("file:///"+path+"/") + (10 + path.length());
+        int n = msg.indexOf(m_inputFile) + m_inputFile.length();
         if (n == -1) {
             m_validationErrorMessage = QObject::tr("Error while parsing output: path not found at start");
             return;
@@ -159,7 +158,7 @@ void Validator::parseOutput()
         m_errorRow = msg.mid(n,n2-n).toInt();
         msg.remove(0,n2+2);
 
-        n = msg.indexOf(path);
+        n = msg.indexOf(m_inputFile);
         if (n == -1)
             msg = QObject::tr("Error while parsing output: path not found at end");
         msg.truncate(n - 2);
