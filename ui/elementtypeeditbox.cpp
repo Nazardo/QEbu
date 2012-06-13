@@ -39,6 +39,7 @@ ElementTypeEditBox::ElementTypeEditBox(QWidget *parent) :
     l->addWidget(m_labelLang, 1, 0);
     l->addWidget(m_editLang, 1, 1);
     this->setLayout(l);
+    m_editLang->setText("en");
 }
 
 QLineEdit *ElementTypeEditBox::editValue()
