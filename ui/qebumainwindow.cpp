@@ -362,6 +362,7 @@ void QEbuMainWindow::actionAbout()
                                  "<br><br>This program is licensed to you under terms of the GNU General Public License Version 3 as published by Free Software Foundation."
                                  "<br><br>The program is provided AS IS with NO WARRANTY OF ANY KIND."
                                  ));
+    text->setOpenExternalLinks(true);
     text->setWordWrap(true);
     text->setAlignment(Qt::AlignJustify);
     QVBoxLayout *vLayout = new QVBoxLayout;
