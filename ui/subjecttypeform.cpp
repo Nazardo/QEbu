@@ -48,6 +48,7 @@ SubjectTypeForm::SubjectTypeForm(SubjectType *subject, QEbuMainWindow *mainWindo
         }
 
         QObject::connect(m_editSubjectCode, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
+        QObject::connect(m_editSubjectCode->lineEdit(), SIGNAL(editingFinished()), this, SLOT(onChange()));
         fl->addRow(tr("Subject code"), m_editSubjectCode);
 
         m_editSubjectDefinition = new QLineEdit;
@@ -191,6 +192,19 @@ void SubjectTypeForm::onChange(int index) {
 
         //Add it to the autocompletion map
         m_linkMap->insert(linkText,linkText);
+    }
+}
+
+void SubjectTypeForm::onChange()
+{
+    QString s = m_editSubjectCode->lineEdit()->text();
+    if (m_editSubjectCode->findText(s) < 0) {
+        m_editSubjectCode->addItem(s, s);
+        //Add it to the autocompletion maps
+        m_linkMap->insert(s,s);
+        int i = m_editSubjectCode->findText(s);
+        if (i >= 0)
+            m_editSubjectCode->setCurrentIndex(i);
     }
 }
 

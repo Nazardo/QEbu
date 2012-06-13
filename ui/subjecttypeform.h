@@ -30,6 +30,7 @@ private slots:
     void attributorClicked();
     void attributorClosed(Operation op, QVariant value);
     void onChange(int index);
+    void onChange();
 private:
     bool eventFilter(QObject *obj, QEvent *event);
 
