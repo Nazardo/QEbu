@@ -796,18 +796,18 @@ QDomElement EbuSerializer::serializeOrganisationDetails(OrganisationDetailsType 
     if (!organisationDetails->organisationId().isEmpty()) {
         o.setAttribute("organisationId", organisationDetails->organisationId());
     }
-    if (organisationDetails->organisationDepartment()) {
-        QDomElement e = m_doc.createElement(" ");
-        e.setTagName("ebucore:organisationDepartment");
-        e.setAttribute("lang", organisationDetails->organisationDepartment()->lang());
-        e.setAttribute("departmentId", organisationDetails->organisationDepartment()->departmentId());
-        QDomText textNode = m_doc.createTextNode(organisationDetails->organisationDepartment()->value());
-        e.appendChild(textNode);
-        o.appendChild(e);
-    }
     if (organisationDetails->organisationName()) {
         QDomElement e = serializeElement(organisationDetails->organisationName());
         e.setTagName("ebucore:organisationName");
+        o.appendChild(e);
+    }
+    if (organisationDetails->organisationDepartment()) {
+        QDomElement e = m_doc.createElement(" ");
+        e.setTagName("ebucore:organisationDepartment");
+        e.setAttribute("xml:lang", organisationDetails->organisationDepartment()->lang());
+        e.setAttribute("departmentId", organisationDetails->organisationDepartment()->departmentId());
+        QDomText textNode = m_doc.createTextNode(organisationDetails->organisationDepartment()->value());
+        e.appendChild(textNode);
         o.appendChild(e);
     }
     QList<DetailsType *> details = organisationDetails->details();
