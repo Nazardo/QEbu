@@ -28,6 +28,7 @@ FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup,
     m_editFormatLink->setEditable(true);
     m_editFormatLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editFormatLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
+    QObject::connect(m_editFormatLink->lineEdit(), SIGNAL(editingFinished()), this, SLOT(onChange()));
     m_editFormatLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
@@ -113,5 +114,19 @@ void FormatGroupEditBox::onChange(int index) {
         //Add it to the autocompletion maps
         for (int i=0;    i<m_linkMaps.size();    i++)
             m_linkMaps[i]->insert(linkText,linkText);
+    }
+}
+
+void FormatGroupEditBox::onChange()
+{
+    QString s = m_editFormatLink->lineEdit()->text();
+    if (m_editFormatLink->findText(s) < 0) {
+        m_editFormatLink->addItem(s, s);
+        //Add it to the autocompletion maps
+        for (int i=0; i<m_linkMaps.size(); ++i)
+            m_linkMaps[i]->insert(s,s);
+        int i = m_editFormatLink->findText(s);
+        if (i >= 0)
+            m_editFormatLink->setCurrentIndex(i);
     }
 }

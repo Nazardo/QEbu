@@ -27,6 +27,7 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
     m_editTypeLink->setEditable(true);
     m_editTypeLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editTypeLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
+    QObject::connect(m_editTypeLink->lineEdit(), SIGNAL(editingFinished()), this, SLOT(onChange()));
     m_editTypeLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
@@ -112,5 +113,19 @@ void TypeGroupEditBox::onChange(int index) {
         //Add it to the autocompletion maps
         for (int i=0;    i<m_linkMaps.size();    i++)
             m_linkMaps[i]->insert(linkText,linkText);
+    }
+}
+
+void TypeGroupEditBox::onChange()
+{
+    QString s = m_editTypeLink->lineEdit()->text();
+    if (m_editTypeLink->findText(s) < 0) {
+        m_editTypeLink->addItem(s, s);
+        //Add it to the autocompletion maps
+        for (int i=0; i<m_linkMaps.size(); ++i)
+            m_linkMaps[i]->insert(s,s);
+        int i = m_editTypeLink->findText(s);
+        if (i >= 0)
+            m_editTypeLink->setCurrentIndex(i);
     }
 }

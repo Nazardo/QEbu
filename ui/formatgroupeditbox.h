@@ -27,6 +27,7 @@ public:
 
 private slots:
     void onChange(int index);
+    void onChange();
 private:
     QGroupBox *m_groupBox;
     QLineEdit *m_editFormatLabel;
