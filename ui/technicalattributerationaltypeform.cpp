@@ -86,7 +86,7 @@ TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(
         l->addWidget(m_editTypeGroup);
     }
     this->setLayout(l);
-    m_textDocumentation->setText(tr("Allows users / implementers to define their own technical parameters as ‘rational’."));
+    m_textDocumentation->setText(tr("Allows users / implementers to define their own technical parameters as 'rational'."));
     // Set data fields...
     if (m_rational->value()) {
         m_spinValue->setValue(*(m_rational->value()));

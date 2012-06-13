@@ -106,9 +106,9 @@ bool AudioTrackTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
             m_textDocumentation->setHtml(tr("Link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_AudioChannelPurposeCodeCS_p.xml.htm\">ebu_AudioChannelPurposeCodeCS</a>"));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
-            m_textDocumentation->setText(tr("Free text.\nExample: ‘dubbing’."));
+            m_textDocumentation->setText(tr("Free text.\nExample: 'dubbing'."));
         else if (obj == (QObject*) m_editTrackLanguage)
-            m_textDocumentation->setText(tr("The language used in the audio track and possible purpose refinement using languageType’s typeGroup attributes."));
+            m_textDocumentation->setText(tr("The language used in the audio track and possible purpose refinement using languageType's typeGroup attributes."));
         else if (obj == (QObject*) m_editTrackId)
             m_textDocumentation->setText(tr("An optional identifier applied to each track."));
         else if (obj == (QObject*) m_editTrackName)

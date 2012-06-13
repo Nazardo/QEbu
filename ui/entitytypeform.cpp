@@ -155,9 +155,9 @@ void EntityTypeForm::addClicked()
         rolesForm->addLinksMap(mainWindow()->getMap("ebu_RoleCodeCS"));
         rolesForm->setTitle(tr("Role"));
         rolesForm->setGeneralDoc(tr("Used to define the type of role."));
-        rolesForm->setDefinitionDoc(tr("An optional definition of the type.\nExample: ‘the terms and conditions under which the resource can be used’."));
+        rolesForm->setDefinitionDoc(tr("An optional definition of the type.\nExample: 'the terms and conditions under which the resource can be used'."));
         rolesForm->setLinkDoc(tr("A link to a term or only identify a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_RoleCodeCS_p.xml.htm\">ebu_RoleCodeCS</a>"));
-        rolesForm->setLabelDoc(tr("Free text definition of the type or rights expressed in dc:rights.\nExample: ‘Director’."));
+        rolesForm->setLabelDoc(tr("Free text definition of the type or rights expressed in dc:rights.\nExample: 'Director'."));
         QObject::connect(rolesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(roleFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rolesForm);
@@ -197,9 +197,9 @@ void EntityTypeForm::editClicked()
         rolesForm->addLinksMap(mainWindow()->getMap("ebu_RoleCodeCS"));
         rolesForm->setTitle(tr("Role"));
         rolesForm->setGeneralDoc(tr("Used to define the type of role."));
-        rolesForm->setDefinitionDoc(tr("An optional definition of the type.\nExample: ‘the terms and conditions under which the resource can be used’."));
+        rolesForm->setDefinitionDoc(tr("An optional definition of the type.\nExample: 'the terms and conditions under which the resource can be used'."));
         rolesForm->setLinkDoc(tr("A link to a term or only identify a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_RoleCodeCS_p.xml.htm\">ebu_RoleCodeCS</a>"));
-        rolesForm->setLabelDoc(tr("Free text definition of the type or rights expressed in dc:rights.\nExample: ‘Director’."));
+        rolesForm->setLabelDoc(tr("Free text definition of the type or rights expressed in dc:rights.\nExample: 'Director'."));
         QObject::connect(rolesForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(roleFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(rolesForm);

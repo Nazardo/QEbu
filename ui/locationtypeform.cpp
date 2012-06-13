@@ -153,17 +153,17 @@ bool LocationTypeForm::eventFilter(QObject *obj, QEvent *event)
         if (obj == (QObject*) m_textNote )
             m_textDocumentation->setText(tr("A note for additional contextual information."));
         else if  (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
-            m_textDocumentation->setText(tr("Free text o precise the type of place and location information provided.\nExample: ‘to provide a name of a city’."));
+            m_textDocumentation->setText(tr("Free text o precise the type of place and location information provided.\nExample: 'to provide a name of a city'."));
         else if  (obj == (QObject*) m_editTypeGroup->editTypeLabel())
-            m_textDocumentation->setText(tr("Free text.\nExample: ‘city’."));
+            m_textDocumentation->setText(tr("Free text.\nExample: 'city'."));
         else if  (obj == (QObject*) m_editTypeGroup->editTypeLink())
             m_textDocumentation->setText(tr("A link to a classification scheme."));
         else if  (obj == (QObject*) m_editName)
-            m_textDocumentation->setText(tr("The name of the place or location.\nExample: ‘London’."));
+            m_textDocumentation->setText(tr("The name of the place or location.\nExample: 'London'."));
         else if  (obj == (QObject*) m_editCoordinates)
             m_textDocumentation->setText(tr("The spatial coordinates."));
         else if  (obj == (QObject*) m_editCode)
-            m_textDocumentation->setText(tr("The code under the which the place or location may be known/referenced.\nExample: ‘W1AA 4WW’."));
+            m_textDocumentation->setText(tr("The code under the which the place or location may be known/referenced.\nExample: 'W1AA 4WW'."));
         else if  (obj == (QObject*) m_editLocationId)
             m_textDocumentation->setText(tr("An attribute to identify the place or location."));
     }

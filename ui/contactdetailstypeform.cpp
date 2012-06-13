@@ -441,7 +441,7 @@ bool ContactDetailsTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_buttonDetails)
             m_textDocumentation->setText(tr("To provide the contact details of a contact/person."));
         else if (obj == (QObject*) m_buttonStageName)
-            m_textDocumentation->setText(tr("To record the name that the person has been attributed on stage.\nExamples: ‘character name’ or ‘interviewer’."));
+            m_textDocumentation->setText(tr("To record the name that the person has been attributed on stage.\nExamples: 'character name' or 'interviewer'."));
         else if (obj == (QObject*) m_buttonRelatedContacts)
             m_textDocumentation->setText(tr("To provide a list of contacts through which the person can alternatively be contacted."));
     }

@@ -188,13 +188,13 @@ bool IdentifierTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if  (obj == (QObject*) m_editElementIdentifier->editLang())
             m_textDocumentation->setText("The language in which the identifier is provided.");
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
-            m_textDocumentation->setText(tr("Free text to define the type of Identifier used.\nExample: ‘main identifier attributed to the resource’."));
+            m_textDocumentation->setText(tr("Free text to define the type of Identifier used.\nExample: 'main identifier attributed to the resource'."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
             m_textDocumentation->setText(tr("A link to a classification scheme."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
-            m_textDocumentation->setText(tr("Free text.\nExample: ‘main’."));
+            m_textDocumentation->setText(tr("Free text.\nExample: 'main'."));
         else if (obj == (QObject*) m_editFormatGroup->editFormatDefinition())
-            m_textDocumentation->setText(tr("Free text to define the format and possibly syntax of the identifier.\nExample: ‘a unique identifier as defined by SMPTE 330M’."));
+            m_textDocumentation->setText(tr("Free text to define the format and possibly syntax of the identifier.\nExample: 'a unique identifier as defined by SMPTE 330M'."));
         else if (obj == (QObject*) m_editFormatGroup->editFormatLink())
             m_textDocumentation->setHtml(tr("A link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/ebu_IdentifierTypeCodeCS.xml\">ebu_IdentifierTypeCodeCS</a><br/><a href=\"http://tools.ietf.org/html/rfc3986\">URI - Unique Resource Identifier</a>"));
         else if (obj == (QObject*) m_editFormatGroup->editFormatLabel())

@@ -103,9 +103,9 @@ bool LanguageTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if  (obj == (QObject*) m_editElementLanguage->editValue())
             m_textDocumentation->setText(tr("Use to identify the language."));
         else if  (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
-            m_textDocumentation->setText(tr("Free text used to identify the purpose of use of the language.\n.Example: ‘the main language as originally created/captured for the resource’"));
+            m_textDocumentation->setText(tr("Free text used to identify the purpose of use of the language.\n.Example: 'the main language as originally created/captured for the resource'"));
         else if  (obj == (QObject*) m_editTypeGroup->editTypeLabel())
-            m_textDocumentation->setText(tr("Free text.\nExample: ‘main original language’."));
+            m_textDocumentation->setText(tr("Free text.\nExample: 'main original language'."));
         else if  (obj == (QObject*) m_editTypeGroup->editTypeLink())
             m_textDocumentation->setHtml(tr("A link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_LanguagePurposeCodeCS_p.xml.htm\">ebu_LanguagePurposeCodeCS</a>"));
     }

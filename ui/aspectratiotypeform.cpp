@@ -98,7 +98,7 @@ bool AspectRatioTypeForm::eventFilter(QObject *obj, QEvent *event)
         if (obj == (QObject*) m_textNote)
             m_textDocumentation->setText(tr("A note to add contextual additional information."));
         else if (obj == (QObject*) m_editFormatGroup->editFormatDefinition())
-            m_textDocumentation->setText(tr("Free text for an optional definition.\nExample: ‘the so-called “widescreen” picture format’"));
+            m_textDocumentation->setText(tr("Free text for an optional definition.\nExample: 'the so-called “widescreen” picture format'"));
         else if (obj == (QObject*) m_editFormatGroup->editFormatLink())
             m_textDocumentation->setHtml(tr("Link to a classification scheme.<br/>Reference data: ebu_VisualAspectRatioCS<br/>Example:<a href=\"http://www.ebu.ch/metadata/cs/ebu_VisualAspectRatioCS.xml#3\">http://www.ebu.ch/metadata/cs/ebu_VisualAspectRatioCS.xml#3</a>"));
         else if (obj == (QObject*) m_editFormatGroup->editFormatLabel())

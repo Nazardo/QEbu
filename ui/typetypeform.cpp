@@ -148,7 +148,7 @@ void TypeTypeForm::addClicked()
         genreForm->setGeneralDoc(tr("A group of attributes to describe the genre."));
         genreForm->setDefinitionDoc(tr("Free text for an optional definition."));
         genreForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
-        genreForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: ‘non-fiction/information’."));
+        genreForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: 'non-fiction/information'."));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentAlertSchemeCodeCS"));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentGenreCS"));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_EditorialFormatCodeCS"));
@@ -165,7 +165,7 @@ void TypeTypeForm::addClicked()
         TypeGroupForm *objectTypeForm = new TypeGroupForm(0, this->mainWindow());
         objectTypeForm->setTitle(tr("Object Type"));
         objectTypeForm->setGeneralDoc(tr("A group of attributes to describe the objectType."));
-        objectTypeForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘A short description of the resource’."));
+        objectTypeForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: 'A short description of the resource'."));
         objectTypeForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
         objectTypeForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink."));
         objectTypeForm->addLinksMap(mainWindow()->getMap("ebu_ObjectTypeCS"));
@@ -181,7 +181,7 @@ void TypeTypeForm::addClicked()
         targetAudienceForm->setGeneralDoc(tr("A group of attributes to describe the target audience (parental guidance, geographical or occupantional groups, etc.)."));
         targetAudienceForm->setDefinitionDoc(tr("An optional definition.\nExample: code for MPAA 'general' rating."));
         targetAudienceForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
-        targetAudienceForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: ‘General’."));
+        targetAudienceForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: 'General'."));
         targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_IntendedAudienceCodeCS"));
         targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_ParentalGuidanceCodeCS"));
         QObject::connect(targetAudienceForm, SIGNAL(closed(Operation,QVariant)),
@@ -215,7 +215,7 @@ void TypeTypeForm::editClicked()
         genreForm->setGeneralDoc(tr("A group of attributes to describe the genre."));
         genreForm->setDefinitionDoc(tr("Free text for an optional definition."));
         genreForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
-        genreForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: ‘non-fiction/information’."));
+        genreForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: 'non-fiction/information'."));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentAlertSchemeCodeCS"));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_ContentGenreCS"));
         genreForm->addLinksMap(mainWindow()->getMap("ebu_EditorialFormatCodeCS"));
@@ -232,7 +232,7 @@ void TypeTypeForm::editClicked()
         TypeGroupForm *objectTypeForm = new TypeGroupForm(m_type->objectType().at(index), this->mainWindow());
         objectTypeForm->setTitle(tr("Object Type"));
         objectTypeForm->setGeneralDoc(tr("A group of attributes to describe the objectType."));
-        objectTypeForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘A short description of the resource’."));
+        objectTypeForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: 'A short description of the resource'."));
         objectTypeForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
         objectTypeForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink."));
         objectTypeForm->addLinksMap(mainWindow()->getMap("ebu_ObjectTypeCS"));
@@ -248,7 +248,7 @@ void TypeTypeForm::editClicked()
         targetAudienceForm->setGeneralDoc(tr("A group of attributes to describe the target audience (parental guidance, geographical or occupantional groups, etc.)."));
         targetAudienceForm->setDefinitionDoc(tr("An optional definition.\nExample: code for MPAA 'general' rating."));
         targetAudienceForm->setLinkDoc(tr("A link to a term or only identify a classification scheme."));
-        targetAudienceForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: ‘General’."));
+        targetAudienceForm->setLabelDoc(tr("Free text field. This can be used to repeat the term name of the classification scheme term identified by a typeLink.\nExample: 'General'."));
         targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_IntendedAudienceCodeCS"));
         targetAudienceForm->addLinksMap(mainWindow()->getMap("ebu_ParentalGuidanceCodeCS"));
         QObject::connect(targetAudienceForm, SIGNAL(closed(Operation,QVariant)),
@@ -411,13 +411,13 @@ bool TypeTypeForm::eventFilter(QObject *obj, QEvent *event)
         if (obj == (QObject*) m_textNote )
             m_textDocumentation->setText(tr("A note element to provide additional contextual information."));
         else if  (obj == (QObject*) m_buttonType )
-            m_textDocumentation->setText(tr("Free text to provide ‘type’ information other than ‘genre’ or ‘objectType’, possibly in different languages."));
+            m_textDocumentation->setText(tr("Free text to provide 'type' information other than 'genre' or 'objectType', possibly in different languages."));
         else if  (obj == (QObject*) m_buttonGenre )
-            m_textDocumentation->setHtml(tr("To define the ‘genre’ categorising the resource. Content genre is often described through more than one single term.<br/>Reference data:<ul><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ContentAlertSchemeCodeCS_p.xml.htm\">ebu_ContentAlertSchemeCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ContentGenreCS_p.xml.htm\">ebu_ContentGenreCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_EditorialFormatCodeCS_p.xml.htm\">ebu_EditorialFormatCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_IntentionCodeCS_p.xml.htm\">ebu_IntentionCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/tva_ContentCommercialCS_p.xml.htm\">tva_ContentCommercialCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/tva_ContentAlertCS_p.xml.htm\">tva_ContentAlertCS</a></li></ul>"));
+            m_textDocumentation->setHtml(tr("To define the 'genre' categorising the resource. Content genre is often described through more than one single term.<br/>Reference data:<ul><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ContentAlertSchemeCodeCS_p.xml.htm\">ebu_ContentAlertSchemeCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ContentGenreCS_p.xml.htm\">ebu_ContentGenreCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_EditorialFormatCodeCS_p.xml.htm\">ebu_EditorialFormatCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_IntentionCodeCS_p.xml.htm\">ebu_IntentionCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/tva_ContentCommercialCS_p.xml.htm\">tva_ContentCommercialCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/tva_ContentAlertCS_p.xml.htm\">tva_ContentAlertCS</a></li></ul>"));
         else if (obj == (QObject*) m_buttonObjectType )
             m_textDocumentation->setHtml(tr("To define the type of real or abstract media object that the resource consists of or relates to (e.g. a programme, an item, shot, clip, scene).<br/>Reference data<br/><a href=\"http://www.ebu.ch/metadata/cs/ebu_ObjectTypeCodeCS.xml\">ebu_ObjectTypeCS</a>"));
         else if (obj == (QObject*) m_buttonTargetAudience )
-            m_textDocumentation->setHtml(tr("To define the ‘target audience’ categorising the resource.<br/>Reference data<ul><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_IntendedAudienceCodeCS_p.xml.htm\">ebu_IntendedAudienceCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ParentalGuidanceCodeCS_p.xml.htm\">ebu_ParentalGuidanceCodeCS</a></li></ul>"));
+            m_textDocumentation->setHtml(tr("To define the 'target audience' categorising the resource.<br/>Reference data<ul><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_IntendedAudienceCodeCS_p.xml.htm\">ebu_IntendedAudienceCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ParentalGuidanceCodeCS_p.xml.htm\">ebu_ParentalGuidanceCodeCS</a></li></ul>"));
     }
     return QObject::eventFilter(obj, event);
 }

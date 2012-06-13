@@ -67,7 +67,7 @@ StringForm::StringForm(String *string,
         l->addWidget(m_editFormatGroup);
     }
     this->setLayout(l);
-    m_textDocumentation->setText(tr("Allows users / implementers to define their own technical parameters as ‘string’ for which a format can be defined to restrict the string format."));
+    m_textDocumentation->setText(tr("Allows users / implementers to define their own technical parameters as 'string' for which a format can be defined to restrict the string format."));
     // Set data fields...
     m_editValue->setText(m_string->value());
 }

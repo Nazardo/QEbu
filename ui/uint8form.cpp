@@ -108,7 +108,7 @@ bool Uint8Form::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::FocusIn) {
         if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
-            m_textDocumentation->setText(tr("Free text.\nExample: ‘a flag indicating that the video bitrate corresponds to an average bitrate’."));
+            m_textDocumentation->setText(tr("Free text.\nExample: 'a flag indicating that the video bitrate corresponds to an average bitrate'."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
             m_textDocumentation->setText(tr("Link to a classification scheme."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())

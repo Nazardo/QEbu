@@ -2384,11 +2384,11 @@ bool CoreMetadataTypeForm::eventFilter(QObject *obj, QEvent *event)
 {
     if (event->type() == QEvent::FocusIn) {
         if (obj == (QObject*) m_buttonTitle)
-            m_textDocumentation->setText(tr("A Title is the ‘main’ name given to a resource e.g. a media item, a media object, or a sequence as specified by the associated title type."));
+            m_textDocumentation->setText(tr("A Title is the 'main' name given to a resource e.g. a media item, a media object, or a sequence as specified by the associated title type."));
         else if (obj == (QObject*) m_buttonAlternativeTitle)
-            m_textDocumentation->setText(tr("An Alternative Title is the name other than the ‘main’ Title given to a resource."));
+            m_textDocumentation->setText(tr("An Alternative Title is the name other than the 'main' Title given to a resource."));
         else if (obj == (QObject*) m_buttonCreator)
-            m_textDocumentation->setText(tr("The descriptor creator identifies an ‘entity’ (a person, group of persons or organisation) primarily responsible for creating the content of the resource - behind the camera."));
+            m_textDocumentation->setText(tr("The descriptor creator identifies an 'entity' (a person, group of persons or organisation) primarily responsible for creating the content of the resource - behind the camera."));
         else if (obj == (QObject*) m_buttonSubject)
             m_textDocumentation->setText(tr("The generalised topic that represents the intellectual content of the resource. Typically, a subject is expressed by keywords, key phrases."));
         else if (obj == (QObject*) m_buttonDescription)

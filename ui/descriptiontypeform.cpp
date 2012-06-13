@@ -120,7 +120,7 @@ bool DescriptionTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if  (obj == (QObject*) m_editElementDescription->editLang())
             m_textDocumentation->setText(tr("The language in which the title is provided."));
         else if  (obj == (QObject*) m_editElementDescription->editValue())
-            m_textDocumentation->setText(tr("Free-text to provide the main title by which the resource is known. The title can be provided in different languages.\nExample: ‘the fifth element’."));
+            m_textDocumentation->setText(tr("Free-text to provide the main title by which the resource is known. The title can be provided in different languages.\nExample: 'the fifth element'."));
         else if  (obj == (QObject*) m_textNote)
             m_textDocumentation->setText(tr("A note element to provide additional contextual information"));
     }

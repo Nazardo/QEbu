@@ -233,13 +233,13 @@ bool SubjectTypeForm::eventFilter(QObject *obj, QEvent *event)
         if (obj == (QObject*) m_textNote )
             m_textDocumentation->setText(tr("A note element to provide additional contextual information."));
         else if  (obj == (QObject*) m_editElementSubject->editValue() )
-            m_textDocumentation->setText(tr("Free text to provide subject.\nExample: ‘Tennis’."));
+            m_textDocumentation->setText(tr("Free text to provide subject.\nExample: 'Tennis'."));
         else if  (obj == (QObject*) m_editElementSubject->editLang() )
             m_textDocumentation->setText(tr("The language in which the subject is provided."));
         else if  (obj == (QObject*) m_editSubjectCode )
             m_textDocumentation->setHtml(tr("A link or code to/within a classification scheme.<br/>Reference data:<ul><li>Library of Congress Subject Heading (LCSH), Library of Congress Classification (LCC), Medical Subject Headings (MeSH), Dewey Decimal Classification (DDC), Dansk decimalklassedeling 5.utgave (DK5), Klassifikasjonssystem för svenska bibliotek (SAB), Universal Decimal Classification (UDC), Norske emneord</li><li><a href=\"http://cv.iptc.org/newscodes/subjectcode/\">http://cv.iptc.org/newscodes/subjectcode/</a></li></ul>"));
         else if (obj == (QObject*) m_editSubjectDefinition )
-            m_textDocumentation->setText(tr("An optional definition.\nExample: ‘the subject is about tennis (sport, game)’."));
+            m_textDocumentation->setText(tr("An optional definition.\nExample: 'the subject is about tennis (sport, game)'."));
         else if (obj == (QObject*) m_editAttributor )
             m_textDocumentation->setText(tr("A person or organisation having defined/attributed the subject (e.g. a user tag)."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
@@ -247,7 +247,7 @@ bool SubjectTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
             m_textDocumentation->setHtml(tr("A link to a classification scheme.<br/>Example: <a href=\"http://cv.iptc.org/newscodes/subjectcode/\">http://cv.iptc.org/newscodes/subjectcode/</a>"));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
-            m_textDocumentation->setText(tr("Free text to define the type of the source of reference for subject.\nExample: ‘IPTC Subject Code Classification Scheme’ (EBU subset)."));
+            m_textDocumentation->setText(tr("Free text to define the type of the source of reference for subject.\nExample: 'IPTC Subject Code Classification Scheme' (EBU subset)."));
     }
     return QObject::eventFilter(obj, event);
 }

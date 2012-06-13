@@ -148,8 +148,8 @@ void AudioFormatTypeForm::addClicked()
         audioEncodingForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioCompressionCodeCS")); //Autocompletion values
         audioEncodingForm->setTitle(tr("Audio Encoding"));
         audioEncodingForm->setGeneralDoc(tr("A group of attributes to describe the audio compression format."));
-        audioEncodingForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘the audio compression scheme MPEG4, AAC profile, level1 as specified by ISO/IEC’."));
-        audioEncodingForm->setLabelDoc(tr("Free text.\nExample: ‘MPEG-4 AAC Profile @ Level 1’."));
+        audioEncodingForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: 'the audio compression scheme MPEG4, AAC profile, level1 as specified by ISO/IEC'."));
+        audioEncodingForm->setLabelDoc(tr("Free text.\nExample: 'MPEG-4 AAC Profile @ Level 1'."));
         audioEncodingForm->setLinkDoc(tr("Link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_VideoCompressionCodeCS_p.xml.htm\">ebu_AudioCompressionCodeCS</a>"));
         QObject::connect(audioEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioEncodingFormClosed(Operation,QVariant)));
@@ -163,7 +163,7 @@ void AudioFormatTypeForm::addClicked()
         audioTrackConfigurationForm->setTitle(tr("Audio Track Configuration"));
         audioTrackConfigurationForm->setGeneralDoc(tr("A group of attributes to describe the audio track configuration."));
         audioTrackConfigurationForm->setDefinitionDoc(tr("Free text for an optional definition."));
-        audioTrackConfigurationForm->setLabelDoc(tr("Free text.\nExample: ‘surround’."));
+        audioTrackConfigurationForm->setLabelDoc(tr("Free text.\nExample: 'surround'."));
         audioTrackConfigurationForm->setLinkDoc(tr("Link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_AudioFormatCodeCS_p.xml.htm\">ebu_AudioFormatCodeCS</a>"));
         QObject::connect(audioTrackConfigurationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioTrackConfigurationFormClosed(Operation,QVariant)));
@@ -202,8 +202,8 @@ void AudioFormatTypeForm::editClicked()
         audioEncodingForm->addLinksMap(this->mainWindow()->getMap("ebu_AudioCompressionCodeCS")); //Autocompletion values
         audioEncodingForm->setTitle(tr("Audio Encoding"));
         audioEncodingForm->setGeneralDoc(tr("A group of attributes to describe the audio compression format."));
-        audioEncodingForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘the audio compression scheme MPEG4, AAC profile, level1 as specified by ISO/IEC’."));
-        audioEncodingForm->setLabelDoc(tr("Free text.\nExample: ‘MPEG-4 AAC Profile @ Level 1’."));
+        audioEncodingForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: 'the audio compression scheme MPEG4, AAC profile, level1 as specified by ISO/IEC'."));
+        audioEncodingForm->setLabelDoc(tr("Free text.\nExample: 'MPEG-4 AAC Profile @ Level 1'."));
         audioEncodingForm->setLinkDoc(tr("Link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_VideoCompressionCodeCS_p.xml.htm\">ebu_AudioCompressionCodeCS</a>"));
         QObject::connect(audioEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioEncodingFormClosed(Operation,QVariant)));
@@ -218,7 +218,7 @@ void AudioFormatTypeForm::editClicked()
         audioTrackConfigurationForm->setTitle(tr("Audio Track Configuration"));
         audioTrackConfigurationForm->setGeneralDoc(tr("A group of attributes to describe the audio track configuration."));
         audioTrackConfigurationForm->setDefinitionDoc(tr("Free text for an optional definition."));
-        audioTrackConfigurationForm->setLabelDoc(tr("Free text.\nExample: ‘surround’."));
+        audioTrackConfigurationForm->setLabelDoc(tr("Free text.\nExample: 'surround'."));
         audioTrackConfigurationForm->setLinkDoc(tr("Link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_AudioFormatCodeCS_p.xml.htm\">ebu_AudioFormatCodeCS</a>"));
         QObject::connect(audioTrackConfigurationForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(audioTrackConfigurationFormClosed(Operation,QVariant)));
