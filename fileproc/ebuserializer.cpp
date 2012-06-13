@@ -803,6 +803,7 @@ QDomElement EbuSerializer::serializeOrganisationDetails(OrganisationDetailsType 
         e.setAttribute("departmentId", organisationDetails->organisationDepartment()->departmentId());
         QDomText textNode = m_doc.createTextNode(organisationDetails->organisationDepartment()->value());
         e.appendChild(textNode);
+        o.appendChild(e);
     }
     if (organisationDetails->organisationName()) {
         QDomElement e = serializeElement(organisationDetails->organisationName());
@@ -1185,7 +1186,7 @@ QDomElement EbuSerializer::serializeFormat(FormatType *format)
     }
     if(!format->fileName().isEmpty()) {
         QDomElement e = m_doc.createElement(" ");
-        e.setTagName("ebucore:fileName");
+        e.setTagName("ebucore:filename");
         QDomText textNode = m_doc.createTextNode(format->fileName());
         e.appendChild(textNode);
         f.appendChild(e);

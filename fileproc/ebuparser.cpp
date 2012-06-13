@@ -517,7 +517,7 @@ CoreMetadataType *EbuParser::parseCoreMetadataType(CoreMetadataType *coreMetadat
     }
 
     // pubblicationHistory [0..1]
-    el = element.elementsByTagName("pubblicationHistory").at(0).toElement();
+    el = element.elementsByTagName("publicationHistory").at(0).toElement();
     if (!el.isNull()) {
         PublicationHistoryType *publicationHistory = parsePublicationHistoryType(el);
         if (!publicationHistory) {
@@ -768,12 +768,12 @@ OrganisationDetailsType *EbuParser::parseOrganisationDetailsType(const QDomEleme
     el = element.elementsByTagName("organisationDepartment").at(0).toElement();
     if (!el.isNull()) {
         OrganisationDepartmentType *department = new OrganisationDepartmentType();
-        QString lang = element.attribute("lang", "en");
+        QString lang = el.attribute("lang", "en");
         department->setLang(lang);
-        QString value = element.text();
+        QString value = el.text();
         if (!value.isEmpty())
             department->setValue(value);
-        QString departmentId = element.attribute("departmentId");
+        QString departmentId = el.attribute("departmentId");
         if (!departmentId.isNull())
             department->setDepartmentId(departmentId);
         organisationDetails->setOrganisationDepartment(department);
@@ -1266,16 +1266,16 @@ FormatType *EbuParser::parseFormatType(const QDomElement &element)
          }
          format->setWidth(width);
      }
-     el = element.elementsByTagName("length").at(0).toElement();
+     el = element.elementsByTagName("height").at(0).toElement();
      if (!el.isNull()) {
-         LengthType *length = parseLengthType(el);
-         if (!length) {
+         LengthType *height = parseLengthType(el);
+         if (!height) {
              delete format;
              return 0;
          }
-         format->setWidth(length);
+         format->setHeight(height);
      }
-     QDomNodeList el_list = element.elementsByTagName("mediumType");
+     QDomNodeList el_list = element.elementsByTagName("medium");
      for (int i=0; i < el_list.size(); ++i) {
          QDomElement el = el_list.at(i).toElement();
          if(el.isNull())
@@ -1341,8 +1341,9 @@ FormatType *EbuParser::parseFormatType(const QDomElement &element)
              delete format;
              return 0;
          }
-         format->containerFormat().append(new FormatGroup());
-         parseFormatGroup(el, format->containerFormat().at(i));
+         FormatGroup *fg = new FormatGroup();
+         parseFormatGroup(el, fg);
+         format->containerFormat().append(fg);
      }
      el_list = element.elementsByTagName("signingFormat");
      for (int i=0; i < el_list.size(); ++i) {
@@ -1388,7 +1389,7 @@ FormatType *EbuParser::parseFormatType(const QDomElement &element)
      if (!el.isNull())
          format->setFileSize(el.text().toLong());
 
-     el = element.elementsByTagName("fileName").at(0).toElement();
+     el = element.elementsByTagName("filename").at(0).toElement();
      if (!el.isNull())
          format->setFileName(el.text());
 
@@ -1529,14 +1530,14 @@ VideoFormatType *EbuParser::parseVideoFormatType(const QDomElement &element)
         }
         videoFormat->setWidth(width);
     }
-    el = element.elementsByTagName("length").at(0).toElement();
+    el = element.elementsByTagName("height").at(0).toElement();
     if (!el.isNull()) {
-        LengthType *length = parseLengthType(el);
-        if (!length) {
+        LengthType *height = parseLengthType(el);
+        if (!height) {
             delete videoFormat;
             return 0;
         }
-        videoFormat->setWidth(length);
+        videoFormat->setHeight(height);
     }
 
     QDomNodeList el_list = element.elementsByTagName("videoEncoding");
@@ -1619,14 +1620,14 @@ ImageFormatType *EbuParser::parseImageFormatType(const QDomElement &element)
         }
         imageFormat->setWidth(width);
     }
-    el = element.elementsByTagName("lenght").at(0).toElement();
+    el = element.elementsByTagName("height").at(0).toElement();
     if (!el.isNull()) {
-        LengthType *length = parseLengthType(el);
-        if (!length) {
+        LengthType *height = parseLengthType(el);
+        if (!height) {
             delete imageFormat;
             return 0;
         }
-        imageFormat->setWidth(length);
+        imageFormat->setHeight(height);
     }
 
     el = element.elementsByTagName("orientation").at(0).toElement();
@@ -2195,7 +2196,7 @@ RightsType *EbuParser::parseRightsType(const QDomElement &element)
         }
     }
 
-    QDomNodeList el_list = el.elementsByTagName("disclaimer");
+    QDomNodeList el_list = element.elementsByTagName("disclaimer");
     for (int i=0; i<el_list.size(); ++i) {
         ElementType *disclaimer = parseElementType(el_list.at(i).toElement());
         if(!disclaimer) {
@@ -2205,7 +2206,7 @@ RightsType *EbuParser::parseRightsType(const QDomElement &element)
         rights->disclaimer().append(disclaimer);
     }
 
-    el_list = el.elementsByTagName("rightsId");
+    el_list = element.elementsByTagName("rightsId");
     for (int i=0; i<el_list.size(); ++i) {
         IdentifierType *rightsId = parseIdentifierType(el_list.at(i).toElement());
         if(!rightsId) {
@@ -2215,7 +2216,7 @@ RightsType *EbuParser::parseRightsType(const QDomElement &element)
         rights->rightsID().append(rightsId);
     }
 
-    el_list = el.elementsByTagName("contactDetails");
+    el_list = element.elementsByTagName("contactDetails");
     for (int i=0; i<el_list.size(); ++i) {
         ContactDetailsType *cd = parseContactDetailsType(el_list.at(i).toElement());
         if(!cd) {
@@ -2770,7 +2771,7 @@ TimeType *EbuParser::parseTimeType(const QDomElement &element)
 
     // Get attributes.
     bool ok;
-    QString timeCode = element.elementsByTagName("timeCode").at(0).toElement().text();
+    QString timeCode = element.elementsByTagName("timecode").at(0).toElement().text();
     if(!timeCode.isEmpty())
         time->setTimecode(timeCode);
     QString normalPlayTime = element.elementsByTagName("normalPlayTime").at(0).toElement().text();
@@ -2810,7 +2811,7 @@ DurationType *EbuParser::parseDurationType(const QDomElement &element)
 
     // Get attributes.
     bool ok;
-    QString timeCode = element.elementsByTagName("timeCode").at(0).toElement().text();
+    QString timeCode = element.elementsByTagName("timecode").at(0).toElement().text();
     if(!timeCode.isEmpty())
         duration->setTimecode(timeCode);
     QString normalPlayTime = element.elementsByTagName("normalPlayTime").at(0).toElement().text();
@@ -2886,14 +2887,14 @@ DocumentFormatType *EbuParser::parseDocumentFormatType(const QDomElement &elemen
         }
         documentFormat->setWidth(width);
     }
-    el = element.elementsByTagName("length").at(0).toElement();
+    el = element.elementsByTagName("height").at(0).toElement();
     if (!el.isNull()) {
-        LengthType *length = parseLengthType(el);
-        if (!length) {
+        LengthType *height = parseLengthType(el);
+        if (!height) {
             delete documentFormat;
             return 0;
         }
-        documentFormat->setWidth(length);
+        documentFormat->setHeight(height);
     }
 
     TechnicalAttributes *ta = parseTechnicalAttributes(element);
