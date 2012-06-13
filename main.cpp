@@ -1,30 +1,31 @@
+/****************************************************************************
+** Copyright (C) 2012 by
+**  Mauro Levra  (nazardo)     mauro@nazardo.it
+**  Paolo Pasini (cosmos3900)  paolo.pasini@studenti.polito.it
+**  Denis Patti  (dextp3)      denis.patti@studenti.polito.it
+**  Giovanni Pessiva           giovanni.pessiva@gmail.com
+**  Stefano Ricossa            stefano.ricossa@studenti.polito.it
+**
+** This file is part of QEbu.
+** QEbu is free software: you can redistribute it and/or modify
+** it under the terms of the GNU General Public License as published by
+** the Free Software Foundation, in the version 3 of the License.
+**
+** QEbu is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+** See the GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with QEbu.  If not, see <http://www.gnu.org/licenses/>.
+****************************************************************************/
+
 #include <QtGui/QApplication>
-#include <QDebug>
-#include "fileproc/ebuparser.h"
-#include "fileproc/ebuserializer.h"
 #include "ui/qebumainwindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    /*EbuParser parser;
-    QFile ifile("D:\\Documenti\\Politecnico\\MultimediaArchivalTechniques\\EBU_CORE_20110915\\prova\\NewFile.xml");
-    ifile.open(QFile::ReadOnly);
-    if (!ifile.isOpen()) {
-        qDebug("Invalid file");
-    } else if (!parser.parseFromFile(ifile)) {
-        qDebug("%s", qPrintable(parser.errorMsg()));
-        return 1;
-    }
-    EbuCoreMainType *t = parser.root();
-
-    EbuSerializer s(t);
-    QFile ofile("D:\\Documenti\\Politecnico\\MultimediaArchivalTechniques\\QEbu\\out.xml");
-    ofile.open(QFile::WriteOnly);
-    s.serializeToFile(ofile);
-
-    return 0;*/
-
     QEbuMainWindow mainWindow;
     mainWindow.show();
     return a.exec();
