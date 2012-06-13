@@ -30,6 +30,7 @@
 class QVBoxLayout;
 class QLayout;
 class QTextBrowser;
+class VerticalScrollArea;
 
 class StackableWidget : public QWidget
 {
@@ -62,6 +63,7 @@ protected:
 private:
     QVBoxLayout *m_vLayout;
     QEbuMainWindow *m_mainWindow;
+    VerticalScrollArea *m_verticalScrollArea;
     
 };
 

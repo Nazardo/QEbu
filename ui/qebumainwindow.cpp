@@ -57,14 +57,12 @@ QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
     m_mainCentralLayout = new QVBoxLayout;
 
     m_labelNavigation = new QLabel;
+    m_labelNavigation->setFrameStyle(QFrame::Box | QFrame::Raised);
     m_stackedWidget = new QStackedWidget;
-    m_stackedWidget->setMinimumSize(640,400);
+    m_stackedWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
+    //m_stackedWidget->setMinimumSize(640,400);
     m_mainCentralLayout->addWidget(m_labelNavigation);
-    m_mainCentralLayout->setAlignment(m_labelNavigation,
-                                      Qt::AlignTop | Qt::AlignLeft);
     m_mainCentralLayout->addWidget(m_stackedWidget);
-    m_mainCentralLayout->setAlignment(m_stackedWidget,
-                                      Qt::AlignVCenter | Qt::AlignCenter);
     cw->setLayout(m_mainCentralLayout);
     this->setCentralWidget(cw);
 

@@ -21,6 +21,7 @@
 ****************************************************************************/
 
 #include "stackablewidget.h"
+#include "verticalscrollarea.h"
 #include <QVariant>
 #include <QVBoxLayout>
 #include <QLayout>
@@ -37,6 +38,9 @@ StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
     m_mainWindow = mainWindow;
     m_vLayout = new QVBoxLayout;
     QWidget::setLayout(m_vLayout);
+
+    m_verticalScrollArea = new VerticalScrollArea;
+    m_vLayout->addWidget(m_verticalScrollArea);
 
     // Add lastRow layout
     if (items.testFlag(None))
@@ -77,7 +81,8 @@ QEbuMainWindow *StackableWidget::mainWindow()
 
 void StackableWidget::setLayout(QLayout *layout)
 {
-    m_vLayout->insertLayout(0, layout);
+    //m_vLayout->insertLayout(0, layout);
+    m_verticalScrollArea->setLayout(layout);
 }
 
 void StackableWidget::applyClicked()
