@@ -26,6 +26,7 @@ StatusGroupEditBox::StatusGroupEditBox(StatusGroup *statusGroup, QWidget *parent
     m_editStatusLink->setEditable(true);
     m_editStatusLink->setInsertPolicy(QComboBox::InsertAtTop);
     QObject::connect(m_editStatusLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
+    QObject::connect(m_editStatusLink->lineEdit(), SIGNAL(editingFinished()), this, SLOT(onChange()));
     m_editStatusLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
@@ -98,6 +99,20 @@ void StatusGroupEditBox::onChange(int index) {
         if (newValue)
             for (int i=0;    i<m_linkMaps.size();    i++)
                 m_linkMaps[i]->insert(linkData,linkText);
+    }
+}
+
+void StatusGroupEditBox::onChange()
+{
+    QString s = m_editStatusLink->lineEdit()->text();
+    if (m_editStatusLink->findText(s) < 0) {
+        m_editStatusLink->addItem(s, s);
+        //Add it to the autocompletion maps
+        for (int i=0; i<m_linkMaps.size(); ++i)
+            m_linkMaps[i]->insert(s,s);
+        int i = m_editStatusLink->findText(s);
+        if (i >= 0)
+            m_editStatusLink->setCurrentIndex(i);
     }
 }
 

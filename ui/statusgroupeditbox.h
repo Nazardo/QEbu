@@ -23,6 +23,7 @@ public:
     QLineEdit *editStatusDefinition();
 private slots:
     void onChange(int index);
+    void onChange();
 private:
     QLineEdit *m_editStatusLabel;
     QLineEdit *m_editStatusDefinition;
