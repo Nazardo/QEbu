@@ -45,6 +45,7 @@ private slots:
     void applyClicked();
     // -
 private:
+    bool eventFilter(QObject *, QEvent *);
     QLineEdit *m_editTrackId;
     QLineEdit *m_editTrackName;
     QLineEdit *m_editLanguage;

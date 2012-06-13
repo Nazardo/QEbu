@@ -6,7 +6,6 @@
 #include <QFormLayout>
 #include <QComboBox>
 #include <QEvent>
-#include <QTextEdit>
 #include <QTextBrowser>
 
 LocatorTypeForm::LocatorTypeForm(LocatorType *locator,

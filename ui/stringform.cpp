@@ -5,6 +5,9 @@
 #include "qvarptr.h"
 #include <QLineEdit>
 #include <QFormLayout>
+#include <QEvent>
+#include <QComboBox>
+#include <QTextBrowser>
 
 StringForm::StringForm(String *string,
                        QEbuMainWindow *mainWindow,
@@ -23,19 +26,26 @@ StringForm::StringForm(String *string,
     {
         QFormLayout *fl = new QFormLayout;
         m_editValue = new QLineEdit;
+        m_editValue->installEventFilter(this);
         fl->addRow(tr("Value"), m_editValue);
         l->addLayout(fl);
     }
     {
         m_editFormatGroup = new FormatGroupEditBox(string);
+        m_editFormatGroup->editFormatDefinition()->installEventFilter(this);
+        m_editFormatGroup->editFormatLabel()->installEventFilter(this);
+        m_editFormatGroup->editFormatLink()->installEventFilter(this);
         m_editTypeGroup = new TypeGroupEditBox(string);
+        m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+        m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+        m_editTypeGroup->editTypeLink()->installEventFilter(this);
         m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_ColourCodeCS"));
         m_editTypeGroup->addLinksMap(mainWindow->getMap("ebu_VideoFrameRateCS"));
         l->addWidget(m_editTypeGroup);
         l->addWidget(m_editFormatGroup);
     }
     this->setLayout(l);
-
+    m_textDocumentation->setText(tr("Allows users / implementers to define their own technical parameters as ‘string’ for which a format can be defined to restrict the string format."));
     // Set data fields...
     m_editValue->setText(m_string->value());
 }
@@ -60,5 +70,26 @@ void StringForm::applyClicked()
     m_editFormatGroup->updateExistingFormatGroup(m_string);
     m_editTypeGroup->updateExistingTypeGroup(m_string);
     emit closed(m_op, QVarPtr<String>::asQVariant(m_string));
+}
+
+bool StringForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_editFormatGroup->editFormatDefinition())
+            m_textDocumentation->setText(tr("An optional definition."));
+        if ( obj == (QObject*) m_editFormatGroup->editFormatLabel())
+            m_textDocumentation->setText(tr("Free text."));
+        if ( obj == (QObject*) m_editFormatGroup->editFormatLink())
+            m_textDocumentation->setText(tr("A link to a classification scheme."));
+        if ( obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("An optional definition"));
+        if ( obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text"));
+        if ( obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setHtml(tr("A link to a classification scheme<br/>Reference data<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ColourCodeCS_p.xml.htm\">ebu_ColourCodeCS</a><br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_VideoFrameRateCS_p.xml.htm\">ebu_VideoFrameRateCS</a>"));
+        if ( obj == (QObject*) m_editValue)
+            m_textDocumentation->setText(tr("A string containing the value of the string technical attribute, which format may be further specified using the formatGroup attributes. This applies to all technicalAttributeString inc. audio and video"));
+    }
+    return QObject::eventFilter(obj, event);
 }
 

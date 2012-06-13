@@ -5,6 +5,9 @@
 #include "formatgroupeditbox.h"
 #include "qvarptr.h"
 #include <QLineEdit>
+#include <QComboBox>
+#include <QEvent>
+#include <QTextBrowser>
 #include <QFormLayout>
 
 SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -20,21 +23,30 @@ SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, Q
         QFormLayout *fl = new QFormLayout;
 
         m_editTrackId = new QLineEdit;
+        m_editTrackId->installEventFilter(this);
         fl->addRow(tr("Track id"),m_editTrackId);
 
         m_editTrackName = new QLineEdit;
+        m_editTrackName->installEventFilter(this);
         fl->addRow(tr("Track name"),m_editTrackName);
 
         m_editLanguage = new QLineEdit;
+        m_editLanguage->installEventFilter(this);
         fl->addRow(tr("Language"),m_editLanguage);
         vl->addLayout(fl);
     }
     {
         m_editTypeGroup = new TypeGroupEditBox(m_signingFormat);
+        m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+        m_editTypeGroup->editTypeLabel()->installEventFilter(this);
+        m_editTypeGroup->editTypeLink()->installEventFilter(this);
         vl->addWidget(m_editTypeGroup);
     }
     {
         m_editFormatGroup = new FormatGroupEditBox(m_signingFormat);
+        m_editFormatGroup->editFormatDefinition()->installEventFilter(this);
+        m_editFormatGroup->editFormatLabel()->installEventFilter(this);
+        m_editFormatGroup->editFormatLink()->installEventFilter(this);
         m_editFormatGroup->addLinksMap(mainWindow->getMap("ebu_SignLanguageCodeCS"));
         vl->addWidget(m_editFormatGroup);
     }
@@ -42,21 +54,26 @@ SigningFormatTypeForm::SigningFormatTypeForm(SigningFormatType *signingFormat, Q
         QFormLayout *fl = new QFormLayout;
 
         m_editSigningSourceUri = new QLineEdit;
+        m_editSigningSourceUri->installEventFilter(this);
         m_editSigningSourceUri->setValidator(TypeConverter::getUriValidator());
         fl->addRow(tr("Source uri"),m_editSigningSourceUri);
 
         m_editSigningFormatId = new QLineEdit;
+        m_editSigningFormatId->installEventFilter(this);
         fl->addRow(tr("Format id"),m_editSigningFormatId);
 
         m_editSigningFormatName = new QLineEdit;
+        m_editSigningFormatName->installEventFilter(this);
         fl->addRow(tr("Format name"),m_editSigningFormatName);
 
         m_editSigningFormatDefinition = new QLineEdit;
+        m_editSigningFormatDefinition->installEventFilter(this);
         fl->addRow(tr("Format definition"),m_editSigningFormatDefinition);
         vl->addLayout(fl);
     }
     this->setLayout(vl);
     // Set text fields...
+    m_textDocumentation->setText(tr("To provide information on the language, purpose and format of signing if used in the resource."));
     m_editTrackId->setText(m_signingFormat->trackId());
     m_editTrackName->setText(m_signingFormat->trackName());
     m_editLanguage->setText(m_signingFormat->language());
@@ -95,4 +112,37 @@ void SigningFormatTypeForm::applyClicked()
     m_signingFormat->setSigningFormatDefinition(m_editSigningFormatDefinition->text());
 
     emit closed(m_op, QVarPtr<SigningFormatType>::asQVariant(m_signingFormat));
+}
+
+bool SigningFormatTypeForm::eventFilter(QObject *obj, QEvent *event)
+{
+    if (event->type() == QEvent::FocusIn) {
+        if ( obj == (QObject*) m_editTrackId)
+            m_textDocumentation->setText(tr("An identifier associated to the signing track."));
+        if ( obj == (QObject*) m_editTrackName)
+            m_textDocumentation->setText(tr("An name associated to the signing track."));
+        if ( obj == (QObject*) m_editLanguage)
+            m_textDocumentation->setText(tr("The language in which the signing is delivered."));
+        if ( obj == (QObject*) m_editFormatGroup->editFormatDefinition())
+            m_textDocumentation->setText(tr("Free text for an optional definition."));
+        if ( obj == (QObject*) m_editFormatGroup->editFormatLabel())
+            m_textDocumentation->setText(tr("Free text"));
+        if ( obj == (QObject*) m_editFormatGroup->editFormatLink())
+            m_textDocumentation->setHtml(tr("Link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_SignLanguageCodeCS_p.xml.htm\">ebu_SignLanguageCodeCS</a>"));
+        if ( obj == (QObject*) m_editTypeGroup->editTypeDefinition())
+            m_textDocumentation->setText(tr("Free text for an optional definition."));
+        if ( obj == (QObject*) m_editTypeGroup->editTypeLabel())
+            m_textDocumentation->setText(tr("Free text"));
+        if ( obj == (QObject*) m_editTypeGroup->editTypeLink())
+            m_textDocumentation->setHtml(tr("Link to a classification scheme."));
+        if ( obj == (QObject*) m_editSigningSourceUri)
+            m_textDocumentation->setText(tr("The address at which a signing resource can be found or accessed from"));
+        if ( obj == (QObject*) m_editSigningFormatId)
+            m_textDocumentation->setText(tr("An identifier associated to the signing format"));
+        if ( obj == (QObject*) m_editSigningFormatName)
+            m_textDocumentation->setHtml(tr("An name associated to the signing format"));
+        if ( obj == (QObject*) m_editSigningFormatDefinition)
+            m_textDocumentation->setHtml(tr("A definition associated to the signing format"));
+    }
+    return QObject::eventFilter(obj, event);
 }

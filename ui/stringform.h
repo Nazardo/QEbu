@@ -43,6 +43,7 @@ private slots:
     void cancelClicked();
     void applyClicked();
 private:
+    bool eventFilter(QObject *, QEvent *);
     QLineEdit *m_editValue;
     FormatGroupEditBox *m_editFormatGroup;
     TypeGroupEditBox *m_editTypeGroup;
