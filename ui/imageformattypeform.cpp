@@ -13,7 +13,7 @@
 #include <QLineEdit>
 #include <QCheckBox>
 #include <QComboBox>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 #include <QDialogButtonBox>
 #include <QPushButton>
@@ -207,7 +207,7 @@ void ImageFormatTypeForm::addClicked()
     form->setTitle(tr("Image Encoding"));
     form->setGeneralDoc(tr("The type group attributes provide the information on the encoding format"));
     form->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘standard file format for compressing pictures so they can be stored or sent by e-mail more easily. JPEG is an abbreviation for `Joint Photographic Experts Group'."));
-    form->setLinkDoc(tr("A link to a classification scheme."));
+    form->setLinkDoc(tr("A link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_VideoCompressionCodeCS_p.xml.htm\">ebu_ImageCompressionCodeCS</a>"));
     form->setLabelDoc(tr("Free text field.\nExample: JPEG."));
     QObject::connect(form, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(typeGroupFormClosed(Operation,QVariant)));
@@ -225,7 +225,7 @@ void ImageFormatTypeForm::editClicked()
     form->setTitle(tr("Image Encoding"));
     form->setGeneralDoc(tr("The type group attributes provide the information on the encoding format"));
     form->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘standard file format for compressing pictures so they can be stored or sent by e-mail more easily. JPEG is an abbreviation for `Joint Photographic Experts Group'."));
-    form->setLinkDoc(tr("A link to a classification scheme."));
+    form->setLinkDoc(tr("A link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_VideoCompressionCodeCS_p.xml.htm\">ebu_ImageCompressionCodeCS</a>"));
     form->setLabelDoc(tr("Free text field.\nExample: JPEG."));
     form->addLinksMap(this->mainWindow()->getMap("ebu_VideoCompressionCodeCS")); //Autocompletion values
     QObject::connect(form, SIGNAL(closed(Operation,QVariant)),

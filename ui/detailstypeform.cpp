@@ -11,7 +11,7 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QComboBox>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 
 DetailsTypeForm::DetailsTypeForm(DetailsType *details,

@@ -11,7 +11,7 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 DateTypeForm::DateTypeForm(DateType *date,
                            QEbuMainWindow *mainWindow,

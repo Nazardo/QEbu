@@ -13,7 +13,7 @@
 #include <QButtonGroup>
 #include <QInputDialog>
 #include <QComboBox>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 
 AddressTypeForm::AddressTypeForm(AddressType *address, QEbuMainWindow *mainWindow, QWidget *parent) :

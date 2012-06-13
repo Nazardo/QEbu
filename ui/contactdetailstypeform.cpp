@@ -12,7 +12,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QButtonGroup>
 #include <QInputDialog>
 #include <QMessageBox>

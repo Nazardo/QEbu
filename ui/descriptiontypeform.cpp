@@ -4,13 +4,13 @@
 #include "elementtypeeditbox.h"
 #include "entitytypeform.h"
 #include "qvarptr.h"
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QLineEdit>
 #include <QMessageBox>
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QComboBox>
 
 DescriptionTypeForm::DescriptionTypeForm(DescriptionType *description,
@@ -94,7 +94,7 @@ bool DescriptionTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if ( obj == (QObject*) m_editTypeGroup->editTypeLabel() )
             m_textDocumentation->setText(tr("Free text to define the type."));
         else if  (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme"));
+            m_textDocumentation->setHtml(tr("A link to a term or only identify a classification scheme.<br/>Reference:<br/> <a href=\"http://www.ebu.ch/metadata/cs/web/ebu_DescriptionTypeCodeCS_p.xml.htm\">ebu_DescriptionTypeCodeCS</a>"));
         else if  (obj == (QObject*) m_editElementDescription->editLang())
             m_textDocumentation->setText(tr("The language in which the title is provided."));
         else if  (obj == (QObject*) m_editElementDescription->editValue())

@@ -5,7 +5,7 @@
 #include <QCheckBox>
 #include <QComboBox>
 #include <QLineEdit>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QEvent>

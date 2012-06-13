@@ -8,7 +8,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QMessageBox>
 #include <QLayout>
 

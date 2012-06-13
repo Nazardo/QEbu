@@ -34,7 +34,7 @@
 #include <QButtonGroup>
 #include <QMessageBox>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include "qextendedspinbox.h"
 
 FormatTypeForm::FormatTypeForm(FormatType *format, QEbuMainWindow *mainWindow, QWidget *parent) :
@@ -1230,11 +1230,11 @@ bool FormatTypeForm::eventFilter(QObject *obj, QEvent *event)
         if ( obj == (QObject*) m_editDuration)
             m_textDocumentation->setText(tr("The time duration/extent of the resource. Format Duration is an alternative to Format End for identifying the extent of a sequence or segment."));
         if ( obj == (QObject*) m_buttonMedium)
-            m_textDocumentation->setText(tr("To define the type of medium in which the resource is available."));
+            m_textDocumentation->setHtml(tr("To define the type of medium in which the resource is available.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_StorageMediaTypeCode_p.xml.htm\">ebu_StorageMediaTypeCode</a>"));
         if ( obj == (QObject*) m_buttonMimeType)
-            m_textDocumentation->setText(tr("To define the type of mime type in which the resource is available."));
+            m_textDocumentation->setHtml(tr("To define the type of mime type in which the resource is available.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_MediaTypeCS_p.xml.htm\">ebu_MediaTypeCS</a>"));
         if ( obj == (QObject*) m_buttonContainerFormat)
-            m_textDocumentation->setText(tr("To provide information on the Container Format in complement to stream encoding information"));
+            m_textDocumentation->setHtml(tr("To provide information on the Container Format in complement to stream encoding information.<br/>Reference data<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_FileFormatCS_p.xml.htm\">ebu_FileFormatCS</a>"));
         if ( obj == (QObject*) m_buttonSigningFormat)
             m_textDocumentation->setText(tr("To provide information on the signing format, if used."));
         if ( obj == (QObject*) m_buttonImageFormat)

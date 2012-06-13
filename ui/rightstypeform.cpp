@@ -14,7 +14,7 @@
 #include <QButtonGroup>
 #include <QLineEdit>
 #include <QCheckBox>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QComboBox>
 #include <QFormLayout>
 #include <QMessageBox>

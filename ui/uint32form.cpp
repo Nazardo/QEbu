@@ -8,7 +8,7 @@
 #include <QLayout>
 #include <QComboBox>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include "qextendedspinbox.h"
 
 Uint32Form::Uint32Form(UInt32 *uint32,

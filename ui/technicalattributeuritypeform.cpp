@@ -4,7 +4,7 @@
 #include "typegroupeditbox.h"
 #include "qvarptr.h"
 #include <QLineEdit>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 #include <QFormLayout>
 #include <QComboBox>

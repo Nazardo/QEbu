@@ -13,7 +13,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QFormLayout>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 
 DataFormatTypeForm::DataFormatTypeForm(DataFormatType *dataFormat,

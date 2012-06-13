@@ -5,7 +5,7 @@
 #include "model/qebulimits.h"
 #include <QSpinBox>
 #include <QCheckBox>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 #include <QLayout>
 #include <QComboBox>

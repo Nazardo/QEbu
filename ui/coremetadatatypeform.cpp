@@ -25,7 +25,7 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QLineEdit>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 #include <QLabel>
 #include <QHBoxLayout>

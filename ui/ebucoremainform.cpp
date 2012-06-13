@@ -11,7 +11,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 EbuCoreMainForm::EbuCoreMainForm(EbuCoreMainType *ebuCoreMain,
                                  QEbuMainWindow *mainWindow,

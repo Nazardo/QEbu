@@ -9,7 +9,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QButtonGroup>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QFormLayout>
 #include <QDebug>
 #include <QEvent>
@@ -392,11 +392,11 @@ bool TypeTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if  (obj == (QObject*) m_buttonType )
             m_textDocumentation->setText(tr("Free text to provide ‘type’ information other than ‘genre’ or ‘objectType’, possibly in different languages."));
         else if  (obj == (QObject*) m_buttonGenre )
-            m_textDocumentation->setText(tr("To define the ‘genre’ categorising the resource. Content genre is often described through more than one single term."));
+            m_textDocumentation->setHtml(tr("To define the ‘genre’ categorising the resource. Content genre is often described through more than one single term.<br/>Reference data:<ul><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ContentAlertSchemeCodeCS_p.xml.htm\">ebu_ContentAlertSchemeCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ContentGenreCS_p.xml.htm\">ebu_ContentGenreCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_EditorialFormatCodeCS_p.xml.htm\">ebu_EditorialFormatCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_IntentionCodeCS_p.xml.htm\">ebu_IntentionCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/tva_ContentCommercialCS_p.xml.htm\">tva_ContentCommercialCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/tva_ContentAlertCS_p.xml.htm\">tva_ContentAlertCS</a></li></ul>"));
         else if (obj == (QObject*) m_buttonObjectType )
-            m_textDocumentation->setText(tr("To define the type of real or abstract media object that the resource consists of or relates to (e.g. a programme, an item, shot, clip, scene)."));
+            m_textDocumentation->setHtml(tr("To define the type of real or abstract media object that the resource consists of or relates to (e.g. a programme, an item, shot, clip, scene).<br/>Reference data<br/><a href=\"http://www.ebu.ch/metadata/cs/ebu_ObjectTypeCodeCS.xml\">ebu_ObjectTypeCS</a>"));
         else if (obj == (QObject*) m_buttonTargetAudience )
-            m_textDocumentation->setText(tr("To define the ‘target audience’ categorising the resource."));
+            m_textDocumentation->setHtml(tr("To define the ‘target audience’ categorising the resource.<br/>Reference data<ul><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_IntendedAudienceCodeCS_p.xml.htm\">ebu_IntendedAudienceCodeCS</a></li><li><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ParentalGuidanceCodeCS_p.xml.htm\">ebu_ParentalGuidanceCodeCS</a></li></ul>"));
     }
     return QObject::eventFilter(obj, event);
 }

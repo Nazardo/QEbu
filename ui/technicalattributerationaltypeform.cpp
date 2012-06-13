@@ -8,7 +8,7 @@
 #include <QLayout>
 #include "qextendedspinbox.h"
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QComboBox>
 
 TechnicalAttributeRationalTypeForm::TechnicalAttributeRationalTypeForm(

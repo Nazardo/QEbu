@@ -3,7 +3,7 @@
 #include "elementtypeeditbox.h"
 #include "qvarptr.h"
 #include <QLineEdit>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 #include <QVBoxLayout>
 

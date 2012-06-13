@@ -9,7 +9,7 @@
 #include <QLineEdit>
 #include <QDateEdit>
 #include <QTimeEdit>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 
 DateGroupForm::DateGroupForm(DateGroup *dateGroup,

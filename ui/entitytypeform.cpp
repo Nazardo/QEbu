@@ -14,7 +14,7 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 EntityTypeForm::EntityTypeForm(EntityType *entity, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)

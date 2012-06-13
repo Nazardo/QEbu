@@ -7,7 +7,7 @@
 #include <QVBoxLayout>
 #include <QGridLayout>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QLineEdit>
 #include <QComboBox>
 

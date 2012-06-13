@@ -4,7 +4,7 @@
 #include <QLayout>
 #include <QDialogButtonBox>
 #include <QPushButton>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 
 StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
@@ -33,10 +33,11 @@ StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
 
     }
     if (items.testFlag(DocText)) {
-        m_textDocumentation = new QTextEdit;
+        m_textDocumentation = new QTextBrowser;
         m_textDocumentation->setReadOnly(true);
+        m_textDocumentation->setOpenExternalLinks(true);
         QPalette* palette = new QPalette();
-        palette->setColor(QPalette::Base, palette->color(QPalette::Window));
+        palette->setColor(QPalette::Base, Qt::transparent);
         m_textDocumentation->setFrameShape( QTextEdit::NoFrame );
         m_textDocumentation->setPalette(*palette);
         m_textDocumentation->setFrameShadow( QTextEdit::Plain );

@@ -2,7 +2,7 @@
 #include "../model/formatgroup.h"
 #include "formatgroupeditbox.h"
 #include "qvarptr.h"
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QLayout>
 #include <QString>
 

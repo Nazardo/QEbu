@@ -2,14 +2,14 @@
 #include "qvarptr.h"
 #include "../model/coremetadatatype.h"
 #include "../ui/coremetadatatypeform.h"
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
 #include <QFormLayout>
 #include <QMessageBox>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 PartTypeForm::PartTypeForm(PartType *part, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)

@@ -20,7 +20,7 @@
 #include <QLabel>
 #include <QLayout>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 TechnicalAttributesForm::TechnicalAttributesForm(TechnicalAttributes *technicalAttributes,
                                                  QEbuMainWindow *mainWindow, QWidget *parent) :

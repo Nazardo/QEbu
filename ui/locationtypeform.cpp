@@ -4,7 +4,7 @@
 #include "typegroupeditbox.h"
 #include "coordinatestypeform.h"
 #include "qvarptr.h"
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QLineEdit>
 #include <QLabel>
 #include <QEvent>

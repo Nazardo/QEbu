@@ -6,7 +6,7 @@
 #include "elementtypeeditbox.h"
 #include "qvarptr.h"
 #include <QPushButton>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QLineEdit>
 #include <QFormLayout>
 #include <QMessageBox>
@@ -15,6 +15,7 @@
 #include <QDateEdit>
 #include <QTimeEdit>
 #include <QSpinBox>
+#include <QTextBrowser>
 
 AlternativeTitleTypeForm::AlternativeTitleTypeForm(
         AlternativeTitleType *alternativeTitle,
@@ -57,6 +58,7 @@ AlternativeTitleTypeForm::AlternativeTitleTypeForm(
     // Event Filter
     m_textDocumentation->setText(tr("An Alternative Title is the name other than the ‘main’ Title given to a resource.\nThe type of title is defined by the typeGroup of attributes.\nThe status of the title is defined by the statusGroup of attributes.\nAlternative Titles are recorded as they appear.\nAn Alternative Title may be attributed to a resource for several reasons described using the status (e.g. working title) and type (e.g. series title) attributes.\nThe alternativeTitle may be provided in several languages.\nIt is sometimes common practice to put dates into the alternativeTitle. If present, the attributionDate (indicating when the alternativeTitle was attributed) in the date attribute should be consistent."));
     m_textNote->installEventFilter(this);
+    m_textDocumentation->setTextInteractionFlags(Qt::LinksAccessibleByMouse);
     m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
     m_editTypeGroup->editTypeLabel()->installEventFilter(this);
     m_editTypeGroup->editTypeLink()->installEventFilter(this);
@@ -143,13 +145,13 @@ bool AlternativeTitleTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
             m_textDocumentation->setText(tr("An optional definition.\nExample: the ‘title’ of the series that the resource is an episode of."));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme."));
+            m_textDocumentation->setHtml(tr("A link to a term or only identify a classification scheme.<br/>Reference data<br/> <a href=\"http://www.ebu.ch/metadata/cs/web/ebu_ObjectTypeCodeCS_p.xml.htm\">ebu_ObjectTypeCodeCS</a>"));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(tr("Free text to define the type of resource.\nExample: ‘series’."));
         else if (obj == (QObject*) m_editStatusGroup->editStatusDefinition())
             m_textDocumentation->setText(tr("An optional definition.\nExample: a temporary title, which is different from the formal title under wbeen published."));
         else if (obj == (QObject*) m_editStatusGroup->editStatusLink())
-            m_textDocumentation->setText(tr("A link to a term or only identify a classification scheme."));
+            m_textDocumentation->setHtml(tr("A link to a term or only identify a classification scheme.<br/>Reference data<br/> <a href=\"http://www.ebu.ch/metadata/cs/web/ebu_TitleStatusCodeCS_p.xml.htm\">ebu_TitleStatusCodeCS</a>"));
         else if (obj == (QObject*) m_editStatusGroup->editStatusLabel())
             m_textDocumentation->setText(tr("Free text to define the status of the title of the resource.\nExample: statusLabel: working (for ‘working title’)."));
         else if ( obj == (QObject*) m_editDateGroup->editEndDate())

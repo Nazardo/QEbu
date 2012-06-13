@@ -3,7 +3,7 @@
 #include "../model/qebulimits.h"
 #include "qvarptr.h"
 #include <QLineEdit>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 #include <QCheckBox>
 #include <QFormLayout>

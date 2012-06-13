@@ -18,7 +18,7 @@
 #include <QFormLayout>
 #include <QLabel>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include "qextendedspinbox.h"
 
 DurationTypeForm::DurationTypeForm( DurationType *duration,

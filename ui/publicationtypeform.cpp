@@ -14,7 +14,7 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 PublicationTypeForm::PublicationTypeForm(PublicationType *publication,
                                          QEbuMainWindow *mainWindow,

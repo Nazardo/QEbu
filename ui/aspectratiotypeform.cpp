@@ -3,7 +3,7 @@
 #include "qvarptr.h"
 #include "formatgroupeditbox.h"
 #include <QPushButton>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QFormLayout>
 #include <QString>
 #include <QLineEdit>
@@ -78,7 +78,7 @@ bool AspectRatioTypeForm::eventFilter(QObject *obj, QEvent *event)
         else if (obj == (QObject*) m_editFormatGroup->editFormatDefinition())
             m_textDocumentation->setText(tr("Free text for an optional definition.\nExample: ‘the so-called “widescreen” picture format’"));
         else if (obj == (QObject*) m_editFormatGroup->editFormatLink())
-            m_textDocumentation->setText(tr("Link to a classification scheme."));
+            m_textDocumentation->setHtml(tr("Link to a classification scheme.<br/>Reference data: ebu_VisualAspectRatioCS<br/>Example:<a href=\"http://www.ebu.ch/metadata/cs/ebu_VisualAspectRatioCS.xml#3\">http://www.ebu.ch/metadata/cs/ebu_VisualAspectRatioCS.xml#3</a>"));
         else if (obj == (QObject*) m_editFormatGroup->editFormatLabel())
             m_textDocumentation->setText(tr("Free text\nExample: 16:9."));
     }

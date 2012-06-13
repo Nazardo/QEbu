@@ -7,7 +7,7 @@
 #include <QEvent>
 #include <QDebug>
 #include <QLineEdit>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QComboBox>
 
 TypeGroupForm::TypeGroupForm(TypeGroup *typeGroup,
@@ -60,7 +60,7 @@ bool TypeGroupForm::eventFilter(QObject *obj, QEvent *event)
         else if ( obj ==(QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(m_labelDoc);
         else if ( obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(m_linkDoc);
+            m_textDocumentation->setHtml(m_linkDoc);
     }
     return QObject::eventFilter(obj, event);
 }

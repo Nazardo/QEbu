@@ -11,7 +11,7 @@
 #include <QVBoxLayout>
 #include <QFormLayout>
 #include <QInputDialog>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 
 AncillaryDataFormatTypeForm::AncillaryDataFormatTypeForm(

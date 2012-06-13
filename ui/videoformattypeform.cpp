@@ -12,7 +12,7 @@
 #include <QPushButton>
 #include <QButtonGroup>
 #include <QLineEdit>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QCheckBox>
 #include <QFormLayout>
 #include "qextendedspinbox.h"
@@ -205,7 +205,7 @@ void VideoFormatTypeForm::addClicked()
         videoEncodingForm->setGeneralDoc(tr("The type attribute group provides information on the encoding format."));
         videoEncodingForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘the video compression scheme H264, main profile, level1 as specified by ISO/IEC’."));
         videoEncodingForm->setLabelDoc(tr("Free text.\nExample: ‘H264 Main Profile @ Level 1’."));
-        videoEncodingForm->setLinkDoc(tr("Link to a classification scheme."));
+        videoEncodingForm->setLinkDoc(tr("Link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_VideoCompressionCodeCS_p.xml.htm\">ebu_VideoCompressionCodeCS</a>"));
         QObject::connect(videoEncodingForm, SIGNAL(closed(Operation,QVariant)),
                          this, SLOT(videoEncodingFormClosed(Operation,QVariant)));
         this->mainWindow()->pushWidget(videoEncodingForm);
@@ -252,7 +252,7 @@ void VideoFormatTypeForm::editClicked()
                     m_videoFormat->videoEncoding().at(index), this->mainWindow());
         videoEncodingForm->addLinksMap(this->mainWindow()->getMap("ebu_VideoCompressionCodeCS")); //Autocompletion values
         videoEncodingForm->setTitle(tr("Video Encoding"));
-        videoEncodingForm->setTitle(tr("Video Encoding"));
+        videoEncodingForm->setLinkDoc(tr("Link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_VideoCompressionCodeCS_p.xml.htm\">ebu_VideoCompressionCodeCS</a>"));
         videoEncodingForm->setGeneralDoc(tr("The type attribute group provides information on the encoding format."));
         videoEncodingForm->setDefinitionDoc(tr("Free text for an optional definition.\nExample: ‘the video compression scheme H264, main profile, level1 as specified by ISO/IEC’."));
         videoEncodingForm->setLabelDoc(tr("Free text.\nExample: ‘H264 Main Profile @ Level 1’."));

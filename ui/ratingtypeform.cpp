@@ -5,7 +5,7 @@
 #include "formatgroupeditbox.h"
 #include "entitytypeform.h"
 #include "qvarptr.h"
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QLineEdit>
 #include <QLabel>
 #include <QPushButton>

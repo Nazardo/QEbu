@@ -16,7 +16,7 @@
 #include <QFormLayout>
 #include <QMessageBox>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 OrganisationDetailsTypeForm::OrganisationDetailsTypeForm(
         OrganisationDetailsType *organisationDetails,

@@ -7,7 +7,7 @@
 #include "entitytypeform.h"
 #include <QPushButton>
 #include <QLineEdit>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QComboBox>
 #include <QEvent>
 #include <QLabel>

@@ -13,7 +13,7 @@
 #include <QSpinBox>
 #include <QCheckBox>
 #include <QFormLayout>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 #include <QComboBox>
 

@@ -9,7 +9,7 @@
 #include <QLineEdit>
 #include <QComboBox>
 #include <QSpinBox>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QEvent>
 #include <QVBoxLayout>
 #include <QFormLayout>

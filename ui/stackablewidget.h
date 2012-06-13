@@ -29,7 +29,7 @@
 
 class QVBoxLayout;
 class QLayout;
-class QTextEdit;
+class QTextBrowser;
 
 class StackableWidget : public QWidget
 {
@@ -58,7 +58,7 @@ protected slots:
     virtual void applyClicked();
     virtual void cancelClicked();
 protected:
-    QTextEdit *m_textDocumentation;
+    QTextBrowser *m_textDocumentation;
 private:
     QVBoxLayout *m_vLayout;
     QEbuMainWindow *m_mainWindow;

@@ -16,7 +16,7 @@
 #include <QCheckBox>
 #include <QLabel>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 PublicationHistoryTypeForm::PublicationHistoryTypeForm(
         PublicationHistoryType *publicationHistory,

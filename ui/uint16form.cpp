@@ -9,7 +9,7 @@
 #include "qextendedspinbox.h"
 #include <QEvent>
 #include <QComboBox>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 Uint16Form::Uint16Form(UInt16 *uint16,
                        QEbuMainWindow *mainWindow,

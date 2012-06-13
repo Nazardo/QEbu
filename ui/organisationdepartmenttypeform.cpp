@@ -6,7 +6,7 @@
 #include <QFormLayout>
 #include <QLineEdit>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 
 OrganisationDepartmentTypeForm::OrganisationDepartmentTypeForm(

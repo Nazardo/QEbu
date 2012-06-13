@@ -7,7 +7,7 @@
 #include <QFormLayout>
 #include <QComboBox>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 
 AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindow *mainWindow, QWidget *parent) :
     StackableWidget(mainWindow, parent)
@@ -45,7 +45,7 @@ AudioTrackTypeForm::AudioTrackTypeForm(AudioTrackType *audioTrack, QEbuMainWindo
     m_editTrackName->installEventFilter(this);
     m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
     m_editTypeGroup->editTypeLabel()->installEventFilter(this);
-    m_editTypeGroup->editTypeDefinition()->installEventFilter(this);
+    m_editTypeGroup->editTypeLink()->installEventFilter(this);
     // Set text fields...
     m_editTrackId->setText(m_audioTrack->trackId());
     m_editTrackName->setText(m_audioTrack->trackName());
@@ -82,7 +82,7 @@ bool AudioTrackTypeForm::eventFilter(QObject *obj, QEvent *event)
         if (obj == (QObject*) m_editTypeGroup->editTypeDefinition())
             m_textDocumentation->setText(tr("Free text for an optional definition of the purpose of the track"));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLink())
-            m_textDocumentation->setText(tr("Link to a classification scheme."));
+            m_textDocumentation->setHtml(tr("Link to a classification scheme.<br/>Reference data:<br/><a href=\"http://www.ebu.ch/metadata/cs/web/ebu_AudioChannelPurposeCodeCS_p.xml.htm\">ebu_AudioChannelPurposeCodeCS</a>"));
         else if (obj == (QObject*) m_editTypeGroup->editTypeLabel())
             m_textDocumentation->setText(tr("Free text.\nExample: ‘dubbing’."));
         else if (obj == (QObject*) m_editTrackLanguage)

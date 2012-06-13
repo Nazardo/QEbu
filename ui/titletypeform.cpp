@@ -2,7 +2,7 @@
 #include "../model/coremetadatatype.h"
 #include "elementtypeeditbox.h"
 #include "qvarptr.h"
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QDateEdit>
 #include <QLineEdit>
 #include <QCheckBox>

@@ -7,7 +7,7 @@
 #include <QCheckBox>
 #include <QLayout>
 #include <QEvent>
-#include <QTextEdit>
+#include <QTextBrowser>
 #include <QComboBox>
 #include "qextendedspinbox.h"
 
