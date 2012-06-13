@@ -1235,12 +1235,12 @@ void FormatType::setFileName(const QString &fileName)
     m_fileName = fileName;
 }
 
-TypeGroup *FormatType::locator() const
+LocatorType *FormatType::locator() const
 {
     return m_locator;
 }
 
-void FormatType::setLocator(TypeGroup *locator)
+void FormatType::setLocator(LocatorType *locator)
 {
     if (locator != m_locator)
         delete m_locator;
@@ -1304,4 +1304,22 @@ QString FormatType::toString() const
     if (!m_formatId.isEmpty())
         return m_formatId;
     return QObject::tr("Unspecified format");
+}
+
+
+QString LocatorType::locatorValue()
+{
+    return m_locatorValue;
+}
+
+void LocatorType::setLocatorValue(const QString &locatorValue)
+{
+    m_locatorValue = locatorValue;
+}
+
+QString LocatorType::toString()
+{
+    if (m_locatorValue.isEmpty())
+        return TypeGroup::toString();
+    return m_locatorValue;
 }

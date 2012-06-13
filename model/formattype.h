@@ -345,6 +345,7 @@ private:
     TechnicalAttributes *m_technicalAttributes;
 };
 
+class LocatorType;
 
 class FormatType
 {
@@ -390,8 +391,8 @@ public:
     void clearFileSize();
     QString fileName() const;
     void setFileName(const QString &fileName);
-    TypeGroup *locator() const;
-    void setLocator(TypeGroup *locator);
+    LocatorType *locator() const;
+    void setLocator(LocatorType *locator);
     DocumentFormatType *documentFormat() const;
     void setDocumentFormat(DocumentFormatType *documentFormat);
     TechnicalAttributes *technicalAttributes() const;
@@ -425,11 +426,21 @@ private:
     DurationType *m_duration;
     long *m_fileSize;
     QString m_fileName;
-    TypeGroup *m_locator;
+    LocatorType *m_locator;
     DocumentFormatType *m_documentFormat;
     TechnicalAttributes *m_technicalAttributes;
     DateGroup *m_dateCreated;
     DateGroup *m_dateModified;
+};
+
+class LocatorType : public TypeGroup
+{
+public:
+    QString locatorValue();
+    void setLocatorValue(const QString &locatorValue);
+    QString toString();
+private:
+    QString m_locatorValue;
 };
 
 #endif // FORMATTYPE_H

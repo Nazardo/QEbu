@@ -1171,6 +1171,10 @@ QDomElement EbuSerializer::serializeFormat(FormatType *format)
     if(format->locator()) {
         QDomElement e = m_doc.createElement(" ");
         serializeTypeGroup(format->locator(), &e);
+        if (!format->locator()->locatorValue().isEmpty()) {
+            QDomText textNode = m_doc.createTextNode(format->locator()->locatorValue());
+            e.appendChild(textNode);
+        }
         e.setTagName("ebucore:locator");
         f.appendChild(e);
     }

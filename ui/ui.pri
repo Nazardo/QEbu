@@ -74,7 +74,8 @@ HEADERS += \
     ui/verticalscrollarea.h \
     ui/formattypeform.h \
     ui/extendedvalidator.h \
-    ui/qextendedspinbox.h
+    ui/qextendedspinbox.h \
+    ui/locatortypeform.h
 
 SOURCES += \
     ui/qebumainwindow.cpp \
@@ -149,4 +150,5 @@ SOURCES += \
     ui/coremetadatatypeform.cpp \
     ui/parttypeform.cpp \
     ui/verticalscrollarea.cpp \
-    ui/formattypeform.cpp
+    ui/formattypeform.cpp \
+    ui/locatortypeform.cpp

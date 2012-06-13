@@ -1370,9 +1370,13 @@ FormatType *EbuParser::parseFormatType(const QDomElement &element)
      if (!el.isNull())
          format->setFileName(el.text());
 
-     TypeGroup *locator = new TypeGroup();
-     parseTypeGroup(element, locator);
-     format->setLocator(locator);
+     el = element.elementsByTagName("locator").at(0).toElement();
+     if (!el.isNull()) {
+        LocatorType *locator = new LocatorType();
+        parseTypeGroup(el, locator);
+        locator->setLocatorValue(el.text());
+        format->setLocator(locator);
+     }
 
      el = element.elementsByTagName("documentFormat").at(0).toElement();
      if (!el.isNull()) {

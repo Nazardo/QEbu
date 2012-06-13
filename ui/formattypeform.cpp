@@ -11,6 +11,7 @@
 #include "imageformattypeform.h"
 #include "dataformattypeform.h"
 #include "durationtypeform.h"
+#include "locatortypeform.h"
 #include "lengthtypeeditbox.h"
 #include "../model/ebucoremaintype.h"
 #include "../model/typegroup.h"
@@ -477,9 +478,8 @@ void FormatTypeForm::locatorRemoveClicked()
 
 void FormatTypeForm::locatorClicked()
 {
-    TypeGroupForm *locatorForm = new TypeGroupForm(
+    LocatorTypeForm *locatorForm = new LocatorTypeForm(
                 m_format->locator(),this->mainWindow());
-    locatorForm->setTitle(tr("Locator"));
     QObject::connect(locatorForm, SIGNAL(closed(Operation,QVariant)),
                      this, SLOT(locatorClosed(Operation,QVariant)));
     this->mainWindow()->pushWidget(locatorForm);
@@ -487,7 +487,7 @@ void FormatTypeForm::locatorClicked()
 
 void FormatTypeForm::locatorClosed(StackableWidget::Operation op, QVariant value)
 {
-    TypeGroup *locator = QVarPtr<TypeGroup>::asPointer(value);
+    LocatorType *locator = QVarPtr<LocatorType>::asPointer(value);
     if (!locator)
         return;
     if (op == Add)
