@@ -380,7 +380,7 @@ void QEbuMainWindow::actionAbout()
 
 void QEbuMainWindow::actionWizard()
 {
-    QWizard *wizard = new QWizard;
+    QWizard *wizard = new QWizard(this);
     wizard->setWindowTitle(QObject::tr("Getting started"));
     wizard->setWizardStyle(QWizard::ModernStyle);
     wizard->adjustSize();
@@ -508,7 +508,7 @@ void QEbuMainWindow::actionWizard()
     wizard->addPage(page2);
     wizard->addPage(page3);
     wizard->addPage(page4);
-    wizard->show();
+    wizard->exec();
 }
 
 QMap<QString, QString> *QEbuMainWindow::getMap(QString name)
