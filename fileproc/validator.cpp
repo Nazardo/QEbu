@@ -162,6 +162,8 @@ void Validator::parseOutput()
         if (n == -1)
             msg = QObject::tr("Error while parsing output: path not found at end");
         msg.truncate(n - 2);
+        if (m_errorRow >= 0)
+            msg.prepend(QObject::tr("Error at row %1.\n").arg(m_errorRow));
 
     } else {
         msg = QObject::tr("Error while parsing output: unexpected ending");

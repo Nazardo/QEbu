@@ -240,13 +240,18 @@ bool QEbuMainWindow::doOpen()
         {
             QMessageBox validatorWarning(this);
             validatorWarning.setIcon(QMessageBox::Warning);
+            validatorWarning.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
             validatorWarning.setWindowTitle(tr("Validator"));
-            validatorWarning.setText(tr("Invalid input file"));
+            validatorWarning.setText(tr("Invalid input file.\n"
+                                        "Should you choose to ignore this error, "
+                                        "the parsing can bring to unpredictable results."));
             validatorWarning.setDetailedText(validator.validationErrorMessage());
-            validatorWarning.setStandardButtons(QMessageBox::Ok);
-            validatorWarning.setDefaultButton(QMessageBox::Ok);
-            validatorWarning.exec();
-            return false;
+            validatorWarning.setStandardButtons(QMessageBox::Abort | QMessageBox::Ignore);
+            validatorWarning.setDefaultButton(QMessageBox::Abort);
+            int i = validatorWarning.exec();
+            if (i != QMessageBox::Ignore)
+                return false;
+            break;
         }
         case Validator::DocumentValid:
             break;
@@ -255,6 +260,7 @@ bool QEbuMainWindow::doOpen()
         {
             QMessageBox validatorWarning(this);
             validatorWarning.setIcon(QMessageBox::Warning);
+            validatorWarning.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
             validatorWarning.setWindowTitle(tr("Validator"));
             validatorWarning.setText(tr("Unexpected error from validator"));
             validatorWarning.setDetailedText(validator.returnMessage());
@@ -272,9 +278,10 @@ bool QEbuMainWindow::doOpen()
     EbuParser parser;
     if (!parser.parseFromFile(inputFile)) {
         QMessageBox parserWarning(this);
+        parserWarning.setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Minimum);
         parserWarning.setIcon(QMessageBox::Warning);
         parserWarning.setWindowTitle(tr("QEbu Parser"));
-        parserWarning.setText(tr("Invalid input file"));
+        parserWarning.setText(tr("Invalid input file."));
         parserWarning.setDetailedText(parser.errorMsg());
         parserWarning.setStandardButtons(QMessageBox::Ok);
         parserWarning.setDefaultButton(QMessageBox::Ok);
