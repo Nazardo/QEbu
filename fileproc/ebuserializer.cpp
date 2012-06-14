@@ -592,9 +592,18 @@ QDomElement EbuSerializer::serializeCoordinates(CoordinatesType *coordinates)
 {
     QDomElement c = m_doc.createElement(" ");
     serializeFormatGroup(coordinates, &c);
-    c.setAttribute("posx", coordinates->posx());
-    c.setAttribute("posy", coordinates->posy());
-
+    {
+        QDomElement el = m_doc.createElement("ebucore:posy");
+        QDomText textNode = m_doc.createTextNode(QString::number(coordinates->posy()));
+        el.appendChild(textNode);
+        c.appendChild(el);
+    }
+    {
+        QDomElement el = m_doc.createElement("ebucore:posx");
+        QDomText textNode = m_doc.createTextNode(QString::number(coordinates->posx()));
+        el.appendChild(textNode);
+        c.appendChild(el);
+    }
     return c;
 }
 
@@ -734,7 +743,7 @@ QDomElement EbuSerializer::serializeCaptioningFormat(CaptioningFormatType *capti
     if(!caption->trackId().isEmpty())
         c.setAttribute("trackId",caption->trackId());
     if(!caption->trackLanguage().isEmpty())
-        c.setAttribute("trackLanguage",caption->trackLanguage());
+        c.setAttribute("language",caption->trackLanguage());
     if(!caption->trackName().isEmpty())
         c.setAttribute("trackName",caption->trackName());
     serializeTypeGroup(caption, &c);
@@ -1682,8 +1691,7 @@ QDomElement EbuSerializer::serializeVideoFormat(VideoFormatType *format)
     }
     QList<VideoTrackType *> tracks = format->videoTrack();
     for(int i=0; i<tracks.size(); ++i) {
-        QDomElement e = m_doc.createElement(" ");
-        serializeTypeGroup(tracks.at(i), &e);
+        QDomElement e = serializeVideoTrack(tracks.at(i));
         e.setTagName("ebucore:videoTrack");
         f.appendChild(e);
     }
@@ -1876,6 +1884,11 @@ QDomElement EbuSerializer::serializeDetails(DetailsType *details)
         e.appendChild(textNode);
         d.appendChild(e);
     }
+    if(details->address()) {
+        QDomElement e = serializeAddress(details->address());
+        e.setTagName("ebucore:address");
+        d.appendChild(e);
+    }
     if(!details->telephoneNumber().isEmpty()) {
         QDomElement e = m_doc.createElement(" ");
         e.setTagName("ebucore:telephoneNumber");
@@ -1890,11 +1903,6 @@ QDomElement EbuSerializer::serializeDetails(DetailsType *details)
         e.appendChild(textNode);
         d.appendChild(e);
     }
-    if(details->address()) {
-        QDomElement e = serializeAddress(details->address());
-        e.setTagName("ebucore:address");
-        d.appendChild(e);
-    }
 
     return d;
 }
@@ -1907,7 +1915,7 @@ QDomElement EbuSerializer::serializeAddress(AddressType *address)
     for(int i=0; i<lines.size(); ++i)
     {
         QDomElement e = m_doc.createElement(" ");
-        e.setTagName("ebucore:addressLines");
+        e.setTagName("ebucore:addressLine");
         QDomText textNode = m_doc.createTextNode(lines.at(i));
         e.appendChild(textNode);
         a.appendChild(e);

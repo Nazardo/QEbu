@@ -574,6 +574,8 @@ EntityType *EbuParser::parseEntityType(const QDomElement &element)
     QDomNodeList contactDetailsList = element.elementsByTagName("contactDetails");
     for (int i=0; i < contactDetailsList.size(); ++i) {
         QDomElement el = contactDetailsList.item(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         ContactDetailsType *contactDetails = parseContactDetailsType(el);
         if (!contactDetails) {
             delete entity;
@@ -596,8 +598,11 @@ EntityType *EbuParser::parseEntityType(const QDomElement &element)
     // role [0..*]
     QDomNodeList roleList = element.elementsByTagName("role");
     for (int i=0; i < roleList.size(); ++i) {
+        QDomElement el = roleList.at(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         TypeGroup *role = new TypeGroup();
-        parseTypeGroup(roleList.at(i).toElement(), role);
+        parseTypeGroup(el, role);
         entity->roles().append(role);
     }
 
@@ -640,14 +645,19 @@ ContactDetailsType *EbuParser::parseContactDetailsType(const QDomElement &elemen
 
     QDomNodeList el_list = element.elementsByTagName("stageName");
     for (int i=0; i < el_list.size(); ++i) {
-        el = el_list.at(i).toElement();
+        QDomElement el = el_list.at(i).toElement();
+        if (el.parentNode() != element)
+            continue;
         if (!el.isNull())
             contactDetails->stageNames().append(el.text());
     }
 
     el_list = element.elementsByTagName("relatedContacts");
     for (int i=0; i < el_list.size(); ++i) {
-        EntityType *relatedContact = parseEntityType(el_list.at(i).toElement());
+        QDomElement el = el_list.at(i).toElement();
+        if (el.parentNode() != element)
+            continue;
+        EntityType *relatedContact = parseEntityType(el);
         if (!relatedContact) {
             delete contactDetails;
             return 0;
@@ -657,7 +667,10 @@ ContactDetailsType *EbuParser::parseContactDetailsType(const QDomElement &elemen
 
     el_list = element.elementsByTagName("details");
     for (int i=0; i < el_list.size(); ++i) {
-        DetailsType *detail = parseDetailsType(el_list.at(i).toElement());
+        QDomElement el = el_list.at(i).toElement();
+        if (el.parentNode() != element)
+            continue;
+        DetailsType *detail = parseDetailsType(el);
         if (!detail) {
             delete contactDetails;
             return 0;
@@ -689,11 +702,11 @@ DetailsType *EbuParser::parseDetailsType(const QDomElement &element)
     el = element.elementsByTagName("telephoneNumber").at(0).toElement();
     if (!el.isNull())
         details->setTelephoneNumber(el.text());
-    el = element.elementsByTagName("mobileThelephoneNumber").at(0).toElement();
+    el = element.elementsByTagName("mobileTelephoneNumber").at(0).toElement();
     if (!el.isNull())
         details->setMobileTelephoneNumber(el.text());
 
-    el = element.elementsByTagName("abucore:address").at(0).toElement();
+    el = element.elementsByTagName("address").at(0).toElement();
     if (!el.isNull()) {
         AddressType *address = parseAddressType(el);
         if (!address) {
@@ -723,7 +736,7 @@ AddressType *EbuParser::parseAddressType(const QDomElement &element)
     QDomElement el = element.elementsByTagName("addressTownCity").at(0).toElement();
     if (!el.isNull())
         address->setTownCity(el.text());
-    el = element.elementsByTagName("addressCoutryState").at(0).toElement();
+    el = element.elementsByTagName("addressCountyState").at(0).toElement();
     if (!el.isNull())
         address->setCountyState(el.text());
     el = element.elementsByTagName("addressDeliveryCode").at(0).toElement();
@@ -1333,7 +1346,7 @@ FormatType *EbuParser::parseFormatType(const QDomElement &element)
          }
          format->dataFormat().append(dataFormat);
      }
-     el = element.elementsByTagName("containerFormat").at(0).toElement();
+     el_list = element.elementsByTagName("containerFormat");
      for (int i=0; i < el_list.size(); ++i) {
          QDomElement el = el_list.at(i).toElement();
          if(el.isNull())
@@ -2218,7 +2231,10 @@ RightsType *EbuParser::parseRightsType(const QDomElement &element)
 
     el_list = element.elementsByTagName("contactDetails");
     for (int i=0; i<el_list.size(); ++i) {
-        ContactDetailsType *cd = parseContactDetailsType(el_list.at(i).toElement());
+        QDomElement el = el_list.at(i).toElement();
+        if (el.parentNode() != element)
+            continue;
+        ContactDetailsType *cd = parseContactDetailsType(el);
         if(!cd) {
             delete rights;
             return 0;
