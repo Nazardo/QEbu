@@ -54,6 +54,7 @@ FormatGroupEditBox::FormatGroupEditBox(FormatGroup *formatGroup,
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
     m_editFormatLink->setToolTip("Press Enter to save your custom value");
+    m_editFormatLink->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
     m_editFormatLink->setValidator(TypeConverter::getUriValidator());
 
     if (!formatGroup) {

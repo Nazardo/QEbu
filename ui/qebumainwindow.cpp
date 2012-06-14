@@ -57,7 +57,7 @@ QEbuMainWindow::QEbuMainWindow(QWidget *parent) :
     m_mainCentralLayout = new QVBoxLayout;
 
     m_labelNavigation = new QLabel;
-    m_labelNavigation->setFrameStyle(QFrame::Box | QFrame::Raised);
+    m_labelNavigation->setFrameStyle(QFrame::NoFrame);
     m_stackedWidget = new QStackedWidget;
     m_stackedWidget->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Expanding);
     //m_stackedWidget->setMinimumSize(640,400);

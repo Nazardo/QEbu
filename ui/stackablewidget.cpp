@@ -40,6 +40,7 @@ StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
     QWidget::setLayout(m_vLayout);
 
     m_verticalScrollArea = new VerticalScrollArea;
+    m_verticalScrollArea->setFrameStyle(QFrame::Panel | QFrame::Raised);
     m_vLayout->addWidget(m_verticalScrollArea);
 
     // Add lastRow layout
@@ -51,7 +52,7 @@ StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
         QDialogButtonBox *dialogButtonBox = new QDialogButtonBox(
                     QDialogButtonBox::Apply | QDialogButtonBox::Cancel,
                     Qt::Horizontal);
-        lastRow->addWidget(dialogButtonBox, 0, Qt::AlignLeft | Qt::AlignBottom);
+        lastRow->addWidget(dialogButtonBox, 0, Qt::AlignLeft);
         QObject::connect(dialogButtonBox->button(QDialogButtonBox::Apply),
                          SIGNAL(clicked()), this, SLOT(applyClicked()));
         QObject::connect(dialogButtonBox, SIGNAL(rejected()),
@@ -67,8 +68,8 @@ StackableWidget::StackableWidget(QEbuMainWindow *mainWindow,
         m_textDocumentation->setFrameShape( QTextEdit::NoFrame );
         m_textDocumentation->setPalette(*palette);
         m_textDocumentation->setFrameShadow( QTextEdit::Plain );
-        m_textDocumentation->setMinimumHeight(80);
-        m_textDocumentation->setMaximumSize(400, 160);
+        m_textDocumentation->setMinimumHeight(40);
+        m_textDocumentation->setMaximumSize(400, 100);
         lastRow->addWidget(m_textDocumentation);
     }
     // ... maybe some day there will be other things to add.

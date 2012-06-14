@@ -46,6 +46,7 @@ StatusGroupEditBox::StatusGroupEditBox(StatusGroup *statusGroup, QWidget *parent
 
     m_editStatusLink->setEditable(true);
     m_editStatusLink->setInsertPolicy(QComboBox::InsertAtTop);
+    m_editStatusLink->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
     QObject::connect(m_editStatusLink, SIGNAL(currentIndexChanged(int)), this, SLOT(onChange(int)));
     QObject::connect(m_editStatusLink->lineEdit(), SIGNAL(editingFinished()), this, SLOT(onChange()));
     m_editStatusLink->setStyleSheet("QComboBox::drop-down {border-width: 0px;} \

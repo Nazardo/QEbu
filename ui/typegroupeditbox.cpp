@@ -53,6 +53,7 @@ TypeGroupEditBox::TypeGroupEditBox(TypeGroup *typeGroup,
                                   QComboBox::down-arrow {image: url(noimg); \
                                   border-width: 0px;}");
     m_editTypeLink->setToolTip("Press Enter to save your custom value");
+    m_editTypeLink->setSizeAdjustPolicy(QComboBox::AdjustToMinimumContentsLength);
     m_editTypeLink->setValidator(TypeConverter::getUriValidator());
 
     if (!typeGroup) {
