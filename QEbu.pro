@@ -4,7 +4,7 @@
 #  Paolo Pasini (cosmos3900)  paolo.pasini@studenti.polito.it               #
 #  Denis Patti  (dextp3)      denis.patti@studenti.polito.it                #
 #  Giovanni Pessiva           giovanni.pessiva@gmail.com                    #
-#  Stefano Ricossa            stefano.ricossa@studenti.polito.it            #
+#  Stefano Ricossa            stefano.ricossa@gmail.com                     #
 #                                                                           #
 # This file is part of QEbu.                                                #
 # QEbu is free software: you can redistribute it and/or modify              #
