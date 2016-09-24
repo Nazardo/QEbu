@@ -1,5 +1,3 @@
 QEbu is a graphical editor that supports creation and editing of XML documents complying to the specifics of EBUCore metadata v1.3
 
-
-Win32 binaries (tag v0.0-BETA)
-http://www.nazardo.it/share/projects/qebu/QEbu-0.0-BETA-win32.zip
+Compiled binaries are attached to GitHub releases.
